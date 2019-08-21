@@ -12,6 +12,8 @@
  */
 /* eslint-disable */
 
+// Setup Types for this file.
+
 import { _gsScope } from 'gsap/TweenLite.js'
 
 var _doc = _gsScope.document,

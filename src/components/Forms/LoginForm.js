@@ -10,7 +10,12 @@ const LoginForm = () => {
   const [updateInputValues, updateInputOptions] = useUpdateFormControls()
   const [formState, dispatch] = useFormStore()
 
-  return <form />
+  return (
+    <FormContainer>
+      <TextInput />
+      <TextInput />
+    </FormContainer>
+  )
 }
 
 export default LoginForm
