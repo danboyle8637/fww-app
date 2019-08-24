@@ -6,8 +6,8 @@ import { darkTheme } from './styles/Theme'
 import AppLayout from './layouts/AppLayout'
 import MainNav from './components/Nav/MainNav'
 import IgniteResetHeader from './components/Cards/ProgramHeaders/IgniteResetHeader'
-import BodyBurnResetHeader from './components/Cards/ProgramHeaders/BodyBurnResetHeader'
 import StrongResetHeader from './components/Cards/ProgramHeaders/StrongResetHeader'
+import WorkoutProgramCard from './components/Cards/WorkoutProgramCard'
 import { ScreenWidthStore } from './context/ScreenWidthContext'
 
 function App() {
@@ -21,10 +21,21 @@ function App() {
             <IgniteResetHeader />
           </HoldingDiv>
           <HoldingDiv>
-            <BodyBurnResetHeader />
+            <WorkoutProgramCard isWorkout={true} title="Pushup Workout" description="Let’s perfect and practice our pushups with this sweaty... tough workout." />
           </HoldingDiv>
           <HoldingDiv>
-            <StrongResetHeader />
+            <WorkoutProgramCard
+              isProgram={true}
+              programHeader={<IgniteResetHeader />}
+              description="A beginner reset program you're going to love."
+            />
+          </HoldingDiv>
+          <HoldingDiv>
+            <WorkoutProgramCard
+              isProgram={true}
+              programHeader={<StrongResetHeader />}
+              description="A reset program for strong. It's great."
+            />
           </HoldingDiv>
         </AppLayout>
       </ScreenWidthStore>

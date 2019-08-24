@@ -7,6 +7,7 @@ const WorkoutCardHeader = ({ background, altText, title }) => {
 
 export default WorkoutCardHeader
 
-const WorkoutImage = styled.image`
+const WorkoutImage = styled.img`
+  border-radius: 10px 10px 0 0;
   width: 100%;
 `

@@ -6,10 +6,8 @@ const ProgramHeaderGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  background: ${props => props.theme.mainBackgroundBorderColor};
   border-radius: 10px 10px 0 0;
   width: 100%;
-  max-width: 360px;
 `
 
 const ProgramBackgroundWrapper = styled.div`
