@@ -24,6 +24,13 @@ const useUpdateFormControls = () => {
         })
         break
       }
+      case 'workoutGoal': {
+        dispatch({
+          type: 'setWorkoutGoalValue',
+          value: inputValue
+        })
+        break
+      }
       default: {
         throw new Error('You have not exhausted all possible inputs.')
       }
@@ -40,6 +47,10 @@ const useUpdateFormControls = () => {
       }
       case 'loginPassword': {
         dispatch({ type: 'updatePasswordOptions' })
+        break
+      }
+      case 'workoutGoal': {
+        dispatch({ type: 'setWorkoutGoalOptions' })
         break
       }
       default: {

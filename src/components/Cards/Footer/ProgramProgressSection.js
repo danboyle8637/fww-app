@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import ProgressLoader from '../../../svgs/ProgressLoader'
+import ProgramProgressLoader from './ProgramProgressLoader'
 
-const ProgramProgressSection = ({ percentComplete }) => {
+const ProgramProgressSection = () => {
   return (
     <ProgressContainer>
-      <ProgressGraph />
-      <PercentNumber>{`${percentComplete}%`}</PercentNumber>
+      <ProgramProgressLoader percentComplete={100} />
+      <ProgressLabel>Progress</ProgressLabel>
     </ProgressContainer>
   )
 }
@@ -15,25 +15,15 @@ const ProgramProgressSection = ({ percentComplete }) => {
 export default ProgramProgressSection
 
 const ProgressContainer = styled.div`
-  position: relative;
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  justify-items: center;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
   align-items: center;
 `
 
-const ProgressGraph = styled(ProgressLoader)`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
-  width: 54px;
-`
-
-const PercentNumber = styled.p`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
-  font-family: QuicksandSemiBold;
-  font-size: 11px;
-  color: ${props => props.theme.primaryAccent};
-  z-index: 1;
+const ProgressLabel = styled.p`
+  font-family: QuicksandMedium;
+  font-size: 14px;
+  color: ${props => props.theme.bodyText};
+  text-transform: uppercase;
 `

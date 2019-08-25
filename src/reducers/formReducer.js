@@ -12,6 +12,11 @@ const passwordValidationRules = {
   isRequired: true
 }
 
+const workoutGoalValidation = {
+  maxLength: 4,
+  isRequired: true
+}
+
 const formState = {
   userNameValue: {
     value: '',
@@ -30,12 +35,21 @@ const formState = {
     initial: true,
     touched: false,
     showInstructions: false
+  },
+  workoutGoalValue: {
+    value: '',
+    valid: false
+  },
+  workoutGoalOptions: {
+    initial: true,
+    touched: false,
+    showInstructions: false
   }
 }
 
 const formReducer = (state, action) => {
   switch (action.type) {
-    case 'updateUsernameValue': {
+    case 'setUsernameValue': {
       const valid = validate(action.value, userNameValidationRules)
       return {
         ...state,
@@ -45,7 +59,7 @@ const formReducer = (state, action) => {
         }
       }
     }
-    case 'updateUsernameOptions': {
+    case 'setUsernameOptions': {
       return {
         ...state,
         userNameOptions: {
@@ -55,7 +69,7 @@ const formReducer = (state, action) => {
         }
       }
     }
-    case 'updatePasswordValue': {
+    case 'setPasswordValue': {
       const valid = validate(action.value, passwordValidationRules)
       return {
         ...state,
@@ -65,13 +79,33 @@ const formReducer = (state, action) => {
         }
       }
     }
-    case 'updatePasswordOptions': {
+    case 'setPasswordOptions': {
       return {
         ...state,
         passwordOptions: {
           initial: false,
           touched: !state.passwordOptions.touched,
           showInstructions: !state.passwordOptions.showInstructions
+        }
+      }
+    }
+    case 'setWorkoutGoalValue': {
+      const valid = validate(action.value, workoutGoalValidation)
+      return {
+        ...state,
+        workoutGoalValue: {
+          value: action.value,
+          valid: valid
+        }
+      }
+    }
+    case 'setWorkoutGoalOptions': {
+      return {
+        ...state,
+        workoutGoalOptions: {
+          initial: false,
+          touched: !state.workoutGoalOptions.touched,
+          showInstructions: !state.workoutGoalOptions.showInstructions
         }
       }
     }

@@ -3,7 +3,7 @@ import { Transition } from 'react-transition-group'
 import { TweenMax } from 'gsap/TweenMax'
 
 const FormInstructionsTransition = ({ isTouched, isTextArea, children }) => {
-  const [yPosition, setYPosition] = useState(-37)
+  const [yPosition, setYPosition] = useState(-30)
 
   useEffect(() => {
     if (isTextArea) {

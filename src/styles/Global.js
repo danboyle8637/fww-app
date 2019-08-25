@@ -40,9 +40,16 @@ const Global = createGlobalStyle`
     `}
   }
 
+  h1, h2, h3, h4, h5 {
+    margin: 0;
+    padding: 0;
+    font-family: RobotoBold;
+  }
+
   p {
     margin: 0;
     padding: 0;
+    line-height: 1.6rem;
   }
 
   #root {

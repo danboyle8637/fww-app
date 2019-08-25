@@ -108,7 +108,7 @@ const VisibleButton = styled.button`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
   margin: 0;
-  padding: 12px 14px;
+  padding: 10px 14px;
   background: ${props =>
     props.purple ? props.theme.tertiaryAccent : props.theme.primaryAccent};
   border: none;

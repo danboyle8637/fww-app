@@ -9,7 +9,7 @@ const ProgramCardFooter = () => {
   return (
     <FooterContainer>
       <ProgramActiveSection />
-      <ProgramProgressSection percentComplete={100} />
+      <ProgramProgressSection />
       <NavigationArrow />
     </FooterContainer>
   )
