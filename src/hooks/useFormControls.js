@@ -12,14 +12,21 @@ const useUpdateFormControls = () => {
     switch (inputName) {
       case 'loginUsername': {
         dispatch({
-          type: 'updateUsernameValue',
+          type: 'setUsernameValue',
           value: inputValue
         })
         break
       }
       case 'loginPassword': {
         dispatch({
-          type: 'updatePasswordValue',
+          type: 'setPasswordValue',
+          value: inputValue
+        })
+        break
+      }
+      case 'emailAddress': {
+        dispatch({
+          type: 'setEmailValue',
           value: inputValue
         })
         break
@@ -42,11 +49,15 @@ const useUpdateFormControls = () => {
 
     switch (inputName) {
       case 'loginUsername': {
-        dispatch({ type: 'updateUsernameOptions' })
+        dispatch({ type: 'setUsernameOptions' })
         break
       }
       case 'loginPassword': {
-        dispatch({ type: 'updatePasswordOptions' })
+        dispatch({ type: 'setPasswordOptions' })
+        break
+      }
+      case 'emailAddress': {
+        dispatch({ type: 'setEmailOptions' })
         break
       }
       case 'workoutGoal': {

@@ -2,7 +2,7 @@ import validate from '../utils/validate'
 
 // Validation rules for intputs
 
-const userNameValidationRules = {
+const usernameValidationRules = {
   minLength: 4,
   isRequired: true
 }
@@ -12,17 +12,23 @@ const passwordValidationRules = {
   isRequired: true
 }
 
+const emailValidationRules = {
+  minLength: 4,
+  isEmail: true,
+  isRequired: true
+}
+
 const workoutGoalValidation = {
   maxLength: 4,
   isRequired: true
 }
 
 const formState = {
-  userNameValue: {
+  usernameValue: {
     value: '',
     valid: false
   },
-  userNameOptions: {
+  usernameOptions: {
     initial: true,
     touched: false,
     showInstructions: false
@@ -32,6 +38,15 @@ const formState = {
     valid: false
   },
   passwordOptions: {
+    initial: true,
+    touched: false,
+    showInstructions: false
+  },
+  emailValue: {
+    value: '',
+    valid: false
+  },
+  emailOptions: {
     initial: true,
     touched: false,
     showInstructions: false
@@ -50,10 +65,10 @@ const formState = {
 const formReducer = (state, action) => {
   switch (action.type) {
     case 'setUsernameValue': {
-      const valid = validate(action.value, userNameValidationRules)
+      const valid = validate(action.value, usernameValidationRules)
       return {
         ...state,
-        userNameValue: {
+        usernameValue: {
           value: action.value,
           valid: valid
         }
@@ -62,10 +77,10 @@ const formReducer = (state, action) => {
     case 'setUsernameOptions': {
       return {
         ...state,
-        userNameOptions: {
+        usernameOptions: {
           initial: false,
-          touched: !state.userNameOptions.touched,
-          showInstructions: !state.userNameOptions.showInstructions
+          touched: !state.usernameOptions.touched,
+          showInstructions: !state.usernameOptions.showInstructions
         }
       }
     }
@@ -86,6 +101,26 @@ const formReducer = (state, action) => {
           initial: false,
           touched: !state.passwordOptions.touched,
           showInstructions: !state.passwordOptions.showInstructions
+        }
+      }
+    }
+    case 'setEmailValue': {
+      const valid = validate(action.value, emailValidationRules)
+      return {
+        ...state,
+        emailValue: {
+          value: action.value,
+          valid: valid
+        }
+      }
+    }
+    case 'setEmailOptions': {
+      return {
+        ...state,
+        emailOptions: {
+          initial: false,
+          touched: !state.emailOptions.touched,
+          showInstructions: !state.emailOptions.showInstructions
         }
       }
     }

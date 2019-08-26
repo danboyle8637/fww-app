@@ -69,8 +69,10 @@ const InputLabel = styled.label`
 `
 
 const HelpLabel = styled(InputLabel)`
+  position: absolute;
   font-size: 13px;
   color: ${props => props.theme.bodyText};
+  border-radius: 8px;
 `
 
 const Input = styled.input`

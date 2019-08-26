@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { TimelineMax, Power2 } from 'gsap/all'
 
-const TextButton = ({ children, purple = null }) => {
+const TextButton = ({ children, purple = null, handleClick }) => {
   const buttonRef = useRef(null)
   const timeline = useRef(new TimelineMax())
 
@@ -11,13 +11,7 @@ const TextButton = ({ children, purple = null }) => {
       timeline.current.kill()
       timeline.current = null
     }
-  })
-
-  const handleClick = () => {
-    console.log('clicked')
-    const button = buttonRef.current
-    button.focus()
-  }
+  }, [])
 
   const handleMouseDown = () => {
     const button = buttonRef.current
