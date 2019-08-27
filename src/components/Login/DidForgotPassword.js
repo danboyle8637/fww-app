@@ -3,15 +3,13 @@ import styled from 'styled-components'
 
 import TextButton from '../Buttons/TextButton'
 
-const DidForgotPassword = () => {
-  const handleForgotPassword = () => {
-    console.log('Trigger animation to bring forgot password form.')
-  }
-
+const DidForgotPassword = ({ handleShowForgotPasswordForm }) => {
   return (
     <ForgotPasswordContainer>
       <ForgotPasswordHeadline>Forgot password?</ForgotPasswordHeadline>
-      <TextButton handleClick={handleForgotPassword}>Send reminder</TextButton>
+      <TextButton handleClick={handleShowForgotPasswordForm}>
+        Send reminder
+      </TextButton>
     </ForgotPasswordContainer>
   )
 }

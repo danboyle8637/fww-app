@@ -24,6 +24,13 @@ const useUpdateFormControls = () => {
         })
         break
       }
+      case 'loginConfirmPassword': {
+        dispatch({
+          type: 'setConfirmPasswordValue',
+          value: inputValue
+        })
+        break
+      }
       case 'emailAddress': {
         dispatch({
           type: 'setEmailValue',
@@ -34,6 +41,13 @@ const useUpdateFormControls = () => {
       case 'workoutGoal': {
         dispatch({
           type: 'setWorkoutGoalValue',
+          value: inputValue
+        })
+        break
+      }
+      case 'signupFirstName': {
+        dispatch({
+          type: 'setSignUpFirstNameValue',
           value: inputValue
         })
         break
@@ -56,12 +70,20 @@ const useUpdateFormControls = () => {
         dispatch({ type: 'setPasswordOptions' })
         break
       }
+      case 'loginConfirmPassword': {
+        dispatch({ type: 'setConfirmPasswordOptions' })
+        break
+      }
       case 'emailAddress': {
         dispatch({ type: 'setEmailOptions' })
         break
       }
       case 'workoutGoal': {
         dispatch({ type: 'setWorkoutGoalOptions' })
+        break
+      }
+      case 'signupFirstName': {
+        dispatch({ type: 'setSignUpFirstNameOptions' })
         break
       }
       default: {

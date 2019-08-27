@@ -12,14 +12,25 @@ const passwordValidationRules = {
   isRequired: true
 }
 
+const confirmPasswordValidationRules = {
+  minLength: 6,
+  isRequired: true,
+  matchPassword: true
+}
+
 const emailValidationRules = {
   minLength: 4,
   isEmail: true,
   isRequired: true
 }
 
-const workoutGoalValidation = {
+const workoutGoalValidationRules = {
   maxLength: 4,
+  isRequired: true
+}
+
+const signupFirstNameValidationRules = {
+  minLength: 2,
   isRequired: true
 }
 
@@ -42,11 +53,29 @@ const formState = {
     touched: false,
     showInstructions: false
   },
+  confirmPasswordValue: {
+    value: '',
+    valid: false
+  },
+  confirmPasswordOptions: {
+    initial: true,
+    touched: false,
+    showInstructions: false
+  },
   emailValue: {
     value: '',
     valid: false
   },
   emailOptions: {
+    initial: true,
+    touched: false,
+    showInstructions: false
+  },
+  signupFirstNameValue: {
+    value: '',
+    valid: false
+  },
+  signupFirstNameOptions: {
     initial: true,
     touched: false,
     showInstructions: false
@@ -88,7 +117,7 @@ const formReducer = (state, action) => {
       const valid = validate(action.value, passwordValidationRules)
       return {
         ...state,
-        passwordVale: {
+        passwordValue: {
           value: action.value,
           valid: valid
         }
@@ -101,6 +130,30 @@ const formReducer = (state, action) => {
           initial: false,
           touched: !state.passwordOptions.touched,
           showInstructions: !state.passwordOptions.showInstructions
+        }
+      }
+    }
+    case 'setConfirmPasswordValue': {
+      const valid = validate(
+        action.value,
+        confirmPasswordValidationRules,
+        state.passwordValue.value
+      )
+      return {
+        ...state,
+        confirmPasswordValue: {
+          value: action.value,
+          valid: valid
+        }
+      }
+    }
+    case 'setConfirmPasswordOptions': {
+      return {
+        ...state,
+        confirmPasswordOptions: {
+          initial: false,
+          touched: !state.confirmPasswordOptions.touched,
+          showInstructions: !state.confirmPasswordOptions.showInstructions
         }
       }
     }
@@ -124,8 +177,28 @@ const formReducer = (state, action) => {
         }
       }
     }
+    case 'setSignUpFirstNameValue': {
+      const valid = validate(action.value, signupFirstNameValidationRules)
+      return {
+        ...state,
+        signupFirstNameValue: {
+          value: action.value,
+          valid: valid
+        }
+      }
+    }
+    case 'setSignUpFirstNameOptions': {
+      return {
+        ...state,
+        signupFirstNameOptions: {
+          initial: false,
+          touched: !state.signupFirstNameOptions.touched,
+          showInstructions: !state.signupFirstNameOptions.showInstructions
+        }
+      }
+    }
     case 'setWorkoutGoalValue': {
-      const valid = validate(action.value, workoutGoalValidation)
+      const valid = validate(action.value, workoutGoalValidationRules)
       return {
         ...state,
         workoutGoalValue: {
@@ -141,6 +214,29 @@ const formReducer = (state, action) => {
           initial: false,
           touched: !state.workoutGoalOptions.touched,
           showInstructions: !state.workoutGoalOptions.showInstructions
+        }
+      }
+    }
+    case 'resetUsernamePasswordForm': {
+      return {
+        ...state,
+        usernameValue: {
+          value: '',
+          valid: false
+        },
+        usernameOptions: {
+          initial: true,
+          touched: false,
+          showInstructions: false
+        },
+        passwordValue: {
+          value: '',
+          valid: false
+        },
+        passwordOptions: {
+          initial: true,
+          touched: false,
+          showInstructions: false
         }
       }
     }

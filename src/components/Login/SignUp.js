@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 import TextButton from '../Buttons/TextButton'
 
@@ -7,7 +8,9 @@ const SignUp = () => {
   return (
     <SignUpContainer>
       <SignUpHeadline>Don't have an account?</SignUpHeadline>
-      <TextButton>Learn More Here</TextButton>
+      <Link to="/signup">
+        <TextButton>Create a Free Account</TextButton>
+      </Link>
     </SignUpContainer>
   )
 }

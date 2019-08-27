@@ -25,7 +25,7 @@ const validate = (value, rules, value2 = null) => {
       }
 
       case 'matchPassword': {
-        isValid = isValid && matchPasswordValidator(value)
+        isValid = isValid && matchPasswordValidator(value, value2)
         break
       }
 
@@ -50,6 +50,12 @@ const emailValidator = value => {
 
 const numberValidator = value => !isNaN(value)
 
-const matchPasswordValidator = (value, value2) => value === value2
+const matchPasswordValidator = (value, value2) => {
+  if (value2) {
+    return value === value2
+  } else {
+    return false
+  }
+}
 
 export default validate

@@ -10,7 +10,7 @@ const FormLabelTransition = ({ isTouched, children }) => {
       addEndListener={(node, done) => {
         if (isTouched) {
           TweenMax.set(node, {
-            y: 0,
+            x: 0,
             autoAlpha: 1
           })
         } else {
