@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import FormCheck from '../../../svgs/FormCheck'
@@ -7,11 +7,22 @@ import FormLabelTransition from '../../../Animations/Transitions/FormLabelTransi
 
 const TextInput = props => {
   const { labelName, labelFor, labelInstructions, labelError } = props
+  const [isNormal, setIsNormal] = useState(true)
+  const [isError, setIsError] = useState(false)
+  const [isValid, setIsValid] = useState(false)
+  const [isTouched, setIsTouched] = useState(false)
 
-  const isNormal = props.initial && !props.touched && !props.error
-  const isError = !props.initial && !props.valid
-  const isValid = !props.touched && props.valid
-  const isTouched = props.touched
+  useEffect(() => {
+    setIsNormal(props.initial && !props.touched && !props.error)
+    setIsError(!props.initial && !props.valid)
+    setIsValid(!props.touched && props.valid)
+    setIsTouched(props.touched)
+  }, [props.initial, props.touched, props.error, props.valid])
+
+  // const isNormal = props.initial && !props.touched && !props.error
+  // const isError = !props.initial && !props.valid
+  // const isValid = !props.touched && props.valid
+  // const isTouched = props.touched
 
   return (
     <InputContainer touched={props.touched} error={isError} valid={isValid}>

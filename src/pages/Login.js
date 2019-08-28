@@ -12,7 +12,7 @@ import UsernamePasswordForm from '../components/Login/UsernamePasswordForm'
 import ForgotPasswordForm from '../components/Login/ForgotPasswordForm'
 import ScreenWidthContext from '../context/ScreenWidthContext'
 import { formState, formReducer } from '../reducers/formReducer'
-import { FormStore } from '../context/FormContext'
+import { FormStore, useFormStore } from '../context/FormContext'
 import { above } from '../styles/Theme'
 
 const Login = () => {
@@ -23,6 +23,8 @@ const Login = () => {
   )
   const [showForgotPasswordForm, setShowForgotPasswordForm] = useState(false)
   const device = useContext(ScreenWidthContext)
+  // eslint-disable-next-line
+  const [state, dispatch] = useFormStore()
 
   const handleShowUsernamePasswordForm = () => {
     setReverse(false)
@@ -34,6 +36,7 @@ const Login = () => {
     setReverse(false)
     setShowUsernamePasswordForm(false)
     setShowForgotPasswordForm(true)
+    dispatch({ type: 'resetUsernamePasswordForm' })
   }
 
   const handleReverseForgotPasswordForm = () => {

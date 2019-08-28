@@ -13,7 +13,11 @@ const CreateAccountForm = () => {
 
   const handleSignUpForm = event => {
     event.preventDefault()
-    console.log('Hit api for creating a new member')
+    const firstName = formState.signupFirstNameValue.value
+    const username = formState.usernameValue.value
+    const password = formState.passwordValue.value
+    console.log(`Username: ${username}`)
+    console.log(`Password: ${password}`)
   }
 
   return (

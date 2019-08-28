@@ -218,6 +218,7 @@ const formReducer = (state, action) => {
       }
     }
     case 'resetUsernamePasswordForm': {
+      console.log('Clean up the username and password state')
       return {
         ...state,
         usernameValue: {
