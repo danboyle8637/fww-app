@@ -4,19 +4,20 @@ import { ThemeProvider } from 'styled-components'
 import { darkTheme } from './styles/Theme'
 import { FormStore } from './context/FormContext'
 import { formState, formReducer } from './reducers/formReducer'
+import { FirebaseConnect } from './components/Firebase/FirebaseContext'
+import Firebase from './components/Firebase/firebaseConfig'
 import { ScreenWidthStore } from './context/ScreenWidthContext'
-import { FirebaseInstance } from './components/Firebase/FirebaseContext'
 import App from './App'
 
 ReactDOM.render(
   <ThemeProvider theme={darkTheme}>
-    <FirebaseInstance>
+    <FirebaseConnect initializeFirebase={new Firebase()}>
       <ScreenWidthStore>
         <FormStore initialState={formState} reducer={formReducer}>
           <App />
         </FormStore>
       </ScreenWidthStore>
-    </FirebaseInstance>
+    </FirebaseConnect>
   </ThemeProvider>,
   document.getElementById('root')
 )

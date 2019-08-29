@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 import TextInput from '../Forms/Inputs/TextInput'
@@ -13,9 +13,16 @@ const ForgetPasswordForm = ({
   handleReverseForgotPasswordForm,
   reverse
 }) => {
-  // eslint-disable-next-line
   const [formState, dispatch] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
+
+  useEffect(() => {
+    const emailValid = formState.emailValue.valid
+
+    if (emailValid) {
+      dispatch({ type: 'setFormValid' })
+    }
+  }, [formState.emailValue.valid, dispatch])
 
   const handleResetPassword = event => {
     event.preventDefault()
@@ -49,7 +56,9 @@ const ForgetPasswordForm = ({
             onFocus={updateInputOptions}
             onBlur={updateInputOptions}
           />
-          <BaseButton type="submit">Send New Password</BaseButton>
+          <BaseButton disabled={!formState.formValid.valid} type="submit">
+            Send New Password
+          </BaseButton>
         </ResetPasswordForm>
       </ResetPasswordContainer>
     </LoginFormTransition>

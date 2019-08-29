@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { TimelineMax, Power2 } from 'gsap/all'
 
-const BaseButton = ({ children, purple, handleClick }) => {
+const BaseButton = ({ children, purple, disabled, handleClick }) => {
   const buttonRef = useRef(null)
   const timeline = useRef(new TimelineMax())
 
@@ -40,6 +40,7 @@ const BaseButton = ({ children, purple, handleClick }) => {
   return (
     <Button
       purple={purple}
+      disabled={disabled}
       ref={buttonRef}
       onMouseDown={handleMouseDown}
       onClick={handleClick}
@@ -54,18 +55,29 @@ export default BaseButton
 const Button = styled.button`
   margin: 0;
   padding: 8px 14px;
-  background: ${props =>
-    props.purple ? props.theme.tertiaryAccent : props.theme.primaryAccent};
+  background-color: ${props =>
+    props.purple
+      ? props.theme.tertiaryAccent
+      : props.disabled
+      ? 'transparent'
+      : props.theme.primaryAccent};
   border-radius: 6px;
-  border: none;
+  border-color: ${props => (props.disabled ? '#2B2C3A' : 'none')};
+  border-width: ${props => (props.disabled ? '2px' : 0)};
+  border-style: ${props => (props.disabled ? 'solid' : 'none')};
   font-size: 18px;
   font-weight: 800;
   text-transform: uppercase;
   text-align: center;
-  color: ${props => props.theme.mainBackgroundColor};
+  color: ${props =>
+    props.disabled
+      ? props.theme.accentBackgroundColor
+      : props.theme.mainBackgroundColor};
   box-shadow: 0 2px 3px 3px rgba(0, 0, 0, 0.2);
   width: 100%;
   outline: none;
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;
+  transition: background-color, border-color, border-width, border-style, color,
+    200ms ease-in-out;
 `

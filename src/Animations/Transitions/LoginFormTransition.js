@@ -1,11 +1,21 @@
 import React from 'react'
 import { Transition } from 'react-transition-group'
+
 import loginFormOnEnter from '../Tweens/loginFormOnEnter'
 import loginFormOnExit from '../Tweens/loginFormOnExit'
 import loginFormReverseEnter from '../Tweens/loginFormReverseEnter'
 import loginFormReverseExit from '../Tweens/loginFormReverseExit'
+import { useFormStore } from '../../context/FormContext'
 
 const LoginFormTransition = ({ showNode, reverse, children }) => {
+  // eslint-disable-next-line
+  const [formState, dispatch] = useFormStore()
+
+  const resetForm = () => {
+    dispatch({ type: 'resetUsernamePasswordForm' })
+    dispatch({ type: 'resetForgotPasswordForm' })
+  }
+
   return (
     <Transition
       in={showNode}
@@ -21,6 +31,7 @@ const LoginFormTransition = ({ showNode, reverse, children }) => {
       onExit={node =>
         reverse ? loginFormReverseExit(node) : loginFormOnExit(node)
       }
+      onExited={() => resetForm()}
     >
       {children}
     </Transition>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 import TextInput from '../Forms/Inputs/TextInput'
@@ -15,9 +15,17 @@ const LoginUsernamePassword = ({
   handleReverseUsernamePasswordForm,
   reverse
 }) => {
-  // eslint-disable-next-line
   const [formState, dispatch] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
+
+  useEffect(() => {
+    const usernameValid = formState.usernameValue.valid
+    const passwordValid = formState.passwordValue.valid
+
+    if (usernameValid && passwordValid) {
+      dispatch({ type: 'setFormValid' })
+    }
+  }, [formState.usernameValue.valid, formState.passwordValue.valid, dispatch])
 
   const handleLoginSubmit = event => {
     event.preventDefault()
@@ -67,7 +75,9 @@ const LoginUsernamePassword = ({
             onFocus={updateInputOptions}
             onBlur={updateInputOptions}
           />
-          <BaseButton type="submit">Login</BaseButton>
+          <BaseButton disabled={!formState.formValid.valid} type="submit">
+            {formState.formValid.valid ? 'Login' : 'Enter Your Info'}
+          </BaseButton>
         </LoginForm>
         <DidForgetPassword
           handleShowForgotPasswordForm={handleShowForgotPasswordForm}

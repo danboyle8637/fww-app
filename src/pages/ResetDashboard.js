@@ -2,12 +2,18 @@ import React from 'react'
 import styled from 'styled-components'
 
 import FWWLogo from '../svgs/FWWLogo'
+import BaseButton from '../components/Buttons/BaseButton'
 
 const ResetDashboard = () => {
+  const handleSignOut = () => {
+    console.log('Sign out')
+  }
+
   return (
     <DashboardContainer>
       <Logo />
       <UserInfo>Kindal</UserInfo>
+      <BaseButton onClick={handleSignOut}>Sign Out</BaseButton>
     </DashboardContainer>
   )
 }

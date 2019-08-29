@@ -35,6 +35,9 @@ const signupFirstNameValidationRules = {
 }
 
 const formState = {
+  formValid: {
+    valid: false
+  },
   usernameValue: {
     value: '',
     valid: false
@@ -93,6 +96,14 @@ const formState = {
 
 const formReducer = (state, action) => {
   switch (action.type) {
+    case 'setFormValid': {
+      return {
+        ...state,
+        formValid: {
+          valid: !state.formValid.valid
+        }
+      }
+    }
     case 'setUsernameValue': {
       const valid = validate(action.value, usernameValidationRules)
       return {
@@ -217,8 +228,16 @@ const formReducer = (state, action) => {
         }
       }
     }
+    case 'setLoggedInUser': {
+      return {
+        ...state,
+        usernameValue: {
+          value: action.value,
+          valid: true
+        }
+      }
+    }
     case 'resetUsernamePasswordForm': {
-      console.log('Clean up the username and password state')
       return {
         ...state,
         usernameValue: {
@@ -235,6 +254,20 @@ const formReducer = (state, action) => {
           valid: false
         },
         passwordOptions: {
+          initial: true,
+          touched: false,
+          showInstructions: false
+        }
+      }
+    }
+    case 'resetForgotPasswordForm': {
+      return {
+        ...state,
+        emailValue: {
+          value: '',
+          valid: false
+        },
+        emailOptions: {
           initial: true,
           touched: false,
           showInstructions: false
