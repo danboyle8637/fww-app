@@ -35,9 +35,6 @@ const signupFirstNameValidationRules = {
 }
 
 const formState = {
-  formValid: {
-    valid: false
-  },
   usernameValue: {
     value: '',
     valid: false
@@ -96,14 +93,6 @@ const formState = {
 
 const formReducer = (state, action) => {
   switch (action.type) {
-    case 'setFormValid': {
-      return {
-        ...state,
-        formValid: {
-          valid: !state.formValid.valid
-        }
-      }
-    }
     case 'setUsernameValue': {
       const valid = validate(action.value, usernameValidationRules)
       return {

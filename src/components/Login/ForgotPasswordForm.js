@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import TextInput from '../Forms/Inputs/TextInput'
@@ -15,14 +15,18 @@ const ForgetPasswordForm = ({
 }) => {
   const [formState, dispatch] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
+  const [
+    emailNewPasswordButtonValid,
+    setEmailNewPasswordButtonValid
+  ] = useState(false)
 
   useEffect(() => {
     const emailValid = formState.emailValue.valid
 
     if (emailValid) {
-      dispatch({ type: 'setFormValid' })
+      setEmailNewPasswordButtonValid(true)
     }
-  }, [formState.emailValue.valid, dispatch])
+  }, [formState.emailValue.valid])
 
   const handleResetPassword = event => {
     event.preventDefault()
@@ -56,8 +60,10 @@ const ForgetPasswordForm = ({
             onFocus={updateInputOptions}
             onBlur={updateInputOptions}
           />
-          <BaseButton disabled={!formState.formValid.valid} type="submit">
-            Send New Password
+          <BaseButton disabled={!emailNewPasswordButtonValid} type="submit">
+            {emailNewPasswordButtonValid
+              ? 'Send New Password'
+              : 'Enter Email Address'}
           </BaseButton>
         </ResetPasswordForm>
       </ResetPasswordContainer>

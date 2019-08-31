@@ -7,16 +7,24 @@ import { formState, formReducer } from './reducers/formReducer'
 import { FirebaseConnect } from './components/Firebase/FirebaseContext'
 import Firebase from './components/Firebase/firebaseConfig'
 import { ScreenWidthStore } from './context/ScreenWidthContext'
+import { WorkoutsStore } from './context/WorkoutsContext'
+import { workoutsReducer, workoutsState } from './reducers/workoutsReducer'
+import { MenuStore } from './context/menuContext'
+import { menuState, menuReducer } from './reducers/menuReducer'
 import App from './App'
 
 ReactDOM.render(
   <ThemeProvider theme={darkTheme}>
     <FirebaseConnect initializeFirebase={new Firebase()}>
-      <ScreenWidthStore>
-        <FormStore initialState={formState} reducer={formReducer}>
-          <App />
-        </FormStore>
-      </ScreenWidthStore>
+      <WorkoutsStore initialState={workoutsState} reducer={workoutsReducer}>
+        <MenuStore initialState={menuState} reducer={menuReducer}>
+          <ScreenWidthStore>
+            <FormStore initialState={formState} reducer={formReducer}>
+              <App />
+            </FormStore>
+          </ScreenWidthStore>
+        </MenuStore>
+      </WorkoutsStore>
     </FirebaseConnect>
   </ThemeProvider>,
   document.getElementById('root')

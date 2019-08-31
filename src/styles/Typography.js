@@ -14,4 +14,13 @@ const WorkoutPageDescription = styled.p`
   color: ${props => props.theme.bodyText};
 `
 
-export { WorkoutPageHeadline, WorkoutPageDescription }
+const MenuLabel = styled.p`
+  font-family: QuicksandMedium;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  line-height: 1;
+  color: ${props => props.theme.whiteText};
+`
+
+export { WorkoutPageHeadline, WorkoutPageDescription, MenuLabel }

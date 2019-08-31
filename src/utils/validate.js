@@ -1,31 +1,33 @@
 const validate = (value, rules, value2 = null) => {
   let isValid = true
+  const cleanValue = value.trim()
+  const cleanValue2 = value2 ? value2.trim() : null
 
   for (let rule in rules) {
     switch (rule) {
       case 'maxLength':
-        isValid = isValid && maxLengthValidator(value, rules[rule])
+        isValid = isValid && maxLengthValidator(cleanValue, rules[rule])
         break
 
       case 'minLength':
-        isValid = isValid && minLengthValidator(value, rules[rule])
+        isValid = isValid && minLengthValidator(cleanValue, rules[rule])
         break
 
       case 'isRequired':
-        isValid = isValid && requiredValidator(value)
+        isValid = isValid && requiredValidator(cleanValue)
         break
 
       case 'isEmail':
-        isValid = isValid && emailValidator(value)
+        isValid = isValid && emailValidator(cleanValue)
         break
 
       case 'isNumber': {
-        isValid = isValid && numberValidator(value)
+        isValid = isValid && numberValidator(cleanValue)
         break
       }
 
       case 'matchPassword': {
-        isValid = isValid && matchPasswordValidator(value, value2)
+        isValid = isValid && matchPasswordValidator(cleanValue, cleanValue2)
         break
       }
 

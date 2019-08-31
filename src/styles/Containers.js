@@ -20,4 +20,17 @@ const ProgramBackgroundImage = styled.img`
   width: 100%;
 `
 
-export { ProgramHeaderGrid, ProgramBackgroundWrapper, ProgramBackgroundImage }
+const MenuItemGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 6px;
+  justify-items: center;
+`
+
+export {
+  ProgramHeaderGrid,
+  ProgramBackgroundWrapper,
+  ProgramBackgroundImage,
+  MenuItemGrid
+}

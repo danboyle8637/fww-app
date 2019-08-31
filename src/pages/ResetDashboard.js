@@ -1,20 +1,37 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
+import { Redirect } from 'react-router-dom'
 
 import FWWLogo from '../svgs/FWWLogo'
 import BaseButton from '../components/Buttons/BaseButton'
+import { FirebaseContext } from '../components/Firebase/FirebaseContext'
 
 const ResetDashboard = () => {
+  const auth = useContext(FirebaseContext)
+  const [toLogin, setToLogin] = useState(false)
+
+  useEffect(() => {
+    const user = auth.getCurrentUser()
+    console.log(user)
+  }, [auth])
+
   const handleSignOut = () => {
-    console.log('Sign out')
+    auth.logUserOut()
+    setToLogin(true)
   }
 
   return (
-    <DashboardContainer>
-      <Logo />
-      <UserInfo>Kindal</UserInfo>
-      <BaseButton onClick={handleSignOut}>Sign Out</BaseButton>
-    </DashboardContainer>
+    <>
+      {toLogin ? (
+        <Redirect to="/login" />
+      ) : (
+        <DashboardContainer>
+          <Logo />
+          <UserInfo>Kindal</UserInfo>
+          <BaseButton handleClick={handleSignOut}>Sign Out</BaseButton>
+        </DashboardContainer>
+      )}
+    </>
   )
 }
 

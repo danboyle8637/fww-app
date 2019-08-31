@@ -9,7 +9,7 @@ import useFormControls from '../../hooks/useFormControls'
 import { FirebaseContext } from '../Firebase/FirebaseContext'
 
 const CreateAccountForm = () => {
-  const firebase = useContext(FirebaseContext)
+  const auth = useContext(FirebaseContext)
   const [formState, dispatch] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
   const [toDashboard, setToDashboard] = useState(false)
@@ -20,7 +20,7 @@ const CreateAccountForm = () => {
     const email = formState.emailValue.value
     const password = formState.passwordValue.value
 
-    firebase
+    auth
       .signUpUserWithEmailAndPassword(email, password)
       .then(() => {
         console.log('User created')
