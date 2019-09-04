@@ -52,6 +52,13 @@ const useUpdateFormControls = () => {
         })
         break
       }
+      case 'biggestObstacle': {
+        dispatch({
+          type: 'setBiggestObstacleValue',
+          value: inputValue
+        })
+        break
+      }
       default: {
         throw new Error('You have not exhausted all possible inputs.')
       }
@@ -84,6 +91,10 @@ const useUpdateFormControls = () => {
       }
       case 'signupFirstName': {
         dispatch({ type: 'setSignUpFirstNameOptions' })
+        break
+      }
+      case 'biggestObstacle': {
+        dispatch({ type: 'setBiggestObstacleOptions' })
         break
       }
       default: {

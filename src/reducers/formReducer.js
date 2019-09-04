@@ -34,6 +34,10 @@ const signupFirstNameValidationRules = {
   isRequired: true
 }
 
+const biggestObstacleValidationRules = {
+  isRequired: true
+}
+
 const formState = {
   usernameValue: {
     value: '',
@@ -88,6 +92,40 @@ const formState = {
     initial: true,
     touched: false,
     showInstructions: false
+  },
+  resetWorkoutValue: {
+    value: '',
+    valid: false
+  },
+  resetWorkoutOptions: {
+    initial: true,
+    touched: false,
+    showInstructions: false
+  },
+  biggestObstacleValue: {
+    value: '',
+    valid: false,
+    options: [
+      { value: 'time', displayValue: 'Not enough time', checked: false },
+      {
+        value: 'intensity',
+        displayValue: `My workouts aren't intense enough`,
+        checked: false
+      },
+      {
+        value: 'coaching',
+        displayValue: `I feel like I'm ignored`,
+        checked: false
+      },
+      {
+        value: 'mindset',
+        displayValue: `I don't believe I can succeed`,
+        checked: false
+      }
+    ]
+  },
+  biggestObstacleOptions: {
+    initial: true
   }
 }
 
@@ -260,6 +298,48 @@ const formReducer = (state, action) => {
           initial: true,
           touched: false,
           showInstructions: false
+        }
+      }
+    }
+    case 'setBiggestObstacleValue': {
+      const valid = validate(action.value, biggestObstacleValidationRules)
+
+      const options = state.biggestObstacleValue.options.map(option => {
+        if (action.value === option.value) {
+          return {
+            value: option.value,
+            displayValue: option.displayValue,
+            checked: !option.checked
+          }
+        } else if (option.checked) {
+          return {
+            value: option.value,
+            displayValue: option.displayValue,
+            checked: !option.checked
+          }
+        } else {
+          return {
+            value: option.value,
+            displayValue: option.displayValue,
+            checked: option.checked
+          }
+        }
+      })
+
+      return {
+        ...state,
+        biggestObstacleValue: {
+          value: action.value,
+          valid: valid,
+          options: options
+        }
+      }
+    }
+    case 'setBiggestObstacleOptions': {
+      return {
+        ...state,
+        biggestObstacleOptions: {
+          initial: false
         }
       }
     }

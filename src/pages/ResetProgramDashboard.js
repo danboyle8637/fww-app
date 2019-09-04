@@ -7,9 +7,11 @@ const ResetProgramDashboard = () => {
   const [workoutState, dispatch] = useWorkoutState()
 
   useEffect(() => {
-    dispatch({
-      type: 'cleanWorkoutState'
-    })
+    
+    // dispatch({
+    //   type: 'createWorkoutStatsState',
+    //   value: workoutStats
+    // })
   }, [dispatch])
 
   return <div>Reset Program Dashboard and Workout List</div>

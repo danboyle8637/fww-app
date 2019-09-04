@@ -4,11 +4,42 @@ import { Redirect } from 'react-router-dom'
 
 import FWWLogo from '../svgs/FWWLogo'
 import BaseButton from '../components/Buttons/BaseButton'
-import { FirebaseContext } from '../components/Firebase/FirebaseContext'
+import { useFireBase } from '../components/Firebase/FirebaseContext'
 
 const ResetDashboard = () => {
-  const auth = useContext(FirebaseContext)
+  const auth = useFireBase()
   const [toLogin, setToLogin] = useState(false)
+
+  useEffect(() => {
+    const user = auth.getCurrentUser()
+    console.log(user)
+    if (user) {
+      const username = user.displayName
+    }
+
+    // const baseUrl = 'http://localhost:5001/fit-womens-weekly/us-central1/api'
+    // const programsPath = '/get-programs'
+    // const percentCompletePath = '/get-percent-complete'
+    // const programsPromise = fetch(`${baseUrl}${programsPath}`)
+    // const percentCompletePromise = fetch(`${baseUrl}${percentCompletePath}`, {
+    //   body: {
+    //     username:
+    //   }
+    // })
+
+    // Promise.all([programsPromise, percentCompletePromise])
+    //   .then(response => {
+    //     return response.map(res => res.json())
+    //   })
+    //   .then(data => {
+    //     data.forEach(element => {
+    //       console.log(element)
+    //     })
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+  }, [auth])
 
   useEffect(() => {
     const user = auth.getCurrentUser()

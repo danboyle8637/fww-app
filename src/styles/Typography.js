@@ -23,4 +23,38 @@ const MenuLabel = styled.p`
   color: ${props => props.theme.whiteText};
 `
 
-export { WorkoutPageHeadline, WorkoutPageDescription, MenuLabel }
+const Header1 = styled.h1`
+  font-size: 38px;
+`
+
+const Header2 = styled.h2`
+  font-size: 32px;
+`
+
+const Header3 = styled.h3`
+  font-size: 22px;
+`
+
+const Header4 = styled.h4`
+  font-size: 20px;
+`
+
+const Header5 = styled.h5`
+  font-size: 18px;
+`
+
+const BodyText = styled.p`
+  font-size: 16px;
+`
+
+export {
+  WorkoutPageHeadline,
+  WorkoutPageDescription,
+  MenuLabel,
+  Header1,
+  Header2,
+  Header3,
+  Header4,
+  Header5,
+  BodyText
+}

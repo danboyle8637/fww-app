@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import WorkoutCardHeader from './WorkoutCardHeader'
-import WorkoutCardDescription from './WorkoutCardDescription'
+import WorkoutProgramDescription from './WorkoutProgramDescription'
 import WorkoutCardFooter from './WorkoutCardFooter'
 import ProgramCardFooter from './ProgramCardFooter'
 import background from '../../images/bbc-reset-program-cover.jpg'
@@ -24,7 +24,7 @@ const WorkoutProgramCard = ({
         />
       ) : null}
       {isProgram ? programHeader : null}
-      <WorkoutCardDescription
+      <WorkoutProgramDescription
         isWorkout={isWorkout}
         title={title}
         description={description}

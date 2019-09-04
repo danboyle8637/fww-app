@@ -24,6 +24,9 @@ const CreateAccountForm = () => {
       .signUpUserWithEmailAndPassword(email, password)
       .then(() => {
         console.log('User created')
+        // Call our Signup endpoint...
+        // set our userState
+        // set toDashboard
       })
       .catch(error => {
         console.log(error)

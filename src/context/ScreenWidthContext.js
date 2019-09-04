@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState, useContext } from 'react'
 
 import { getRems } from '../utils/helpers'
 import { sizes } from '../styles/Theme'
@@ -6,7 +6,7 @@ import { sizes } from '../styles/Theme'
 const ScreenWidthContext = createContext()
 
 const ScreenWidthStore = ({ children }) => {
-  const [screenWidht, setScreenWidth] = useState('')
+  const [screenWidth, setScreenWidth] = useState('')
 
   useEffect(() => {
     const width = getRems(window.innerWidth)
@@ -34,10 +34,16 @@ const ScreenWidthStore = ({ children }) => {
   }, [])
 
   return (
-    <ScreenWidthContext.Provider value={screenWidht}>
+    <ScreenWidthContext.Provider value={screenWidth}>
       {children}
     </ScreenWidthContext.Provider>
   )
 }
 
-export { ScreenWidthContext as default, ScreenWidthStore }
+const useScreenWidthContext = () => useContext(ScreenWidthContext)
+
+export {
+  ScreenWidthContext as default,
+  ScreenWidthStore,
+  useScreenWidthContext
+}

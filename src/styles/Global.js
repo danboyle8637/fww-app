@@ -44,12 +44,18 @@ const Global = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-family: RobotoBold;
+    color: ${props =>
+      props.secondary
+        ? props.theme.headlineSecondary
+        : props.theme.headlinePrimary};
   }
 
   p {
     margin: 0;
     padding: 0;
     line-height: 1.6rem;
+    color: ${props => props.theme.bodyText};
+    font-family: QuicksandSemiBold;
   }
 
   #root {
