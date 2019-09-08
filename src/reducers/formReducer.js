@@ -38,6 +38,10 @@ const biggestObstacleValidationRules = {
   isRequired: true
 }
 
+const setResetWorkoutValidationRules = {
+  isRequired: true
+}
+
 const formState = {
   usernameValue: {
     value: '',
@@ -95,12 +99,39 @@ const formState = {
   },
   resetWorkoutValue: {
     value: '',
-    valid: false
+    valid: false,
+    options: [
+      {
+        value: '7DayIgniteReset',
+        description:
+          'Seven days of re-learning form… pushing your comfort zone… and discovering a smarter, more intense way to workout.',
+        fitnessLevel: 'beginner',
+        numberOfWorkouts: 5,
+        duration: '7 - 9 days',
+        checked: false
+      },
+      {
+        value: '7DayBodyBurnReset',
+        description:
+          'Seven days of re-learning form… pushing your comfort zone… and discovering a smarter, more intense way to workout.',
+        fitnessLevel: 'intermediate',
+        numberOfWorkouts: 5,
+        duration: '7 - 9 days',
+        checked: false
+      },
+      {
+        value: '7DayStrongReset',
+        description:
+          'Seven days of re-learning form… pushing your comfort zone… and discovering a smarter, more intense way to workout.',
+        fitnessLevel: 'advanced',
+        numberOfWorkouts: 5,
+        duration: '7 - 9 days',
+        checked: false
+      }
+    ]
   },
   resetWorkoutOptions: {
-    initial: true,
-    touched: false,
-    showInstructions: false
+    initial: true
   },
   biggestObstacleValue: {
     value: '',
@@ -235,26 +266,26 @@ const formReducer = (state, action) => {
         }
       }
     }
-    case 'setWorkoutGoalValue': {
-      const valid = validate(action.value, workoutGoalValidationRules)
-      return {
-        ...state,
-        workoutGoalValue: {
-          value: action.value,
-          valid: valid
-        }
-      }
-    }
-    case 'setWorkoutGoalOptions': {
-      return {
-        ...state,
-        workoutGoalOptions: {
-          initial: false,
-          touched: !state.workoutGoalOptions.touched,
-          showInstructions: !state.workoutGoalOptions.showInstructions
-        }
-      }
-    }
+    // case 'setWorkoutGoalValue': {
+    //   const valid = validate(action.value, workoutGoalValidationRules)
+    //   return {
+    //     ...state,
+    //     workoutGoalValue: {
+    //       value: action.value,
+    //       valid: valid
+    //     }
+    //   }
+    // }
+    // case 'setWorkoutGoalOptions': {
+    //   return {
+    //     ...state,
+    //     workoutGoalOptions: {
+    //       initial: false,
+    //       touched: !state.workoutGoalOptions.touched,
+    //       showInstructions: !state.workoutGoalOptions.showInstructions
+    //     }
+    //   }
+    // }
     case 'setLoggedInUser': {
       return {
         ...state,
@@ -339,6 +370,45 @@ const formReducer = (state, action) => {
       return {
         ...state,
         biggestObstacleOptions: {
+          initial: false
+        }
+      }
+    }
+    case 'setResetWorkoutValue': {
+      const valid = validate(action.value, setResetWorkoutValidationRules)
+
+      const options = state.resetWorkoutValue.options.map(option => {
+        if (action.value === option.value) {
+          return {
+            ...option,
+            checked: !option.checked
+          }
+        } else if (option.checked) {
+          return {
+            ...option,
+            checked: !option.checked
+          }
+        } else {
+          return {
+            ...option,
+            checked: option.checked
+          }
+        }
+      })
+
+      return {
+        ...state,
+        resetWorkoutValue: {
+          value: action.value,
+          valid: valid,
+          options: options
+        }
+      }
+    }
+    case 'setResetWorkoutOptions': {
+      return {
+        ...state,
+        resetWorkoutOptions: {
           initial: false
         }
       }

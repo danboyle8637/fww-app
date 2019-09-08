@@ -8,7 +8,7 @@ import ResetDashboard from './pages/ResetDashboard'
 import FourOhFour from './pages/FourOhFour'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
-import SevenDayResetSignUpStep1 from './pages/SevenDayResetSignUpStep1'
+import ResetSignUp from './pages/ResetSignUp'
 import ResetProgramDashboard from './pages/ResetProgramDashboard'
 import ResetWorkout from './pages/ResetWorkout'
 import ResetWorkoutCoaching from './pages/ResetWorkoutCoaching'
@@ -26,10 +26,7 @@ function App() {
             <Route path="/dashboard" component={ResetDashboard} />
             <Route path="/signup" component={SignUp} />
             <Route path="/login" component={Login} />
-            <Route
-              path="/7-day-reset-step1"
-              component={SevenDayResetSignUpStep1}
-            />
+            <Route path="/7-day-reset-step1" component={ResetSignUp} />
             <Route path="/account/:username" component={ResetUserAccount} />
             <Route
               exact

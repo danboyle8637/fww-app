@@ -5,7 +5,6 @@ import BodyBurnResetHeader from './BodyBurnResetHeader'
 import StrongResetHeader from './StrongResetHeader'
 
 const ChooseProgramHeader = ({ workoutId }) => {
-  console.log(workoutId)
   const programHeaders = [
     { workoutId: '7DayIgniteReset', component: <IgniteResetHeader /> },
     { workoutId: '7DayBodyBurnReset', component: <BodyBurnResetHeader /> },

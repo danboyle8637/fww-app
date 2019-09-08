@@ -1,0 +1,61 @@
+import React from 'react'
+import styled from 'styled-components'
+
+import ChooseResetProgramCard from '../../Cards/ChooseResetProgramCard'
+
+const CardRadioInput = ({ name, options, updateInputValues }) => {
+  const radios = options.map(option => {
+    return (
+      <InputLabel htmlFor={option.value} key={option.value}>
+        <HiddenRadioInput
+          type="radio"
+          id={option.value}
+          name={name}
+          value={option.value}
+          checked={option.checked}
+          onChange={updateInputValues}
+        />
+        <ChooseResetProgramCard
+          workoutId={option.value}
+          description={option.description}
+          fitnessLevel={option.fitnessLevel}
+          numberOfWorkouts={option.numberOfWorkouts}
+          duration={option.duration}
+          checked={option.checked}
+        />
+      </InputLabel>
+    )
+  })
+
+  return <>{radios}</>
+}
+
+export default CardRadioInput
+
+const InputContainer = styled.div`
+  margin: 0;
+  padding: 8px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 6px;
+  width: 100%;
+`
+
+const InputLabel = styled.label`
+  position: relative;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  &:last-child {
+    margin-bottom: 0;
+  }
+`
+
+const HiddenRadioInput = styled.input.attrs({ type: 'radio' })`
+  visibility: hidden;
+  margin: 0;
+  width: 0;
+`

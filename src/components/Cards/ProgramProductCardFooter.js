@@ -24,6 +24,7 @@ const ProgramProductCardFooter = ({
 export default ProgramProductCardFooter
 
 const FooterContainer = styled.div`
+  padding: 8px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr auto;
   gap: 8px;

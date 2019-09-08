@@ -10,7 +10,7 @@ const SevenDayResetStep1Header = () => {
       <ResetLogo />
       <ContentWrapper>
         <Header1>Step 1:</Header1>
-        <BodyText>How can I help you hit your goals?</BodyText>
+        <BodyText>Solve your biggest obstacle...</BodyText>
       </ContentWrapper>
     </HeadlineContainer>
   )

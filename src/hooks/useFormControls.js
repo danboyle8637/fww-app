@@ -59,6 +59,13 @@ const useUpdateFormControls = () => {
         })
         break
       }
+      case 'chooseResetWorkout': {
+        dispatch({
+          type: 'setResetWorkoutValue',
+          value: inputValue
+        })
+        break
+      }
       default: {
         throw new Error('You have not exhausted all possible inputs.')
       }
@@ -95,6 +102,10 @@ const useUpdateFormControls = () => {
       }
       case 'biggestObstacle': {
         dispatch({ type: 'setBiggestObstacleOptions' })
+        break
+      }
+      case 'chooseResetWorkout': {
+        dispatch({ type: 'setResetWorkoutOptions' })
         break
       }
       default: {

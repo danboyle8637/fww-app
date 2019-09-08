@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { TweenMax } from 'gsap/TweenMax'
 import drawSVG from '../greensock/DrawSVGPlugin'
 
-const FormCheck = ({ width, height, className }) => {
+const FormCheck = ({ width, height, className, teal }) => {
   const checkRef = useRef(null)
   // eslint-disable-next-line
   const useDrawSVG = drawSVG
@@ -40,7 +40,7 @@ const FormCheck = ({ width, height, className }) => {
         ref={checkRef}
         id="check"
         fill="none"
-        stroke="#8b53f6"
+        stroke={teal ? '#5AFDF2' : '#8b53f6'}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="33.07"

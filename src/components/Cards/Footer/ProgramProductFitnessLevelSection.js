@@ -18,7 +18,7 @@ const ProgramProductFitnessLevelSection = ({ fitnessLevel }) => {
 
   return (
     <SectionContainer>
-      <FooterLabel>Fitness Level</FooterLabel>
+      <FooterLabel>Fit Level</FooterLabel>
       <FitnessLevelDotWrapper>
         <FooterCircleIcon active={fitnessLevelArray[0]} />
         <FooterCircleIcon active={fitnessLevelArray[1]} />
