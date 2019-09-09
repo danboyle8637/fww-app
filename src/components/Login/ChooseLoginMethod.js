@@ -1,14 +1,12 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import BaseButton from '../Buttons/BaseButton'
 import SignUp from './SignUp'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
-import { useScreenWidthContext } from '../../context/ScreenWidthContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 
 const ChooseLoginMethod = ({ showNode, handleShowUsernamePasswordForm }) => {
-  const device = useScreenWidthContext()
   const auth = useFireBase()
 
   const handleLoginWithGoogle = () => {

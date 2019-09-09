@@ -10,8 +10,10 @@ import { FirebaseContext } from '../Firebase/FirebaseContext'
 
 const CreateAccountForm = () => {
   const auth = useContext(FirebaseContext)
+  // eslint-disable-next-line
   const [formState, dispatch] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
+  // eslint-disable-next-line
   const [toDashboard, setToDashboard] = useState(false)
 
   const handleSignUpForm = event => {

@@ -24,10 +24,10 @@ const emailValidationRules = {
   isRequired: true
 }
 
-const workoutGoalValidationRules = {
-  maxLength: 4,
-  isRequired: true
-}
+// const workoutGoalValidationRules = {
+//   maxLength: 4,
+//   isRequired: true
+// }
 
 const signupFirstNameValidationRules = {
   minLength: 2,
@@ -39,7 +39,7 @@ const biggestObstacleValidationRules = {
 }
 
 const setResetWorkoutValidationRules = {
-  isRequired: true
+  isSelected: true
 }
 
 const formState = {
@@ -319,6 +319,7 @@ const formReducer = (state, action) => {
       }
     }
     case 'resetForgotPasswordForm': {
+      console.log('Reset Forgot Password Reducer is Running!')
       return {
         ...state,
         emailValue: {
@@ -375,13 +376,11 @@ const formReducer = (state, action) => {
       }
     }
     case 'setResetWorkoutValue': {
-      const valid = validate(action.value, setResetWorkoutValidationRules)
-
       const options = state.resetWorkoutValue.options.map(option => {
         if (action.value === option.value) {
           return {
             ...option,
-            checked: !option.checked
+            checked: true
           }
         } else if (option.checked) {
           return {
@@ -395,6 +394,8 @@ const formReducer = (state, action) => {
           }
         }
       })
+
+      const valid = validate(options, setResetWorkoutValidationRules)
 
       return {
         ...state,

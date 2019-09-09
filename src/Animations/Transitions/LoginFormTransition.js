@@ -7,13 +7,18 @@ import loginFormReverseEnter from '../Tweens/loginFormReverseEnter'
 import loginFormReverseExit from '../Tweens/loginFormReverseExit'
 import { useFormStore } from '../../context/FormContext'
 
-const LoginFormTransition = ({ showNode, reverse, children }) => {
+const LoginFormTransition = ({ showNode, reverse, formName, children }) => {
   // eslint-disable-next-line
   const [formState, dispatch] = useFormStore()
 
   const resetForm = () => {
-    dispatch({ type: 'resetUsernamePasswordForm' })
-    dispatch({ type: 'resetForgotPasswordForm' })
+    if (
+      formName === 'UsernamePasswordForm' ||
+      formName === 'ForgotPasswordForm'
+    ) {
+      dispatch({ type: 'resetUsernamePasswordForm' })
+      dispatch({ type: 'resetForgotPasswordForm' })
+    }
   }
 
   return (

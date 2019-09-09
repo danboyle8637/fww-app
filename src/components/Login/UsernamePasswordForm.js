@@ -80,7 +80,11 @@ const LoginUsernamePassword = ({
       {showDashboard ? (
         <Redirect to="/dashboard" />
       ) : (
-        <LoginFormTransition showNode={showNode} reverse={reverse}>
+        <LoginFormTransition
+          showNode={showNode}
+          reverse={reverse}
+          formName="UsernamePasswordForm"
+        >
           <FormContainer>
             <BackChip
               handleReverseUsernamePasswordForm={

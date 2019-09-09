@@ -37,65 +37,73 @@ const ResetStep1Form = ({ showNode, handleShowStep2 }) => {
   }
 
   return (
-    <LoginFormTransition showNode={showNode}>
-      <Step1Form>
-        <RadioInput
-          type="radio"
-          name="biggestObstacle"
-          labelName="1. What is your biggest obstacle?"
-          value={formState.biggestObstacleValue.value}
-          options={formState.biggestObstacleValue.options}
-          updateInputValue={updateInputValues}
-        />
-        <TextInput
-          type="text"
-          name="signupFirstName"
-          labelName="name:"
-          labelFor="signupFirstName"
-          labelInstructions="Only your first name..."
-          labelError="Need at least two characters..."
-          value={formState.signupFirstNameValue.value}
-          valid={formState.signupFirstNameValue.valid}
-          initial={formState.signupFirstNameOptions.initial}
-          touched={formState.signupFirstNameOptions.touched}
-          showInstructions={formState.signupFirstNameOptions.showInstructions}
-          onChange={updateInputValues}
-          onFocus={updateInputOptions}
-          onBlur={updateInputOptions}
-        />
-        <TextInput
-          type="text"
-          name="emailAddress"
-          labelName="email:"
-          labelFor="emailAddress"
-          labelInstructions="The email for your fit profile"
-          labelError="Please use a valid email address..."
-          value={formState.emailValue.value}
-          valid={formState.emailValue.valid}
-          initial={formState.emailOptions.initial}
-          touched={formState.emailOptions.touched}
-          showInstructions={formState.emailOptions.showInstructions}
-          onChange={updateInputValues}
-          onFocus={updateInputOptions}
-          onBlur={updateInputOptions}
-        />
+    <LoginFormTransition showNode={showNode} formName="ResetSignUpStep1Form">
+      <Step1Container>
+        <Step1Form>
+          <RadioInput
+            type="radio"
+            name="biggestObstacle"
+            labelName="1. What is your biggest obstacle?"
+            value={formState.biggestObstacleValue.value}
+            options={formState.biggestObstacleValue.options}
+            updateInputValue={updateInputValues}
+          />
+          <TextInput
+            type="text"
+            name="signupFirstName"
+            labelName="name:"
+            labelFor="signupFirstName"
+            labelInstructions="Only your first name..."
+            labelError="Need at least two characters..."
+            value={formState.signupFirstNameValue.value}
+            valid={formState.signupFirstNameValue.valid}
+            initial={formState.signupFirstNameOptions.initial}
+            touched={formState.signupFirstNameOptions.touched}
+            showInstructions={formState.signupFirstNameOptions.showInstructions}
+            onChange={updateInputValues}
+            onFocus={updateInputOptions}
+            onBlur={updateInputOptions}
+          />
+          <TextInput
+            type="text"
+            name="emailAddress"
+            labelName="email:"
+            labelFor="emailAddress"
+            labelInstructions="Enter email for fit profile"
+            labelError="Please use a valid email address..."
+            value={formState.emailValue.value}
+            valid={formState.emailValue.valid}
+            initial={formState.emailOptions.initial}
+            touched={formState.emailOptions.touched}
+            showInstructions={formState.emailOptions.showInstructions}
+            onChange={updateInputValues}
+            onFocus={updateInputOptions}
+            onBlur={updateInputOptions}
+          />
+        </Step1Form>
         <BaseButton
           disabled={!formButtonActive}
-          type="submit"
           handleClick={handleButtonPress}
         >
-          Step 2: Select Program
+          {formButtonActive ? 'Step 2: Select Program' : 'Fill Out Entire Form'}
         </BaseButton>
-      </Step1Form>
+      </Step1Container>
     </LoginFormTransition>
   )
 }
 
 export default ResetStep1Form
 
-const Step1Form = styled.form`
-  margin: 60px 0 0 0;
+const Step1Container = styled.div`
   padding: 0 16px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 10px;
+`
+
+const Step1Form = styled.form`
+  margin: 30px 0 0 0;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(4, auto);

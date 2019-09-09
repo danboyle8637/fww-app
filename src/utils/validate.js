@@ -1,7 +1,12 @@
 const validate = (value, rules, value2 = null) => {
   let isValid = true
-  const cleanValue = value.trim()
-  const cleanValue2 = value2 ? value2.trim() : null
+  let cleanValue
+  let cleanValue2
+
+  if (!Array.isArray(value)) {
+    cleanValue = value.trim()
+    cleanValue2 = value2 ? value2.trim() : null
+  }
 
   for (let rule in rules) {
     switch (rule) {
@@ -28,6 +33,11 @@ const validate = (value, rules, value2 = null) => {
 
       case 'matchPassword': {
         isValid = isValid && matchPasswordValidator(cleanValue, cleanValue2)
+        break
+      }
+
+      case 'isSelected': {
+        isValid = isValid && isSelectedValidator(value)
         break
       }
 
@@ -58,6 +68,12 @@ const matchPasswordValidator = (value, value2) => {
   } else {
     return false
   }
+}
+
+const isSelectedValidator = optionsArray => {
+  return optionsArray.some(option => {
+    return option.checked === true
+  })
 }
 
 export default validate

@@ -6,12 +6,17 @@ import NavigationArrow from '../../svgs/NavigationArrow'
 const BackChip = ({
   children,
   handleReverseUsernamePasswordForm,
-  handleReverseForgotPasswordForm
+  handleReverseForgotPasswordForm,
+  handleReverseStep2,
+  handleReverseStep3
 }) => {
   return (
     <ChipContainer
       onClick={
-        handleReverseUsernamePasswordForm || handleReverseForgotPasswordForm
+        handleReverseUsernamePasswordForm ||
+        handleReverseForgotPasswordForm ||
+        handleReverseStep2 ||
+        handleReverseStep3
       }
     >
       <Arrow />

@@ -13,6 +13,7 @@ const ForgetPasswordForm = ({
   handleReverseForgotPasswordForm,
   reverse
 }) => {
+  // eslint-disable-next-line
   const [formState, dispatch] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
   const [
@@ -35,7 +36,11 @@ const ForgetPasswordForm = ({
   }
 
   return (
-    <LoginFormTransition showNode={showNode} reverse={reverse}>
+    <LoginFormTransition
+      showNode={showNode}
+      reverse={reverse}
+      formName="ForgotPasswordForm"
+    >
       <ResetPasswordContainer>
         <BackChip
           handleReverseForgotPasswordForm={handleReverseForgotPasswordForm}

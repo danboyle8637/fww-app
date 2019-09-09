@@ -1,20 +1,18 @@
 import { TweenMax, Power2 } from 'gsap/TweenMax'
 
-const loginFormOnEnter = node => {
+const fadeInOnEnter = node => {
   TweenMax.fromTo(
     node,
-    0.3,
+    0.8,
     {
-      x: 300,
       autoAlpha: 0
     },
     {
-      x: 0,
       autoAlpha: 1,
       ease: Power2.easeOut,
-      delay: 0.5
+      delay: 0.3
     }
   )
 }
 
-export default loginFormOnEnter
+export default fadeInOnEnter

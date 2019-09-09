@@ -14,6 +14,7 @@ const ResetDashboard = () => {
     const user = auth.getCurrentUser()
     console.log(user)
     if (user) {
+      // eslint-disable-next-line
       const username = user.displayName
     }
 

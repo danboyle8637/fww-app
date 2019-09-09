@@ -4,13 +4,15 @@ import { Redirect } from 'react-router-dom'
 
 import TextInput from '../Forms/Inputs/TextInput'
 import BaseButton from '../Buttons/BaseButton'
+import BackChip from '../Chips/BackChip'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
 import { FirebaseContext } from '../Firebase/FirebaseContext'
 
-const ResetStep3Form = ({ showNode }) => {
+const ResetStep3Form = ({ showNode, reverse, handleReverseStep3 }) => {
   const auth = useContext(FirebaseContext)
+  // eslint-disable-next-line
   const [formState, dispatch] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
   const [toDashboard, setToDashboard] = useState(false)
@@ -18,16 +20,49 @@ const ResetStep3Form = ({ showNode }) => {
   const handleSignUpForm = event => {
     event.preventDefault()
 
+    const firstName = formState.signupFirstNameValue.value
+    // const biggestObstacle = formState.biggestObstacleValue.value
+    const program = formState.resetWorkoutValue.value
     const email = formState.emailValue.value
+    const username = formState.usernameValue.value
     const password = formState.passwordValue.value
+    const confirmPassword = formState.confirmPasswordValue.value
 
     auth
       .signUpUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User created')
+      .then(userCredential => {
+        const userId = userCredential.user.uid
+
+        const signUpData = {
+          userId: userId,
+          program: program,
+          totalWorkouts: 5,
+          firstName: firstName,
+          username: username,
+          password: password,
+          confirmPassword: confirmPassword,
+          email: email
+        }
         // Call our Signup endpoint...
-        // set our userState
-        // set toDashboard
+        const url = `http://localhost:5000/sign-up`
+        fetch(url, {
+          method: 'POST',
+          body: JSON.stringify(signUpData),
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(JSON.stringify(data))
+            setToDashboard(true)
+          })
+          .catch(error => {
+            if (error) {
+              console.log(error)
+            }
+          })
       })
       .catch(error => {
         console.log(error)
@@ -39,8 +74,13 @@ const ResetStep3Form = ({ showNode }) => {
       {toDashboard ? (
         <Redirect to="/dashboard" />
       ) : (
-        <LoginFormTransition showNode={showNode}>
-          <FormContainer>
+        <LoginFormTransition
+          showNode={showNode}
+          reverse={reverse}
+          formName="ResetSignUpStep3Form"
+        >
+          <Step3Container>
+            <BackChip handleReverseStep3={handleReverseStep3}>Back</BackChip>
             <SignUpForm onSubmit={handleSignUpForm}>
               <TextInput
                 type="text"
@@ -94,7 +134,7 @@ const ResetStep3Form = ({ showNode }) => {
               />
               <BaseButton type="submit">Create Fit Profile</BaseButton>
             </SignUpForm>
-          </FormContainer>
+          </Step3Container>
         </LoginFormTransition>
       )}
     </>
@@ -103,7 +143,8 @@ const ResetStep3Form = ({ showNode }) => {
 
 export default ResetStep3Form
 
-const FormContainer = styled.div`
+const Step3Container = styled.div`
+  margin: 20px 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;

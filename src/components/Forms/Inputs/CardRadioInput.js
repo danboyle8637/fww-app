@@ -32,16 +32,6 @@ const CardRadioInput = ({ name, options, updateInputValues }) => {
 
 export default CardRadioInput
 
-const InputContainer = styled.div`
-  margin: 0;
-  padding: 8px 0px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  border-radius: 6px;
-  width: 100%;
-`
-
 const InputLabel = styled.label`
   position: relative;
   margin: 0;
