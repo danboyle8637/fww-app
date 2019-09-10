@@ -7,5 +7,8 @@ module.exports = {
     ipadPro: helpers.getRems(1100),
     laptop: helpers.getRems(1450),
     ultraWide: helpers.getRems(1460)
+  },
+  api: {
+    baseUrl: 'http://localhost:5000'
   }
 }

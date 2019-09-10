@@ -1,8 +1,10 @@
-const workoutsState = {}
+const workoutsState = {
+  workouts: []
+}
 
 const workoutsReducer = (state, action) => {
   switch (action.type) {
-    case 'createWorkoutsState': {
+    case 'setWorkoutsState': {
       const workoutsArray = action.value
 
       // This reducer generates workout state
@@ -14,11 +16,12 @@ const workoutsReducer = (state, action) => {
       // In real app it will clean up when use goes back to Program Dashbaord
       const newWorkoutsState = workoutsArray.reduce(
         (accumulator, currentValue) => {
-          accumulator[currentValue.workoutId] = { ...currentValue }
+          // accumulator[currentValue.workoutId] = { ...currentValue }
+          accumulator.push({ ...currentValue })
 
           return accumulator
         },
-        {}
+        []
       )
       return newWorkoutsState
     }

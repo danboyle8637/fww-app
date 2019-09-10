@@ -7,14 +7,13 @@ import {
   ProgramBackgroundImage
 } from '../../../styles/Containers'
 import StrongResetLogo from '../../../svgs/StrongResetLogo'
-import StrongResetProgramCover from '../../../images/strong-reset-program-cover.jpg'
 
-const StrongResetHeader = () => {
+const StrongResetHeader = ({ coverImage }) => {
   return (
     <ProgramHeaderGrid>
       <ProgramBackgroundWrapper>
         <ProgramBackgroundImage
-          src={StrongResetProgramCover}
+          src={coverImage}
           alt="7 Day Strong Reset Program Cover"
           title="7 Day Strong Reset Program"
         />

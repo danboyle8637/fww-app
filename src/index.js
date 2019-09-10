@@ -18,26 +18,30 @@ import { MenuStore } from './context/menuContext'
 import { menuState, menuReducer } from './reducers/menuReducer'
 import { UserStore } from './context/UserContext'
 import { userState, userReducer } from './reducers/userReducer'
+import { ProgramsStore } from './context/ProgramsContext'
+import { programsState, programsReducer } from './reducers/programsReducer'
 import App from './App'
 
 ReactDOM.render(
   <ThemeProvider theme={darkTheme}>
     <FirebaseConnect initializeFirebase={new Firebase()}>
       <UserStore initialState={userState} reducer={userReducer}>
-        <WorkoutsStore initialState={workoutsState} reducer={workoutsReducer}>
-          <WorkoutStatsStore
-            initialState={workoutStatsState}
-            reducer={workoutStatsReducer}
-          >
-            <MenuStore initialState={menuState} reducer={menuReducer}>
-              <ScreenWidthStore>
-                <FormStore initialState={formState} reducer={formReducer}>
-                  <App />
-                </FormStore>
-              </ScreenWidthStore>
-            </MenuStore>
-          </WorkoutStatsStore>
-        </WorkoutsStore>
+        <ProgramsStore initialState={programsState} reducer={programsReducer}>
+          <WorkoutsStore initialState={workoutsState} reducer={workoutsReducer}>
+            <WorkoutStatsStore
+              initialState={workoutStatsState}
+              reducer={workoutStatsReducer}
+            >
+              <MenuStore initialState={menuState} reducer={menuReducer}>
+                <ScreenWidthStore>
+                  <FormStore initialState={formState} reducer={formReducer}>
+                    <App />
+                  </FormStore>
+                </ScreenWidthStore>
+              </MenuStore>
+            </WorkoutStatsStore>
+          </WorkoutsStore>
+        </ProgramsStore>
       </UserStore>
     </FirebaseConnect>
   </ThemeProvider>,

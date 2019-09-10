@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 import WorkoutCardHeader from './WorkoutCardHeader'
+import ChooseProgramHeader from './ProgramHeaders/ChooseProgramHeader'
 import WorkoutProgramDescription from './WorkoutProgramDescription'
 import WorkoutCardFooter from './WorkoutCardFooter'
 import ProgramCardFooter from './ProgramCardFooter'
@@ -10,28 +12,33 @@ import background from '../../images/bbc-reset-program-cover.jpg'
 const WorkoutProgramCard = ({
   isWorkout,
   isProgram,
-  programHeader,
+  programId,
+  coverImage,
   title = 'Workout Title',
   description
 }) => {
   return (
-    <CardContainer>
-      {isWorkout ? (
-        <WorkoutCardHeader
-          background={background}
-          altText="Text"
-          title="Title"
+    <Link to={`/program/${programId}`} style={{ textDecoration: 'none' }}>
+      <CardContainer>
+        {isWorkout ? (
+          <WorkoutCardHeader
+            background={background}
+            altText="Text"
+            title="Title"
+          />
+        ) : null}
+        {isProgram ? (
+          <ChooseProgramHeader programId={programId} coverImage={coverImage} />
+        ) : null}
+        <WorkoutProgramDescription
+          isWorkout={isWorkout}
+          title={title}
+          description={description}
         />
-      ) : null}
-      {isProgram ? programHeader : null}
-      <WorkoutProgramDescription
-        isWorkout={isWorkout}
-        title={title}
-        description={description}
-      />
-      {isWorkout ? <WorkoutCardFooter /> : null}
-      {isProgram ? <ProgramCardFooter /> : null}
-    </CardContainer>
+        {isWorkout ? <WorkoutCardFooter /> : null}
+        {isProgram ? <ProgramCardFooter programId={programId} /> : null}
+      </CardContainer>
+    </Link>
   )
 }
 

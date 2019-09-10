@@ -9,7 +9,9 @@ import BackChip from '../Chips/BackChip'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
+import { useUserContext } from '../../context/UserContext'
 import { useFireBase } from '../../components/Firebase/FirebaseContext'
+import siteConfig from '../../utils/siteConfig'
 
 const LoginUsernamePassword = ({
   showNode,
@@ -23,6 +25,8 @@ const LoginUsernamePassword = ({
   const [emailErrorMessage, setEmailErrorMessage] = useState('')
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('')
   const [formState, dispatch] = useFormStore()
+  // eslint-disable-next-line
+  const [userState, dispatchUserAction] = useUserContext()
   const [updateInputValues, updateInputOptions] = useFormControls()
 
   // Check for form valid and set correct error message
@@ -52,27 +56,61 @@ const LoginUsernamePassword = ({
     event.preventDefault()
     const email = formState.emailValue.value
     const password = formState.passwordValue.value
+    let photoUrl
 
-    auth.loginUserWithEmailAndPassword(email, password).catch(error => {
-      if (error.code === 'auth/invalid-email') {
-        // update error state and display to user
-      } else if (error.code === 'auth/user-disabled') {
-        // update error state and display to user
-      } else if (error.code === 'auth/user-not-found') {
-        // update error state and display to user
-      } else if (error.code === 'auth/wrong-password') {
-        // update error state and display to user
-        setPasswordErrorMessage('Wrong password. Try again')
-      } else {
-        // something crazy happened. Should never hit this.
-      }
-    })
+    auth
+      .loginUserWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        const username = userCredential.user.displayName
+        photoUrl = userCredential.user.photoURL
+        const getUserData = { username: username }
+        const baseUrl = siteConfig.api.baseUrl
+        const url = `${baseUrl}/get-user`
 
-    // Empty the form state
-    dispatch({ type: 'resetUsernamePasswordForm' })
+        fetch(url, {
+          method: 'POST',
+          body: JSON.stringify(getUserData)
+        })
+          .then(response => response.json())
+          .then(userData => {
+            const firstName = userData.firstName
+            const programsArray = userData.programs
+            const username = userData.username
 
-    // Navigate to the Dashboard
-    setShowDashboard(true)
+            dispatchUserAction({
+              type: 'setLoggedInUser',
+              value: {
+                firstName: firstName,
+                username: username,
+                photoUrl: photoUrl,
+                programs: programsArray
+              }
+            })
+
+            // Empty the form state
+            dispatch({ type: 'resetUsernamePasswordForm' })
+
+            // Navigate to the Dashboard
+            setShowDashboard(true)
+          })
+          .catch(error => {
+            console.log('Could not set user', error)
+          })
+      })
+      .catch(error => {
+        if (error.code === 'auth/invalid-email') {
+          // update error state and display to user
+        } else if (error.code === 'auth/user-disabled') {
+          // update error state and display to user
+        } else if (error.code === 'auth/user-not-found') {
+          // update error state and display to user
+        } else if (error.code === 'auth/wrong-password') {
+          // update error state and display to user
+          setPasswordErrorMessage('Wrong password. Try again')
+        } else {
+          // something crazy happened. Should never hit this.
+        }
+      })
   }
 
   return (

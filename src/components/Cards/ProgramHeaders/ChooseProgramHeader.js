@@ -4,15 +4,24 @@ import IgniteResetHeader from './IgniteResetHeader'
 import BodyBurnResetHeader from './BodyBurnResetHeader'
 import StrongResetHeader from './StrongResetHeader'
 
-const ChooseProgramHeader = ({ workoutId }) => {
+const ChooseProgramHeader = ({ programId, coverImage }) => {
   const programHeaders = [
-    { workoutId: '7DayIgniteReset', component: <IgniteResetHeader /> },
-    { workoutId: '7DayBodyBurnReset', component: <BodyBurnResetHeader /> },
-    { workoutId: '7DayStrongReset', component: <StrongResetHeader /> }
+    {
+      programId: '7DayIgniteReset',
+      component: <IgniteResetHeader coverImage={coverImage} />
+    },
+    {
+      programId: '7DayBodyBurnReset',
+      component: <BodyBurnResetHeader coverImage={coverImage} />
+    },
+    {
+      programId: '7DayStrongReset',
+      component: <StrongResetHeader coverImage={coverImage} />
+    }
   ]
 
   const header = programHeaders.reduce((accumulator, currentValue) => {
-    if (currentValue.workoutId === workoutId) {
+    if (currentValue.programId === programId) {
       accumulator = currentValue.component
     }
 

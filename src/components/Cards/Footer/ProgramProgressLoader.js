@@ -34,6 +34,7 @@ const PercentNumber = styled.p`
   grid-row: 1 / -1;
   font-family: QuicksandSemiBold;
   font-size: 11px;
+  text-decoration: none;
   color: ${props => props.theme.primaryAccent};
   z-index: 1;
 `

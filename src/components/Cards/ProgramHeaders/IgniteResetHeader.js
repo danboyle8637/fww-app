@@ -7,14 +7,13 @@ import {
   ProgramBackgroundImage
 } from '../../../styles/Containers'
 import IgniteResetLogo from '../../../svgs/IgniteResetLogo'
-import IgniteResetProgramCover from '../../../images/ignite-reset-program-cover.jpg'
 
-const IgniteResetHeader = () => {
+const IgniteResetHeader = ({ coverImage }) => {
   return (
     <ProgramHeaderGrid>
       <ProgramBackgroundWrapper>
         <ProgramBackgroundImage
-          src={IgniteResetProgramCover}
+          src={coverImage}
           alt="7 Day Ignite Reset Program Cover"
           title="7 Day Ignite Reset Program"
         />

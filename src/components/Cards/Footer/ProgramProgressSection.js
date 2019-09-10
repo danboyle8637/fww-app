@@ -3,10 +3,10 @@ import styled from 'styled-components'
 
 import ProgramProgressLoader from './ProgramProgressLoader'
 
-const ProgramProgressSection = () => {
+const ProgramProgressSection = ({ percentComplete }) => {
   return (
     <ProgressContainer>
-      <ProgramProgressLoader percentComplete={100} />
+      <ProgramProgressLoader percentComplete={percentComplete} />
       <ProgressLabel>Progress</ProgressLabel>
     </ProgressContainer>
   )
@@ -26,4 +26,5 @@ const ProgressLabel = styled.p`
   font-size: 14px;
   color: ${props => props.theme.bodyText};
   text-transform: uppercase;
+  text-decoration: none;
 `

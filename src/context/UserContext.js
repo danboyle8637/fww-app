@@ -10,6 +10,6 @@ const UserStore = ({ children, initialState, reducer }) => {
   )
 }
 
-const useUseContext = () => useContext(UserContext)
+const useUserContext = () => useContext(UserContext)
 
-export { UserStore, useUseContext }
+export { UserStore, useUserContext }

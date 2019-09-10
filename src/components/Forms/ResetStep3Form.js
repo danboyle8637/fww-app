@@ -8,13 +8,16 @@ import BackChip from '../Chips/BackChip'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
+import { useUserContext } from '../../context/UserContext'
 import { FirebaseContext } from '../Firebase/FirebaseContext'
 
 const ResetStep3Form = ({ showNode, reverse, handleReverseStep3 }) => {
   const auth = useContext(FirebaseContext)
   // eslint-disable-next-line
-  const [formState, dispatch] = useFormStore()
+  const [formState, _] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
+  // eslint-disable-next-line
+  const [userState, dispatch] = useUserContext()
   const [toDashboard, setToDashboard] = useState(false)
 
   const handleSignUpForm = event => {
@@ -47,15 +50,19 @@ const ResetStep3Form = ({ showNode, reverse, handleReverseStep3 }) => {
         const url = `http://localhost:5000/sign-up`
         fetch(url, {
           method: 'POST',
-          body: JSON.stringify(signUpData),
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json'
-          }
+          body: JSON.stringify(signUpData)
         })
           .then(response => response.json())
           .then(data => {
-            console.log(JSON.stringify(data))
+            dispatch({
+              type: 'setLoggedInUser',
+              value: {
+                firstName: data.firstName,
+                username: data.username,
+                photoUrl: data.photoUrl,
+                program: data.program
+              }
+            })
             setToDashboard(true)
           })
           .catch(error => {

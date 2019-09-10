@@ -26,6 +26,7 @@ const HeadlineWrapper = styled.h3`
   font-size: 22px;
   color: ${props => props.theme.headlinePrimary};
   text-transform: uppercase;
+  text-decoration: none;
   letter-spacing: 0.1rem;
 `
 
@@ -34,5 +35,6 @@ const DescriptionWrapper = styled.p`
   padding: 0;
   font-family: QuicksandSemiBold;
   font-size: 14px;
+  text-decoration: none;
   color: ${props => props.theme.bodyText};
 `

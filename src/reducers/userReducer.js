@@ -2,7 +2,7 @@ const userState = {
   firstName: '',
   username: '',
   photoUrl: '',
-  program: ''
+  programs: []
 }
 
 const userReducer = (state, action) => {
@@ -12,7 +12,7 @@ const userReducer = (state, action) => {
         firstName: action.value.firstName,
         username: action.value.username,
         photoUrl: action.value.photoUrl,
-        program: action.value.program
+        programs: action.value.programs
       }
     }
     default: {

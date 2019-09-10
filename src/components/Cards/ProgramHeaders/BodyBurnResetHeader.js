@@ -7,14 +7,13 @@ import {
   ProgramBackgroundImage
 } from '../../../styles/Containers'
 import BodyBurnResetLogo from '../../../svgs/BodyBurnResetLogo'
-import BodyBurnResetProgramCover from '../../../images/bbc-reset-program-cover.jpg'
 
-const BodyBurnResetHeader = () => {
+const BodyBurnResetHeader = ({ coverImage }) => {
   return (
     <ProgramHeaderGrid>
       <ProgramBackgroundWrapper>
         <ProgramBackgroundImage
-          src={BodyBurnResetProgramCover}
+          src={coverImage}
           alt="7 Day Body Burn Reset Program Cover"
           title="7 Day Body Burn Reset Program"
         />

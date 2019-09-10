@@ -2,11 +2,17 @@ import React from 'react'
 import styled from 'styled-components'
 
 import FooterCircleIcon from './FooterCircleIcon'
+import { useUserContext } from '../../../context/UserContext'
 
-const ProgramActiveSection = () => {
+const ProgramActiveSection = ({ programId }) => {
+  // eslint-disable-next-line
+  const [userState, dispatch] = useUserContext()
+
+  const activeProgram = userState.programs.includes(programId)
+
   return (
     <ActiveContainer>
-      <FooterCircleIcon active={false} />
+      <FooterCircleIcon active={activeProgram} />
       <ActiveLabel>Active</ActiveLabel>
     </ActiveContainer>
   )
@@ -26,4 +32,5 @@ const ActiveLabel = styled.p`
   font-size: 14px;
   color: ${props => props.theme.bodyText};
   text-transform: uppercase;
+  text-decoration: none;
 `
