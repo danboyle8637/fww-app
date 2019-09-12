@@ -1,17 +1,25 @@
-const workoutStatsState = {}
+const workoutStatsState = {
+  stats: []
+}
 
 const workoutStatsReducer = (state, action) => {
   switch (action.type) {
-    case 'createWorkoutStatsState': {
-      const statsArray = action.value
+    case 'setWorkoutStatsState': {
+      const workoutStatsArray = action.value
 
-      const newStatsState = statsArray.reduce((accumulator, currentValue) => {
-        accumulator[currentValue.workoutId] = { ...currentValue }
+      const newWorkoutStatsState = workoutStatsArray.reduce(
+        (accumulator, currentValue) => {
+          accumulator.push({ ...currentValue })
 
-        return accumulator
-      }, {})
+          return accumulator
+        },
+        []
+      )
 
-      return newStatsState
+      return {
+        ...state,
+        stats: newWorkoutStatsState
+      }
     }
     case 'cleanWorkoutStatsState': {
       return {}

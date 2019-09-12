@@ -71,6 +71,7 @@ const ResetDashboard = () => {
     userState.username
   ])
 
+  // Check for real loading... use this!!!!
   useEffect(() => {
     if (
       programsState.programs.length > 0 &&

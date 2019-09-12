@@ -25,6 +25,12 @@ const WorkoutTrackingForm = ({ trackingGoal }) => {
     }
   }, [formState.workoutGoalValue.valid, formState.workoutGoalOptions.touched])
 
+  const handlePostWorkoutNumber = event => {
+    event.preventDefault()
+
+    console.log('Posting workout numbers to database')
+  }
+
   return (
     <FormContainer>
       <WorkoutPageHeadline>Track It:</WorkoutPageHeadline>
@@ -47,7 +53,13 @@ const WorkoutTrackingForm = ({ trackingGoal }) => {
           onFocus={updateInputOptions}
           onBlur={updateInputOptions}
         />
-        <WiggleButton shouldWiggle={wiggle}>Post</WiggleButton>
+        <WiggleButton
+          shouldWiggle={wiggle}
+          buttonType="submit"
+          handleClick={handlePostWorkoutNumber}
+        >
+          Post
+        </WiggleButton>
       </TrackingForm>
     </FormContainer>
   )
@@ -56,6 +68,8 @@ const WorkoutTrackingForm = ({ trackingGoal }) => {
 export default WorkoutTrackingForm
 
 const FormContainer = styled.div`
+  margin: 80px 0 0 0;
+  padding: 0 16px;
   display: flex;
   flex-direction: column;
 `

@@ -2,7 +2,13 @@ import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { TimelineMax, Power2 } from 'gsap/all'
 
-const BaseButton = ({ children, purple, disabled, handleClick }) => {
+const BaseButton = ({
+  children,
+  purple,
+  disabled,
+  handleClick,
+  buttonType
+}) => {
   const buttonRef = useRef(null)
   const timeline = useRef(new TimelineMax())
 
@@ -39,9 +45,10 @@ const BaseButton = ({ children, purple, disabled, handleClick }) => {
 
   return (
     <Button
+      ref={buttonRef}
+      type={buttonType}
       purple={purple}
       disabled={disabled}
-      ref={buttonRef}
       onMouseDown={handleMouseDown}
       onClick={handleClick}
     >

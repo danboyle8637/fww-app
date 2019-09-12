@@ -30,16 +30,16 @@ function App() {
             <Route path="/account/:username" component={ResetUserAccount} />
             <Route
               exact
-              path="/program/:name"
+              path="/program/:programId"
               component={ResetProgramDashboard}
             />
             <Route
               exact
-              path="/program/:name/:workoutName"
+              path="/program/:programId/:workoutId"
               component={ResetWorkout}
             />
             <Route
-              path="/program/:name/:workoutName/coaching"
+              path="/program/:programId/:workoutId/coaching"
               component={ResetWorkoutCoaching}
             />
             <Route component={FourOhFour} />

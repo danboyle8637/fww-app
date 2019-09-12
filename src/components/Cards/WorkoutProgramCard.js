@@ -7,22 +7,25 @@ import ChooseProgramHeader from './ProgramHeaders/ChooseProgramHeader'
 import WorkoutProgramDescription from './WorkoutProgramDescription'
 import WorkoutCardFooter from './WorkoutCardFooter'
 import ProgramCardFooter from './ProgramCardFooter'
-import background from '../../images/bbc-reset-program-cover.jpg'
 
 const WorkoutProgramCard = ({
   isWorkout,
   isProgram,
-  programId,
+  programId = null,
+  workoutId = null,
   coverImage,
   title = 'Workout Title',
   description
 }) => {
   return (
-    <Link to={`/program/${programId}`} style={{ textDecoration: 'none' }}>
+    <Link
+      to={isProgram ? `/program/${programId}` : '#'}
+      style={{ textDecoration: 'none' }}
+    >
       <CardContainer>
         {isWorkout ? (
           <WorkoutCardHeader
-            background={background}
+            background={coverImage}
             altText="Text"
             title="Title"
           />
@@ -35,7 +38,7 @@ const WorkoutProgramCard = ({
           title={title}
           description={description}
         />
-        {isWorkout ? <WorkoutCardFooter /> : null}
+        {isWorkout ? <WorkoutCardFooter workoutId={workoutId} /> : null}
         {isProgram ? <ProgramCardFooter programId={programId} /> : null}
       </CardContainer>
     </Link>

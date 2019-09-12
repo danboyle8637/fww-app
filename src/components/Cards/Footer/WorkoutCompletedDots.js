@@ -3,12 +3,12 @@ import styled from 'styled-components'
 
 import FooterCircleIcon from './FooterCircleIcon'
 
-const WorkoutCompletedDots = () => {
+const WorkoutCompletedDots = ({ completed }) => {
   return (
     <DotContainer>
-      <FooterCircleIcon active={true} />
-      <FooterCircleIcon active={false} />
-      <FooterCircleIcon active={false} />
+      <FooterCircleIcon active={completed.complete1.isComplete} />
+      <FooterCircleIcon active={completed.complete2.isComplete} />
+      <FooterCircleIcon active={completed.complete3.isComplete} />
     </DotContainer>
   )
 }

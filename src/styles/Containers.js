@@ -20,6 +20,18 @@ const ProgramBackgroundImage = styled.img`
   width: 100%;
 `
 
+const WorkoutSectionGrid = styled.div`
+  position: relative;
+  padding: 4px;
+  align-self: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  border-radius: 14px;
+  background: ${props => props.theme.mainBackgroundBorderColor};
+  width: 100%;
+`
+
 const MenuItemGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
@@ -32,5 +44,6 @@ export {
   ProgramHeaderGrid,
   ProgramBackgroundWrapper,
   ProgramBackgroundImage,
-  MenuItemGrid
+  MenuItemGrid,
+  WorkoutSectionGrid
 }

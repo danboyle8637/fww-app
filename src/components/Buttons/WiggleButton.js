@@ -2,7 +2,13 @@ import React, { useRef, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { TimelineMax, Power2 } from 'gsap/all'
 
-const WiggleButton = ({ children, purple, shouldWiggle }) => {
+const WiggleButton = ({
+  children,
+  purple,
+  shouldWiggle,
+  handleClick,
+  buttonType
+}) => {
   const [runWiggle, setRunWiggle] = useState(true)
   const visibleButtonRef = useRef(null)
   const flashButtonRef = useRef(null)
@@ -85,8 +91,10 @@ const WiggleButton = ({ children, purple, shouldWiggle }) => {
     <ButtonGrid>
       <VisibleButton
         ref={visibleButtonRef}
+        type={buttonType}
         purple={purple}
         onMouseDown={handleMouseDown}
+        onClick={handleClick}
       >
         {children}
       </VisibleButton>

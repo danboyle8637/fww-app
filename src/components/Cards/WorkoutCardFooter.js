@@ -3,11 +3,19 @@ import styled from 'styled-components'
 
 import WorkoutStatsSection from './Footer/WorkoutStatsSection'
 import NavigationArrow from '../Shared/NavigationArrow'
+import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 
-const WorkoutCardFooter = () => {
+const WorkoutCardFooter = ({ workoutId }) => {
+  // eslint-disable-next-line
+  const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
+
+  const stats = workoutStatsState.stats.find(element => {
+    return element.workoutId === workoutId
+  })
+
   return (
     <FooterContainer>
-      <WorkoutStatsSection />
+      <WorkoutStatsSection stats={stats} />
       <NavigationArrow />
     </FooterContainer>
   )

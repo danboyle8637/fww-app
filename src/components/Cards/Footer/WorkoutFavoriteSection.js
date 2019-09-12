@@ -3,11 +3,11 @@ import styled from 'styled-components'
 
 import HeartIcon from '../../../svgs/HeartIcon'
 
-const WorkoutFavoriteSection = () => {
+const WorkoutFavoriteSection = ({ isFavorite }) => {
   return (
     <FavoriteContainer>
       <FooterLabel>Favorite</FooterLabel>
-      <FavoriteIcon />
+      <FavoriteIcon isFavorite={isFavorite} />
     </FavoriteContainer>
   )
 }

@@ -30,6 +30,8 @@ const TrackingChart = () => {
 export default TrackingChart
 
 const ChartContainer = styled.div`
+  margin: 60px 0 0 0;
+  padding: 0 16px;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
   width: 100%;

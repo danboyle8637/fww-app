@@ -24,10 +24,11 @@ const emailValidationRules = {
   isRequired: true
 }
 
-// const workoutGoalValidationRules = {
-//   maxLength: 4,
-//   isRequired: true
-// }
+const workoutGoalValidationRules = {
+  maxLength: 6,
+  isRequired: true,
+  isNumber: true
+}
 
 const signupFirstNameValidationRules = {
   minLength: 2,
@@ -266,26 +267,26 @@ const formReducer = (state, action) => {
         }
       }
     }
-    // case 'setWorkoutGoalValue': {
-    //   const valid = validate(action.value, workoutGoalValidationRules)
-    //   return {
-    //     ...state,
-    //     workoutGoalValue: {
-    //       value: action.value,
-    //       valid: valid
-    //     }
-    //   }
-    // }
-    // case 'setWorkoutGoalOptions': {
-    //   return {
-    //     ...state,
-    //     workoutGoalOptions: {
-    //       initial: false,
-    //       touched: !state.workoutGoalOptions.touched,
-    //       showInstructions: !state.workoutGoalOptions.showInstructions
-    //     }
-    //   }
-    // }
+    case 'setWorkoutGoalValue': {
+      const valid = validate(action.value, workoutGoalValidationRules)
+      return {
+        ...state,
+        workoutGoalValue: {
+          value: action.value,
+          valid: valid
+        }
+      }
+    }
+    case 'setWorkoutGoalOptions': {
+      return {
+        ...state,
+        workoutGoalOptions: {
+          initial: false,
+          touched: !state.workoutGoalOptions.touched,
+          showInstructions: !state.workoutGoalOptions.showInstructions
+        }
+      }
+    }
     case 'setLoggedInUser': {
       return {
         ...state,

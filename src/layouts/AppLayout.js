@@ -32,6 +32,8 @@ const Layout = styled.main`
 const AppWrapper = styled.section`
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
   background: ${props => props.theme.mainBackgroundColor};
   width: 100%;
   overflow: hidden;

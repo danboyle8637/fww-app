@@ -23,7 +23,10 @@ const workoutsReducer = (state, action) => {
         },
         []
       )
-      return newWorkoutsState
+      return {
+        ...state,
+        workouts: newWorkoutsState
+      }
     }
     case 'cleanWorkoutsState': {
       return {}

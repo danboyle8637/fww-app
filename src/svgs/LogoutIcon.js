@@ -1,8 +1,17 @@
 import React from 'react'
 
+import { useFireBase } from '../components/Firebase/FirebaseContext'
+
 const LogoutIcon = ({ width, height, className }) => {
+  const auth = useFireBase()
+
+  const handleLogout = () => {
+    auth.logUserOut()
+  }
+
   return (
     <svg
+      onClick={handleLogout}
       id="logout-icon"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
