@@ -23,23 +23,23 @@ function App() {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Login} />
-            <Route path="/dashboard" component={ResetDashboard} />
+            <Route exact path="/dashboard" component={ResetDashboard} />
             <Route path="/signup" component={SignUp} />
             <Route path="/login" component={Login} />
             <Route path="/7-day-reset-step1" component={ResetSignUp} />
             <Route path="/account/:username" component={ResetUserAccount} />
             <Route
               exact
-              path="/program/:programId"
+              path="/dashboard/:programId"
               component={ResetProgramDashboard}
             />
             <Route
               exact
-              path="/program/:programId/:workoutId"
+              path="/dashboard/:programId/:workoutId"
               component={ResetWorkout}
             />
             <Route
-              path="/program/:programId/:workoutId/coaching"
+              path="/dashboard/:programId/:workoutId/coaching"
               component={ResetWorkoutCoaching}
             />
             <Route component={FourOhFour} />

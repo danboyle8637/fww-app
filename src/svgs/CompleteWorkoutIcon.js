@@ -12,12 +12,22 @@ const CompleteWorkoutIcon = ({ width, height, className, isComplete }) => {
   const timeline = useRef(new TimelineMax({ paused: true }))
 
   useEffect(() => {
+    let firstRender = true
     const circleFill = circleFillRef.current
     const check = checkRef.current
     const tl = timeline.current
 
-    TweenMax.set(circleFill, { transformOrigin: '50% 50%', scale: 0 })
-    TweenMax.set(check, { drawSVG: '100% 100%' })
+    if (isComplete && firstRender) {
+      // Set the tween to the end of the animation
+      TweenMax.set(circleFill, { scale: 1 })
+      TweenMax.set(check, { drawSVG: '100% 0%' })
+      firstRender = false
+    } else {
+      // Set the tween to the beginning of the animation
+      TweenMax.set(circleFill, { transformOrigin: '50% 50%', scale: 0 })
+      TweenMax.set(check, { drawSVG: '100% 100%' })
+      firstRender = false
+    }
 
     tl.to(circleFill, 0.3, {
       scale: 1,
@@ -27,21 +37,32 @@ const CompleteWorkoutIcon = ({ width, height, className, isComplete }) => {
       ease: Power2.easeOut
     })
 
+    if (isComplete) {
+      tl.play()
+    } else {
+      tl.reverse()
+    }
+
     // Clean up the tweens
     return () => {
       tl.kill(null, circleFill)
       tl.kill(null, check)
+      firstRender = true
     }
-  }, [])
+  }, [isComplete])
 
-  const handleToggleCheck = () => {
-    const tl = timeline.current
-    tl.play()
-  }
+  // useEffect(() => {
+  //   const tl = timeline.current
+
+  //   if (isComplete) {
+  //     tl.play()
+  //   } else {
+  //     tl.reverse()
+  //   }
+  // }, [isComplete])
 
   return (
     <svg
-      onClick={handleToggleCheck}
       id="workout-check-circle"
       xmlns="http://www.w3.org/2000/svg"
       className={className}

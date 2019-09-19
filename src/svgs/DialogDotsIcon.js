@@ -1,8 +1,14 @@
 import React from 'react'
 
-const DialogDotsIcon = ({ width, height, className }) => {
+const DialogDotsIcon = ({
+  width,
+  height,
+  className,
+  handleToggleInfoDialog
+}) => {
   return (
     <svg
+      onClick={handleToggleInfoDialog}
       id="dialog-dot-icon"
       xmlns="http://www.w3.org/2000/svg"
       className={className}

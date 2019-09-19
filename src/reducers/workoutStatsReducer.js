@@ -17,8 +17,69 @@ const workoutStatsReducer = (state, action) => {
       )
 
       return {
-        ...state,
         stats: newWorkoutStatsState
+      }
+    }
+    case 'setComplete1': {
+      const workoutId = action.value.workoutId
+      let selectedIndex
+
+      const activeWorkout = state.stats.find((workout, index) => {
+        selectedIndex = index
+        return workout.workoutId === workoutId
+      })
+
+      const copyOfWorkout = { ...activeWorkout }
+
+      copyOfWorkout.completed.complete1.isComplete = true
+
+      return {
+        stats: [...state.stats, (state.stats[selectedIndex] = copyOfWorkout)]
+      }
+    }
+    case 'setComplete2': {
+      const workoutId = action.value.workoutId
+
+      const activeWorkout = state.stats.find(workout => {
+        return workout.workoutId === workoutId
+      })
+
+      const copyOfWorkout = { ...activeWorkout }
+
+      copyOfWorkout.completed.complete2.isComplete = true
+
+      return {
+        stats: [...state.stats, copyOfWorkout]
+      }
+    }
+    case 'setComplete3': {
+      const workoutId = action.value.workoutId
+
+      const activeWorkout = state.stats.find(workout => {
+        return workout.workoutId === workoutId
+      })
+
+      const copyOfWorkout = { ...activeWorkout }
+
+      copyOfWorkout.completed.complete3.isComplete = true
+
+      return {
+        stats: [...state.stats, copyOfWorkout]
+      }
+    }
+    case 'toggleIsFavoriteWorkout': {
+      const workoutId = action.value
+
+      const activeWorkout = state.stats.find(workout => {
+        return workout.workoutId === workoutId
+      })
+
+      const copyOfWorkout = { ...activeWorkout }
+
+      copyOfWorkout.isFavorite = !copyOfWorkout.isFavorite
+
+      return {
+        stats: [...state.stats, copyOfWorkout]
       }
     }
     case 'cleanWorkoutStatsState': {

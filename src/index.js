@@ -14,8 +14,8 @@ import {
   workoutStatsState,
   workoutStatsReducer
 } from './reducers/workoutStatsReducer'
-import { MenuStore } from './context/menuContext'
-import { menuState, menuReducer } from './reducers/menuReducer'
+import { PortalStore } from './context/portalContext'
+import { portalState, portalReducer } from './reducers/portalReducer'
 import { UserStore } from './context/UserContext'
 import { userState, userReducer } from './reducers/userReducer'
 import { ProgramsStore } from './context/ProgramsContext'
@@ -32,13 +32,13 @@ ReactDOM.render(
               initialState={workoutStatsState}
               reducer={workoutStatsReducer}
             >
-              <MenuStore initialState={menuState} reducer={menuReducer}>
+              <PortalStore initialState={portalState} reducer={portalReducer}>
                 <ScreenWidthStore>
                   <FormStore initialState={formState} reducer={formReducer}>
                     <App />
                   </FormStore>
                 </ScreenWidthStore>
-              </MenuStore>
+              </PortalStore>
             </WorkoutStatsStore>
           </WorkoutsStore>
         </ProgramsStore>

@@ -13,6 +13,8 @@ const WorkoutCardFooter = ({ workoutId }) => {
     return element.workoutId === workoutId
   })
 
+  console.log(stats)
+
   return (
     <FooterContainer>
       <WorkoutStatsSection stats={stats} />

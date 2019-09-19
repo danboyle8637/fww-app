@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import CompleteWorkout from './Inputs/CompleteWorkout'
-import FavoriteWorkout from './Inputs/FavoriteWorkout'
+import CompleteWorkoutForm from './CompleteWorkoutForm'
+import FavoriteWorkoutForm from './FavoriteWorkouktForm'
 import {
   WorkoutPageHeadline,
   WorkoutPageDescription
 } from '../../styles/Typography'
 
-const CompleteFavoriteWorkoutForm = () => {
+const CompleteFavoriteWorkoutForm = ({ workoutId, completed, isFavorite }) => {
   return (
     <FormContainer>
       <WorkoutPageHeadline>Complete It:</WorkoutPageHeadline>
@@ -17,8 +17,8 @@ const CompleteFavoriteWorkoutForm = () => {
         a favorite.
       </WorkoutPageDescription>
       <CheckBoxWrapper>
-        <CompleteWorkout />
-        <FavoriteWorkout />
+        <CompleteWorkoutForm workoutId={workoutId} completed={completed} />
+        <FavoriteWorkoutForm workoutId={workoutId} isFavorite={isFavorite} />
       </CheckBoxWrapper>
     </FormContainer>
   )
@@ -27,8 +27,6 @@ const CompleteFavoriteWorkoutForm = () => {
 export default CompleteFavoriteWorkoutForm
 
 const FormContainer = styled.div`
-  margin: 80px 0 0 0;
-  padding: 0 16px;
   display: flex;
   flex-direction: column;
 `

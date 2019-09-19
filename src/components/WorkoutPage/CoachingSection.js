@@ -3,12 +3,16 @@ import styled from 'styled-components'
 
 import { WorkoutSectionGrid } from '../../styles/Containers'
 import PlayButton from '../../svgs/PlayButton'
-import CoachingImage from '../../images/strong-reset-workout1-coaching-cover.jpg'
+import { above } from '../../styles/Theme'
 
-const CoachingSection = ({ title, altText }) => {
+const CoachingSection = ({ coachingBackground, name }) => {
   return (
     <WorkoutSectionGrid>
-      <BackgroundImage src={CoachingImage} title={title} alt={altText} />
+      <BackgroundImage 
+        src={coachingBackground} 
+        title={`${name} coaching video`} 
+        alt={`Learn how the ${name} is going to work.`} 
+      />
       <Play />
     </WorkoutSectionGrid>
   )
@@ -30,4 +34,7 @@ const Play = styled(PlayButton)`
   justify-self: center;
   width: 60px;
   z-index: 1;
+  ${above.mobile`
+    width: 80px;
+  `}
 `

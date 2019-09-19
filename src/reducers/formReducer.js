@@ -158,6 +158,18 @@ const formState = {
   },
   biggestObstacleOptions: {
     initial: true
+  },
+  completeWorkout: {
+    value: [],
+    options: [
+      { id: 1, value: 'complete1', checked: false },
+      { id: 2, value: 'complete2', checked: false },
+      { id: 3, value: 'complete3', checked: false }
+    ]
+  },
+  isFavoriteWorkout: {
+    value: '',
+    options: [{ value: 'isFavoriteWorkout', checked: false }]
   }
 }
 
@@ -412,6 +424,89 @@ const formReducer = (state, action) => {
         ...state,
         resetWorkoutOptions: {
           initial: false
+        }
+      }
+    }
+    case 'setCompleteWorkoutValue': {
+      // You can't spread a string because it will spread out the letters
+      let completedArray = [...state.completeWorkout.value]
+      const options = state.completeWorkout.options
+
+      const completedFirst = completedArray.includes(1)
+      const completedSecond = completedArray.includes(2)
+
+      const newOptions = options.map(option => {
+        if (action.value === option.value && action.value === 'complete1') {
+          return {
+            ...option,
+            checked: true
+          }
+        } else if (
+          action.value === option.value &&
+          action.value === 'complete2' &&
+          completedFirst
+        ) {
+          return {
+            ...option,
+            checked: true
+          }
+        } else if (
+          action.value === option.value &&
+          action.value === 'complete3' &&
+          completedSecond
+        ) {
+          return {
+            ...option,
+            checked: true
+          }
+        } else {
+          return {
+            ...option,
+            checked: option.checked
+          }
+        }
+      })
+
+      newOptions.forEach(option => {
+        if (action.value === option.value && option.checked) {
+          completedArray.push(option.id)
+        } else if (action.value === option.value && !option.checked) {
+          completedArray = completedArray.filter(el => {
+            return option.id !== el
+          })
+        } else {
+          return completedArray
+        }
+      })
+
+      return {
+        ...state,
+        completeWorkout: {
+          value: completedArray,
+          options: newOptions
+        }
+      }
+    }
+    case 'setIsFavoriteWorkout': {
+      const options = state.isFavoriteWorkout.options.map(option => {
+        if (action.value === option.value) {
+          return {
+            ...option,
+            checked: !option.checked
+          }
+        } else {
+          return {
+            ...option,
+            checked: option.checked
+          }
+        }
+      })
+
+      return {
+        ...state,
+        isFavoriteWorkout: {
+          value: action.value,
+          options: options
         }
       }
     }

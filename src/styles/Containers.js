@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { above } from '../styles/Theme'
 
 // Program Header Base Components
 const ProgramHeaderGrid = styled.div`
@@ -30,6 +31,12 @@ const WorkoutSectionGrid = styled.div`
   border-radius: 14px;
   background: ${props => props.theme.mainBackgroundBorderColor};
   width: 100%;
+  ${above.mobile`
+    padding: 6px;
+  `}
+  ${above.ipadPro`
+    padding: 12px 0 0 0;
+  `}
 `
 
 const MenuItemGrid = styled.div`

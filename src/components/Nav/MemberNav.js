@@ -8,6 +8,7 @@ import AccountIcon from '../../svgs/AccountIcon'
 import ContactIcon from '../../svgs/ContactIcon'
 import ReviewIcon from '../../svgs/ReviewIcon'
 import LogoutIcon from '../../svgs/LogoutIcon'
+import { above } from '../../styles/Theme'
 
 const MemberNav = () => {
   const resetNavigation = [
@@ -38,4 +39,7 @@ export default MemberNav
 
 const NavIcon = styled.div`
   width: 40px;
+  ${above.tablet`
+    width: 60px;
+  `}
 `

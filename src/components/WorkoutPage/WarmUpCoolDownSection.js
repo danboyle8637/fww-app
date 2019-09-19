@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import { WorkoutSectionGrid } from '../../styles/Containers'
 import PlayButton from '../../svgs/PlayButton'
 import WarmUpCover from '../../images/warmup-cover1.jpg'
 import CoolDownCover from '../../images/cooldown-cover1.jpg'
+import Portal from '../Shared/Portal'
+import PopUpVideo from '../WorkoutPage/PopUpVideo'
+import { usePortalContext } from '../../context/portalContext'
+import { above } from '../../styles/Theme'
 
 const WarmUpCoolDownSection = ({
   warmUpTitle,
@@ -12,6 +16,20 @@ const WarmUpCoolDownSection = ({
   coolDownTitle,
   coolDownAltText
 }) => {
+  // eslint-disable-next-line
+  const [portalState, dispatch] = usePortalContext()
+  const [title, setTitle] = useState('')
+
+  const handleToggleWarmUp = () => {
+    dispatch({ type: 'toggleWarmUpVideo' })
+    setTitle('Warm Up')
+  }
+
+  const handleToggleCoolDown = () => {
+    dispatch({ type: 'toggleCoolDownVideo' })
+    setTitle('Cool Down')
+  }
+
   return (
     <WarmUpCoolDownContainer>
       <WorkoutSectionGrid>
@@ -20,7 +38,7 @@ const WarmUpCoolDownSection = ({
           title={warmUpTitle}
           alt={warmupAltText}
         />
-        <Play />
+        <Play handleToggleVideo={handleToggleWarmUp} />
       </WorkoutSectionGrid>
       <WorkoutSectionGrid>
         <BackgroundImage
@@ -28,8 +46,11 @@ const WarmUpCoolDownSection = ({
           title={coolDownTitle}
           alt={coolDownAltText}
         />
-        <Play />
+        <Play handleToggleVideo={handleToggleCoolDown} />
       </WorkoutSectionGrid>
+      <Portal>
+        <PopUpVideo title={title} />
+      </Portal>
     </WarmUpCoolDownContainer>
   )
 }
@@ -41,6 +62,10 @@ const WarmUpCoolDownContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
+  ${above.ipadPro`
+    margin-bottom: 12px;
+    gap: 12px;
+  `}
 `
 
 const BackgroundImage = styled.img`
@@ -57,4 +82,7 @@ const Play = styled(PlayButton)`
   justify-self: center;
   width: 30px;
   z-index: 1;
+  ${above.mobile`
+    width: 60px;
+  `}
 `

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 
 import FWWLogo from '../svgs/FWWLogo'
 import BaseButton from '../components/Buttons/BaseButton'
@@ -10,7 +10,7 @@ import { useFireBase } from '../components/Firebase/FirebaseContext'
 import { useProgramsContext } from '../context/ProgramsContext'
 import siteConfig from '../utils/siteConfig'
 
-const ResetDashboard = () => {
+const ResetDashboard = ({ match }) => {
   const auth = useFireBase()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
@@ -23,7 +23,7 @@ const ResetDashboard = () => {
       programsState.programs.length === 0 &&
       programsState.percentComplete.length === 0
     ) {
-      console.log('Fetching Data from Api')
+      console.log('Fetching Data - Setting Up Program State')
       const getProgramData = {
         username: userState.username,
         programs: userState.programs
@@ -66,7 +66,6 @@ const ResetDashboard = () => {
     dispatchProgramsAction,
     programsState.percentComplete,
     programsState.programs,
-    userState.program,
     userState.programs,
     userState.username
   ])
@@ -91,20 +90,23 @@ const ResetDashboard = () => {
       const key = program.order
       const coverImage = program.coverImage
       const description = program.description
-      // const duration = program.duration
       const title = program.name
       const programId = program.programId
-      // const totalWorkouts = program.totalWorkouts
 
       return (
-        <ProgramCard
+        <Link
           key={key}
-          isProgram
-          coverImage={coverImage}
-          programId={programId}
-          title={title}
-          description={description}
-        />
+          to={`${match.url}/${programId}`}
+          style={{ textDecoration: 'none' }}
+        >
+          <ProgramCard
+            isProgram
+            coverImage={coverImage}
+            programId={programId}
+            title={title}
+            description={description}
+          />
+        </Link>
       )
     })
 

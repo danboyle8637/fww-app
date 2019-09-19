@@ -66,6 +66,25 @@ const useUpdateFormControls = () => {
         })
         break
       }
+      case 'complete1': {
+        dispatch({ type: 'setCompleteWorkoutValue', value: inputName })
+        break
+      }
+      case 'complete2': {
+        dispatch({ type: 'setCompleteWorkoutValue', value: inputName })
+        break
+      }
+      case 'complete3': {
+        dispatch({ type: 'setCompleteWorkoutValue', value: inputName })
+        break
+      }
+      case 'isFavoriteWorkout': {
+        dispatch({
+          type: 'setIsFavoriteWorkout',
+          value: inputName
+        })
+        break
+      }
       default: {
         throw new Error('You have not exhausted all possible inputs.')
       }

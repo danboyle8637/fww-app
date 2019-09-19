@@ -3,14 +3,15 @@ import styled from 'styled-components'
 
 import MenuTransition from '../../Animations/Transitions/MenuTransition'
 import MemberNav from './MemberNav'
-import { useMenuContext } from '../../context/menuContext'
+import { usePortalContext } from '../../context/portalContext'
+import { above } from '../../styles/Theme'
 
 const MenuBar = () => {
   // eslint-disable-next-line
-  const [menuState, dispatch] = useMenuContext()
+  const [portalState, dispatch] = usePortalContext()
 
   return (
-    <MenuTransition menuOpen={menuState.isOpen}>
+    <MenuTransition menuOpen={portalState.menu.isOpen}>
       <MenuContainer>
         <MemberNav />
       </MenuContainer>
@@ -35,4 +36,7 @@ const MenuContainer = styled.div`
   border-radius: 8px 0 0 8px;
   box-shadow: -3px 0 3px 3px rgba(0, 0, 0, 0.3);
   z-index: 12;
+  ${above.tablet`
+    width: 110px;
+  `}
 `

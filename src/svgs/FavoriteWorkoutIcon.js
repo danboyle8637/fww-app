@@ -52,14 +52,18 @@ const FavoriteWorkoutIcon = ({ width, height, className, isFavorite }) => {
     }
   }, [])
 
-  const handleFavoriteClick = () => {
+  useEffect(() => {
     const tl = timeline.current
-    tl.play()
-  }
+
+    if (isFavorite) {
+      tl.play()
+    } else {
+      tl.reverse()
+    }
+  }, [isFavorite])
 
   return (
     <svg
-      onClick={handleFavoriteClick}
       id="favorite-checkmark"
       xmlns="http://www.w3.org/2000/svg"
       className={className}

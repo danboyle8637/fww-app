@@ -9,16 +9,19 @@ const TrackingChart = () => {
     <ChartContainer>
       <HeaderRow />
       <TrackingRow
+        id="workoutGoal1"
         goal="How many pushups can you do from the ground on the last round?"
         date={'8/20/19'}
         numbers={14}
       />
       <TrackingRow
+        id="workoutGoal2"
         goal="How many pushups can you do from the ground on the last round?"
         date={'8/20/19'}
         numbers={14}
       />
       <TrackingRow
+        id="workoutGoal3"
         goal="How many pushups can you do from the ground on the last round?"
         date={'8/20/19'}
         numbers={14}
@@ -30,8 +33,7 @@ const TrackingChart = () => {
 export default TrackingChart
 
 const ChartContainer = styled.div`
-  margin: 60px 0 0 0;
-  padding: 0 16px;
+  display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
   width: 100%;

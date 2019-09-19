@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 import WorkoutCardHeader from './WorkoutCardHeader'
 import ChooseProgramHeader from './ProgramHeaders/ChooseProgramHeader'
@@ -18,30 +18,25 @@ const WorkoutProgramCard = ({
   description
 }) => {
   return (
-    <Link
-      to={isProgram ? `/program/${programId}` : '#'}
-      style={{ textDecoration: 'none' }}
-    >
-      <CardContainer>
-        {isWorkout ? (
-          <WorkoutCardHeader
-            background={coverImage}
-            altText="Text"
-            title="Title"
-          />
-        ) : null}
-        {isProgram ? (
-          <ChooseProgramHeader programId={programId} coverImage={coverImage} />
-        ) : null}
-        <WorkoutProgramDescription
-          isWorkout={isWorkout}
-          title={title}
-          description={description}
+    <CardContainer>
+      {isWorkout ? (
+        <WorkoutCardHeader
+          background={coverImage}
+          altText="Text"
+          title="Title"
         />
-        {isWorkout ? <WorkoutCardFooter workoutId={workoutId} /> : null}
-        {isProgram ? <ProgramCardFooter programId={programId} /> : null}
-      </CardContainer>
-    </Link>
+      ) : null}
+      {isProgram ? (
+        <ChooseProgramHeader programId={programId} coverImage={coverImage} />
+      ) : null}
+      <WorkoutProgramDescription
+        isWorkout={isWorkout}
+        title={title}
+        description={description}
+      />
+      {isWorkout ? <WorkoutCardFooter workoutId={workoutId} /> : null}
+      {isProgram ? <ProgramCardFooter programId={programId} /> : null}
+    </CardContainer>
   )
 }
 
@@ -56,3 +51,12 @@ const CardContainer = styled.div`
   max-width: 390px;
   box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.3);
 `
+
+/* <Link
+      to={
+        isProgram
+          ? `/program/${programId}`
+          : `/program/${programId}/${workoutId}`
+      }
+      style={{ textDecoration: 'none' }}
+    ></Link> */

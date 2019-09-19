@@ -22,8 +22,6 @@ const DownloadTrackingSection = () => {
 export default DownloadTrackingSection
 
 const FormContainer = styled.div`
-  margin: 100px 0 0 0;
-  padding: 0 16px;
   display: flex;
   flex-direction: column;
 `

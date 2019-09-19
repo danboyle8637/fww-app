@@ -1,8 +1,9 @@
 import React from 'react'
 
-const PlayButton = ({ width, height, className }) => {
+const PlayButton = ({ width, height, className, handleToggleVideo }) => {
   return (
     <svg
+      onClick={handleToggleVideo}
       id="play-icon"
       xmlns="http://www.w3.org/2000/svg"
       className={className}

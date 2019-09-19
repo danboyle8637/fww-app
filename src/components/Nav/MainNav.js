@@ -37,7 +37,7 @@ const MainNavBar = styled.header`
   justify-content: flex-end;
   align-items: center;
   width: 100%;
-  z-index: 9999;
+  z-index: 16;
   ${above.mobile`
     justify-content: space-between;
   `}

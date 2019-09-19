@@ -17,7 +17,7 @@ const ResetStep3Form = ({ showNode, reverse, handleReverseStep3 }) => {
   const [formState, _] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
   // eslint-disable-next-line
-  const [userState, dispatch] = useUserContext()
+  const [userState, dispatchUserAction] = useUserContext()
   const [toDashboard, setToDashboard] = useState(false)
 
   const handleSignUpForm = event => {
@@ -54,7 +54,7 @@ const ResetStep3Form = ({ showNode, reverse, handleReverseStep3 }) => {
         })
           .then(response => response.json())
           .then(data => {
-            dispatch({
+            dispatchUserAction({
               type: 'setLoggedInUser',
               value: {
                 firstName: data.firstName,

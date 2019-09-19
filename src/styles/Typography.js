@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { above } from '../styles/Theme'
 
 const WorkoutPageHeadline = styled.h3`
   font-size: 32px;
@@ -21,6 +22,9 @@ const MenuLabel = styled.p`
   letter-spacing: 1.6px;
   line-height: 1;
   color: ${props => props.theme.whiteText};
+  ${above.tablet`
+    font-size: 12px;
+  `}
 `
 
 const Header1 = styled.h1`

@@ -3,13 +3,30 @@ import styled from 'styled-components'
 
 import { WorkoutSectionGrid } from '../../styles/Containers'
 import PlayButton from '../../svgs/PlayButton'
-import WorkoutImage from '../../images/strong-reset-workout1-cover.jpg'
+import Portal from '../Shared/Portal'
+import PopUpVideo from '../WorkoutPage/PopUpVideo'
+import { usePortalContext } from '../../context/portalContext'
+import { above } from '../../styles/Theme'
 
-const WorkoutSection = ({ title, altText }) => {
+const WorkoutSection = ({ workoutBackground, name }) => {
+  // eslint-disable-next-line
+  const [portalState, dispatch] = usePortalContext()
+
+  const handleToggleVideo = () => {
+    dispatch({ type: 'toggleWorkoutVideo' })
+  }
+
   return (
     <WorkoutSectionGrid>
-      <BackgroundImage src={WorkoutImage} title={title} alt={altText} />
-      <Play />
+      <BackgroundImage 
+        src={workoutBackground} 
+        title={`${name} workout background`} 
+        alt={`Let's do the ${name} together and get the ultimate burn, press the play button.`} 
+      />
+      <Play handleToggleVideo={handleToggleVideo} />
+      <Portal>
+        <PopUpVideo title={'Workout'} />
+      </Portal>
     </WorkoutSectionGrid>
   )
 }
@@ -30,4 +47,7 @@ const Play = styled(PlayButton)`
   justify-self: center;
   width: 60px;
   z-index: 1;
+  ${above.mobile`
+    width: 80px;
+  `}
 `
