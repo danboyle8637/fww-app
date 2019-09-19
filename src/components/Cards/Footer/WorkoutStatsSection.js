@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import WorkoutCompletedSection from './WorkoutCompletedSection'
 import WorkoutFavoriteSection from './WorkoutFavoriteSection'
 
-const WorkoutStatsSection = ({ stats }) => {
+const WorkoutStatsSection = ({ workoutStats }) => {
   return (
     <SectionContainer>
-      <WorkoutCompletedSection completed={stats.completed} />
-      <WorkoutFavoriteSection isFavorite={stats.isFavorite} />
+      <WorkoutCompletedSection completed={workoutStats.completed} />
+      <WorkoutFavoriteSection isFavorite={workoutStats.isFavorite} />
     </SectionContainer>
   )
 }

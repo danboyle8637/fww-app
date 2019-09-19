@@ -13,30 +13,21 @@ const useUpdateWorkoutStatsControls = () => {
       case 'complete1': {
         dispatchStatAction({
           type: 'setComplete1',
-          value: {
-            checkbox: inputName,
-            workoutId: workoutId
-          }
+          value: workoutId
         })
         break
       }
       case 'complete2': {
         dispatchStatAction({
           type: 'setComplete2',
-          value: {
-            checkbox: inputName,
-            workoutId: workoutId
-          }
+          value: workoutId
         })
         break
       }
       case 'complete3': {
         dispatchStatAction({
           type: 'setComplete3',
-          value: {
-            checkbox: inputName,
-            workoutId: workoutId
-          }
+          value: workoutId
         })
         break
       }

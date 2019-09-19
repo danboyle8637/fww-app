@@ -2,12 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 
 import CompleteWorkoutCheckboxInput from './Inputs/CompleteWorkoutCheckboxInput'
-import { useFormStore } from '../../context/FormContext'
 import useStatsControls from '../../hooks/useStatsControls'
 
 const CompleteWorkoutForm = ({ workoutId, completed }) => {
-  // eslint-disable-next-line
-  const [formState, dispatchFormAction] = useFormStore()
   // eslint-disable-next-line
   const [updateCheckboxValues] = useStatsControls()
 

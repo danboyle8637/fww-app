@@ -17,18 +17,19 @@ const TrackingRow = ({ id, goal, date, numbers }) => {
     dispatchPortalAction({ type: 'toggleDialogBox', value: id })
   }
 
+  const desktopGoal = date ? <TableCell data={true}>{goal}</TableCell> : null
+  const mobileGoal = date ? (
+    <MobileGoalDialogIcon handleToggleInfoDialog={handleToggleInfoDialog} />
+  ) : null
+
   return (
     <RowContainer>
-      {device === 'mobile' || device === 'tablet' ? (
-        <MobileGoalDialogIcon handleToggleInfoDialog={handleToggleInfoDialog} />
-      ) : (
-        <TableCell data={true}>{goal}</TableCell>
-      )}
+      {device === 'mobile' || device === 'tablet' ? mobileGoal : desktopGoal}
       <TableCell data={true} center={true}>
-        {date}
+        {date || null}
       </TableCell>
       <TableCell data={true} center={true}>
-        {numbers}
+        {numbers || null}
       </TableCell>
       <Portal>
         <InfoDialog

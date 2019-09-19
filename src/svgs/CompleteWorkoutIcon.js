@@ -12,22 +12,12 @@ const CompleteWorkoutIcon = ({ width, height, className, isComplete }) => {
   const timeline = useRef(new TimelineMax({ paused: true }))
 
   useEffect(() => {
-    let firstRender = true
     const circleFill = circleFillRef.current
     const check = checkRef.current
     const tl = timeline.current
 
-    if (isComplete && firstRender) {
-      // Set the tween to the end of the animation
-      TweenMax.set(circleFill, { scale: 1 })
-      TweenMax.set(check, { drawSVG: '100% 0%' })
-      firstRender = false
-    } else {
-      // Set the tween to the beginning of the animation
-      TweenMax.set(circleFill, { transformOrigin: '50% 50%', scale: 0 })
-      TweenMax.set(check, { drawSVG: '100% 100%' })
-      firstRender = false
-    }
+    TweenMax.set(circleFill, { transformOrigin: '50% 50%', scale: 0 })
+    TweenMax.set(check, { drawSVG: '100% 100%' })
 
     tl.to(circleFill, 0.3, {
       scale: 1,
@@ -37,29 +27,22 @@ const CompleteWorkoutIcon = ({ width, height, className, isComplete }) => {
       ease: Power2.easeOut
     })
 
+    // Clean up the tweens
+    return () => {
+      tl.kill(null, circleFill)
+      tl.kill(null, check)
+    }
+  }, [])
+
+  useEffect(() => {
+    const tl = timeline.current
+
     if (isComplete) {
       tl.play()
     } else {
       tl.reverse()
     }
-
-    // Clean up the tweens
-    return () => {
-      tl.kill(null, circleFill)
-      tl.kill(null, check)
-      firstRender = true
-    }
   }, [isComplete])
-
-  // useEffect(() => {
-  //   const tl = timeline.current
-
-  //   if (isComplete) {
-  //     tl.play()
-  //   } else {
-  //     tl.reverse()
-  //   }
-  // }, [isComplete])
 
   return (
     <svg

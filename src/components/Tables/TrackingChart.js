@@ -4,27 +4,30 @@ import styled from 'styled-components'
 import HeaderRow from './HeaderRow'
 import TrackingRow from './TrackingRow'
 
-const TrackingChart = () => {
+const TrackingChart = ({ trackingGoal, trackingStats }) => {
+  const { trackingStats1, trackingStats2, trackingStats3 } = trackingStats
+
+  // TODO Create a placeholder for the chart if there is no data available
   return (
     <ChartContainer>
       <HeaderRow />
       <TrackingRow
         id="workoutGoal1"
-        goal="How many pushups can you do from the ground on the last round?"
-        date={'8/20/19'}
-        numbers={14}
+        goal={trackingGoal}
+        date={trackingStats1.timestamp}
+        numbers={trackingStats1.number}
       />
       <TrackingRow
         id="workoutGoal2"
-        goal="How many pushups can you do from the ground on the last round?"
-        date={'8/20/19'}
-        numbers={14}
+        goal={trackingGoal}
+        date={trackingStats2.timestamp}
+        numbers={trackingStats2.number}
       />
       <TrackingRow
         id="workoutGoal3"
-        goal="How many pushups can you do from the ground on the last round?"
-        date={'8/20/19'}
-        numbers={14}
+        goal={trackingGoal}
+        date={trackingStats3.timestamp}
+        numbers={trackingStats3.number}
       />
     </ChartContainer>
   )

@@ -16,7 +16,6 @@ const ResetProgramDashboard = ({ match }) => {
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
 
   useEffect(() => {
-    console.log(match)
     const programData = {
       programId: match.params.programId
     }
@@ -26,7 +25,7 @@ const ResetProgramDashboard = ({ match }) => {
 
     if (
       workoutsState.workouts.length === 0 &&
-      workoutStatsState.stats.length === 0
+      Object.keys(workoutStatsState).length === 0
     ) {
       console.log('Fetching Data - Setting Up Workout State and Stats State')
       fetch(`${baseUrl}${getWorkoutsPath}`, {
@@ -56,7 +55,7 @@ const ResetProgramDashboard = ({ match }) => {
 
           const trackingRequest = {
             programId: programData.programId,
-            username: userState.username, // TODO Switch this out - userState.username
+            username: 'pampam', // TODO Switch this out - userState.username
             workoutsArray: workoutTrackingArray
           }
 
@@ -68,7 +67,6 @@ const ResetProgramDashboard = ({ match }) => {
             .then(data => {
               const keyArray = Object.keys(data)
               if (keyArray.includes('stats')) {
-                console.log(data.stats)
                 dispatchStatsAction({
                   type: 'setWorkoutStatsState',
                   value: data.stats
@@ -98,13 +96,13 @@ const ResetProgramDashboard = ({ match }) => {
   useEffect(() => {
     if (
       workoutsState.workouts.length > 0 &&
-      workoutStatsState.stats.length > 0
+      Object.keys(workoutStatsState).length > 0
     ) {
       setIsLoadingWorkouts(false)
     } else {
       setIsLoadingWorkouts(true)
     }
-  }, [workoutStatsState.stats, workoutsState.workouts])
+  }, [workoutStatsState, workoutsState.workouts])
 
   const renderWorkouts = () => {
     const workouts = workoutsState.workouts.map(workout => {
@@ -114,9 +112,7 @@ const ResetProgramDashboard = ({ match }) => {
       const description = workout.description
       const workoutId = workout.workoutId
 
-      const workoutStats = workoutStatsState.stats.find(statObj => {
-        return statObj.workoutId === workoutId
-      })
+      const workoutStats = workoutStatsState.stats[`${workoutId}`]
 
       return (
         <Link

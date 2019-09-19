@@ -44,9 +44,9 @@ const DialogContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   border-radius: 8px;
-  background: ${props => props.theme.mainBackgroundBorderColor};
+  background: ${props => props.theme.strongBodyText};
   border: 2px solid ${props => props.theme.primaryAccent};
-  box-shadow: 0 3px 16px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 16px 6px rgba(0, 0, 0, 0.4);
   z-index: 16;
 `
 
@@ -54,7 +54,7 @@ const DialogText = styled.p`
   margin: 0;
   padding: 0;
   font-size: 16px;
-  color: ${props => props.theme.whiteText};
+  color: ${props => props.theme.mainBackgroundColor};
   line-height: 1.8;
 `
 

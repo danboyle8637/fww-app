@@ -2,11 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 
 import FavoriteWorkoutCheckboxInput from './Inputs/FavoriteWorkoutCheckboxInput'
+import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 import useStatsControls from '../../hooks/useStatsControls'
 
-const FavoriteWorkoutForm = ({ workoutId, isFavorite }) => {
+const FavoriteWorkoutForm = ({ workoutId }) => {
   // eslint-disable-next-line
   const [updateCheckboxValues] = useStatsControls()
+  // eslint-disable-next-line
+  const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
+
+  const isFavorite = workoutStatsState.stats[workoutId].isFavorite
 
   return (
     <FormContainer>

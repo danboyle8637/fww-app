@@ -8,7 +8,7 @@ import {
   WorkoutPageDescription
 } from '../../styles/Typography'
 
-const CompleteFavoriteWorkoutForm = ({ workoutId, completed, isFavorite }) => {
+const CompleteFavoriteWorkoutForm = ({ workoutId, completed }) => {
   return (
     <FormContainer>
       <WorkoutPageHeadline>Complete It:</WorkoutPageHeadline>
@@ -18,7 +18,7 @@ const CompleteFavoriteWorkoutForm = ({ workoutId, completed, isFavorite }) => {
       </WorkoutPageDescription>
       <CheckBoxWrapper>
         <CompleteWorkoutForm workoutId={workoutId} completed={completed} />
-        <FavoriteWorkoutForm workoutId={workoutId} isFavorite={isFavorite} />
+        <FavoriteWorkoutForm workoutId={workoutId} />
       </CheckBoxWrapper>
     </FormContainer>
   )

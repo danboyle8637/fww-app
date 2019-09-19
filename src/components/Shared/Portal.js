@@ -1,19 +1,26 @@
-import { useEffect } from 'react'
+import { Component } from 'react'
 import { createPortal } from 'react-dom'
 
 const portalContainer = document.getElementById('portal')
-const element = document.createElement('div')
 
-const Portal = ({ children, node }) => {
-  useEffect(() => {
-    portalContainer.appendChild(element)
+class Portal extends Component {
+  constructor(props) {
+    super(props)
 
-    return () => {
-      portalContainer.removeChild(element)
-    }
-  }, [node])
+    this.el = document.createElement('div')
+  }
 
-  return createPortal(children, element)
+  componentDidMount() {
+    portalContainer.appendChild(this.el)
+  }
+
+  componentWillUnmount() {
+    portalContainer.removeChild(this.el)
+  }
+
+  render() {
+    return createPortal(this.props.children, this.el)
+  }
 }
 
 export default Portal

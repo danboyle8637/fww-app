@@ -9,15 +9,11 @@ const WorkoutCardFooter = ({ workoutId }) => {
   // eslint-disable-next-line
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
 
-  const stats = workoutStatsState.stats.find(element => {
-    return element.workoutId === workoutId
-  })
-
-  console.log(stats)
+  const workoutStats = workoutStatsState.stats[`${workoutId}`]
 
   return (
     <FooterContainer>
-      <WorkoutStatsSection stats={stats} />
+      <WorkoutStatsSection workoutStats={workoutStats} />
       <NavigationArrow />
     </FooterContainer>
   )

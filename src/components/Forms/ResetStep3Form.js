@@ -60,7 +60,7 @@ const ResetStep3Form = ({ showNode, reverse, handleReverseStep3 }) => {
                 firstName: data.firstName,
                 username: data.username,
                 photoUrl: data.photoUrl,
-                program: data.program
+                programs: data.programs
               }
             })
             setToDashboard(true)

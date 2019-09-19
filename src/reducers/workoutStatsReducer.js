@@ -1,85 +1,84 @@
-const workoutStatsState = {
-  stats: []
-}
+const workoutStatsState = {}
 
 const workoutStatsReducer = (state, action) => {
   switch (action.type) {
     case 'setWorkoutStatsState': {
-      const workoutStatsArray = action.value
-
-      const newWorkoutStatsState = workoutStatsArray.reduce(
-        (accumulator, currentValue) => {
-          accumulator.push({ ...currentValue })
-
-          return accumulator
-        },
-        []
-      )
+      const stats = action.value
 
       return {
-        stats: newWorkoutStatsState
+        stats
       }
     }
     case 'setComplete1': {
-      const workoutId = action.value.workoutId
-      let selectedIndex
+      const workoutId = action.value
 
-      const activeWorkout = state.stats.find((workout, index) => {
-        selectedIndex = index
-        return workout.workoutId === workoutId
-      })
+      const workoutStats = state.stats[workoutId]
 
-      const copyOfWorkout = { ...activeWorkout }
+      const copyOfWorkoutStats = { ...workoutStats }
 
-      copyOfWorkout.completed.complete1.isComplete = true
+      copyOfWorkoutStats.completed.complete1.isComplete = true
+
+      state.stats[workoutId] = copyOfWorkoutStats
 
       return {
-        stats: [...state.stats, (state.stats[selectedIndex] = copyOfWorkout)]
+        ...state
       }
     }
     case 'setComplete2': {
-      const workoutId = action.value.workoutId
+      console.log(state)
+      const workoutId = action.value
 
-      const activeWorkout = state.stats.find(workout => {
-        return workout.workoutId === workoutId
-      })
+      const workoutStats = state.stats[workoutId]
 
-      const copyOfWorkout = { ...activeWorkout }
+      const copyOfWorkoutStats = { ...workoutStats }
 
-      copyOfWorkout.completed.complete2.isComplete = true
+      if (copyOfWorkoutStats.completed.complete1.isComplete) {
+        copyOfWorkoutStats.completed.complete2.isComplete = true
+
+        state.stats[workoutId] = copyOfWorkoutStats
+      } else {
+        console.log('Must complete the workout for a first time... first.')
+        return state
+      }
 
       return {
-        stats: [...state.stats, copyOfWorkout]
+        ...state
       }
     }
     case 'setComplete3': {
-      const workoutId = action.value.workoutId
+      const workoutId = action.value
+      const isFirstCompleted =
+        state.stats[workoutId].completed.complete1.isComplete
+      const isSecondCompleted =
+        state.stats[workoutId].completed.complete2.isComplete
 
-      const activeWorkout = state.stats.find(workout => {
-        return workout.workoutId === workoutId
-      })
+      if (isFirstCompleted && isSecondCompleted) {
+        const workoutStats = state.stats[workoutId]
 
-      const copyOfWorkout = { ...activeWorkout }
+        const copyOfWorkoutStats = { ...workoutStats }
 
-      copyOfWorkout.completed.complete3.isComplete = true
+        copyOfWorkoutStats.completed.complete3.isComplete = true
+
+        state.stats[workoutId] = copyOfWorkoutStats
+      }
 
       return {
-        stats: [...state.stats, copyOfWorkout]
+        ...state
       }
     }
     case 'toggleIsFavoriteWorkout': {
       const workoutId = action.value
 
-      const activeWorkout = state.stats.find(workout => {
-        return workout.workoutId === workoutId
-      })
+      const workoutStats = state.stats[workoutId]
 
-      const copyOfWorkout = { ...activeWorkout }
+      const copyOfWorkoutStats = { ...workoutStats }
 
-      copyOfWorkout.isFavorite = !copyOfWorkout.isFavorite
+      copyOfWorkoutStats.isFavorite = !copyOfWorkoutStats.isFavorite
+
+      state.stats[workoutId] = copyOfWorkoutStats
 
       return {
-        stats: [...state.stats, copyOfWorkout]
+        ...state
       }
     }
     case 'cleanWorkoutStatsState': {

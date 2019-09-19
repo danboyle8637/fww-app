@@ -28,6 +28,12 @@ const WorkoutTrackingForm = ({ trackingGoal }) => {
   const handlePostWorkoutNumber = event => {
     event.preventDefault()
 
+    // Update local start first with a timestamp
+
+    // Do a post request to the data base to update the database.
+    // Use the timestamp and send it with the request
+    // On success you need to let the user know somehow
+
     console.log('Posting workout numbers to database')
   }
 

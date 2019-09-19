@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import ResetWorkoutPageHeader from '../components/PageHeaders/ResetWorkoutPageHeader'
@@ -18,12 +18,7 @@ const ResetWorkout = ({ location }) => {
     trackingSheetUrl
   } = location.state.workout
 
-  const {
-    workoutId,
-    completed,
-    isFavorite,
-    trackingStats
-  } = location.state.stats
+  const { workoutId, completed, trackingStats } = location.state.stats
 
   return (
     <>
@@ -35,13 +30,15 @@ const ResetWorkout = ({ location }) => {
       />
       <Row1Wrapper>
         <WorkoutTrackingForm trackingGoal={trackingGoal} />
-        <TrackingChart trackingStats={trackingStats} />
+        <TrackingChart
+          trackingGoal={trackingGoal}
+          trackingStats={trackingStats}
+        />
       </Row1Wrapper>
       <Row2Wrapper>
         <CompleteFavoriteWorkoutForm
           workoutId={workoutId}
           completed={completed}
-          isFavorite={isFavorite}
         />
         <DownloadTrackingSheet trackingSheet={trackingSheetUrl} />
       </Row2Wrapper>
