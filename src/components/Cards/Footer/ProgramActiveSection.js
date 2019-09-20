@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import FooterCircleIcon from './FooterCircleIcon'
@@ -7,12 +7,19 @@ import { useUserContext } from '../../../context/UserContext'
 const ProgramActiveSection = ({ programId }) => {
   // eslint-disable-next-line
   const [userState, dispatch] = useUserContext()
+  const [isActive, setIsActive] = useState(false)
 
-  const activeProgram = userState.programs.includes(programId)
+  useEffect(() => {
+    if (Object.values(userState).length !== 0) {
+      if (userState.programs.includes(programId)) {
+        setIsActive(true)
+      }
+    }
+  }, [programId, userState])
 
   return (
     <ActiveContainer>
-      <FooterCircleIcon active={activeProgram} />
+      <FooterCircleIcon active={isActive} />
       <ActiveLabel>Active</ActiveLabel>
     </ActiveContainer>
   )

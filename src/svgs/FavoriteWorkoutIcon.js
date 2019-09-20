@@ -2,7 +2,13 @@ import React, { useEffect, useRef } from 'react'
 import { TweenMax, Power2 } from 'gsap/TweenMax'
 import TimelineMax from 'gsap/TimelineMax'
 
-const FavoriteWorkoutIcon = ({ width, height, className, isFavorite }) => {
+const FavoriteWorkoutIcon = ({
+  width,
+  height,
+  className,
+  isFavorite,
+  handleFavoriteWorkoutClick
+}) => {
   const circleFillRef = useRef(null)
   const heartRef = useRef(null)
   const heartPulseRef = useRef(null)
@@ -64,6 +70,7 @@ const FavoriteWorkoutIcon = ({ width, height, className, isFavorite }) => {
 
   return (
     <svg
+      onClick={handleFavoriteWorkoutClick}
       id="favorite-checkmark"
       xmlns="http://www.w3.org/2000/svg"
       className={className}

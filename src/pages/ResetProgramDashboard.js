@@ -6,103 +6,109 @@ import WorkoutCard from '../components/Cards/WorkoutProgramCard'
 import { useWorkoutState } from '../context/WorkoutsContext'
 import { useUserContext } from '../context/UserContext'
 import { useWorkoutStatsContext } from '../context/WorkoutStatsContext'
-import siteConfig from '../utils/siteConfig'
+// import siteConfig from '../utils/siteConfig'
 
 const ResetProgramDashboard = ({ match }) => {
   const [isLoadingWorkouts, setIsLoadingWorkouts] = useState(true)
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  // eslint-disable-next-line
   const [workoutsState, dispatchWorkoutsAction] = useWorkoutState()
+  // eslint-disable-next-line
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
 
   useEffect(() => {
-    const programData = {
-      programId: match.params.programId
-    }
-    const baseUrl = siteConfig.api.baseUrl
-    const getWorkoutsPath = '/get-workouts'
-    const setupTrackingPath = '/setup-workout-tracking'
+    setIsLoadingWorkouts(false)
+  }, [])
 
-    if (
-      workoutsState.workouts.length === 0 &&
-      Object.keys(workoutStatsState).length === 0
-    ) {
-      console.log('Fetching Data - Setting Up Workout State and Stats State')
-      fetch(`${baseUrl}${getWorkoutsPath}`, {
-        method: 'POST',
-        body: JSON.stringify(programData)
-      })
-        .then(response => response.json())
-        .then(workoutsArray => {
-          const array = workoutsArray.workouts
-          dispatchWorkoutsAction({
-            type: 'setWorkoutsState',
-            value: array
-          })
+  // useEffect(() => {
+  //   const programData = {
+  //     programId: match.params.programId
+  //   }
+  //   const baseUrl = siteConfig.api.baseUrl
+  //   const getWorkoutsPath = '/get-workouts'
+  //   const setupTrackingPath = '/setup-workout-tracking'
 
-          const workoutTrackingArray = array.reduce(
-            (accumulator, currentValue) => {
-              const workoutName = currentValue.name
-              const workoutId = currentValue.workoutId
-              const workoutObject = { workoutId: workoutId, name: workoutName }
+  //   if (
+  //     workoutsState.workouts.length === 0 &&
+  //     Object.keys(workoutStatsState.stats).length === 0
+  //   ) {
+  //     console.log('Fetching Data - Setting Up Workout State and Stats State')
+  //     fetch(`${baseUrl}${getWorkoutsPath}`, {
+  //       method: 'POST',
+  //       body: JSON.stringify(programData)
+  //     })
+  //       .then(response => response.json())
+  //       .then(workoutsArray => {
+  //         const array = workoutsArray.workouts
+  //         dispatchWorkoutsAction({
+  //           type: 'setWorkoutsState',
+  //           value: array
+  //         })
 
-              accumulator.push(workoutObject)
+  //         const workoutTrackingArray = array.reduce(
+  //           (accumulator, currentValue) => {
+  //             const workoutName = currentValue.name
+  //             const workoutId = currentValue.workoutId
+  //             const workoutObject = { workoutId: workoutId, name: workoutName }
 
-              return accumulator
-            },
-            []
-          )
+  //             accumulator.push(workoutObject)
 
-          const trackingRequest = {
-            programId: programData.programId,
-            username: 'pampam', // TODO Switch this out - userState.username
-            workoutsArray: workoutTrackingArray
-          }
+  //             return accumulator
+  //           },
+  //           []
+  //         )
 
-          fetch(`${baseUrl}${setupTrackingPath}`, {
-            method: 'POST',
-            body: JSON.stringify(trackingRequest)
-          })
-            .then(response => response.json())
-            .then(data => {
-              const keyArray = Object.keys(data)
-              if (keyArray.includes('stats')) {
-                dispatchStatsAction({
-                  type: 'setWorkoutStatsState',
-                  value: data.stats
-                })
-              }
-            })
-            .catch(error => {
-              // TODO Hand this error of not getting the tracking setup.
-              console.log(error)
-            })
-        })
-        .catch(error => {
-          // TODO Handle this error about getting the workouts
-          console.log('Error getting workouts from the database.', error)
-        })
-    }
-  }, [
-    dispatchStatsAction,
-    dispatchWorkoutsAction,
-    match,
-    userState.username,
-    workoutStatsState,
-    workoutsState
-  ])
+  //         const trackingRequest = {
+  //           programId: programData.programId,
+  //           username: 'pampam', // TODO Switch this out - userState.username
+  //           workoutsArray: workoutTrackingArray
+  //         }
 
-  // TODO: Only this time check for the state that actually matters.
-  useEffect(() => {
-    if (
-      workoutsState.workouts.length > 0 &&
-      Object.keys(workoutStatsState).length > 0
-    ) {
-      setIsLoadingWorkouts(false)
-    } else {
-      setIsLoadingWorkouts(true)
-    }
-  }, [workoutStatsState, workoutsState.workouts])
+  //         fetch(`${baseUrl}${setupTrackingPath}`, {
+  //           method: 'POST',
+  //           body: JSON.stringify(trackingRequest)
+  //         })
+  //           .then(response => response.json())
+  //           .then(data => {
+  //             const keyArray = Object.keys(data)
+  //             if (keyArray.includes('stats')) {
+  //               dispatchStatsAction({
+  //                 type: 'setWorkoutStatsState',
+  //                 value: data.stats
+  //               })
+  //             }
+  //           })
+  //           .catch(error => {
+  //             // TODO Hand this error of not getting the tracking setup.
+  //             console.log(error)
+  //           })
+  //       })
+  //       .catch(error => {
+  //         // TODO Handle this error about getting the workouts
+  //         console.log('Error getting workouts from the database.', error)
+  //       })
+  //   }
+  // }, [
+  //   dispatchStatsAction,
+  //   dispatchWorkoutsAction,
+  //   match,
+  //   userState.username,
+  //   workoutStatsState,
+  //   workoutsState
+  // ])
+
+  // // TODO: Only this time check for the state that actually matters.
+  // useEffect(() => {
+  //   if (
+  //     workoutsState.workouts.length > 0 &&
+  //     Object.keys(workoutStatsState).length > 0
+  //   ) {
+  //     setIsLoadingWorkouts(false)
+  //   } else {
+  //     setIsLoadingWorkouts(true)
+  //   }
+  // }, [workoutStatsState, workoutsState.workouts])
 
   const renderWorkouts = () => {
     const workouts = workoutsState.workouts.map(workout => {

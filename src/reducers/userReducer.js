@@ -1,9 +1,4 @@
-const userState = {
-  firstName: '',
-  username: '',
-  photoUrl: '',
-  programs: []
-}
+const userState = {}
 
 const userReducer = (state, action) => {
   switch (action.type) {

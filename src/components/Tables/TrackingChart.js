@@ -5,7 +5,7 @@ import HeaderRow from './HeaderRow'
 import TrackingRow from './TrackingRow'
 
 const TrackingChart = ({ trackingGoal, trackingStats }) => {
-  const { trackingStats1, trackingStats2, trackingStats3 } = trackingStats
+  const { first, second, third } = trackingStats
 
   // TODO Create a placeholder for the chart if there is no data available
   return (
@@ -14,20 +14,20 @@ const TrackingChart = ({ trackingGoal, trackingStats }) => {
       <TrackingRow
         id="workoutGoal1"
         goal={trackingGoal}
-        date={trackingStats1.timestamp}
-        numbers={trackingStats1.number}
+        date={first.timestamp}
+        numbers={first.number}
       />
       <TrackingRow
         id="workoutGoal2"
         goal={trackingGoal}
-        date={trackingStats2.timestamp}
-        numbers={trackingStats2.number}
+        date={second.timestamp}
+        numbers={second.number}
       />
       <TrackingRow
         id="workoutGoal3"
         goal={trackingGoal}
-        date={trackingStats3.timestamp}
-        numbers={trackingStats3.number}
+        date={third.timestamp}
+        numbers={third.number}
       />
     </ChartContainer>
   )

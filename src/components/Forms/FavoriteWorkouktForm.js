@@ -1,34 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import FavoriteWorkoutCheckboxInput from './Inputs/FavoriteWorkoutCheckboxInput'
+import FavoriteWorkoutIcon from '../../svgs/FavoriteWorkoutIcon'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
-import useStatsControls from '../../hooks/useStatsControls'
 
 const FavoriteWorkoutForm = ({ workoutId }) => {
-  // eslint-disable-next-line
-  const [updateCheckboxValues] = useStatsControls()
   // eslint-disable-next-line
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
 
   const isFavorite = workoutStatsState.stats[workoutId].isFavorite
 
+  const handleFavoriteWorkoutClick = () => {
+    dispatchStatsAction({
+      type: 'toggleIsFavoriteWorkout',
+      value: workoutId
+    })
+    // TODO Make a network request to update the database
+  }
+
   return (
     <FormContainer>
       <Label>Mark as favorite:</Label>
-      <Form>
-        <FavoriteWorkoutCheckboxInput
-          type="checkbox"
-          options={[
-            {
-              workoutId: workoutId,
-              value: 'isFavoriteWorkout',
-              isFavorite: isFavorite
-            }
-          ]}
-          updateCheckboxValues={updateCheckboxValues}
+      <ButtonWrapper>
+        <FavoriteWorkout
+          isFavorite={isFavorite}
+          handleFavoriteWorkoutClick={handleFavoriteWorkoutClick}
         />
-      </Form>
+      </ButtonWrapper>
     </FormContainer>
   )
 }
@@ -36,20 +34,26 @@ const FavoriteWorkoutForm = ({ workoutId }) => {
 export default FavoriteWorkoutForm
 
 const FormContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
   align-items: center;
 `
 
-const Form = styled.form`
-  margin: 0 0 0 12px;
+const ButtonWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, auto);
   gap: 12px;
+  align-items: center;
+  justify-items: start;
 `
 
 const Label = styled.p`
   font-family: RobotoBold;
   font-size: 18px;
   color: ${props => props.theme.headlineSecondary};
+`
+
+const FavoriteWorkout = styled(FavoriteWorkoutIcon)`
+  width: 40px;
 `

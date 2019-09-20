@@ -4,7 +4,14 @@ import TimelineMax from 'gsap/TimelineMax'
 
 import DrawSVG from '../greensock/DrawSVGPlugin'
 
-const CompleteWorkoutIcon = ({ width, height, className, isComplete }) => {
+const CompleteWorkoutIcon = ({
+  width,
+  height,
+  className,
+  id,
+  isComplete,
+  handleCompleteWorkoutClick
+}) => {
   // eslint-disable-next-line
   const drawSVG = DrawSVG
   const circleFillRef = useRef(null)
@@ -46,6 +53,7 @@ const CompleteWorkoutIcon = ({ width, height, className, isComplete }) => {
 
   return (
     <svg
+      onClick={() => handleCompleteWorkoutClick(id)}
       id="workout-check-circle"
       xmlns="http://www.w3.org/2000/svg"
       className={className}

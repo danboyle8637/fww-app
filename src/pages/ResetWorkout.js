@@ -18,7 +18,7 @@ const ResetWorkout = ({ location }) => {
     trackingSheetUrl
   } = location.state.workout
 
-  const { workoutId, completed, trackingStats } = location.state.stats
+  const { workoutId, trackingStats } = location.state.stats
 
   return (
     <>
@@ -36,10 +36,7 @@ const ResetWorkout = ({ location }) => {
         />
       </Row1Wrapper>
       <Row2Wrapper>
-        <CompleteFavoriteWorkoutForm
-          workoutId={workoutId}
-          completed={completed}
-        />
+        <CompleteFavoriteWorkoutForm workoutId={workoutId} />
         <DownloadTrackingSheet trackingSheet={trackingSheetUrl} />
       </Row2Wrapper>
     </>
