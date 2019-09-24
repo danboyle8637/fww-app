@@ -11,6 +11,9 @@ const portalState = {
   coolDownVideo: {
     isOpen: false
   },
+  trainingPlanVideo: {
+    isOpen: false
+  },
   dialogBox: {
     openBox: '',
     boxes: [
@@ -63,6 +66,14 @@ const portalReducer = (state, action) => {
         }
       }
     }
+    case 'toggleTrainingPlanVideo': {
+      return {
+        ...state,
+        trainingPlanVideo: {
+          isOpen: !state.trainingPlanVideo.isOpen
+        }
+      }
+    }
     case 'closeVideo': {
       return {
         ...state,
@@ -73,6 +84,9 @@ const portalReducer = (state, action) => {
           isOpen: false
         },
         coolDownVideo: {
+          isOpen: false
+        },
+        trainingPlanVideo: {
           isOpen: false
         }
       }

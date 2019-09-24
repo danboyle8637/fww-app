@@ -53,14 +53,12 @@ const ResetStep3Form = ({ showNode, reverse, handleReverseStep3 }) => {
           body: JSON.stringify(signUpData)
         })
           .then(response => response.json())
-          .then(data => {
+          .then(userData => {
             dispatchUserAction({
               type: 'setLoggedInUser',
               value: {
-                firstName: data.firstName,
-                username: data.username,
-                photoUrl: data.photoUrl,
-                programs: data.programs
+                userData: userData,
+                photoUrl: userData.photoUrl
               }
             })
             setToDashboard(true)

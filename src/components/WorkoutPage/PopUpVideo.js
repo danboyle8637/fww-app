@@ -12,6 +12,7 @@ const PopUpVideo = ({ title }) => {
   const workoutIsOpen = portalState.workoutVideo.isOpen
   const warmUpIsOpen = portalState.warmUpVideo.isOpen
   const coolDownIsOpen = portalState.coolDownVideo.isOpen
+  const trainingPlanIsOpen = portalState.trainingPlanVideo.isOpen
 
   useEffect(() => {
     if (title === 'Workout') {
@@ -25,7 +26,11 @@ const PopUpVideo = ({ title }) => {
     if (title === 'Warm Up') {
       setShowVideo(warmUpIsOpen)
     }
-  }, [workoutIsOpen, warmUpIsOpen, coolDownIsOpen, title])
+
+    if (title === 'Training Plan') {
+      setShowVideo(trainingPlanIsOpen)
+    }
+  }, [workoutIsOpen, warmUpIsOpen, coolDownIsOpen, title, trainingPlanIsOpen])
 
   return (
     <VideoTransition showVideo={showVideo}>

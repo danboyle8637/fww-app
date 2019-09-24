@@ -73,17 +73,11 @@ const LoginUsernamePassword = ({
         })
           .then(response => response.json())
           .then(userData => {
-            const firstName = userData.firstName
-            const programsArray = userData.programs
-            const username = userData.username
-
             dispatchUserAction({
               type: 'setLoggedInUser',
               value: {
-                firstName: firstName,
-                username: username,
-                photoUrl: photoUrl,
-                programs: programsArray
+                userData: userData,
+                photoUrl: photoUrl
               }
             })
 

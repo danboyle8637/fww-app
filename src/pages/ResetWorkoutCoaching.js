@@ -1,7 +1,15 @@
 import React from 'react'
 
+import VimeoPlayer from '../components/Shared/VimeoPlayer'
+import ResetWorkoutPageHeader from '../components/PageHeaders/ResetWorkoutPageHeader'
+
 const ResetWorkoutCoaching = () => {
-  return <div>Reset Workout Coaching Video and Page</div>
+  return (
+    <>
+      <ResetWorkoutPageHeader name="Coaching" />
+      <VimeoPlayer videoId={'355818758'} />
+    </>
+  )
 }
 
 export default ResetWorkoutCoaching

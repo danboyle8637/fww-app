@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 import ResetProgramDashboardHeader from '../components/PageHeaders/ResetProgramDashboardHeader'
 import WorkoutCard from '../components/Cards/WorkoutProgramCard'
+import DashboardStatsCard from '../components/Cards/DashboardStatsCard'
 import { useWorkoutState } from '../context/WorkoutsContext'
 import { useUserContext } from '../context/UserContext'
 import { useWorkoutStatsContext } from '../context/WorkoutStatsContext'
@@ -19,7 +21,7 @@ const ResetProgramDashboard = ({ match }) => {
 
   useEffect(() => {
     setIsLoadingWorkouts(false)
-  }, [])
+  }, [match])
 
   // useEffect(() => {
   //   const programData = {
@@ -147,11 +149,32 @@ const ResetProgramDashboard = ({ match }) => {
   }
 
   return (
-    <>
-      <ResetProgramDashboardHeader programId={match.params.name} />
-      {isLoadingWorkouts ? <div>Loading...</div> : <>{renderWorkouts()}</>}
-    </>
+    <ProgramDashboardContainer>
+      <ResetProgramDashboardHeader programId={match.params.programId} />
+      <DashboardStatsCard />
+      <WorkoutCardWrapper>
+        {isLoadingWorkouts ? <div>Loading...</div> : <>{renderWorkouts()}</>}
+      </WorkoutCardWrapper>
+    </ProgramDashboardContainer>
   )
 }
 
 export default ResetProgramDashboard
+
+const ProgramDashboardContainer = styled.div`
+  margin: 80px 0 80px 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 60px;
+  justify-items: center;
+`
+
+const WorkoutCardWrapper = styled.div`
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 40px;
+  justify-items: center;
+`

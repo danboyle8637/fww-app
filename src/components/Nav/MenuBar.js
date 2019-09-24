@@ -1,19 +1,32 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import MenuTransition from '../../Animations/Transitions/MenuTransition'
 import MemberNav from './MemberNav'
+import NonMemberNav from './NonMemberNav'
+import { useUserContext } from '../../context/UserContext'
 import { usePortalContext } from '../../context/portalContext'
 import { above } from '../../styles/Theme'
 
 const MenuBar = () => {
   // eslint-disable-next-line
-  const [portalState, dispatch] = usePortalContext()
+  const [portalState, dispatchPortalAction] = usePortalContext()
+  // eslint-disable-next-line
+  const [userState, dispatchUserAction] = useUserContext()
+  const [showNonMemberMenu, setShowNonMemberMenu] = useState(true)
+
+  useEffect(() => {
+    if (Object.keys(userState).length === 0) {
+      setShowNonMemberMenu(true)
+    } else {
+      setShowNonMemberMenu(false)
+    }
+  }, [userState])
 
   return (
     <MenuTransition menuOpen={portalState.menu.isOpen}>
       <MenuContainer>
-        <MemberNav />
+        {showNonMemberMenu ? <NonMemberNav /> : <MemberNav />}
       </MenuContainer>
     </MenuTransition>
   )

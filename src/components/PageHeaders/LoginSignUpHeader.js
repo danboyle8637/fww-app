@@ -3,11 +3,11 @@ import styled from 'styled-components'
 
 import FWWLogo from '../../svgs/FWWLogo'
 
-const LoginSignUpHeader = ({ children }) => {
+const LoginSignUpHeader = () => {
   return (
     <HeaderContainer>
       <Logo />
-      <LoginHeadline>{children}</LoginHeadline>
+      <LoginHeadline>Login</LoginHeadline>
     </HeaderContainer>
   )
 }
@@ -23,7 +23,6 @@ const HeaderContainer = styled.div`
 
 const LoginHeadline = styled.h1`
   margin: 12px 0 0 0;
-  font-family: RobotoBold, sans-serif;
   font-size: 26px;
   color: ${props => props.theme.headlinePrimary};
   letter-spacing: 0.1rem;

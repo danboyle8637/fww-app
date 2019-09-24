@@ -92,6 +92,7 @@ const Input = styled.input`
   background: ${props => props.theme.mainBackgroundColor};
   border: none;
   border-radius: 4px;
+  font-family: QuicksandSemiBold;
   font-size: 18px;
   font-weight: 400;
   color: ${props =>

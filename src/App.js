@@ -18,9 +18,10 @@ function App() {
   return (
     <>
       <Global />
-      <MainNav />
+
       <AppLayout>
         <BrowserRouter>
+          <MainNav />
           <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/dashboard" component={ResetDashboard} />

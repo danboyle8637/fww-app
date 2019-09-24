@@ -5,6 +5,7 @@ import { Redirect, Link } from 'react-router-dom'
 import FWWLogo from '../svgs/FWWLogo'
 import BaseButton from '../components/Buttons/BaseButton'
 import ProgramCard from '../components/Cards/WorkoutProgramCard'
+import HorizontalBasicUserCard from '../components/UserCards/HorizontalBasicUserCard'
 import { useUserContext } from '../context/UserContext'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
 import { useProgramsContext } from '../context/ProgramsContext'
@@ -40,7 +41,10 @@ const ResetDashboard = ({ match }) => {
           .then(userData => {
             dispatchUserAction({
               type: 'setLoggedInUser',
-              value: userData
+              value: {
+                userData: userData,
+                photoUrl: user.photoURL
+              }
             })
           })
           .catch(error => {
@@ -152,8 +156,13 @@ const ResetDashboard = ({ match }) => {
       ) : (
         <DashboardContainer>
           <Logo />
-          <UserInfo>{userState.firstName}</UserInfo>
-          {isLoadingPrograms ? <p>Loading...</p> : <>{renderPrograms()}</>}
+          <HorizontalBasicUserCard
+            photoUrl={userState.photoUrl}
+            firstName={userState.firstName}
+          />
+          <ProgramCardsWrapper>
+            {isLoadingPrograms ? <p>Loading...</p> : <>{renderPrograms()}</>}
+          </ProgramCardsWrapper>
           <BaseButton handleClick={handleSignOut}>Sign Out</BaseButton>
         </DashboardContainer>
       )}
@@ -174,9 +183,12 @@ const Logo = styled(FWWLogo)`
   width: 220px;
 `
 
-const UserInfo = styled.p`
-  margin: 20px 0 0 0;
-  font-family: QuicksandSemiBold;
-  font-size: 18px;
-  color: ${props => props.theme.bodyText};
+const ProgramCardsWrapper = styled.div`
+  margin: 60px 0 80px 0;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 40px;
+  justify-items: center;
 `
