@@ -66,7 +66,9 @@ const MenuChicklet = () => {
 export default MenuChicklet
 
 const Chicklet = styled.div`
+  grid-column: 2 / -1;
   background: transparent;
+  justify-self: end;
 `
 
 const Menu = styled(MainMenuIcon)`

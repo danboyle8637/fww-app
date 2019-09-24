@@ -18,7 +18,6 @@ function App() {
   return (
     <>
       <Global />
-
       <AppLayout>
         <BrowserRouter>
           <MainNav />

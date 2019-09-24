@@ -23,19 +23,20 @@ const ProgramBackgroundImage = styled.img`
 
 const WorkoutSectionGrid = styled.div`
   position: relative;
-  padding: 4px;
   align-self: center;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   border-radius: 14px;
   background: ${props => props.theme.mainBackgroundBorderColor};
+  border: solid 4px ${props => props.theme.mainBackgroundBorderColor};
   width: 100%;
+  overflow: hidden;
   ${above.mobile`
-    padding: 6px;
+    border: solid 6px ${props => props.theme.mainBackgroundBorderColor};
   `}
   ${above.ipadPro`
-    padding: 12px 0 0 0;
+    border: solid 6px ${props => props.theme.mainBackgroundBorderColor};
   `}
 `
 

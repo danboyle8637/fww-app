@@ -22,7 +22,6 @@ const BodyContainer = styled.div`
 const HeadlineWrapper = styled.h3`
   margin: 0;
   padding: 0;
-  font-family: RobotoBold;
   font-size: 22px;
   color: ${props => props.theme.headlinePrimary};
   text-transform: uppercase;

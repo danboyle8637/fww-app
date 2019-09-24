@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import FWWLogo from '../../svgs/FWWLogo'
 import MenuChicklet from './MenuChicklet'
+import NavigationArrow from '../../svgs/NavigationArrow'
 import ScreenWidthContext from '../../context/ScreenWidthContext'
 import { above } from '../../styles/Theme'
 
@@ -20,6 +21,9 @@ const MainNav = () => {
 
   return (
     <MainNavBar>
+      <NavArrowBackground>
+        <NavArrow />
+      </NavArrowBackground>
       {showLogo ? <Logo /> : null}
       <MenuChicklet />
     </MainNavBar>
@@ -33,14 +37,12 @@ const MainNavBar = styled.header`
   margin: 0;
   padding: 12px;
   top: 0;
-  display: flex;
-  justify-content: flex-end;
+  align-self: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   width: 100%;
   z-index: 16;
-  ${above.mobile`
-    justify-content: space-between;
-  `}
   ${above.tablet`
     max-width: 900px;
   `}
@@ -50,8 +52,25 @@ const MainNavBar = styled.header`
 `
 
 const Logo = styled(FWWLogo)`
+  justify-self: start;
   width: 40px;
   ${above.mobile`
     width: 80px;
   `}
+`
+
+const NavArrowBackground = styled.div`
+  display: flex;
+  justify-self: start;
+  justify-content: center;
+  align-items: center;
+  background: rgba(25, 25, 28, 0.8);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+`
+
+const NavArrow = styled(NavigationArrow)`
+  width: 16px;
+  transform: translateX(-2px) rotate(180deg);
 `

@@ -6,16 +6,32 @@ import WorkoutSection from './WorkoutSection'
 import WarmUpCoolDownSection from './WarmUpCoolDownSection'
 import { above } from '../../styles/Theme'
 
-const VideoSection = ({ workoutAssets, workoutVideoIds, name }) => {
+const VideoSection = ({
+  workoutAssets,
+  workoutVideoIds,
+  name,
+  coachingUrl
+}) => {
   // TODO what happens when you have multiple workouts
   // And workout backgrounds
   const coachingBackground = workoutAssets.coachingBackground
   const workoutBackground1 = workoutAssets.workoutBackground1
+  const coachingVideoId = workoutVideoIds.coachingVideo
+  const workoutVideoIdsArray = Object.values(workoutVideoIds).slice(1)
 
   return (
     <VideoContainer>
-      <CoachingSection name={name} coachingBackground={coachingBackground} />
-      <WorkoutSection name={name} workoutBackground={workoutBackground1} />
+      <CoachingSection
+        name={name}
+        coachingBackground={coachingBackground}
+        coachingUrl={coachingUrl}
+        coachingVideoId={coachingVideoId}
+      />
+      <WorkoutSection
+        name={name}
+        workoutBackground={workoutBackground1}
+        workoutVideoIdsArray={workoutVideoIdsArray}
+      />
       <WarmUpCoolDownSection />
     </VideoContainer>
   )

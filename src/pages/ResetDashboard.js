@@ -6,6 +6,7 @@ import FWWLogo from '../svgs/FWWLogo'
 import BaseButton from '../components/Buttons/BaseButton'
 import ProgramCard from '../components/Cards/WorkoutProgramCard'
 import HorizontalBasicUserCard from '../components/UserCards/HorizontalBasicUserCard'
+import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
 import { useUserContext } from '../context/UserContext'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
 import { useProgramsContext } from '../context/ProgramsContext'
@@ -19,6 +20,7 @@ const ResetDashboard = ({ match }) => {
   const [programsState, dispatchProgramsAction] = useProgramsContext()
   // eslint-disable-next-line
   const [isLoadingPrograms, setIsLoadingPrograms] = useState(true)
+  const [isLoaderingUser, setIsLoadingUser] = useState(true)
   const [toLogin, setToLogin] = useState(false)
 
   useEffect(() => {
@@ -46,6 +48,7 @@ const ResetDashboard = ({ match }) => {
                 photoUrl: user.photoURL
               }
             })
+            setIsLoadingUser(false)
           })
           .catch(error => {
             console.log('Error fetching user data', error)
@@ -149,6 +152,8 @@ const ResetDashboard = ({ match }) => {
     return programs
   }
 
+  // TODO Check to make sure you are showing the loading screen...
+  // When you actually need to. The conditional might be off a little.
   return (
     <>
       {toLogin ? (
@@ -161,7 +166,11 @@ const ResetDashboard = ({ match }) => {
             firstName={userState.firstName}
           />
           <ProgramCardsWrapper>
-            {isLoadingPrograms ? <p>Loading...</p> : <>{renderPrograms()}</>}
+            {isLoadingPrograms || isLoaderingUser ? (
+              <FullPageKettlebellLoader loadingMessage="Loading your data..." />
+            ) : (
+              <>{renderPrograms()}</>
+            )}
           </ProgramCardsWrapper>
           <BaseButton handleClick={handleSignOut}>Sign Out</BaseButton>
         </DashboardContainer>

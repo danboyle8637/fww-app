@@ -4,6 +4,9 @@ import ViemoPlayer from '@vimeo/player'
 
 import LoadingKettlebell from '../../svgs/LoadingKettlebell'
 
+// TODO you could create the player and leave it empty
+// Then you can use the load method to laod the player
+// Then when it's loaded you can play it.
 const VimeoPlayer = ({ videoId }) => {
   const [videoLoaded, setVideoLoaded] = useState(false)
   const videoContainerRef = useRef(null)
@@ -35,21 +38,50 @@ const VimeoPlayer = ({ videoId }) => {
   }, [videoId])
 
   return (
-    <>
-      <VideoContainer ref={videoContainerRef} />
-      {videoLoaded ? <div>True</div> : <div>False</div>}
-      <Loader loading={true} />
-    </>
+    <VideoContainer>
+      <VideoWrapper ref={videoContainerRef} />
+      {videoLoaded ? null : (
+        <>
+          <Loader />
+          <VideoLoadingScreen />
+        </>
+      )}
+    </VideoContainer>
   )
 }
 
 export default VimeoPlayer
 
 const VideoContainer = styled.div`
-  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
   box-shadow: 0 3px 4px 3px rgba(0, 0, 0, 0.3);
+  width: 100%;
+`
+
+const VideoWrapper = styled.div`
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  width: 100%;
+  z-index: 1;
+`
+
+const VideoLoadingScreen = styled.div`
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  z-index: 1;
+  background: ${props => props.theme.mainBackgroundBorderColor};
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 `
 
 const Loader = styled(LoadingKettlebell)`
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
   width: 60px;
+  z-index: 3;
 `

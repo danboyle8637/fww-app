@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import VideoTransition from '../../Animations/Transitions/VideoTransition'
+import VimeoPlayer from '../Shared/VimeoPlayer'
 import { usePortalContext } from '../../context/portalContext'
 
-const PopUpVideo = ({ title }) => {
+const PopUpVideo = ({ title, videoId }) => {
   // eslint-disable-next-line
   const [portalState, dispatch] = usePortalContext()
   const [showVideo, setShowVideo] = useState(false)
@@ -35,7 +36,7 @@ const PopUpVideo = ({ title }) => {
   return (
     <VideoTransition showVideo={showVideo}>
       <VideoContainer>
-        <Words>{title}</Words>
+        <VimeoPlayer videoId={videoId} />
         <CloseButton onClick={() => dispatch({ type: 'closeVideo' })}>
           Click to Close
         </CloseButton>

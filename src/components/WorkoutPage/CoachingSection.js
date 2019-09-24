@@ -1,19 +1,30 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 import { WorkoutSectionGrid } from '../../styles/Containers'
 import PlayButton from '../../svgs/PlayButton'
 import { above } from '../../styles/Theme'
 
-const CoachingSection = ({ coachingBackground, name }) => {
+const CoachingSection = ({ coachingBackground, name, coachingUrl }) => {
+  const linkStyle = {
+    gridColumn: '1 / -1',
+    gridRow: '1 / -1',
+    alignSelf: 'center',
+    justifySelf: 'center',
+    textDecoration: 'none'
+  }
+
   return (
     <WorkoutSectionGrid>
-      <BackgroundImage 
-        src={coachingBackground} 
-        title={`${name} coaching video`} 
-        alt={`Learn how the ${name} is going to work.`} 
+      <BackgroundImage
+        src={coachingBackground}
+        title={`${name} coaching video`}
+        alt={`Learn how the ${name} is going to work.`}
       />
-      <Play />
+      <Link to={`${coachingUrl}/coaching`} style={linkStyle}>
+        <Play />
+      </Link>
     </WorkoutSectionGrid>
   )
 }

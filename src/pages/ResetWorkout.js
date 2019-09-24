@@ -9,7 +9,7 @@ import CompleteFavoriteWorkoutForm from '../components/Forms/CompleteFavoriteWor
 import DownloadTrackingSheet from '../components/WorkoutPage/DownloadTrackingSection'
 import { above } from '../styles/Theme'
 
-const ResetWorkout = ({ location }) => {
+const ResetWorkout = ({ location, match }) => {
   const {
     name,
     workoutAssets,
@@ -27,6 +27,7 @@ const ResetWorkout = ({ location }) => {
         name={name}
         workoutAssets={workoutAssets}
         workoutVideoIds={workoutVideos}
+        coachingUrl={match.url}
       />
       <Row1Wrapper>
         <WorkoutTrackingForm trackingGoal={trackingGoal} />
