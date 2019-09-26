@@ -18,6 +18,46 @@ const workoutsState = {
           'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout1-coaching-cover.jpg?alt=media&token=91a53453-9625-4413-8041-2bef2187f9bb',
         workoutBackground1:
           'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout1-cover.jpg?alt=media&token=d8895b3b-837e-4a44-8c6d-02eb4d6dd239'
+      },
+      workout: {
+        circuits: [
+          {
+            id: 'c1',
+            directions: 'One time through. Focus on pushup form.',
+            exercises: [
+              '15 pushups from knees',
+              '60 second pushup plank',
+              '10 elevated pushups',
+              '60 second plank from forearms',
+              '5 pushups from ground'
+            ]
+          },
+          {
+            directions: 'One time through. Focus on pushup form.',
+            exercises: [
+              '15 pushups from knees',
+              '60 twistie mt. climbers',
+              '10 elevated pushups',
+              '60 twistie mt. climbers',
+              '5 pushups from ground'
+            ],
+            id: 'c2'
+          },
+          {
+            id: 'c3',
+            directions: 'One time through. Focus on pushup form.',
+            exercises: [
+              '15 pushups from knees',
+              '15 thrusters',
+              '10 elevated pushups',
+              '15 thrusters',
+              '5 pushups from ground'
+            ]
+          }
+        ],
+        title: 'Body Burn Reset Workout 1',
+        description:
+          "3 rounds of the circuit. Focus on your pushup form and the core elements we're working on in each pushups variation."
       }
     },
     {

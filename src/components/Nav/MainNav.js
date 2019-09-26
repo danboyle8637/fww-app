@@ -21,9 +21,9 @@ const MainNav = () => {
 
   return (
     <MainNavBar>
-      <NavArrowBackground>
+      {/* <NavArrowBackground>
         <NavArrow />
-      </NavArrowBackground>
+      </NavArrowBackground> */}
       {showLogo ? <Logo /> : null}
       <MenuChicklet />
     </MainNavBar>

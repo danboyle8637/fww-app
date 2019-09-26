@@ -2,7 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { WorkoutSectionGrid } from '../../styles/Containers'
+import WorkoutBackgroundImage from './WorkoutBackgroundImage'
 import PlayButton from '../../svgs/PlayButton'
+import NextWorkoutButton from '../Buttons/NextWorkoutButton'
+import NumberOfWorkoutsIndicator from '../Indicators/NumberOfWorkoutsIndicator'
 import Portal from '../Shared/Portal'
 import PopUpVideo from '../WorkoutPage/PopUpVideo'
 import { usePortalContext } from '../../context/portalContext'
@@ -24,11 +27,9 @@ const WorkoutSection = ({ workoutBackground, name, workoutVideoIdsArray }) => {
 
   return (
     <WorkoutSectionGrid>
-      <BackgroundImage
-        src={workoutBackground}
-        title={`${name} workout background`}
-        alt={`Let's do the ${name} together and get the ultimate burn, press the play button.`}
-      />
+      <WorkoutBackgroundImage imageArray={[workoutBackground]} name={name} />
+      <NextWorkoutButton />
+      <NumberOfWorkoutsIndicator workoutsArrayLength={3} />
       <Play handleToggleVideo={handleToggleVideo} />
       <Portal>
         <PopUpVideo title={'Workout'} videoId={videoId} />
@@ -38,13 +39,6 @@ const WorkoutSection = ({ workoutBackground, name, workoutVideoIdsArray }) => {
 }
 
 export default WorkoutSection
-
-const BackgroundImage = styled.img`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
-  border-radius: 10px;
-  width: 100%;
-`
 
 const Play = styled(PlayButton)`
   grid-column: 1 / -1;
