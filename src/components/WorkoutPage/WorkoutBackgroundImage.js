@@ -1,17 +1,76 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
+import { TweenMax } from 'gsap/TweenMax'
+import TimelineMax from 'gsap/TimelineMax'
 
-const WorkoutBackgroundImage = ({ imageArray, name }) => {
-  const refArray = useRef([])
+const WorkoutBackgroundImage = ({
+  workoutBackgrounds,
+  name,
+  activeVideo,
+  workoutBackgroundAction
+}) => {
+  const imageArrayRef = useRef([])
+  const nextTlRef = useRef(new TimelineMax({ paused: true }))
+  const prevTlRef = useRef(new TimelineMax({ paused: true }))
 
   useEffect(() => {
-    console.log(refArray.current.length)
-  }, [])
+    const workoutBackgroundsToSet = []
 
-  const background = imageArray.map((image, index) => {
+    if (imageArrayRef.current.length > 0) {
+      for (let i = 0; i < imageArrayRef.current.length; i++) {
+        if (i > 0) {
+          workoutBackgroundsToSet.push(imageArrayRef.current[i])
+        }
+      }
+    }
+
+    TweenMax.set(workoutBackgroundsToSet, { x: '100%' })
+  }, [workoutBackgrounds])
+
+  useEffect(() => {
+    const nextTl = nextTlRef.current
+    const prevTl = prevTlRef.current
+    const max = imageArrayRef.current.length
+
+    if (activeVideo < max && workoutBackgroundAction === 'next') {
+      console.log('Show next workout background')
+      nextTl
+        .to(imageArrayRef.current[activeVideo - 1], 0.5, {
+          x: '-100%'
+        })
+        .to(
+          imageArrayRef.current[activeVideo],
+          0.5,
+          {
+            x: '0%'
+          },
+          '-=0.5'
+        )
+        .play()
+    }
+
+    if (activeVideo >= 0 && workoutBackgroundAction === 'prev') {
+      console.log('Show previous workout background')
+      prevTl
+        .to(imageArrayRef.current[activeVideo + 1], 0.5, {
+          x: '100%'
+        })
+        .to(
+          imageArrayRef.current[activeVideo],
+          0.5,
+          {
+            x: '0%'
+          },
+          '-=0.5'
+        )
+        .play()
+    }
+  }, [activeVideo, workoutBackgroundAction])
+
+  const backgrounds = workoutBackgrounds.map((image, index) => {
     return (
       <BackgroundImage
-        ref={ref => refArray.current.push(ref)}
+        ref={ref => (imageArrayRef.current[index] = ref)}
         key={index}
         src={image}
         title={`${name} workout background`}
@@ -20,7 +79,7 @@ const WorkoutBackgroundImage = ({ imageArray, name }) => {
     )
   })
 
-  return <BackgroundContainer>{background}</BackgroundContainer>
+  return <BackgroundContainer>{backgrounds}</BackgroundContainer>
 }
 
 export default WorkoutBackgroundImage
@@ -38,6 +97,5 @@ const BackgroundContainer = styled.div`
 const BackgroundImage = styled.img`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
-  border-radius: 10px;
   width: 100%;
 `

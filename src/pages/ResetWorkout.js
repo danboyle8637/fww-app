@@ -12,7 +12,9 @@ import { above } from '../styles/Theme'
 const ResetWorkout = ({ location, match }) => {
   const {
     name,
-    workoutAssets,
+    coachingBackground,
+    workoutBackgrounds,
+    coachingVideo,
     workoutVideos,
     trackingGoal,
     trackingSheetUrl
@@ -25,8 +27,10 @@ const ResetWorkout = ({ location, match }) => {
       <ResetWorkoutPageHeader name={name} />
       <VideoSection
         name={name}
-        workoutAssets={workoutAssets}
-        workoutVideoIds={workoutVideos}
+        coachingBackground={coachingBackground}
+        workoutBackgrounds={workoutBackgrounds}
+        coachingVideo={coachingVideo}
+        workoutVideos={workoutVideos}
         coachingUrl={match.url}
       />
       <Row1Wrapper>

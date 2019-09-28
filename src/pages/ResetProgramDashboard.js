@@ -115,7 +115,7 @@ const ResetProgramDashboard = ({ match }) => {
   const renderWorkouts = () => {
     const workouts = workoutsState.workouts.map(workout => {
       const key = workout.order
-      const coverImage = workout.workoutAssets.workoutBackground1
+      const coverImage = workout.workoutBackgrounds[0]
       const title = workout.name
       const description = workout.description
       const workoutId = workout.workoutId

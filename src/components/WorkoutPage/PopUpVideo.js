@@ -5,10 +5,11 @@ import VideoTransition from '../../Animations/Transitions/VideoTransition'
 import VimeoPlayer from '../Shared/VimeoPlayer'
 import { usePortalContext } from '../../context/portalContext'
 
-const PopUpVideo = ({ title, videoId }) => {
+const PopUpVideo = ({ title, workoutVideos, activeVideo }) => {
   // eslint-disable-next-line
   const [portalState, dispatch] = usePortalContext()
   const [showVideo, setShowVideo] = useState(false)
+  const [videoId, setVideoId] = useState(0)
 
   const workoutIsOpen = portalState.workoutVideo.isOpen
   const warmUpIsOpen = portalState.warmUpVideo.isOpen
@@ -36,7 +37,7 @@ const PopUpVideo = ({ title, videoId }) => {
   return (
     <VideoTransition showVideo={showVideo}>
       <VideoContainer>
-        <VimeoPlayer videoId={videoId} />
+        <VimeoPlayer videoId={workoutVideos[activeVideo]} />
         <CloseButton onClick={() => dispatch({ type: 'closeVideo' })}>
           Click to Close
         </CloseButton>

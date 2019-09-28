@@ -20,7 +20,7 @@ const ResetDashboard = ({ match }) => {
   const [programsState, dispatchProgramsAction] = useProgramsContext()
   // eslint-disable-next-line
   const [isLoadingPrograms, setIsLoadingPrograms] = useState(true)
-  const [isLoaderingUser, setIsLoadingUser] = useState(true)
+  const [isLoaderingUser, setIsLoadingUser] = useState(false)
   const [toLogin, setToLogin] = useState(false)
 
   useEffect(() => {
@@ -29,6 +29,7 @@ const ResetDashboard = ({ match }) => {
 
   useEffect(() => {
     if (Object.values(userState).length === 0) {
+      setIsLoadingUser(true)
       console.log('user not set... fetching user data')
       auth.getCurrentUser().then(user => {
         const username = user.displayName

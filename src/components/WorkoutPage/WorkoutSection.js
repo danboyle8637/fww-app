@@ -1,39 +1,69 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { WorkoutSectionGrid } from '../../styles/Containers'
 import WorkoutBackgroundImage from './WorkoutBackgroundImage'
 import PlayButton from '../../svgs/PlayButton'
-import NextWorkoutButton from '../Buttons/NextWorkoutButton'
+import WorkoutSliderButtons from '../Buttons/WorkoutSliderButtons'
 import NumberOfWorkoutsIndicator from '../Indicators/NumberOfWorkoutsIndicator'
 import Portal from '../Shared/Portal'
 import PopUpVideo from '../WorkoutPage/PopUpVideo'
 import { usePortalContext } from '../../context/portalContext'
 import { above } from '../../styles/Theme'
 
-const WorkoutSection = ({ workoutBackground, name, workoutVideoIdsArray }) => {
+const WorkoutSection = ({ workoutBackgrounds, name, workoutVideos }) => {
   // eslint-disable-next-line
   const [portalState, dispatch] = usePortalContext()
+
+  const [activeVideo, setActiveVideo] = useState(0)
+  const [workoutBackgroundAction, setWorkoutBackgroundAction] = useState('')
+
+  const handleNextVideo = () => {
+    setWorkoutBackgroundAction('next')
+    if (activeVideo < workoutBackgrounds.length - 1) {
+      setActiveVideo(prevIndex => prevIndex + 1)
+    }
+  }
+
+  const handlePrevVideo = () => {
+    setWorkoutBackgroundAction('prev')
+    if (activeVideo > 0) {
+      setActiveVideo(prevIndex => prevIndex - 1)
+    }
+  }
 
   const handleToggleVideo = () => {
     dispatch({ type: 'toggleWorkoutVideo' })
   }
 
-  // TODO... if you get multiple videos.
-  // You probably have to make a new container and set it in the layered grid.
-  // Then you'll have to lay it out flex and setup a slider like you did...
-  // In the nutrition slider. Good build out for a component.
-  const videoId = workoutVideoIdsArray[0]
-
   return (
     <WorkoutSectionGrid>
-      <WorkoutBackgroundImage imageArray={[workoutBackground]} name={name} />
-      <NextWorkoutButton />
-      <NumberOfWorkoutsIndicator workoutsArrayLength={3} />
+      <WorkoutBackgroundImage
+        activeVideo={activeVideo}
+        workoutBackgroundAction={workoutBackgroundAction}
+        workoutBackgrounds={workoutBackgrounds}
+        name={name}
+      />
+      <WorkoutSliderButtons
+        handleNextVideo={handleNextVideo}
+        handlePrevVideo={handlePrevVideo}
+        activeVideo={activeVideo}
+        numberOfWorkouts={workoutBackgrounds.length}
+      />
+      <NumberOfWorkoutsIndicator
+        workoutBackgrounds={workoutBackgrounds}
+        activeVideo={activeVideo}
+      />
       <Play handleToggleVideo={handleToggleVideo} />
-      <Portal>
-        <PopUpVideo title={'Workout'} videoId={videoId} />
-      </Portal>
+      <Portal
+        component={
+          <PopUpVideo
+            title={'Workout'}
+            workoutVideos={workoutVideos}
+            activeVideo={activeVideo}
+          />
+        }
+      />
     </WorkoutSectionGrid>
   )
 }
@@ -46,7 +76,7 @@ const Play = styled(PlayButton)`
   align-self: center;
   justify-self: center;
   width: 60px;
-  z-index: 1;
+  z-index: 2;
   ${above.mobile`
     width: 80px;
   `}

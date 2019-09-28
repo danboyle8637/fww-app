@@ -1,20 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const NumberOfWorkokutsIndicator = ({ workoutsArrayLength }) => {
-  const showIndicators = () => {
-    const indicatorArray = []
-    for (let i = 0; i < workoutsArrayLength; i++) {
-      indicatorArray.push(<WorkoutIndicator key={i} />)
-    }
-
-    return indicatorArray
-  }
+const NumberOfWorkokutsIndicator = ({ workoutBackgrounds, activeVideo }) => {
+  const indicators = workoutBackgrounds.map((item, index) => {
+    return <WorkoutIndicator key={index} filled={activeVideo === index} />
+  })
 
   return (
     <Container>
-      <WorkoutLabel>Workouts:</WorkoutLabel>
-      {showIndicators()}
+      <WorkoutLabel>
+        {workoutBackgrounds.length < 2 ? 'workout' : 'workouts:'}
+      </WorkoutLabel>
+      {workoutBackgrounds.length < 2 ? null : indicators}
     </Container>
   )
 }
@@ -32,6 +29,7 @@ const Container = styled.div`
   justify-content: flex-start;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 0 8px 0 0;
+  z-index: 2;
 `
 
 const WorkoutLabel = styled.p`
@@ -46,8 +44,10 @@ const WorkoutLabel = styled.p`
 const WorkoutIndicator = styled.div`
   margin: 0 0 0 3px;
   border-radius: 50%;
-  border: 2px solid ${props => props.theme.headlinePrimary};
-  background: transparent;
+  border: 2px solid ${props => props.theme.primaryAccent};
+  background-color: ${props =>
+    props.filled ? props.theme.primaryAccent : 'transparent'};
   width: 12px;
   height: 12px;
+  transition: background-color 400ms ease-in-out;
 `
