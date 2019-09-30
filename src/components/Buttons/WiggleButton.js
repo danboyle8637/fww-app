@@ -7,7 +7,8 @@ const WiggleButton = ({
   purple,
   shouldWiggle,
   handleClick,
-  buttonType
+  buttonType,
+  disabled
 }) => {
   const [runWiggle, setRunWiggle] = useState(true)
   const visibleButtonRef = useRef(null)
@@ -17,7 +18,6 @@ const WiggleButton = ({
 
   useEffect(() => {
     return () => {
-      console.log('Cleaning Up')
       wiggleTimeline.current.kill()
       pressTimeline.current.kill()
       wiggleTimeline.current = null
@@ -91,14 +91,15 @@ const WiggleButton = ({
     <ButtonGrid>
       <VisibleButton
         ref={visibleButtonRef}
-        type={buttonType}
+        disabled={disabled}
         purple={purple}
+        type={buttonType}
         onMouseDown={handleMouseDown}
         onClick={handleClick}
       >
         {children}
       </VisibleButton>
-      <FlashButton ref={flashButtonRef} />
+      <FlashButton ref={flashButtonRef} disabled={disabled} />
     </ButtonGrid>
   )
 }
@@ -117,18 +118,28 @@ const VisibleButton = styled.button`
   grid-row: 1 / -1;
   margin: 0;
   padding: 10px 14px;
-  background: ${props =>
-    props.purple ? props.theme.tertiaryAccent : props.theme.primaryAccent};
-  border: none;
+  background-color: ${props =>
+    props.disabled
+      ? props.theme.mainBackgroundColor
+      : props.purple
+      ? props.theme.tertiaryAccent
+      : props.theme.primaryAccent};
+  border-color: ${props => (props.disabled ? '#2B2C3A' : 'none')};
+  border-width: ${props => (props.disabled ? '2px' : 0)};
+  border-style: ${props => (props.disabled ? 'solid' : 'none')};
   border-radius: 6px;
   text-align: center;
-  color: ${props => props.theme.mainBackgroundColor};
+  color: ${props =>
+    props.disabled
+      ? props.theme.accentBackgroundColor
+      : props.theme.mainBackgroundColor};
   font-size: 18px;
   text-transform: uppercase;
   font-weight: 800;
   width: 100%;
   max-width: 600px;
-  box-shadow: 0 2px 3px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: ${props =>
+    props.disabled ? 0 : '0 2px 3px 3px rgba(0, 0, 0, 0.2)'};
   outline: none;
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;
@@ -139,7 +150,7 @@ const FlashButton = styled.div`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
   padding: 10px 12px;
-  background: ${props => props.theme.primaryAccent};
+  background: ${props => (props.disabled ? 'none' : props.theme.primaryAccent)};
   border-radius: 6px;
   width: 100%;
   max-width: 600px;

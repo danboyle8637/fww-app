@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import { WorkoutSectionGrid } from '../../styles/Containers'
 import WorkoutBackgroundImage from './WorkoutBackgroundImage'
 import PlayButton from '../../svgs/PlayButton'
 import WorkoutSliderButtons from '../Buttons/WorkoutSliderButtons'
-import NumberOfWorkoutsIndicator from '../Indicators/NumberOfWorkoutsIndicator'
+import WorkoutLabelIndicator from '../Indicators/WorkoutLabelIndicator'
 import Portal from '../Shared/Portal'
 import PopUpVideo from '../WorkoutPage/PopUpVideo'
 import { usePortalContext } from '../../context/portalContext'
@@ -50,7 +50,8 @@ const WorkoutSection = ({ workoutBackgrounds, name, workoutVideos }) => {
         activeVideo={activeVideo}
         numberOfWorkouts={workoutBackgrounds.length}
       />
-      <NumberOfWorkoutsIndicator
+      <WorkoutLabelIndicator
+        type={'workout'}
         workoutBackgrounds={workoutBackgrounds}
         activeVideo={activeVideo}
       />

@@ -1,47 +1,126 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import CompleteWorkoutCheckboxInput from './Inputs/CompleteWorkoutCheckboxInput'
-import useStatsControls from '../../hooks/useStatsControls'
+import CompleteWorkoutIcon from '../../svgs/CompleteWorkoutIcon'
+import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
+import siteConfig from '../../utils/siteConfig'
 
-const CompleteWorkoutForm = ({ workoutId, completed }) => {
+const CompleteWorkoutForm = ({
+  programId,
+  workoutId,
+  handleToggleSync,
+  handleSetSyncMessage
+}) => {
   // eslint-disable-next-line
-  const [updateCheckboxValues] = useStatsControls()
+  const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
 
-  const options = Object.values(completed)
+  const completed = workoutStatsState.stats[workoutId].completed
+
+  const handleCompleteWorkoutClick = id => {
+    if (id === 1) {
+      dispatchStatsAction({
+        type: 'setComplete1',
+        value: workoutId
+      })
+
+      handleToggleSync()
+      handleSetCompleteInDatabase(1)
+    } else if (id === 2) {
+      dispatchStatsAction({
+        type: 'setComplete2',
+        value: workoutId
+      })
+
+      // TODO Make network request to update database
+    } else if (id === 3) {
+      dispatchStatsAction({
+        type: 'setComplete3',
+        value: workoutId
+      })
+
+      // TODO Make network request to update database
+    } else {
+      console.log('How did you click a button that wasnt on the screen?')
+    }
+  }
+
+  const handleSetCompleteInDatabase = completeId => {
+    // TODO replace this with the user from state
+    const username = 'pampam'
+
+    const completeBody = {
+      programId: programId,
+      workoutId: workoutId,
+      username: username,
+      completeId: completeId
+    }
+
+    const baseUrl = siteConfig.api.baseUrl
+    const toggleComplete = '/toggle-complete'
+    const url = `${baseUrl}${toggleComplete}`
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(completeBody)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        handleSetSyncMessage(data.message)
+        handleToggleSync()
+      })
+      .catch(errorObj => {
+        console.log(errorObj)
+      })
+  }
 
   return (
-    <FormContainer>
+    <CompleteWorkoutContainer>
       <Label>Complete workout:</Label>
-      <Form>
-        <CompleteWorkoutCheckboxInput
-          type="checkbox"
-          options={options}
-          workoutId={workoutId}
-          updateCheckboxValues={updateCheckboxValues}
+      <ButtonWrapper>
+        <CompleteWorkout
+          id={1}
+          isComplete={completed.complete1.isComplete}
+          handleCompleteWorkoutClick={handleCompleteWorkoutClick}
         />
-      </Form>
-    </FormContainer>
+        <CompleteWorkout
+          id={2}
+          isComplete={completed.complete2.isComplete}
+          handleCompleteWorkoutClick={handleCompleteWorkoutClick}
+        />
+        <CompleteWorkout
+          id={3}
+          isComplete={completed.complete3.isComplete}
+          handleCompleteWorkoutClick={handleCompleteWorkoutClick}
+        />
+      </ButtonWrapper>
+    </CompleteWorkoutContainer>
   )
 }
 
 export default CompleteWorkoutForm
 
-const FormContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
-
-const Form = styled.form`
-  margin: 0 0 0 12px;
+const CompleteWorkoutContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 12px;
+  align-items: center;
 `
 
 const Label = styled.p`
   font-family: RobotoBold;
   font-size: 18px;
   color: ${props => props.theme.headlineSecondary};
+`
+
+const ButtonWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 12px;
+  align-items: center;
+  justify-items: start;
+`
+
+const CompleteWorkout = styled(CompleteWorkoutIcon)`
+  width: 40px;
 `

@@ -3,31 +3,32 @@ import styled from 'styled-components'
 
 import HeaderRow from './HeaderRow'
 import TrackingRow from './TrackingRow'
+import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 
-const TrackingChart = ({ trackingGoal, trackingStats }) => {
-  const { first, second, third } = trackingStats
+const TrackingChart = ({ trackingGoal, workoutId }) => {
+  // eslint-disable-next-line
+  const [statsState, dispathStatsAction] = useWorkoutStatsContext()
 
-  // TODO Create a placeholder for the chart if there is no data available
   return (
     <ChartContainer>
       <HeaderRow />
       <TrackingRow
         id="workoutGoal1"
         goal={trackingGoal}
-        date={first.timestamp}
-        numbers={first.number}
+        date={statsState.stats[workoutId].trackingStats.first.date}
+        numbers={statsState.stats[workoutId].trackingStats.first.number}
       />
       <TrackingRow
         id="workoutGoal2"
         goal={trackingGoal}
-        date={second.timestamp}
-        numbers={second.number}
+        date={statsState.stats[workoutId].trackingStats.second.date}
+        numbers={statsState.stats[workoutId].trackingStats.second.number}
       />
       <TrackingRow
         id="workoutGoal3"
         goal={trackingGoal}
-        date={third.timestamp}
-        numbers={third.number}
+        date={statsState.stats[workoutId].trackingStats.third.date}
+        numbers={statsState.stats[workoutId].trackingStats.third.number}
       />
     </ChartContainer>
   )

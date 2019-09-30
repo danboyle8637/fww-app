@@ -15,7 +15,47 @@ const workoutsState = {
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout1-coaching-cover.jpg?alt=media&token=91a53453-9625-4413-8041-2bef2187f9bb',
       workoutBackgrounds: [
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout1-cover.jpg?alt=media&token=d8895b3b-837e-4a44-8c6d-02eb4d6dd239'
-      ]
+      ],
+      workout: {
+        title: 'Body Burn Jump Start Pushups',
+        description:
+          "3 rounds of the circuit. Focus on your pushup form and the core elements we're working on in each pushups variation.",
+        circuits: [
+          {
+            id: 'c1',
+            directions: 'One time through. Focus on pushup form.',
+            exercises: [
+              '15 pushups from knees',
+              '60 second pushup plank',
+              '10 elevated pushups',
+              '60 second plank from forearms',
+              '5 pushups from ground'
+            ]
+          },
+          {
+            id: 'c2',
+            directions: 'One time through. Focus on pushup form.',
+            exercises: [
+              '15 pushups from knees',
+              '60 twistie mt. climbers',
+              '10 elevated pushups',
+              '60 twistie mt. climbers',
+              '5 pushups from ground'
+            ]
+          },
+          {
+            id: 'c3',
+            directions: 'One time through. Focus on pushup form.',
+            exercises: [
+              '15 pushups from knees',
+              '15 thrusters',
+              '10 elevated pushups',
+              '15 thrusters',
+              '5 pushups from ground'
+            ]
+          }
+        ]
+      }
     },
     {
       workoutId: 'bbcresetworkout2',
@@ -31,7 +71,36 @@ const workoutsState = {
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout2-coaching-cover.jpg?alt=media&token=e618874c-1840-4144-80c6-e56bfe94724d',
       workoutBackgrounds: [
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout2-cover.jpg?alt=media&token=1aeca8ac-7e73-4a39-a7a6-d0e72d5c6c8a'
-      ]
+      ],
+      workout: {
+        title: 'Body Burn Reset Squat Workout',
+        description:
+          'Start and end with a 60 second wall squat. In the middle complete the 8 minute as many rounds as possible circuit.',
+        circuits: [
+          {
+            id: 'c1',
+            directions: 'Hold for 60 seconds',
+            exercises: ['Wall squat']
+          },
+          {
+            id: 'c2',
+            directions: 'Complete as many rounds as possible in 8 minutes.',
+            exercises: [
+              '8 monkey squats',
+              '8 lizard pushups',
+              '8 squats',
+              '8 plank up downs',
+              '8 prisoner squats (arms up)',
+              '8 star crunches'
+            ]
+          },
+          {
+            id: 'c3',
+            directions: 'Hold for 60 seconds',
+            exercises: ['Wall squat']
+          }
+        ]
+      }
     },
     {
       workoutId: 'bbcresetworkout3',
@@ -50,7 +119,37 @@ const workoutsState = {
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout3-cover.jpg?alt=media&token=7761c561-1d30-4c80-aed4-2170f04426cc',
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout1-cover.jpg?alt=media&token=d8895b3b-837e-4a44-8c6d-02eb4d6dd239',
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout2-cover.jpg?alt=media&token=1aeca8ac-7e73-4a39-a7a6-d0e72d5c6c8a'
-      ]
+      ],
+      workout: {
+        title: 'Body Burn Reset Lunge Workout',
+        description:
+          '3 circuits, each 4 minutes long, each as many rounds as possible. Focus on form and practicing technique.',
+        circuits: [
+          {
+            id: 'c1',
+            directions: '4 minute AMRAP.',
+            exercises: ['6 reverse lunges', '5 pushups', '6 narrow squats']
+          },
+          {
+            id: 'c2',
+            directions: '4 minute AMRAP.',
+            exercises: [
+              '6 curtsey lunges',
+              '5 rainbow pushups',
+              '6 prisoner squats'
+            ]
+          },
+          {
+            id: 'c3',
+            directions: '4 minute AMRAP.',
+            exercises: [
+              '20 lunge jumps (or fast lunges)',
+              '20 shoulder taps',
+              '20 squat jacks'
+            ]
+          }
+        ]
+      }
     },
     {
       workoutId: 'bbcresetworkout4',
@@ -69,7 +168,56 @@ const workoutsState = {
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout4-cover.jpg?alt=media&token=1ca75ead-51ea-4fe9-908c-05e9a62b5a0c',
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout4-cover.jpg?alt=media&token=1ca75ead-51ea-4fe9-908c-05e9a62b5a0c',
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout4-cover.jpg?alt=media&token=1ca75ead-51ea-4fe9-908c-05e9a62b5a0c'
-      ]
+      ],
+      workout: {
+        title: 'Body Burn Reset Core Workout',
+        description:
+          '4 circuits, 2 are 4 minutes long, each as many rounds as possible. After each AMRAP, complete the 2 minute core circuit. Focus on crunching your abs.',
+        circuits: [
+          {
+            id: 'c1',
+            directions:
+              '4 minute AMRAP start at 1 rep, each round increase reps by 1.',
+            exercises: [
+              '# pushups',
+              '# squats',
+              '# right lunge hops',
+              '# left lunge hops'
+            ]
+          },
+          {
+            id: 'c2',
+            directions: 'Complete each exercise for 30 seconds.',
+            exercises: [
+              'Hollow hold',
+              'Plank hold',
+              'Hollow flutter kicks',
+              'Plank rockers'
+            ]
+          },
+          {
+            id: 'c3',
+            directions:
+              '4 minute AMRAP start where you left off from circuit 1 and decrease reps by 1 each round to see if you can return to 1 rep.',
+            exercises: [
+              '# left lunge hops',
+              '# right lunge hops',
+              '# squat ',
+              '# pushups'
+            ]
+          },
+          {
+            id: 'c4',
+            directions: 'Complete each exercise for 30 seconds.',
+            exercises: [
+              'Hollow hold',
+              'Plank hold',
+              'Hollow flutter kicks',
+              'Plank rockers'
+            ]
+          }
+        ]
+      }
     },
     {
       workoutId: 'bbcresetworkout5',
@@ -87,7 +235,42 @@ const workoutsState = {
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout5-cover.jpg?alt=media&token=3002faae-2e50-44fd-830f-d12e2a34eb75',
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout5-cover.jpg?alt=media&token=3002faae-2e50-44fd-830f-d12e2a34eb75',
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout5-cover.jpg?alt=media&token=3002faae-2e50-44fd-830f-d12e2a34eb75'
-      ]
+      ],
+      workout: {
+        title: 'Body Burn Reset Movement Workout',
+        description:
+          "One last workout with three circuits. The first and last are 4 minute AMRAPs. The middle circuit is 4 exercises you'll do for 30 seconds each",
+        circuits: [
+          {
+            id: 'c1',
+            directions: '4 minute AMRAP.',
+            exercises: [
+              '12 bear squats',
+              '12 crab tripods',
+              '6 gorilla rainbows'
+            ]
+          },
+          {
+            id: 'c2',
+            directions: 'Do each exercise for 30 seconds each.',
+            exercises: [
+              'Right bear kickbacks',
+              'Left bear kickbacks',
+              'Right crab toe touches',
+              'Left crab toe touches'
+            ]
+          },
+          {
+            id: 'c3',
+            directions: '4 minute AMRAP',
+            exercises: [
+              '3 bear crawl steps forward and backward',
+              '3 crab walk steps forward and backward',
+              'Donkey kick to 3 gorilla shuffles to Donkey (repeat)'
+            ]
+          }
+        ]
+      }
     }
   ]
 }

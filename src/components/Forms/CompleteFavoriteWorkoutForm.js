@@ -1,14 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import CompleteWorkoutForm2 from './CompleteWorkoutForm2'
+import CompleteWorkoutForm from './CompleteWorkoutForm'
 import FavoriteWorkoutForm from './FavoriteWorkouktForm'
 import {
   WorkoutPageHeadline,
   WorkoutPageDescription
 } from '../../styles/Typography'
 
-const CompleteFavoriteWorkoutForm = ({ workoutId }) => {
+const CompleteFavoriteWorkoutForm = ({
+  programId,
+  workoutId,
+  handleToggleSync,
+  handleSetSyncMessage
+}) => {
   return (
     <FormContainer>
       <WorkoutPageHeadline>Complete It:</WorkoutPageHeadline>
@@ -17,7 +22,12 @@ const CompleteFavoriteWorkoutForm = ({ workoutId }) => {
         a favorite.
       </WorkoutPageDescription>
       <CheckBoxWrapper>
-        <CompleteWorkoutForm2 workoutId={workoutId} />
+        <CompleteWorkoutForm
+          programId={programId}
+          workoutId={workoutId}
+          handleToggleSync={handleToggleSync}
+          handleSetSyncMessage={handleSetSyncMessage}
+        />
         <FavoriteWorkoutForm workoutId={workoutId} />
       </CheckBoxWrapper>
     </FormContainer>

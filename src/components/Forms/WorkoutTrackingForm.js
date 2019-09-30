@@ -7,13 +7,28 @@ import {
   WorkoutPageHeadline,
   WorkoutPageDescription
 } from '../../styles/Typography'
+import { createDate } from '../../utils/helpers'
+import { useUserContext } from '../../context/UserContext'
+import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
+import siteConfig from '../../utils/siteConfig'
 
-const WorkoutTrackingForm = ({ trackingGoal }) => {
+const WorkoutTrackingForm = ({
+  trackingGoal,
+  programId,
+  workoutId,
+  isSyncing,
+  handleToggleSync,
+  handleSetSyncMessage
+}) => {
   const [wiggle, setWiggle] = useState(false)
   // eslint-disable-next-line
+  const [statsState, dispatchWorkoutStatsAction] = useWorkoutStatsContext()
+  // eslint-disable-next-line
   const [formState, dispatch] = useFormStore()
+  // eslint-disable-next-line
+  const [userState, dispatchUserAction] = useUserContext()
   const [updateInputValues, updateInputOptions] = useFormControls()
 
   useEffect(() => {
@@ -28,20 +43,56 @@ const WorkoutTrackingForm = ({ trackingGoal }) => {
   const handlePostWorkoutNumber = event => {
     event.preventDefault()
 
-    // Update local start first with a timestamp
+    const now = new Date()
+    const date = createDate(now)
 
-    // Do a post request to the data base to update the database.
-    // Use the timestamp and send it with the request
-    // On success you need to let the user know somehow
+    // Update local state first with a timestamp
+    dispatchWorkoutStatsAction({
+      type: 'setTrackingNumber',
+      value: {
+        workoutId: workoutId,
+        number: formState.workoutGoalValue.value,
+        date: date
+      }
+    })
 
-    console.log('Posting workout numbers to database')
+    handleToggleSync()
+
+    // TODO replace this with the user from state
+    const username = 'pampam'
+
+    const trackingBody = {
+      programId: programId,
+      workoutId: workoutId,
+      username: username,
+      number: formState.workoutGoalValue.value,
+      date: date
+    }
+
+    const baseUrl = siteConfig.api.baseUrl
+    const postWorkoutNumbers = '/post-workout-numbers'
+    const url = `${baseUrl}${postWorkoutNumbers}`
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(trackingBody)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        handleSetSyncMessage(data.message)
+        handleToggleSync()
+      })
+      .catch(errorObj => {
+        console.log(errorObj)
+      })
   }
 
   return (
     <FormContainer>
       <WorkoutPageHeadline>Track It:</WorkoutPageHeadline>
       <WorkoutPageDescription>{trackingGoal}</WorkoutPageDescription>
-      <TrackingForm>
+      <TrackingForm onSubmit={handlePostWorkoutNumber}>
         <TextInput
           type="text"
           name="workoutGoal"
@@ -60,11 +111,15 @@ const WorkoutTrackingForm = ({ trackingGoal }) => {
           onBlur={updateInputOptions}
         />
         <WiggleButton
+          disabled={!formState.workoutGoalValue.valid}
           shouldWiggle={wiggle}
           buttonType="submit"
-          handleClick={handlePostWorkoutNumber}
         >
-          Post
+          {formState.workoutGoalValue.valid
+            ? isSyncing
+              ? 'Posting'
+              : 'Post'
+            : '????'}
         </WiggleButton>
       </TrackingForm>
     </FormContainer>

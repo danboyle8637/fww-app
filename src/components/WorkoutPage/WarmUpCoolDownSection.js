@@ -7,6 +7,7 @@ import WarmUpCover from '../../images/warmup-cover1.jpg'
 import CoolDownCover from '../../images/cooldown-cover1.jpg'
 import Portal from '../Shared/Portal'
 import PopUpVideo from '../WorkoutPage/PopUpVideo'
+import WorkoutLabelIndicator from '../Indicators/WorkoutLabelIndicator'
 import { usePortalContext } from '../../context/portalContext'
 import { above } from '../../styles/Theme'
 
@@ -38,6 +39,7 @@ const WarmUpCoolDownSection = ({
           title={warmUpTitle}
           alt={warmupAltText}
         />
+        <WorkoutLabelIndicator type={'warmup'} />
         <Play handleToggleVideo={handleToggleWarmUp} />
       </WorkoutSectionGrid>
       <WorkoutSectionGrid>
@@ -46,11 +48,10 @@ const WarmUpCoolDownSection = ({
           title={coolDownTitle}
           alt={coolDownAltText}
         />
+        <WorkoutLabelIndicator type={'cooldown'} />
         <Play handleToggleVideo={handleToggleCoolDown} />
       </WorkoutSectionGrid>
-      <Portal>
-        <PopUpVideo title={title} />
-      </Portal>
+      <Portal component={<PopUpVideo title={title} />} />
     </WarmUpCoolDownContainer>
   )
 }

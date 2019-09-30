@@ -17,27 +17,28 @@ const TrackingRow = ({ id, goal, date, numbers }) => {
     dispatchPortalAction({ type: 'toggleDialogBox', value: id })
   }
 
-  const desktopGoal = date ? <TableCell data={true}>{goal}</TableCell> : null
-  const mobileGoal = date ? (
-    <MobileGoalDialogIcon handleToggleInfoDialog={handleToggleInfoDialog} />
-  ) : null
-
   return (
     <RowContainer>
-      {device === 'mobile' || device === 'tablet' ? mobileGoal : desktopGoal}
+      {device === 'mobile' || device === 'tablet' ? (
+        <MobileGoalDialogIcon handleToggleInfoDialog={handleToggleInfoDialog} />
+      ) : (
+        <TableCell data={true}>{goal}</TableCell>
+      )}
       <TableCell data={true} center={true}>
-        {date || null}
+        {date || '--'}
       </TableCell>
       <TableCell data={true} center={true}>
-        {numbers || null}
+        {numbers || '--'}
       </TableCell>
-      <Portal>
-        <InfoDialog
-          id={id}
-          boxes={portalState.dialogBox.boxes}
-          text="How many pushups can you do straight during the last round?"
-        />
-      </Portal>
+      <Portal
+        component={
+          <InfoDialog
+            id={id}
+            boxes={portalState.dialogBox.boxes}
+            text="How many pushups can you do straight during the last round?"
+          />
+        }
+      />
     </RowContainer>
   )
 }

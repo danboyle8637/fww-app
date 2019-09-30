@@ -4,11 +4,11 @@ import VimeoPlayer from '../components/Shared/VimeoPlayer'
 import ResetWorkoutPageHeader from '../components/PageHeaders/ResetWorkoutPageHeader'
 import WorkoutParser from '../components/CoachingPage/WorkoutParser'
 
-const ResetWorkoutCoaching = ({ match }) => {
+const ResetWorkoutCoaching = ({ match, location }) => {
   return (
     <>
       <ResetWorkoutPageHeader name="Coaching" />
-      <VimeoPlayer videoId={'355818758'} />
+      <VimeoPlayer videoId={location.state.coachingVideo} />
       <WorkoutParser workoutId={match.params.workoutId} />
     </>
   )

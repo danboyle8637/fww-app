@@ -14,15 +14,13 @@ const VideoSection = ({
   name,
   coachingUrl
 }) => {
-  // TODO what happens when you have multiple workouts
-  // And workout backgrounds
-
   return (
     <VideoContainer>
       <CoachingSection
         name={name}
         coachingBackground={coachingBackground}
         coachingUrl={coachingUrl}
+        coachingVideo={coachingVideo}
       />
       <WorkoutSection
         name={name}

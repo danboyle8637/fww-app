@@ -69,6 +69,7 @@ const InputLabel = styled.label`
   margin: 0 0 0 12px;
   padding: 1px 8px;
   display: inline;
+  font-family: sans-serif;
   font-size: 16px;
   font-weight: 400;
   letter-spacing: 1.4px;

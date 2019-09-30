@@ -4,9 +4,15 @@ import { Link } from 'react-router-dom'
 
 import { WorkoutSectionGrid } from '../../styles/Containers'
 import PlayButton from '../../svgs/PlayButton'
+import WorkoutLabelIndicator from '../Indicators/WorkoutLabelIndicator'
 import { above } from '../../styles/Theme'
 
-const CoachingSection = ({ coachingBackground, name, coachingUrl }) => {
+const CoachingSection = ({
+  coachingBackground,
+  name,
+  coachingUrl,
+  coachingVideo
+}) => {
   const linkStyle = {
     gridColumn: '1 / -1',
     gridRow: '1 / -1',
@@ -15,6 +21,7 @@ const CoachingSection = ({ coachingBackground, name, coachingUrl }) => {
     textDecoration: 'none'
   }
 
+  //TODO pass caoching video to the coaching page
   return (
     <WorkoutSectionGrid>
       <BackgroundImage
@@ -22,7 +29,14 @@ const CoachingSection = ({ coachingBackground, name, coachingUrl }) => {
         title={`${name} coaching video`}
         alt={`Learn how the ${name} is going to work.`}
       />
-      <Link to={`${coachingUrl}/coaching`} style={linkStyle}>
+      <WorkoutLabelIndicator type={'coaching'} />
+      <Link
+        to={{
+          pathname: `${coachingUrl}/coaching`,
+          state: { coachingVideo: coachingVideo }
+        }}
+        style={linkStyle}
+      >
         <Play />
       </Link>
     </WorkoutSectionGrid>

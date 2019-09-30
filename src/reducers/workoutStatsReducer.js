@@ -89,15 +89,15 @@ const workoutStatsState = {
       trackingStats: {
         first: {
           number: null,
-          timestamp: null
+          date: null
         },
         second: {
           number: null,
-          timestamp: null
+          date: null
         },
         third: {
           number: null,
-          timestamp: null
+          date: null
         }
       },
       programId: '7DayBodyBurnReset',
@@ -183,6 +183,33 @@ const workoutStatsReducer = (state, action) => {
 
       return {
         stats
+      }
+    }
+    case 'setTrackingNumber': {
+      const workoutId = action.value.workoutId
+      const number = Number(action.value.number)
+      const date = action.value.date
+
+      const copyOfState = { ...state }
+
+      const workoutStats = copyOfState.stats[workoutId]
+
+      if (workoutStats.trackingStats.first.number === null) {
+        workoutStats.trackingStats.first.number = number
+        workoutStats.trackingStats.first.date = date
+      } else if (
+        workoutStats.trackingStats.first.number &&
+        workoutStats.trackingStats.second.number === null
+      ) {
+        workoutStats.trackingStats.second.number = number
+        workoutStats.trackingStats.second.date = date
+      } else {
+        workoutStats.trackingStats.third.number = number
+        workoutStats.trackingStats.third.date = date
+      }
+
+      return {
+        ...copyOfState
       }
     }
     case 'setComplete1': {

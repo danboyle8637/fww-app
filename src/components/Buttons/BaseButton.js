@@ -63,10 +63,10 @@ const Button = styled.button`
   margin: 0;
   padding: 8px 14px;
   background-color: ${props =>
-    props.purple
-      ? props.theme.tertiaryAccent
-      : props.disabled
+    props.disabled
       ? 'transparent'
+      : props.purple
+      ? props.theme.tertiaryAccent
       : props.theme.primaryAccent};
   border-radius: 6px;
   border-color: ${props => (props.disabled ? '#2B2C3A' : 'none')};

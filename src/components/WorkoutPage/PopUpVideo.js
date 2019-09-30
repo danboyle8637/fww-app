@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
+import BaseButton from '../Buttons/BaseButton'
 import VideoTransition from '../../Animations/Transitions/VideoTransition'
 import VimeoPlayer from '../Shared/VimeoPlayer'
 import { usePortalContext } from '../../context/portalContext'
@@ -34,13 +35,21 @@ const PopUpVideo = ({ title, workoutVideos, activeVideo }) => {
     }
   }, [workoutIsOpen, warmUpIsOpen, coolDownIsOpen, title, trainingPlanIsOpen])
 
+  useEffect(() => {
+    if (title === 'Workout') {
+      setVideoId(workoutVideos[activeVideo])
+    }
+  }, [activeVideo, title, workoutVideos])
+
   return (
     <VideoTransition showVideo={showVideo}>
       <VideoContainer>
-        <VimeoPlayer videoId={workoutVideos[activeVideo]} />
-        <CloseButton onClick={() => dispatch({ type: 'closeVideo' })}>
-          Click to Close
-        </CloseButton>
+        <VimeoPlayer videoId={videoId} />
+        <ButtonContainer>
+          <BaseButton handleClick={() => dispatch({ type: 'closeVideo' })}>
+            Close Video
+          </BaseButton>
+        </ButtonContainer>
       </VideoContainer>
     </VideoTransition>
   )
@@ -58,24 +67,14 @@ const VideoContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.9);
   width: 100vw;
   height: 100vh;
   z-index: 20;
 `
 
-const CloseButton = styled.button`
-  padding: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: ${props => props.theme.tertiaryAccent};
-  color: #f8f8f8;
-  border: none;
-  border-radius: 6px;
-`
-
-const Words = styled.h3`
-  font-size: 22px;
-  color: #f8f8f8;
+const ButtonContainer = styled.div`
+  margin: 40px;
+  padding: 0 16px;
+  width: 100%;
 `

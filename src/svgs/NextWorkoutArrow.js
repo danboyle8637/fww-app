@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 const NextWorkoutArrow = ({
   width,
@@ -23,7 +23,7 @@ const NextWorkoutArrow = ({
         height="35.24"
         rx="17.62"
         transform="rotate(45 92.948 1.55)"
-        fill={disablePrev ? '#42384a' : disableNext ? '#42384a' : '#B44CFF'}
+        fill={disablePrev ? '#787878' : disableNext ? '#787878' : '#5AFDF2'}
       />
       <rect
         x="33.43"
@@ -32,7 +32,7 @@ const NextWorkoutArrow = ({
         height="35.24"
         rx="17.62"
         transform="rotate(-45 60.935 188.2)"
-        fill={disablePrev ? '#42384a' : disableNext ? '#42384a' : '#B44CFF'}
+        fill={disablePrev ? '#787878' : disableNext ? '#787878' : '#5AFDF2'}
       />
     </svg>
   )

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import ResetWorkoutPageHeader from '../components/PageHeaders/ResetWorkoutPageHeader'
@@ -7,9 +7,14 @@ import WorkoutTrackingForm from '../components/Forms/WorkoutTrackingForm'
 import TrackingChart from '../components/Tables/TrackingChart'
 import CompleteFavoriteWorkoutForm from '../components/Forms/CompleteFavoriteWorkoutForm'
 import DownloadTrackingSheet from '../components/WorkoutPage/DownloadTrackingSection'
+import Portal from '../components/Shared/Portal'
+import SyncingIndicator from '../components/Indicators/SyncingIndicator'
 import { above } from '../styles/Theme'
 
 const ResetWorkout = ({ location, match }) => {
+  const [isSyncing, setIsSyncing] = useState(false)
+  const [syncMessage, setSyncMessage] = useState('Syncing...')
+
   const {
     name,
     coachingBackground,
@@ -20,7 +25,15 @@ const ResetWorkout = ({ location, match }) => {
     trackingSheetUrl
   } = location.state.workout
 
-  const { workoutId, trackingStats } = location.state.stats
+  const { programId, workoutId } = location.state.stats
+
+  const handleToggleSync = () => {
+    setIsSyncing(prevValue => !prevValue)
+  }
+
+  const handleSetSyncMessage = message => {
+    setSyncMessage(message)
+  }
 
   return (
     <>
@@ -34,16 +47,30 @@ const ResetWorkout = ({ location, match }) => {
         coachingUrl={match.url}
       />
       <Row1Wrapper>
-        <WorkoutTrackingForm trackingGoal={trackingGoal} />
-        <TrackingChart
+        <WorkoutTrackingForm
+          programId={programId}
+          workoutId={workoutId}
           trackingGoal={trackingGoal}
-          trackingStats={trackingStats}
+          isSyncing={isSyncing}
+          handleToggleSync={handleToggleSync}
+          handleSetSyncMessage={handleSetSyncMessage}
         />
+        <TrackingChart trackingGoal={trackingGoal} workoutId={workoutId} />
       </Row1Wrapper>
       <Row2Wrapper>
-        <CompleteFavoriteWorkoutForm workoutId={workoutId} />
+        <CompleteFavoriteWorkoutForm
+          programId={programId}
+          workoutId={workoutId}
+          handleToggleSync={handleToggleSync}
+          handleSetSyncMessage={handleSetSyncMessage}
+        />
         <DownloadTrackingSheet trackingSheet={trackingSheetUrl} />
       </Row2Wrapper>
+      <Portal
+        component={
+          <SyncingIndicator isSyncing={isSyncing} syncMessage={syncMessage} />
+        }
+      />
     </>
   )
 }
