@@ -25,7 +25,7 @@ const SignUpContainer = styled.div`
 `
 
 const SignUpHeadline = styled.h4`
-  margin: 0 0 16px 0;
+  margin: 0 0 8px 0;
   font-size: 18px;
   color: ${props => props.theme.headlineSecondary};
   letter-spacing: 0.1rem;

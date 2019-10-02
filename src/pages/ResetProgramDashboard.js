@@ -8,6 +8,7 @@ import DashboardStatsCard from '../components/Cards/DashboardStatsCard'
 import { useWorkoutState } from '../context/WorkoutsContext'
 import { useUserContext } from '../context/UserContext'
 import { useWorkoutStatsContext } from '../context/WorkoutStatsContext'
+import { above } from '../styles/Theme'
 // import siteConfig from '../utils/siteConfig'
 
 const ResetProgramDashboard = ({ match }) => {
@@ -177,4 +178,9 @@ const WorkoutCardWrapper = styled.div`
   grid-template-rows: auto;
   gap: 40px;
   justify-items: center;
+  ${above.mobile`
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 40px;
+  `}
 `

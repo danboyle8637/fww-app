@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import BaseButton from '../Buttons/BaseButton'
+import GoogleFacebookButton from '../Buttons/GoogleFacebookButton'
 import SignUp from './SignUp'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
 import { useFireBase } from '../Firebase/FirebaseContext'
@@ -47,12 +48,15 @@ const ChooseLoginMethod = ({ showNode, handleShowUsernamePasswordForm }) => {
         <BaseButton handleClick={handleShowUsernamePasswordForm}>
           Email & Password
         </BaseButton>
-        <BaseButton handleClick={handleLoginWithGoogle}>
+        <GoogleFacebookButton
+          provider={'google'}
+          handleClick={handleLoginWithGoogle}
+        >
           Sign In with Google
-        </BaseButton>
-        <BaseButton handleClick={handleLoginWithFacebook}>
+        </GoogleFacebookButton>
+        <GoogleFacebookButton handleClick={handleLoginWithFacebook}>
           Sign In with Facebook
-        </BaseButton>
+        </GoogleFacebookButton>
         <SignUp />
       </ButtonContainer>
     </LoginFormTransition>
@@ -63,7 +67,7 @@ export default ChooseLoginMethod
 
 const ButtonContainer = styled.div`
   position: absolute;
-  padding: 0 40px;
+  padding: 0 20px;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(4, auto);

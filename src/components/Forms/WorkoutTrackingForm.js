@@ -80,6 +80,8 @@ const WorkoutTrackingForm = ({
       .then(response => response.json())
       .then(data => {
         console.log(data)
+        // TODO make the request to mark the workout complete
+        // We'll need complete id.
         handleSetSyncMessage(data.message)
         handleToggleSync()
       })

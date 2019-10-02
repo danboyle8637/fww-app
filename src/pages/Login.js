@@ -1,30 +1,63 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
+import { Redirect } from 'react-router-dom'
 
 import loginMobileBg from '../images/signup-kindal-sitting-600x1300.jpg'
 import loginTabletBg from '../images/signup-kindal-sitting-834x1112.jpg'
-import loginIpadProBg from '../images/signup-kindal-sitting-1024x1112.jpg'
+import loginIpadProBg from '../images/signup-kindal-sitting-1024x1366.jpg'
 import loginLaptopBg from '../images/signup-kindal-sitting-1440x900.jpg'
 import LoginSignUpHeader from '../components/PageHeaders/LoginSignUpHeader'
+import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
 import LoginForms from '../components/Login/LoginForms'
 import ScreenWidthContext from '../context/ScreenWidthContext'
 import { above } from '../styles/Theme'
 
 const Login = () => {
   const device = useContext(ScreenWidthContext)
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
+  const [showDashboard, setShowDashboard] = useState(false)
+
+  const renderBackground = () => {
+    switch (device) {
+      case 'mobile': {
+        return <BackgroundImage src={loginMobileBg} />
+      }
+      case 'tablet': {
+        return <BackgroundImage src={loginTabletBg} />
+      }
+      case 'ipadPro': {
+        return <BackgroundImage src={loginIpadProBg} />
+      }
+      case 'laptop': {
+        return <BackgroundImage src={loginLaptopBg} />
+      }
+      case 'ultraWide': {
+        return <BackgroundImage src={loginLaptopBg} />
+      }
+      default: {
+        return null
+      }
+    }
+  }
 
   return (
-    <LoginContainer>
-      {device === 'mobile' ? <BackgroundImage src={loginMobileBg} /> : null}
-      {device === 'tablet' ? <BackgroundImage src={loginTabletBg} /> : null}
-      {device === 'ipadPro' ? <BackgroundImage src={loginIpadProBg} /> : null}
-      {device === 'laptop' ? <BackgroundImage src={loginLaptopBg} /> : null}
-      {device === 'ultraWide' ? <BackgroundImage src={loginLaptopBg} /> : null}
-      <ContentWrapper>
-        <LoginSignUpHeader />
-        <LoginForms />
-      </ContentWrapper>
-    </LoginContainer>
+    <>
+      {isLoggingIn ? (
+        <FullPageKettlebellLoader loadingMessage="Setting up programs!" />
+      ) : (
+        <LoginContainer>
+          {renderBackground()}
+          <ContentWrapper>
+            <LoginSignUpHeader />
+            <LoginForms
+              setIsLoggingIn={setIsLoggingIn}
+              setShowDashboard={setShowDashboard}
+            />
+          </ContentWrapper>
+        </LoginContainer>
+      )}
+      {showDashboard ? <Redirect to="/dashboard" /> : null}
+    </>
   )
 }
 
@@ -65,5 +98,6 @@ const ContentWrapper = styled.div`
   `}
   ${above.ipadPro`
     margin: 80px 0 0 160px;
+    width: 42%;
   `}
 `

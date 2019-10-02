@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { above } from '../../styles/Theme'
+
 const WorkoutLabelIndicator = ({ workoutBackgrounds, activeVideo, type }) => {
   const showWorkoutDots = () => {
     if (workoutBackgrounds) {
@@ -61,7 +63,7 @@ const Container = styled.div`
   grid-row: 1 / -1;
   align-self: end;
   justify-self: start;
-  padding: 1px 8px 1px 4px;
+  padding: 1px 8px 0px 4px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -77,6 +79,12 @@ const WorkoutLabel = styled.p`
   text-transform: uppercase;
   color: #e1e1e1;
   letter-spacing: 0.1rem;
+  ${above.mobile`
+    font-size: 16px;
+  `}
+  ${above.ipadPro`
+    font-size: 18px;
+  `}
 `
 
 const WorkoutIndicator = styled.div`
@@ -88,4 +96,12 @@ const WorkoutIndicator = styled.div`
   width: 12px;
   height: 12px;
   transition: background-color 400ms ease-in-out;
+  ${above.mobile`
+    width: 16px;
+    height: 16px;
+  `}
+  ${above.ipadPro`
+    width: 18px;
+    height: 18px;
+  `}
 `

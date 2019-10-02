@@ -7,7 +7,7 @@ import UsernamePasswordForm from './UsernamePasswordForm'
 import ForgotPasswordForm from './ForgotPasswordForm'
 import { useFormStore } from '../../context/FormContext'
 
-const LoginForms = () => {
+const LoginForms = ({ setIsLoggingIn, setShowDashboard }) => {
   const [reverse, setReverse] = useState(false)
   const [showChooseLoginMethod, setShowChooseLoginMethod] = useState(true)
   const [showUsernamePasswordForm, setShowUsernamePasswordForm] = useState(
@@ -55,6 +55,8 @@ const LoginForms = () => {
           reverse={reverse}
           handleShowForgotPasswordForm={handleShowForgotPasswordForm}
           handleReverseUsernamePasswordForm={handleReverseUsernamePasswordForm}
+          setIsLoggingIn={setIsLoggingIn}
+          setShowDashboard={setShowDashboard}
         />
         <ForgotPasswordForm
           showNode={showForgotPasswordForm}

@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import ProgressLoader from '../../svgs/ProgressLoader'
 
 const DashboardProgressCard = () => {
+  const [percentComplete, setPercentComplete] = useState(0)
+
   return (
     <CardContainer>
       <ProgressHeadline>Progress:</ProgressHeadline>
       <GraphWrapper>
-        <ProgressGraph />
-        <PercentComplete>100%</PercentComplete>
+        <ProgressGraph setPercentComplete={setPercentComplete} />
+        <PercentComplete>{percentComplete}%</PercentComplete>
       </GraphWrapper>
     </CardContainer>
   )

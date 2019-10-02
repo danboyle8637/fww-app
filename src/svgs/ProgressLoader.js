@@ -1,6 +1,37 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
+import { TweenMax } from 'gsap/TweenMax'
+import DrawSVG from '../greensock/DrawSVGPlugin'
 
-const ProgressLoader = ({ width, height, className, gradientId }) => {
+const ProgressLoader = ({
+  width,
+  height,
+  className,
+  gradientId,
+  setPercentComplete
+}) => {
+  const loaderRef = useRef(null)
+  // eslint-disable-next-line
+  const drawSVG = DrawSVG
+
+  useEffect(() => {
+    const loader = loaderRef.current
+
+    const maxLength = DrawSVG.getLength(loader)
+
+    const programPercent = (((2 / 5) * maxLength) / maxLength) * 100
+
+    TweenMax.set(loader, { drawSVG: '0%' })
+
+    TweenMax.to(loader, 5, {
+      drawSVG: `${programPercent}%`,
+      onUpdate: function() {
+        const position = DrawSVG.getPosition(loader)[1]
+        const percent = Math.round((position / maxLength) * 100)
+        setPercentComplete(percent)
+      }
+    })
+  }, [drawSVG, setPercentComplete])
+
   return (
     <svg
       id="progress-loader"
@@ -38,6 +69,7 @@ const ProgressLoader = ({ width, height, className, gradientId }) => {
         strokeWidth="32"
       />
       <path
+        ref={loaderRef}
         id="progress"
         d="M100.08 30a69.47 69.47 0 1 1-1.23 0"
         transform="translate(-14 -14)"

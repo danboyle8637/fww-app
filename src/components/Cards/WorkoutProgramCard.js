@@ -7,6 +7,7 @@ import ChooseProgramHeader from './ProgramHeaders/ChooseProgramHeader'
 import WorkoutProgramDescription from './WorkoutProgramDescription'
 import WorkoutCardFooter from './WorkoutCardFooter'
 import ProgramCardFooter from './ProgramCardFooter'
+import { above } from '../../styles/Theme'
 
 const WorkoutProgramCard = ({
   isWorkout,
@@ -50,13 +51,10 @@ const CardContainer = styled.div`
   width: 100%;
   max-width: 390px;
   box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.3);
+  ${above.ipadPro`
+    &:hover {
+      transform: translateY(-4px);
+      transition: transform 250ms ease-in-out;
+    }
+  `}
 `
-
-/* <Link
-      to={
-        isProgram
-          ? `/program/${programId}`
-          : `/program/${programId}/${workoutId}`
-      }
-      style={{ textDecoration: 'none' }}
-    ></Link> */

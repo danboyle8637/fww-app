@@ -17,10 +17,11 @@ const LoginUsernamePassword = ({
   showNode,
   handleShowForgotPasswordForm,
   handleReverseUsernamePasswordForm,
-  reverse
+  reverse,
+  setIsLoggingIn,
+  setShowDashboard
 }) => {
   const auth = useFireBase()
-  const [showDashboard, setShowDashboard] = useState(false)
   const [loginButtonValid, setLoginButtonValid] = useState(false)
   const [emailErrorMessage, setEmailErrorMessage] = useState('')
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('')
@@ -48,12 +49,12 @@ const LoginUsernamePassword = ({
   }, [
     formState.usernameValue.valid,
     formState.passwordValue.valid,
-    dispatch,
     formState.emailValue.valid
   ])
 
   const handleLoginSubmit = event => {
     event.preventDefault()
+    setIsLoggingIn(true)
     const email = formState.emailValue.value
     const password = formState.passwordValue.value
     let photoUrl
@@ -108,71 +109,63 @@ const LoginUsernamePassword = ({
   }
 
   return (
-    <>
-      {showDashboard ? (
-        <Redirect to="/dashboard" />
-      ) : (
-        <LoginFormTransition
-          showNode={showNode}
-          reverse={reverse}
-          formName="UsernamePasswordForm"
+    <LoginFormTransition
+      showNode={showNode}
+      reverse={reverse}
+      formName="UsernamePasswordForm"
+    >
+      <FormContainer>
+        <BackChip
+          handleReverseUsernamePasswordForm={handleReverseUsernamePasswordForm}
         >
-          <FormContainer>
-            <BackChip
-              handleReverseUsernamePasswordForm={
-                handleReverseUsernamePasswordForm
-              }
-            >
-              Back
-            </BackChip>
-            <LoginForm onSubmit={handleLoginSubmit}>
-              <TextInput
-                type="text"
-                name="emailAddress"
-                labelName="Email"
-                labelFor="emailAddress"
-                labelInstructions="Enter your email address"
-                labelError={emailErrorMessage}
-                value={formState.emailValue.value}
-                valid={formState.emailValue.valid}
-                initial={formState.emailOptions.initial}
-                touched={formState.emailOptions.touched}
-                showInstructions={formState.emailOptions.showInstructions}
-                onChange={updateInputValues}
-                onFocus={updateInputOptions}
-                onBlur={updateInputOptions}
-              />
-              <TextInput
-                type="password"
-                name="loginPassword"
-                labelName="Password"
-                labelFor="loginPassword"
-                labelInstructions="Enter your password"
-                labelError={passwordErrorMessage}
-                value={formState.passwordValue.value}
-                valid={formState.passwordValue.valid}
-                initial={formState.passwordOptions.initial}
-                touched={formState.passwordOptions.touched}
-                showInstructions={formState.passwordOptions.showInstructions}
-                onChange={updateInputValues}
-                onFocus={updateInputOptions}
-                onBlur={updateInputOptions}
-              />
-              <BaseButton
-                disabled={!loginButtonValid}
-                type="submit"
-                handleClick={handleLoginSubmit}
-              >
-                {loginButtonValid ? 'Login' : 'Enter Your Info'}
-              </BaseButton>
-            </LoginForm>
-            <DidForgetPassword
-              handleShowForgotPasswordForm={handleShowForgotPasswordForm}
-            />
-          </FormContainer>
-        </LoginFormTransition>
-      )}
-    </>
+          Back
+        </BackChip>
+        <LoginForm onSubmit={handleLoginSubmit}>
+          <TextInput
+            type="text"
+            name="emailAddress"
+            labelName="Email"
+            labelFor="emailAddress"
+            labelInstructions="Enter your email address"
+            labelError={emailErrorMessage}
+            value={formState.emailValue.value}
+            valid={formState.emailValue.valid}
+            initial={formState.emailOptions.initial}
+            touched={formState.emailOptions.touched}
+            showInstructions={formState.emailOptions.showInstructions}
+            onChange={updateInputValues}
+            onFocus={updateInputOptions}
+            onBlur={updateInputOptions}
+          />
+          <TextInput
+            type="password"
+            name="loginPassword"
+            labelName="Password"
+            labelFor="loginPassword"
+            labelInstructions="Enter your password"
+            labelError={passwordErrorMessage}
+            value={formState.passwordValue.value}
+            valid={formState.passwordValue.valid}
+            initial={formState.passwordOptions.initial}
+            touched={formState.passwordOptions.touched}
+            showInstructions={formState.passwordOptions.showInstructions}
+            onChange={updateInputValues}
+            onFocus={updateInputOptions}
+            onBlur={updateInputOptions}
+          />
+          <BaseButton
+            disabled={!loginButtonValid}
+            type="submit"
+            handleClick={handleLoginSubmit}
+          >
+            {loginButtonValid ? 'Login' : 'Enter Your Info'}
+          </BaseButton>
+        </LoginForm>
+        <DidForgetPassword
+          handleShowForgotPasswordForm={handleShowForgotPasswordForm}
+        />
+      </FormContainer>
+    </LoginFormTransition>
   )
 }
 

@@ -6,6 +6,7 @@ import TextInput from '../Forms/Inputs/TextInput'
 import BaseButton from '../Buttons/BaseButton'
 import BackChip from '../Chips/BackChip'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
+import FullPageKettlebellLoader from '../Loaders/FullPageKettlebellLoader'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
 import { useUserContext } from '../../context/UserContext'
@@ -18,10 +19,12 @@ const ResetStep3Form = ({ showNode, reverse, handleReverseStep3 }) => {
   const [updateInputValues, updateInputOptions] = useFormControls()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  const [isLoading, setIsLoading] = useState(false)
   const [toDashboard, setToDashboard] = useState(false)
 
   const handleSignUpForm = event => {
     event.preventDefault()
+    setIsLoading(true)
 
     const firstName = formState.signupFirstNameValue.value
     // const biggestObstacle = formState.biggestObstacleValue.value
@@ -61,6 +64,7 @@ const ResetStep3Form = ({ showNode, reverse, handleReverseStep3 }) => {
                 photoUrl: userData.photoUrl
               }
             })
+            setIsLoading(false)
             setToDashboard(true)
           })
           .catch(error => {
@@ -74,10 +78,12 @@ const ResetStep3Form = ({ showNode, reverse, handleReverseStep3 }) => {
       })
   }
 
+  console.log(isLoading)
+
   return (
     <>
-      {toDashboard ? (
-        <Redirect to="/dashboard" />
+      {isLoading ? (
+        <FullPageKettlebellLoader loadingMessage={'Setting up programs!'} />
       ) : (
         <LoginFormTransition
           showNode={showNode}
@@ -142,6 +148,7 @@ const ResetStep3Form = ({ showNode, reverse, handleReverseStep3 }) => {
           </Step3Container>
         </LoginFormTransition>
       )}
+      {toDashboard ? <Redirect to="/dashboard" /> : null}
     </>
   )
 }
