@@ -44,6 +44,7 @@ const WorkoutTrackingForm = ({
     event.preventDefault()
 
     const now = new Date()
+    console.log(now)
     const date = createDate(now)
 
     // Update local state first with a timestamp

@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import ProgressLoader from '../../../svgs/ProgressLoader'
+import { useWorkoutStatsContext } from '../../../context/WorkoutStatsContext'
 
-const ProgramProgressLoader = ({ percentComplete }) => {
+const ProgramProgressLoader = () => {
+  const [percentComplete, setPercentComplete] = useState(0)
+  // eslint-disable-next-line
+  const [statsState, dispatchStatsAction] = useWorkoutStatsContext()
+
+  const totalWorkouts = statsState.percentComplete.totalWorkouts
+  const workoutsCompleted = statsState.percentComplete.workoutsCompleted
+
   return (
     <ProgressContainer>
-      <ProgressGraph />
+      <ProgressGraph
+        totalWorkouts={totalWorkouts}
+        workoutsCompleted={workoutsCompleted}
+        setPercentComplete={setPercentComplete}
+      />
       <PercentNumber>{`${percentComplete}%`}</PercentNumber>
     </ProgressContainer>
   )

@@ -49,6 +49,7 @@ const LoginForms = ({ setIsLoggingIn, setShowDashboard }) => {
         <ChooseLoginMethod
           showNode={showChooseLoginMethod}
           handleShowUsernamePasswordForm={handleShowUsernamePasswordForm}
+          setShowDashboard={setShowDashboard}
         />
         <UsernamePasswordForm
           showNode={showUsernamePasswordForm}

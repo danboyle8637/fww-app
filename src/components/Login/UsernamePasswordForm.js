@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Redirect } from 'react-router-dom'
 
 import TextInput from '../Forms/Inputs/TextInput'
 import BaseButton from '../Buttons/BaseButton'

@@ -28,7 +28,12 @@ const CompleteFavoriteWorkoutForm = ({
           handleToggleSync={handleToggleSync}
           handleSetSyncMessage={handleSetSyncMessage}
         />
-        <FavoriteWorkoutForm workoutId={workoutId} />
+        <FavoriteWorkoutForm
+          programId={programId}
+          workoutId={workoutId}
+          handleToggleSync={handleToggleSync}
+          handleSetSyncMessage={handleSetSyncMessage}
+        />
       </CheckBoxWrapper>
     </FormContainer>
   )

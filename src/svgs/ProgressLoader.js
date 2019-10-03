@@ -7,6 +7,8 @@ const ProgressLoader = ({
   height,
   className,
   gradientId,
+  totalWorkouts,
+  workoutsCompleted,
   setPercentComplete
 }) => {
   const loaderRef = useRef(null)
@@ -14,15 +16,18 @@ const ProgressLoader = ({
   const drawSVG = DrawSVG
 
   useEffect(() => {
+    // TODO We need to make sure this only runs when the percent has changed.
+    // It's kicking off a state change everytime currently.
     const loader = loaderRef.current
 
     const maxLength = DrawSVG.getLength(loader)
 
-    const programPercent = (((2 / 5) * maxLength) / maxLength) * 100
+    const programPercent =
+      (((workoutsCompleted / totalWorkouts) * maxLength) / maxLength) * 100
 
     TweenMax.set(loader, { drawSVG: '0%' })
 
-    TweenMax.to(loader, 5, {
+    TweenMax.to(loader, 2, {
       drawSVG: `${programPercent}%`,
       onUpdate: function() {
         const position = DrawSVG.getPosition(loader)[1]
@@ -30,7 +35,7 @@ const ProgressLoader = ({
         setPercentComplete(percent)
       }
     })
-  }, [drawSVG, setPercentComplete])
+  }, [drawSVG, setPercentComplete, totalWorkouts, workoutsCompleted])
 
   return (
     <svg

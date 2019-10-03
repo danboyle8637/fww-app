@@ -6,7 +6,8 @@ const getRems = pixelWidth => {
 
 const createDate = timestamp => {
   const day = timestamp.getDate()
-  const month = timestamp.getMonth()
+  // Remember months and days of week are zero index based
+  const month = timestamp.getMonth() + 1
   const fullYear = timestamp.getFullYear()
 
   const twoDigitYear = Number(

@@ -11,7 +11,6 @@ const CompleteWorkoutForm = ({
   handleToggleSync,
   handleSetSyncMessage
 }) => {
-  // eslint-disable-next-line
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
 
   const completed = workoutStatsState.stats[workoutId].completed
@@ -31,14 +30,16 @@ const CompleteWorkoutForm = ({
         value: workoutId
       })
 
-      // TODO Make network request to update database
+      handleToggleSync()
+      handleSetCompleteInDatabase(2)
     } else if (id === 3) {
       dispatchStatsAction({
         type: 'setComplete3',
         value: workoutId
       })
 
-      // TODO Make network request to update database
+      handleToggleSync()
+      handleSetCompleteInDatabase(3)
     } else {
       console.log('How did you click a button that wasnt on the screen?')
     }
@@ -65,12 +66,12 @@ const CompleteWorkoutForm = ({
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         handleSetSyncMessage(data.message)
         handleToggleSync()
       })
       .catch(errorObj => {
-        console.log(errorObj)
+        handleSetSyncMessage(errorObj.message)
+        handleToggleSync()
       })
   }
 

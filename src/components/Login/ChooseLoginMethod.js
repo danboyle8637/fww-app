@@ -7,7 +7,11 @@ import SignUp from './SignUp'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
 import { useFireBase } from '../Firebase/FirebaseContext'
 
-const ChooseLoginMethod = ({ showNode, handleShowUsernamePasswordForm }) => {
+const ChooseLoginMethod = ({
+  showNode,
+  handleShowUsernamePasswordForm,
+  setShowDashboard
+}) => {
   const auth = useFireBase()
 
   const handleLoginWithGoogle = () => {
@@ -16,6 +20,7 @@ const ChooseLoginMethod = ({ showNode, handleShowUsernamePasswordForm }) => {
       .then(result => {
         const user = result.user
         console.log(user)
+        setShowDashboard(true)
       })
       .catch(error => {
         // const errorCode = error.code
@@ -32,6 +37,7 @@ const ChooseLoginMethod = ({ showNode, handleShowUsernamePasswordForm }) => {
       .then(result => {
         const user = result.user
         console.log(user)
+        setShowDashboard(true)
       })
       .catch(error => {
         // const errorCode = error.code

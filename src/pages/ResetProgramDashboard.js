@@ -78,7 +78,10 @@ const ResetProgramDashboard = ({ match }) => {
   //             if (keyArray.includes('stats')) {
   //               dispatchStatsAction({
   //                 type: 'setWorkoutStatsState',
-  //                 value: data.stats
+  //                 value: {
+  //                   percentComplete: data.percentComplete,
+  //                   stats: data.stats
+  //                 }
   //               })
   //             }
   //           })
