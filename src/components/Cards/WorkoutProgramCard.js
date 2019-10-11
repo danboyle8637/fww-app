@@ -15,6 +15,7 @@ const WorkoutProgramCard = ({
   programId = null,
   workoutId = null,
   coverImage,
+  tinyImage,
   title = 'Workout Title',
   description
 }) => {
@@ -23,6 +24,7 @@ const WorkoutProgramCard = ({
       {isWorkout ? (
         <WorkoutCardHeader
           background={coverImage}
+          tinyImage={tinyImage}
           altText="Text"
           title="Title"
         />

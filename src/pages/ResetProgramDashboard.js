@@ -120,6 +120,7 @@ const ResetProgramDashboard = ({ match }) => {
     const workouts = workoutsState.workouts.map(workout => {
       const key = workout.order
       const coverImage = workout.workoutBackgrounds[0]
+      const tinyImage = workout.workoutTinyBackground
       const title = workout.name
       const description = workout.description
       const workoutId = workout.workoutId
@@ -141,6 +142,7 @@ const ResetProgramDashboard = ({ match }) => {
           <WorkoutCard
             isWorkout
             coverImage={coverImage}
+            tinyImage={tinyImage}
             title={title}
             description={description}
             workoutId={workoutId}

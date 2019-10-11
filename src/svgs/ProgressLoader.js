@@ -35,6 +35,10 @@ const ProgressLoader = ({
         setPercentComplete(percent)
       }
     })
+
+    return () => {
+      TweenMax.killTweensOf(loader)
+    }
   }, [drawSVG, setPercentComplete, totalWorkouts, workoutsCompleted])
 
   return (

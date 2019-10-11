@@ -63,13 +63,13 @@ const LoginUsernamePassword = ({
       .then(userCredential => {
         const username = userCredential.user.displayName
         photoUrl = userCredential.user.photoURL
-        const getUserData = { username: username }
+        const getUserRequestObject = { username: username }
         const baseUrl = siteConfig.api.baseUrl
         const url = `${baseUrl}/get-user`
 
         fetch(url, {
           method: 'POST',
-          body: JSON.stringify(getUserData)
+          body: JSON.stringify(getUserRequestObject)
         })
           .then(response => response.json())
           .then(userData => {

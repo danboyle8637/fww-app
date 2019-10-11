@@ -16,6 +16,8 @@ const workoutsState = {
       workoutBackgrounds: [
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout1-cover.jpg?alt=media&token=d8895b3b-837e-4a44-8c6d-02eb4d6dd239'
       ],
+      workoutTinyBackground:
+        'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout1-cover-tiny.jpg?alt=media&token=6d1c11fc-bac6-4c54-a220-348b656813f8',
       workout: {
         title: 'Body Burn Jump Start Pushups',
         description:
@@ -72,6 +74,8 @@ const workoutsState = {
       workoutBackgrounds: [
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout2-cover.jpg?alt=media&token=1aeca8ac-7e73-4a39-a7a6-d0e72d5c6c8a'
       ],
+      workoutTinyBackground:
+        'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout2-cover-tiny.jpg?alt=media&token=675e544e-50f7-46bf-a08b-635db6882696',
       workout: {
         title: 'Body Burn Reset Squat Workout',
         description:
@@ -120,6 +124,8 @@ const workoutsState = {
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout1-cover.jpg?alt=media&token=d8895b3b-837e-4a44-8c6d-02eb4d6dd239',
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout2-cover.jpg?alt=media&token=1aeca8ac-7e73-4a39-a7a6-d0e72d5c6c8a'
       ],
+      workoutTinyBackground:
+        'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout3-cover-tiny.jpg?alt=media&token=e24fe763-e121-462b-85a1-3088dade26bf',
       workout: {
         title: 'Body Burn Reset Lunge Workout',
         description:
@@ -169,6 +175,8 @@ const workoutsState = {
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout4-cover.jpg?alt=media&token=1ca75ead-51ea-4fe9-908c-05e9a62b5a0c',
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout4-cover.jpg?alt=media&token=1ca75ead-51ea-4fe9-908c-05e9a62b5a0c'
       ],
+      workoutTinyBackground:
+        'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout4-cover-tiny.jpg?alt=media&token=866865aa-dc08-4fa4-b88d-e95554c275ad',
       workout: {
         title: 'Body Burn Reset Core Workout',
         description:
@@ -236,6 +244,8 @@ const workoutsState = {
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout5-cover.jpg?alt=media&token=3002faae-2e50-44fd-830f-d12e2a34eb75',
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout5-cover.jpg?alt=media&token=3002faae-2e50-44fd-830f-d12e2a34eb75'
       ],
+      workoutTinyBackground:
+        'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout5-cover-tiny.jpg?alt=media&token=6dd83ed5-afb1-430c-a9f8-51b906f2865a',
       workout: {
         title: 'Body Burn Reset Movement Workout',
         description:

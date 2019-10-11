@@ -1,15 +1,31 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useLocation, useHistory } from 'react-router-dom'
 
 import FWWLogo from '../../svgs/FWWLogo'
 import MenuChicklet from './MenuChicklet'
 import NavigationArrow from '../../svgs/NavigationArrow'
+import BackButtonTransition from '../../Animations/Transitions/BackButtonTransition'
 import ScreenWidthContext from '../../context/ScreenWidthContext'
 import { above } from '../../styles/Theme'
 
 const MainNav = () => {
   const [showLogo, setShowLogo] = useState(false)
+  const [showBackButton, setShowBackButton] = useState(false)
   const device = useContext(ScreenWidthContext)
+  const location = useLocation()
+  const history = useHistory()
+
+  useEffect(() => {
+    const baseLocation = location.pathname.split('/')
+    const elementsOfPath = baseLocation.filter(element => element.length !== 0)
+
+    if (elementsOfPath[0] === 'dashboard' && elementsOfPath.length > 1) {
+      setShowBackButton(true)
+    } else {
+      setShowBackButton(false)
+    }
+  }, [location])
 
   useEffect(() => {
     if (device !== 'mobile') {
@@ -19,12 +35,17 @@ const MainNav = () => {
     }
   }, [device])
 
+  const handleGoBack = () => {
+    history.goBack()
+  }
+
   return (
     <MainNavBar>
-      {/* <NavArrowBackground>
-        <NavArrow />
-      </NavArrowBackground> */}
-      {showLogo ? <Logo /> : null}
+      <BackButtonTransition showBackButton={showBackButton}>
+        <NavArrowBackground onClick={handleGoBack}>
+          <NavArrow />
+        </NavArrowBackground>
+      </BackButtonTransition>
       <MenuChicklet />
     </MainNavBar>
   )
@@ -64,7 +85,7 @@ const NavArrowBackground = styled.div`
   justify-self: start;
   justify-content: center;
   align-items: center;
-  background: rgba(25, 25, 28, 0.8);
+  background: rgba(16, 16, 16, 0.8);
   border-radius: 50%;
   width: 40px;
   height: 40px;
