@@ -11,6 +11,8 @@ const workoutsState = {
         'Learn correct pushup form and practice it using different intensity levels. But I’ll also make sure we get the heart rate up to test our fitness.',
       coachingVideo: 179195049,
       workoutVideos: [179195048],
+      coachingTinyBackground:
+        'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout1-coaching-cover-tiny.jpg?alt=media&token=18a569f8-a7d2-454e-b9ab-25c387e6ee48',
       coachingBackground:
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout1-coaching-cover.jpg?alt=media&token=91a53453-9625-4413-8041-2bef2187f9bb',
       workoutBackgrounds: [
@@ -69,6 +71,8 @@ const workoutsState = {
         'Tweak your squat form for stronger, more powerful squats. Plus we’ll add in new pushup variations in this AMRAP workout with a great finisher.',
       coachingVideo: 179784593,
       workoutVideos: [179784594],
+      coachingTinyBackground:
+        'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout2-coaching-cover-tiny.jpg?alt=media&token=f1477ebc-a7a5-46bc-9c21-dcc0340b4c74',
       coachingBackground:
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout2-coaching-cover.jpg?alt=media&token=e618874c-1840-4144-80c6-e56bfe94724d',
       workoutBackgrounds: [
@@ -117,6 +121,8 @@ const workoutsState = {
         'Three mini AMRAP circuits and a variety of lunges and new pushup and squat variations. Are you ready to burn your legs out?',
       coachingVideo: 179797251,
       workoutVideos: [179797252, 179832395, 179832396],
+      coachingTinyBackground:
+        'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout3-coaching-cover-tiny.jpg?alt=media&token=357fe88c-cee3-4546-8189-db8b3af0b0fc',
       coachingBackground:
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout3-coaching-cover.jpg?alt=media&token=d822c8b3-aaaa-4580-a046-b1f76e19d852',
       workoutBackgrounds: [
@@ -168,6 +174,8 @@ const workoutsState = {
         'Two four minute AMRAP circuits with a tough core circuit to break things up. Let’s work hard on learning to hold our abs tight!',
       coachingVideo: 179898069,
       workoutVideos: [179898070, 179898071, 179912086],
+      coachingTinyBackground:
+        'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout4-coaching-cover-tiny.jpg?alt=media&token=0285089b-5b6c-4458-ab1c-c2eb6b7c0938',
       coachingBackground:
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout4-coaching-cover.jpg?alt=media&token=2b070f7b-6b35-4bec-85de-27d078338ccb',
       workoutBackgrounds: [
@@ -237,6 +245,8 @@ const workoutsState = {
         'A workout to introduce you to new exercises, new movements, and get your body into something complete different. You ready for this?',
       coachingVideo: 179928803,
       workoutVideos: [179928805, 225613129, 225619221],
+      coachingTinyBackground:
+        'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout5-coaching-cover-tiny.jpg?alt=media&token=9f7a6769-176b-4730-8235-0560c2d18382',
       coachingBackground:
         'https://firebasestorage.googleapis.com/v0/b/fit-womens-weekly.appspot.com/o/admin%2Fprograms%2Fbody-burn-reset%2Fbody-burn-reset-workout5-coaching-cover.jpg?alt=media&token=2c42411b-2584-4283-861d-71d922867ed5',
       workoutBackgrounds: [

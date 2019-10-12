@@ -9,11 +9,18 @@ import WorkoutLabelIndicator from '../Indicators/WorkoutLabelIndicator'
 import Portal from '../Shared/Portal'
 import PopUpVideo from '../WorkoutPage/PopUpVideo'
 import { usePortalContext } from '../../context/portalContext'
+import useBlurUp from '../../hooks/useBlurUp'
 import { above } from '../../styles/Theme'
 
-const WorkoutSection = ({ workoutBackgrounds, name, workoutVideos }) => {
+const WorkoutSection = ({
+  workoutTinyBackground,
+  workoutBackgrounds,
+  name,
+  workoutVideos
+}) => {
   // eslint-disable-next-line
   const [portalState, dispatch] = usePortalContext()
+  const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
 
   const [activeVideo, setActiveVideo] = useState(0)
   const [workoutBackgroundAction, setWorkoutBackgroundAction] = useState('')
@@ -38,12 +45,17 @@ const WorkoutSection = ({ workoutBackgrounds, name, workoutVideos }) => {
 
   return (
     <WorkoutSectionGrid>
-      <WorkoutBackgroundImage
-        activeVideo={activeVideo}
-        workoutBackgroundAction={workoutBackgroundAction}
-        workoutBackgrounds={workoutBackgrounds}
-        name={name}
-      />
+      <BlurUpImageGrid ref={setParentContainer}>
+        <WorkoutBackgroundImage
+          ref={setLargeImage}
+          activeVideo={activeVideo}
+          workoutBackgroundAction={workoutBackgroundAction}
+          workoutBackgrounds={workoutBackgrounds}
+          name={name}
+        />
+        <PlaceholderImage ref={setSmallImage} src={workoutTinyBackground} />
+      </BlurUpImageGrid>
+
       <WorkoutSliderButtons
         handleNextVideo={handleNextVideo}
         handlePrevVideo={handlePrevVideo}
@@ -71,13 +83,33 @@ const WorkoutSection = ({ workoutBackgrounds, name, workoutVideos }) => {
 
 export default WorkoutSection
 
+const BlurUpImageGrid = styled.div`
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  width: 100%;
+  overflow: hidden;
+`
+
+const PlaceholderImage = styled.img`
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  border-radius: 10px;
+  width: 100%;
+  filter: blur(6px);
+  transform: scale(1);
+  z-index: 2;
+`
+
 const Play = styled(PlayButton)`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
   align-self: center;
   justify-self: center;
   width: 60px;
-  z-index: 2;
+  z-index: 4;
   ${above.mobile`
     width: 80px;
   `}

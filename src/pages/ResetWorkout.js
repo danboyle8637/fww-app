@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useLocation, useRouteMatch } from 'react-router-dom'
 
 import ResetWorkoutPageHeader from '../components/PageHeaders/ResetWorkoutPageHeader'
 import VideoSection from '../components/WorkoutPage/VideoSection'
@@ -11,13 +12,18 @@ import Portal from '../components/Shared/Portal'
 import SyncingIndicator from '../components/Indicators/SyncingIndicator'
 import { above } from '../styles/Theme'
 
-const ResetWorkout = ({ location, match }) => {
+const ResetWorkout = () => {
   const [isSyncing, setIsSyncing] = useState(false)
   const [syncMessage, setSyncMessage] = useState('Syncing...')
 
+  const location = useLocation()
+  const urlData = useRouteMatch()
+
   const {
     name,
+    coachingTinyBackground,
     coachingBackground,
+    workoutTinyBackground,
     workoutBackgrounds,
     coachingVideo,
     workoutVideos,
@@ -40,11 +46,13 @@ const ResetWorkout = ({ location, match }) => {
       <ResetWorkoutPageHeader name={name} />
       <VideoSection
         name={name}
+        coachingTinyBackground={coachingTinyBackground}
         coachingBackground={coachingBackground}
+        workoutTinyBackground={workoutTinyBackground}
         workoutBackgrounds={workoutBackgrounds}
         coachingVideo={coachingVideo}
         workoutVideos={workoutVideos}
-        coachingUrl={match.url}
+        coachingUrl={urlData.url}
       />
       <Row1Wrapper>
         <WorkoutTrackingForm

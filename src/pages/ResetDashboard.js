@@ -129,6 +129,7 @@ const ResetDashboard = ({ match }) => {
     const programs = programsState.programs.map(program => {
       const key = program.order
       const coverImage = program.coverImage
+      const tinyCoverImage = program.tinyCoverImage
       const description = program.description
       const title = program.name
       const programId = program.programId
@@ -142,6 +143,7 @@ const ResetDashboard = ({ match }) => {
           <ProgramCard
             isProgram
             coverImage={coverImage}
+            tinyCoverImage={tinyCoverImage}
             programId={programId}
             title={title}
             description={description}

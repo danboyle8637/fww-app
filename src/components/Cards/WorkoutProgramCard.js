@@ -15,6 +15,7 @@ const WorkoutProgramCard = ({
   programId = null,
   workoutId = null,
   coverImage,
+  tinyCoverImage,
   tinyImage,
   title = 'Workout Title',
   description
@@ -30,7 +31,11 @@ const WorkoutProgramCard = ({
         />
       ) : null}
       {isProgram ? (
-        <ChooseProgramHeader programId={programId} coverImage={coverImage} />
+        <ChooseProgramHeader
+          programId={programId}
+          coverImage={coverImage}
+          tinyCoverImage={tinyCoverImage}
+        />
       ) : null}
       <WorkoutProgramDescription
         isWorkout={isWorkout}

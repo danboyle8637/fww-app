@@ -5,14 +5,18 @@ import { Link } from 'react-router-dom'
 import { WorkoutSectionGrid } from '../../styles/Containers'
 import PlayButton from '../../svgs/PlayButton'
 import WorkoutLabelIndicator from '../Indicators/WorkoutLabelIndicator'
+import useBlurUp from '../../hooks/useBlurUp'
 import { above } from '../../styles/Theme'
 
 const CoachingSection = ({
+  coachingTinyBackground,
   coachingBackground,
   name,
   coachingUrl,
   coachingVideo
 }) => {
+  const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
+
   const linkStyle = {
     gridColumn: '1 / -1',
     gridRow: '1 / -1',
@@ -21,14 +25,22 @@ const CoachingSection = ({
     textDecoration: 'none'
   }
 
-  //TODO pass caoching video to the coaching page
   return (
     <WorkoutSectionGrid>
-      <BackgroundImage
-        src={coachingBackground}
-        title={`${name} coaching video`}
-        alt={`Learn how the ${name} is going to work.`}
-      />
+      <BlurUpImageGrid ref={setParentContainer}>
+        <CoachingImage
+          ref={setLargeImage}
+          src={coachingBackground}
+          title={`${name} coaching video`}
+          alt={`Learn how the ${name} is going to work.`}
+        />
+        <PlaceholderImage
+          ref={setSmallImage}
+          src={coachingTinyBackground}
+          title={`${name} coaching video`}
+          alt={`Learn how the ${name} is going to work.`}
+        />
+      </BlurUpImageGrid>
       <WorkoutLabelIndicator type={'coaching'} />
       <Link
         to={{
@@ -45,11 +57,30 @@ const CoachingSection = ({
 
 export default CoachingSection
 
-const BackgroundImage = styled.img`
+const BlurUpImageGrid = styled.div`
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  width: 100%;
+  overflow: hidden;
+`
+
+const CoachingImage = styled.img`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
   border-radius: 10px;
   width: 100%;
+`
+const PlaceholderImage = styled.img`
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  border-radius: 10px;
+  width: 100%;
+  filter: blur(6px);
+  transform: scale(1);
+  z-index: 2;
 `
 
 const Play = styled(PlayButton)`

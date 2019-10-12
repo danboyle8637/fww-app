@@ -69,7 +69,7 @@ const Container = styled.div`
   justify-content: flex-start;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 0 8px 0 0;
-  z-index: 2;
+  z-index: 4;
 `
 
 const WorkoutLabel = styled.p`

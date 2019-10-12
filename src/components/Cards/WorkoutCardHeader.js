@@ -1,7 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { TweenMax, Linear } from 'gsap/TweenMax'
-import TimelineMax from 'gsap/TimelineMax'
 
 import useBlurUp from '../../hooks/useBlurUp'
 
@@ -10,7 +8,7 @@ const WorkoutCardHeader = ({ background, tinyImage, altText, title }) => {
 
   // const largeImageRef = useRef(null)
   // const smallImageRef = useRef(null)
-  const [setSmallImage, setLargeImage] = useBlurUp()
+  const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
   // const timelineRef = useRef(new TimelineMax({ paused: true }))
 
   // useEffect(() => {
@@ -57,7 +55,7 @@ const WorkoutCardHeader = ({ background, tinyImage, altText, title }) => {
   // }, [largeImageLoaded])
 
   return (
-    <ImageContainer>
+    <ImageContainer ref={setParentContainer}>
       <WorkoutImage
         ref={setLargeImage}
         src={background}
@@ -81,6 +79,7 @@ const ImageContainer = styled.div`
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   width: 100%;
+  overflow: hidden;
 `
 
 const WorkoutImage = styled.img`

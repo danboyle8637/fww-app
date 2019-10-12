@@ -7,6 +7,7 @@ const ProgressLoader = ({
   height,
   className,
   gradientId,
+  programId,
   totalWorkouts,
   workoutsCompleted,
   setPercentComplete

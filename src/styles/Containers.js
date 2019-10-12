@@ -14,6 +14,10 @@ const ProgramHeaderGrid = styled.div`
 const ProgramBackgroundWrapper = styled.div`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  overflow: hidden;
 `
 
 const ProgramBackgroundImage = styled.img`

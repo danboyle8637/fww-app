@@ -4,19 +4,34 @@ import IgniteResetHeader from './IgniteResetHeader'
 import BodyBurnResetHeader from './BodyBurnResetHeader'
 import StrongResetHeader from './StrongResetHeader'
 
-const ChooseProgramHeader = ({ programId, coverImage }) => {
+const ChooseProgramHeader = ({ programId, coverImage, tinyCoverImage }) => {
   const programHeaders = [
     {
       programId: '7DayIgniteReset',
-      component: <IgniteResetHeader coverImage={coverImage} />
+      component: (
+        <IgniteResetHeader
+          coverImage={coverImage}
+          tinyCoverImage={tinyCoverImage}
+        />
+      )
     },
     {
       programId: '7DayBodyBurnReset',
-      component: <BodyBurnResetHeader coverImage={coverImage} />
+      component: (
+        <BodyBurnResetHeader
+          coverImage={coverImage}
+          tinyCoverImage={tinyCoverImage}
+        />
+      )
     },
     {
       programId: '7DayStrongReset',
-      component: <StrongResetHeader coverImage={coverImage} />
+      component: (
+        <StrongResetHeader
+          coverImage={coverImage}
+          tinyCoverImage={tinyCoverImage}
+        />
+      )
     }
   ]
 

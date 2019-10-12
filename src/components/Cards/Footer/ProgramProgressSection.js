@@ -3,10 +3,10 @@ import styled from 'styled-components'
 
 import ProgramProgressLoader from './ProgramProgressLoader'
 
-const ProgramProgressSection = () => {
+const ProgramProgressSection = ({ programId }) => {
   return (
     <ProgressContainer>
-      <ProgramProgressLoader />
+      <ProgramProgressLoader programId={programId} />
       <ProgressLabel>Progress</ProgressLabel>
     </ProgressContainer>
   )

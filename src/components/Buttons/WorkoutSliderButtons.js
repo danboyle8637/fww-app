@@ -55,7 +55,7 @@ const WorkoutButtonsContainer = styled.div`
   align-self: center;
   display: flex;
   justify-content: space-between;
-  z-index: 2;
+  z-index: 4;
 `
 
 const NextButtonContainer = styled.div`

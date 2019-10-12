@@ -9,7 +9,7 @@ const ProgramCardFooter = ({ programId }) => {
   return (
     <FooterContainer>
       <ProgramActiveSection programId={programId} />
-      <ProgramProgressSection />
+      <ProgramProgressSection programId={programId} />
       <NavigationArrow />
     </FooterContainer>
   )

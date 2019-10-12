@@ -7,7 +7,9 @@ import WarmUpCoolDownSection from './WarmUpCoolDownSection'
 import { above } from '../../styles/Theme'
 
 const VideoSection = ({
+  coachingTinyBackground,
   coachingBackground,
+  workoutTinyBackground,
   workoutBackgrounds,
   coachingVideo,
   workoutVideos,
@@ -18,12 +20,14 @@ const VideoSection = ({
     <VideoContainer>
       <CoachingSection
         name={name}
+        coachingTinyBackground={coachingTinyBackground}
         coachingBackground={coachingBackground}
         coachingUrl={coachingUrl}
         coachingVideo={coachingVideo}
       />
       <WorkoutSection
         name={name}
+        workoutTinyBackground={workoutTinyBackground}
         workoutBackgrounds={workoutBackgrounds}
         workoutVideos={workoutVideos}
       />
