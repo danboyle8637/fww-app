@@ -43,6 +43,10 @@ const setResetWorkoutValidationRules = {
   isSelected: true
 }
 
+const setSignUpMethodValidation = {
+  isSelected: true
+}
+
 const formState = {
   usernameValue: {
     value: '',
@@ -132,6 +136,18 @@ const formState = {
     ]
   },
   resetWorkoutOptions: {
+    initial: true
+  },
+  signUpMethodValue: {
+    value: '',
+    valid: false,
+    options: [
+      { value: 'Google', checked: false },
+      { value: 'Facebook', checked: false },
+      { value: 'EmailPassword', checked: false }
+    ]
+  },
+  signUpMethodOptions: {
     initial: true
   },
   biggestObstacleValue: {
@@ -423,6 +439,45 @@ const formReducer = (state, action) => {
       return {
         ...state,
         resetWorkoutOptions: {
+          initial: false
+        }
+      }
+    }
+    case 'setSignUpMethodValue': {
+      const options = state.signUpMethodValue.options.map(option => {
+        if (action.value === option.value) {
+          return {
+            ...option,
+            checked: true
+          }
+        } else if (option.checked) {
+          return {
+            ...option,
+            checked: !option.checked
+          }
+        } else {
+          return {
+            ...option,
+            checked: option.checked
+          }
+        }
+      })
+
+      const valid = validate(options, setSignUpMethodValidation)
+
+      return {
+        ...state,
+        signUpMethodValue: {
+          value: action.value,
+          valid: valid,
+          options: options
+        }
+      }
+    }
+    case 'setSignUpMethodOptions': {
+      return {
+        ...state,
+        signUpMethodOptions: {
           initial: false
         }
       }

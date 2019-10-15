@@ -7,17 +7,23 @@ import ProgramProductCardFooter from './ProgramProductCardFooter'
 import FormCheck from '../../svgs/FormCheck'
 
 const ChooseResetProgramCard = ({
+  programId,
   workoutId,
   description,
   fitnessLevel,
   numberOfWorkouts,
   duration,
-  checked
+  checked,
+  signUpCard
 }) => {
   return (
     <CardGrid>
       <CardContainer>
-        <ChooseProgramHeader workoutId={workoutId} />
+        <ChooseProgramHeader
+          workoutId={workoutId}
+          programId={programId}
+          signUpCard={signUpCard}
+        />
         <WorkoutProgramDescription description={description} />
         <ProgramProductCardFooter
           fitnessLevel={fitnessLevel}
@@ -58,7 +64,7 @@ const SelectedCard = styled.div`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
   background: ${props =>
-    props.checked ? 'rgba(0, 0, 0, 0.6)' : 'transparent'};
+    props.checked ? 'rgba(84, 49, 151, 0.6)' : 'transparent'};
   border-radius: 10px 10px 40px 10px;
   z-index: 1;
 `

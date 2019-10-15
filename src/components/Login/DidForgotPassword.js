@@ -3,13 +3,11 @@ import styled from 'styled-components'
 
 import TextButton from '../Buttons/TextButton'
 
-const DidForgotPassword = ({ handleShowForgotPasswordForm }) => {
+const DidForgotPassword = ({ handleClick }) => {
   return (
     <ForgotPasswordContainer>
       <ForgotPasswordHeadline>Forgot password?</ForgotPasswordHeadline>
-      <TextButton handleClick={handleShowForgotPasswordForm}>
-        Send reminder
-      </TextButton>
+      <TextButton handleClick={handleClick}>Send reminder</TextButton>
     </ForgotPasswordContainer>
   )
 }

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import ChooseResetProgramCard from '../../Cards/ChooseResetProgramCard'
 
-const CardRadioInput = ({ name, options, updateInputValues }) => {
+const CardRadioInput = ({ name, options, updateInputValues, signUpCard }) => {
   const radios = options.map(option => {
     return (
       <InputLabel htmlFor={option.value} key={option.value}>
@@ -16,12 +16,13 @@ const CardRadioInput = ({ name, options, updateInputValues }) => {
           onChange={updateInputValues}
         />
         <ChooseResetProgramCard
-          workoutId={option.value}
+          programId={option.value}
           description={option.description}
           fitnessLevel={option.fitnessLevel}
           numberOfWorkouts={option.numberOfWorkouts}
           duration={option.duration}
           checked={option.checked}
+          signUpCard={signUpCard}
         />
       </InputLabel>
     )

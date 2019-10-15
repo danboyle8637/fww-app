@@ -10,6 +10,7 @@ const WorkoutBackgroundImage = forwardRef(
     const prevTlRef = useRef(new TimelineMax({ paused: true }))
 
     useEffect(() => {
+      // This Effect just sets the additional backgrounds off to the left
       const workoutBackgroundsToSet = []
 
       if (imageArrayRef.current.length > 0) {

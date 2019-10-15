@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useLocation, useHistory } from 'react-router-dom'
 
-import FWWLogo from '../../svgs/FWWLogo'
 import MenuChicklet from './MenuChicklet'
 import NavigationArrow from '../../svgs/NavigationArrow'
 import BackButtonTransition from '../../Animations/Transitions/BackButtonTransition'
@@ -10,6 +9,7 @@ import ScreenWidthContext from '../../context/ScreenWidthContext'
 import { above } from '../../styles/Theme'
 
 const MainNav = () => {
+  // eslint-disable-next-line
   const [showLogo, setShowLogo] = useState(false)
   const [showBackButton, setShowBackButton] = useState(false)
   const device = useContext(ScreenWidthContext)
@@ -69,14 +69,6 @@ const MainNavBar = styled.header`
   `}
   ${above.ipadPro`
     max-width: 1300px;
-  `}
-`
-
-const Logo = styled(FWWLogo)`
-  justify-self: start;
-  width: 40px;
-  ${above.mobile`
-    width: 80px;
   `}
 `
 

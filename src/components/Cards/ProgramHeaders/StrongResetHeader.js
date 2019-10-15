@@ -5,10 +5,11 @@ import {
   ProgramHeaderGrid,
   ProgramBackgroundWrapper
 } from '../../../styles/Containers'
+import StrongResetProgramCover from '../../../images/strong-reset-program-cover.jpg'
 import StrongResetLogo from '../../../svgs/StrongResetLogo'
 import useBlurUp from '../../../hooks/useBlurUp'
 
-const StrongResetHeader = ({ coverImage, tinyCoverImage }) => {
+const StrongResetHeader = ({ coverImage, tinyCoverImage, signUpCard }) => {
   const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
 
   return (
@@ -16,7 +17,7 @@ const StrongResetHeader = ({ coverImage, tinyCoverImage }) => {
       <ProgramBackgroundWrapper ref={setParentContainer}>
         <ProgramBackgroundImage
           ref={setLargeImage}
-          src={coverImage}
+          src={signUpCard ? StrongResetProgramCover : coverImage}
           alt="7 Day Strong Reset Program Cover"
           title="7 Day Strong Reset Program"
         />

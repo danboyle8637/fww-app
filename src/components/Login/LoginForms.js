@@ -5,64 +5,33 @@ import { TransitionGroup } from 'react-transition-group'
 import ChooseLoginMethod from './ChooseLoginMethod'
 import UsernamePasswordForm from './UsernamePasswordForm'
 import ForgotPasswordForm from './ForgotPasswordForm'
-import { useFormStore } from '../../context/FormContext'
 
 const LoginForms = ({ setIsLoggingIn, setShowDashboard }) => {
   const [reverse, setReverse] = useState(false)
-  const [showChooseLoginMethod, setShowChooseLoginMethod] = useState(true)
-  const [showUsernamePasswordForm, setShowUsernamePasswordForm] = useState(
-    false
-  )
-  const [showForgotPasswordForm, setShowForgotPasswordForm] = useState(false)
-
-  // eslint-disable-next-line
-  const [state, dispatch] = useFormStore()
-
-  const handleShowUsernamePasswordForm = () => {
-    setReverse(false)
-    setShowChooseLoginMethod(false)
-    setShowUsernamePasswordForm(true)
-  }
-
-  const handleShowForgotPasswordForm = () => {
-    setReverse(false)
-    setShowUsernamePasswordForm(false)
-    setShowForgotPasswordForm(true)
-    dispatch({ type: 'resetUsernamePasswordForm' })
-  }
-
-  const handleReverseForgotPasswordForm = () => {
-    setReverse(true)
-    setShowForgotPasswordForm(false)
-    setShowUsernamePasswordForm(true)
-  }
-
-  const handleReverseUsernamePasswordForm = () => {
-    setReverse(true)
-    setShowUsernamePasswordForm(false)
-    setShowChooseLoginMethod(true)
-  }
+  const [activeForm, setActiveForm] = useState(0)
 
   return (
     <FormWrapper>
       <TransitionGroup component={null}>
         <ChooseLoginMethod
-          showNode={showChooseLoginMethod}
-          handleShowUsernamePasswordForm={handleShowUsernamePasswordForm}
           setShowDashboard={setShowDashboard}
+          activeForm={activeForm}
+          setActiveForm={setActiveForm}
+          setReverse={setReverse}
         />
         <UsernamePasswordForm
-          showNode={showUsernamePasswordForm}
           reverse={reverse}
-          handleShowForgotPasswordForm={handleShowForgotPasswordForm}
-          handleReverseUsernamePasswordForm={handleReverseUsernamePasswordForm}
+          setReverse={setReverse}
+          activeForm={activeForm}
+          setActiveForm={setActiveForm}
           setIsLoggingIn={setIsLoggingIn}
           setShowDashboard={setShowDashboard}
         />
         <ForgotPasswordForm
-          showNode={showForgotPasswordForm}
           reverse={reverse}
-          handleReverseForgotPasswordForm={handleReverseForgotPasswordForm}
+          setReverse={setReverse}
+          activeForm={activeForm}
+          setActiveForm={setActiveForm}
         />
       </TransitionGroup>
     </FormWrapper>

@@ -55,7 +55,6 @@ const WorkoutSection = ({
         />
         <PlaceholderImage ref={setSmallImage} src={workoutTinyBackground} />
       </BlurUpImageGrid>
-
       <WorkoutSliderButtons
         handleNextVideo={handleNextVideo}
         handlePrevVideo={handlePrevVideo}

@@ -8,9 +8,10 @@ import LoginFormTransition from '../../Animations/Transitions/LoginFormTransitio
 import { useFireBase } from '../Firebase/FirebaseContext'
 
 const ChooseLoginMethod = ({
-  showNode,
-  handleShowUsernamePasswordForm,
-  setShowDashboard
+  setShowDashboard,
+  activeForm,
+  setActiveForm,
+  setReverse
 }) => {
   const auth = useFireBase()
 
@@ -48,10 +49,15 @@ const ChooseLoginMethod = ({
       })
   }
 
+  const handleUsernamePasswordButton = () => {
+    setReverse(false)
+    setActiveForm(prevValue => prevValue + 1)
+  }
+
   return (
-    <LoginFormTransition showNode={showNode}>
+    <LoginFormTransition showNode={activeForm === 0}>
       <ButtonContainer>
-        <BaseButton handleClick={handleShowUsernamePasswordForm}>
+        <BaseButton handleClick={handleUsernamePasswordButton}>
           Email & Password
         </BaseButton>
         <GoogleFacebookButton

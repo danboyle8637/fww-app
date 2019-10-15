@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Redirect } from 'react-router-dom'
 
@@ -9,36 +9,24 @@ import loginLaptopBg from '../images/signup-kindal-sitting-1440x900.jpg'
 import LoginSignUpHeader from '../components/PageHeaders/LoginSignUpHeader'
 import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
 import LoginForms from '../components/Login/LoginForms'
-import ScreenWidthContext from '../context/ScreenWidthContext'
+import useRenderBackgroundImage from '../hooks/useRenderBackgroundImage'
 import { above } from '../styles/Theme'
 
 const Login = () => {
-  const device = useContext(ScreenWidthContext)
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const [showDashboard, setShowDashboard] = useState(false)
 
-  const renderBackground = () => {
-    switch (device) {
-      case 'mobile': {
-        return <BackgroundImage src={loginMobileBg} />
-      }
-      case 'tablet': {
-        return <BackgroundImage src={loginTabletBg} />
-      }
-      case 'ipadPro': {
-        return <BackgroundImage src={loginIpadProBg} />
-      }
-      case 'laptop': {
-        return <BackgroundImage src={loginLaptopBg} />
-      }
-      case 'ultraWide': {
-        return <BackgroundImage src={loginLaptopBg} />
-      }
-      default: {
-        return null
-      }
-    }
-  }
+  const title = 'Login to Fit Womens Weekly app'
+  const alt = 'Kindal sitting and recovering after a hard workout'
+
+  const background = useRenderBackgroundImage(
+    loginMobileBg,
+    loginTabletBg,
+    loginIpadProBg,
+    loginLaptopBg,
+    title,
+    alt
+  )
 
   return (
     <>
@@ -46,7 +34,7 @@ const Login = () => {
         <FullPageKettlebellLoader loadingMessage="Setting up programs!" />
       ) : (
         <LoginContainer>
-          {renderBackground()}
+          {background}
           <ContentWrapper>
             <LoginSignUpHeader />
             <LoginForms
@@ -70,13 +58,6 @@ const LoginContainer = styled.div`
   grid-template-rows: 1fr;
   background: #000;
   height: 100%;
-`
-
-const BackgroundImage = styled.img`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
-  align-self: end;
-  width: 100%;
 `
 
 const ContentWrapper = styled.div`

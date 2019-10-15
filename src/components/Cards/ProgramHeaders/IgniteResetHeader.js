@@ -5,10 +5,11 @@ import {
   ProgramHeaderGrid,
   ProgramBackgroundWrapper
 } from '../../../styles/Containers'
+import IgniteResetProgramCover from '../../../images/ignite-reset-program-cover.jpg'
 import IgniteResetLogo from '../../../svgs/IgniteResetLogo'
 import useBlurUp from '../../../hooks/useBlurUp'
 
-const IgniteResetHeader = ({ coverImage, tinyCoverImage }) => {
+const IgniteResetHeader = ({ coverImage, tinyCoverImage, signUpCard }) => {
   const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
 
   return (
@@ -16,7 +17,7 @@ const IgniteResetHeader = ({ coverImage, tinyCoverImage }) => {
       <ProgramBackgroundWrapper ref={setParentContainer}>
         <ProgramBackgroundImage
           ref={setLargeImage}
-          src={coverImage}
+          src={signUpCard ? IgniteResetProgramCover : coverImage}
           alt="7 Day Ignite Reset Program Cover"
           title="7 Day Ignite Reset Program"
         />

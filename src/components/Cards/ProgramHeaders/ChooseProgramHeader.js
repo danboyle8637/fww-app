@@ -4,7 +4,12 @@ import IgniteResetHeader from './IgniteResetHeader'
 import BodyBurnResetHeader from './BodyBurnResetHeader'
 import StrongResetHeader from './StrongResetHeader'
 
-const ChooseProgramHeader = ({ programId, coverImage, tinyCoverImage }) => {
+const ChooseProgramHeader = ({
+  programId,
+  coverImage,
+  tinyCoverImage,
+  signUpCard
+}) => {
   const programHeaders = [
     {
       programId: '7DayIgniteReset',
@@ -12,6 +17,7 @@ const ChooseProgramHeader = ({ programId, coverImage, tinyCoverImage }) => {
         <IgniteResetHeader
           coverImage={coverImage}
           tinyCoverImage={tinyCoverImage}
+          signUpCard={signUpCard}
         />
       )
     },
@@ -21,6 +27,7 @@ const ChooseProgramHeader = ({ programId, coverImage, tinyCoverImage }) => {
         <BodyBurnResetHeader
           coverImage={coverImage}
           tinyCoverImage={tinyCoverImage}
+          signUpCard={signUpCard}
         />
       )
     },
@@ -30,6 +37,7 @@ const ChooseProgramHeader = ({ programId, coverImage, tinyCoverImage }) => {
         <StrongResetHeader
           coverImage={coverImage}
           tinyCoverImage={tinyCoverImage}
+          signUpCard={signUpCard}
         />
       )
     }

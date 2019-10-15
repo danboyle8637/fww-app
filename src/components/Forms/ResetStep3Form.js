@@ -1,175 +1,97 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Redirect } from 'react-router-dom'
 
-import TextInput from '../Forms/Inputs/TextInput'
-import BaseButton from '../Buttons/BaseButton'
-import BackChip from '../Chips/BackChip'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
-import FullPageKettlebellLoader from '../Loaders/FullPageKettlebellLoader'
-import { useFormStore } from '../../context/FormContext'
-import useFormControls from '../../hooks/useFormControls'
-import { useUserContext } from '../../context/UserContext'
-import { FirebaseContext } from '../Firebase/FirebaseContext'
+import BackChip from '../Chips/BackChip'
+import { Header1, BodyText } from '../../styles/Typography'
+import ChooseSignUpMethodCard from '../Cards/ChooseSignUpMethodCard'
 
-const ResetStep3Form = ({ showNode, reverse, handleReverseStep3 }) => {
-  const auth = useContext(FirebaseContext)
-  // eslint-disable-next-line
-  const [formState, _] = useFormStore()
-  const [updateInputValues, updateInputOptions] = useFormControls()
-  // eslint-disable-next-line
-  const [userState, dispatchUserAction] = useUserContext()
-  const [isLoading, setIsLoading] = useState(false)
-  const [toDashboard, setToDashboard] = useState(false)
+const ResetStep3Form = ({
+  activeQuestion,
+  setActiveQuestion,
+  reverse,
+  setReverse
+}) => {
+  const options = [
+    { id: 1, icon: 'google', text: 'Google Account', loginType: 'google' },
+    {
+      id: 2,
+      icon: 'facebook',
+      text: 'Facebook Account',
+      loginType: 'facebook'
+    },
+    {
+      id: 3,
+      icon: 'emailpassword',
+      text: 'Username and Password',
+      loginType: 'next'
+    }
+  ]
 
-  const handleSignUpForm = event => {
-    event.preventDefault()
-    setIsLoading(true)
+  const cards = options.map(card => {
+    const id = card.id
+    const icon = card.icon
+    const buttonText = card.text
+    const loginType = card.loginType
 
-    const firstName = formState.signupFirstNameValue.value
-    // const biggestObstacle = formState.biggestObstacleValue.value
-    const program = formState.resetWorkoutValue.value
-    const email = formState.emailValue.value
-    const username = formState.usernameValue.value
-    const password = formState.passwordValue.value
-    const confirmPassword = formState.confirmPasswordValue.value
+    return (
+      <ChooseSignUpMethodCard
+        key={id}
+        icon={icon}
+        buttonText={buttonText}
+        loginType={loginType}
+        setActiveQuestion={setActiveQuestion}
+        setReverse={setReverse}
+      />
+    )
+  })
 
-    auth
-      .signUpUserWithEmailAndPassword(email, password)
-      .then(userCredential => {
-        const userId = userCredential.user.uid
-
-        const signUpData = {
-          userId: userId,
-          program: program,
-          totalWorkouts: 5,
-          firstName: firstName,
-          username: username,
-          password: password,
-          confirmPassword: confirmPassword,
-          email: email
-        }
-        // Call our Signup endpoint...
-        const url = `http://localhost:5000/sign-up`
-        fetch(url, {
-          method: 'POST',
-          body: JSON.stringify(signUpData)
-        })
-          .then(response => response.json())
-          .then(userData => {
-            dispatchUserAction({
-              type: 'setLoggedInUser',
-              value: {
-                userData: userData,
-                photoUrl: userData.photoUrl
-              }
-            })
-            setIsLoading(false)
-            setToDashboard(true)
-          })
-          .catch(error => {
-            if (error) {
-              console.log(error)
-            }
-          })
-      })
-      .catch(error => {
-        console.log(error)
-      })
+  const handleBackClick = () => {
+    setReverse(true)
+    setActiveQuestion(prevValue => prevValue - 1)
   }
 
-  console.log(isLoading)
-
   return (
-    <>
-      {isLoading ? (
-        <FullPageKettlebellLoader loadingMessage={'Setting up programs!'} />
-      ) : (
-        <LoginFormTransition
-          showNode={showNode}
-          reverse={reverse}
-          formName="ResetSignUpStep3Form"
-        >
-          <Step3Container>
-            <BackChip handleReverseStep3={handleReverseStep3}>Back</BackChip>
-            <SignUpForm onSubmit={handleSignUpForm}>
-              <TextInput
-                type="text"
-                name="loginUsername"
-                labelName="Username"
-                labelFor="loginUsername"
-                labelInstructions="Create a unique username"
-                labelError="ERROR MESSAGE FROM SERVER"
-                value={formState.usernameValue.value}
-                valid={formState.usernameValue.valid}
-                initial={formState.usernameOptions.initial}
-                touched={formState.usernameOptions.touched}
-                showInstructions={formState.usernameOptions.showInstructions}
-                onChange={updateInputValues}
-                onFocus={updateInputOptions}
-                onBlur={updateInputOptions}
-              />
-              <TextInput
-                type="text"
-                name="loginPassword"
-                labelName="Password"
-                labelFor="loginPassword"
-                labelInstructions="Create a password"
-                labelError="ERROR MESSAGE FROM SERVER"
-                value={formState.passwordValue.value}
-                valid={formState.passwordValue.valid}
-                initial={formState.passwordOptions.initial}
-                touched={formState.passwordOptions.touched}
-                showInstructions={formState.passwordOptions.showInstructions}
-                onChange={updateInputValues}
-                onFocus={updateInputOptions}
-                onBlur={updateInputOptions}
-              />
-              <TextInput
-                type="text"
-                name="loginConfirmPassword"
-                labelName="Confirm Password"
-                labelFor="loginConfirmPassword"
-                labelInstructions="Confirm password"
-                labelError="ERROR MESSAGE FROM SERVER"
-                value={formState.confirmPasswordValue.value}
-                valid={formState.confirmPasswordValue.valid}
-                initial={formState.confirmPasswordOptions.initial}
-                touched={formState.confirmPasswordOptions.touched}
-                showInstructions={
-                  formState.confirmPasswordOptions.showInstructions
-                }
-                onChange={updateInputValues}
-                onFocus={updateInputOptions}
-                onBlur={updateInputOptions}
-              />
-              <BaseButton type="submit">Create Fit Profile</BaseButton>
-            </SignUpForm>
-          </Step3Container>
-        </LoginFormTransition>
-      )}
-      {toDashboard ? <Redirect to="/dashboard" /> : null}
-    </>
+    <LoginFormTransition showNode={activeQuestion === 2} reverse={reverse}>
+      <Step3Container>
+        <BackChip handleClick={handleBackClick}>Back</BackChip>
+        <ContentWrapper>
+          <Header1>Step 3:</Header1>
+          <BodyText>
+            How do you want to create your account? ... Google? Facebook? or use
+            your own email and password?
+          </BodyText>
+        </ContentWrapper>
+        <CardsContainer>{cards}</CardsContainer>
+      </Step3Container>
+    </LoginFormTransition>
   )
 }
 
 export default ResetStep3Form
 
 const Step3Container = styled.div`
-  margin: 20px 0 0 0;
+  padding: 0 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
+`
+
+const CardsContainer = styled.div`
+  margin: 40px 0 0 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 20px;
+  justify-items: center;
   width: 100%;
 `
 
-const SignUpForm = styled.form`
-  margin: 20px 0 0 0;
-  padding: 0 16px;
+const ContentWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(6, auto);
-  gap: 20px;
-  justify-items: center;
+  grid-template-rows: 1fr auto;
+  gap: 12px;
+  justify-items: start;
   width: 100%;
 `

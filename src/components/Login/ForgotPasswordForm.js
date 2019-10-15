@@ -9,9 +9,10 @@ import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
 
 const ForgetPasswordForm = ({
-  showNode,
-  handleReverseForgotPasswordForm,
-  reverse
+  reverse,
+  setReverse,
+  activeForm,
+  setActiveForm
 }) => {
   // eslint-disable-next-line
   const [formState, dispatch] = useFormStore()
@@ -35,18 +36,19 @@ const ForgetPasswordForm = ({
     console.log('Hit the API.')
   }
 
+  const handleBackButton = () => {
+    setReverse(true)
+    setActiveForm(prevValue => prevValue - 1)
+  }
+
   return (
     <LoginFormTransition
-      showNode={showNode}
+      showNode={activeForm === 2}
       reverse={reverse}
       formName="ForgotPasswordForm"
     >
       <ResetPasswordContainer>
-        <BackChip
-          handleReverseForgotPasswordForm={handleReverseForgotPasswordForm}
-        >
-          Back
-        </BackChip>
+        <BackChip handleClick={handleBackButton}>Back</BackChip>
         <ResetPasswordForm onSubmit={handleResetPassword}>
           <TextInput
             type="text"

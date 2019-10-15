@@ -13,10 +13,10 @@ import { useFireBase } from '../../components/Firebase/FirebaseContext'
 import siteConfig from '../../utils/siteConfig'
 
 const LoginUsernamePassword = ({
-  showNode,
-  handleShowForgotPasswordForm,
-  handleReverseUsernamePasswordForm,
   reverse,
+  setReverse,
+  activeForm,
+  setActiveForm,
   setIsLoggingIn,
   setShowDashboard
 }) => {
@@ -107,18 +107,25 @@ const LoginUsernamePassword = ({
       })
   }
 
+  const handleBackButton = () => {
+    setReverse(true)
+    setActiveForm(prevValue => prevValue - 1)
+  }
+
+  const handleForgotPassword = () => {
+    dispatch({ type: 'resetUsernamePasswordForm' })
+    setReverse(false)
+    setActiveForm(prevValue => prevValue + 1)
+  }
+
   return (
     <LoginFormTransition
-      showNode={showNode}
+      showNode={activeForm === 1}
       reverse={reverse}
       formName="UsernamePasswordForm"
     >
       <FormContainer>
-        <BackChip
-          handleReverseUsernamePasswordForm={handleReverseUsernamePasswordForm}
-        >
-          Back
-        </BackChip>
+        <BackChip handleClick={handleBackButton}>Back</BackChip>
         <LoginForm onSubmit={handleLoginSubmit}>
           <TextInput
             type="text"
@@ -160,9 +167,7 @@ const LoginUsernamePassword = ({
             {loginButtonValid ? 'Login' : 'Enter Your Info'}
           </BaseButton>
         </LoginForm>
-        <DidForgetPassword
-          handleShowForgotPasswordForm={handleShowForgotPasswordForm}
-        />
+        <DidForgetPassword handleClick={handleForgotPassword} />
       </FormContainer>
     </LoginFormTransition>
   )

@@ -8,7 +8,7 @@ const SignUp = () => {
   return (
     <SignUpContainer>
       <SignUpHeadline>Don't have an account?</SignUpHeadline>
-      <Link to="/signup">
+      <Link to="/7-day-reset-step1">
         <TextButton>Create a Free Account</TextButton>
       </Link>
     </SignUpContainer>

@@ -3,22 +3,9 @@ import styled from 'styled-components'
 
 import NavigationArrow from '../../svgs/NavigationArrow'
 
-const BackChip = ({
-  children,
-  handleReverseUsernamePasswordForm,
-  handleReverseForgotPasswordForm,
-  handleReverseStep2,
-  handleReverseStep3
-}) => {
+const BackChip = ({ children, handleClick }) => {
   return (
-    <ChipContainer
-      onClick={
-        handleReverseUsernamePasswordForm ||
-        handleReverseForgotPasswordForm ||
-        handleReverseStep2 ||
-        handleReverseStep3
-      }
-    >
+    <ChipContainer onClick={handleClick}>
       <Arrow />
       <ChipLabel>{children}</ChipLabel>
     </ChipContainer>

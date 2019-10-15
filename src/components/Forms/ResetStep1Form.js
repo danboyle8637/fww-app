@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
+import { Header1, BodyText } from '../../styles/Typography'
 import TextInput from '../Forms/Inputs/TextInput'
 import RadioInput from '../Forms/Inputs/RadioInput'
 import BaseButton from '../Buttons/BaseButton'
@@ -9,7 +10,7 @@ import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
 import { above } from '../../styles/Theme'
 
-const ResetStep1Form = ({ showNode, handleShowStep2 }) => {
+const ResetStep1Form = ({ activeQuestion, setActiveQuestion, setReverse }) => {
   const [formButtonActive, setFormButtonActive] = useState(false)
   // eslint-disable-next-line
   const [formState, dispatch] = useFormStore()
@@ -33,13 +34,24 @@ const ResetStep1Form = ({ showNode, handleShowStep2 }) => {
 
   const handleButtonPress = event => {
     event.preventDefault()
-    handleShowStep2()
+    setReverse(false)
+    setActiveQuestion(prevValue => prevValue + 1)
   }
 
   return (
-    <LoginFormTransition showNode={showNode} formName="ResetSignUpStep1Form">
+    <LoginFormTransition
+      showNode={activeQuestion === 0}
+      formName="ResetSignUpStep1Form"
+    >
       <Step1Container>
-        <Step1Form>
+        <ContentWrapper>
+          <Header1>Step 1:</Header1>
+          <BodyText>
+            Let's focus on your biggest obstacle first. Solve this and
+            everything else falls into place.
+          </BodyText>
+        </ContentWrapper>
+        <Step1Form onSubmit={handleButtonPress}>
           <RadioInput
             type="radio"
             name="biggestObstacle"
@@ -80,13 +92,12 @@ const ResetStep1Form = ({ showNode, handleShowStep2 }) => {
             onFocus={updateInputOptions}
             onBlur={updateInputOptions}
           />
+          <BaseButton type="submit" disabled={!formButtonActive}>
+            {formButtonActive
+              ? 'Step 2: Select Program'
+              : 'Fill Out Entire Form'}
+          </BaseButton>
         </Step1Form>
-        <BaseButton
-          disabled={!formButtonActive}
-          handleClick={handleButtonPress}
-        >
-          {formButtonActive ? 'Step 2: Select Program' : 'Fill Out Entire Form'}
-        </BaseButton>
       </Step1Container>
     </LoginFormTransition>
   )
@@ -115,4 +126,13 @@ const Step1Form = styled.form`
   ${above.tablet`
     max-width: 44rem;
   `}
+`
+
+const ContentWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 12px;
+  justify-items: start;
+  width: 100%;
 `
