@@ -5,6 +5,7 @@ import LoginFormTransition from '../../Animations/Transitions/LoginFormTransitio
 import BackChip from '../Chips/BackChip'
 import { Header1, BodyText } from '../../styles/Typography'
 import ChooseSignUpMethodCard from '../Cards/ChooseSignUpMethodCard'
+import { above } from '../../styles/Theme'
 
 const ResetStep3Form = ({
   activeQuestion,
@@ -71,10 +72,24 @@ const ResetStep3Form = ({
 export default ResetStep3Form
 
 const Step3Container = styled.div`
+  margin: 0 0 340px 0;
   padding: 0 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  ${above.mobile`
+    margin: 0 0 460px 60px;
+    width: 60%;
+  `}
+  ${above.tablet`
+    margin: 0;
+    width: 70%;
+    align-self: center;
+  `}
+  ${above.ipadPro`
+    margin: 0 0 120px 0px;
+    width: 50%;
+  `}
 `
 
 const CardsContainer = styled.div`

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Redirect, Link } from 'react-router-dom'
 
-import FWWLogo from '../svgs/FWWLogo'
+import FWWLogo from '../components/Logos/FWWLogo'
 import BaseButton from '../components/Buttons/BaseButton'
 import ProgramCard from '../components/Cards/WorkoutProgramCard'
 import HorizontalBasicUserCard from '../components/UserCards/HorizontalBasicUserCard'
@@ -163,7 +163,7 @@ const ResetDashboard = ({ match }) => {
         <Redirect to="/login" />
       ) : (
         <DashboardContainer>
-          <Logo />
+          <FWWLogo />
           <HorizontalBasicUserCard
             photoUrl={userState.photoUrl}
             firstName={userState.firstName}
@@ -189,10 +189,6 @@ const DashboardContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
-
-const Logo = styled(FWWLogo)`
-  width: 220px;
 `
 
 const ProgramCardsWrapper = styled.div`

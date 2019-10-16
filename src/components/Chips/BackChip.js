@@ -22,6 +22,7 @@ const ChipContainer = styled.div`
   background: rgba(43, 44, 58, 0.5);
   border-radius: 50px;
   width: max-content;
+  cursor: pointer;
 `
 
 const ChipLabel = styled.p`

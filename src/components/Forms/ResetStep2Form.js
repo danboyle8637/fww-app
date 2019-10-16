@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 
 import { Header1, BodyText } from '../../styles/Typography'
@@ -8,6 +8,7 @@ import BackChip from '../Chips/BackChip'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
+import ScreenWidthContext from '../../context/ScreenWidthContext'
 import { above } from '../../styles/Theme'
 
 const ResetStep2Form = ({
@@ -21,6 +22,7 @@ const ResetStep2Form = ({
   const [formState, dispatch] = useFormStore()
   // eslint-disable-next-line
   const [updateInputValues, updateInputOptions] = useFormControls()
+  const device = useContext(ScreenWidthContext)
 
   useEffect(() => {
     if (formState.resetWorkoutValue.valid) {
@@ -65,6 +67,12 @@ const ResetStep2Form = ({
             updateInputValues={updateInputValues}
             signUpCard={true}
           />
+          {device === 'tablet' ||
+          device === 'ipadPro' ||
+          device === 'laptop' ||
+          device === 'ultraWide' ? (
+            <div />
+          ) : null}
           <ButtonWrapper>
             <BaseButton type="submit" disabled={!formButtonActive}>
               {formButtonActive
@@ -81,18 +89,35 @@ const ResetStep2Form = ({
 export default ResetStep2Form
 
 const Step2Container = styled.div`
+  margin: 0 0 340px 0;
   padding: 0 16px;
+  align-self: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  ${above.mobile`
+    margin: 0 0 240px 0;
+    width: 100%;
+  `}
+  ${above.tablet`
+    margin: 0 0 340px 0;
+    width: 100%;
+  `}
+  ${above.ipadPro`
+    margin: 0 0 120px 0px;
+    width: 100%;
+  `}
 `
 
 const ProgramsForm = styled.form`
   margin: 20px 0 0 0;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: auto;
   gap: 30px;
+  ${above.mobile`
+    grid-template-columns: 1fr 1fr;
+  `}
 `
 
 const ButtonWrapper = styled.div`
@@ -108,4 +133,10 @@ const ContentWrapper = styled.div`
   gap: 12px;
   justify-items: start;
   width: 100%;
+  ${above.tablet`
+    width: 80%;
+  `}
+  ${above.ipadPro`
+    width: 70%;
+  `}
 `

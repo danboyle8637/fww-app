@@ -109,7 +109,7 @@ const formState = {
       {
         value: '7DayIgniteReset',
         description:
-          'Seven days of re-learning form… pushing your comfort zone… and discovering a smarter, more intense way to workout.',
+          'Seven days of learning correct form… easing into intense workouts… perfect for beginners ready to get started again.',
         fitnessLevel: 'beginner',
         numberOfWorkouts: 5,
         duration: '7 - 9 days',
@@ -118,7 +118,7 @@ const formState = {
       {
         value: '7DayBodyBurnReset',
         description:
-          'Seven days of re-learning form… pushing your comfort zone… and discovering a smarter, more intense way to workout.',
+          'Seven days of tweaking form… pushing your comfort zone… and discovering a smarter, more intense way to workout.',
         fitnessLevel: 'intermediate',
         numberOfWorkouts: 5,
         duration: '7 - 9 days',
@@ -127,7 +127,7 @@ const formState = {
       {
         value: '7DayStrongReset',
         description:
-          'Seven days of re-learning form… pushing your comfort zone… and discovering a smarter, more intense way to workout.',
+          'Seven days of intense kettlebell workouts. Each workout builds on the next with new exercises and challenges.',
         fitnessLevel: 'advanced',
         numberOfWorkouts: 5,
         duration: '7 - 9 days',

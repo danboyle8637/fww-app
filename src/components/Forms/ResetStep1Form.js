@@ -106,11 +106,20 @@ const ResetStep1Form = ({ activeQuestion, setActiveQuestion, setReverse }) => {
 export default ResetStep1Form
 
 const Step1Container = styled.div`
+  margin: 0 0 340px 0;
   padding: 0 16px;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr auto;
   gap: 10px;
+  ${above.mobile`
+    margin: 0 0 460px 60px;
+    width: 60%;
+  `}
+  ${above.ipadPro`
+    margin: 0 0 80px 120px;
+    width: 50%;
+  `}
 `
 
 const Step1Form = styled.form`

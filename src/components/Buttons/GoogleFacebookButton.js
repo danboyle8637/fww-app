@@ -27,6 +27,7 @@ const Button = styled.button`
   border-radius: 6px;
   box-shadow: 0 2px 3px 3px rgba(0, 0, 0, 0.2);
   width: 100%;
+  height: 48px;
   outline: none;
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;

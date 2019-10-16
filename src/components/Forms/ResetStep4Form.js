@@ -12,6 +12,7 @@ import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
 import { useUserContext } from '../../context/UserContext'
 import { FirebaseContext } from '../Firebase/FirebaseContext'
+import { above } from '../../styles/Theme'
 
 const ResetStep4Form = ({
   activeQuestion,
@@ -172,11 +173,24 @@ const ResetStep4Form = ({
 export default ResetStep4Form
 
 const Step3Container = styled.div`
+  margin: 0 0 320px 0;
   padding: 0 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  ${above.mobile`
+    margin: 0 0 460px 60px;
+    width: 60%;
+  `}
+  ${above.tablet`
+    margin: 0 0 0 60px;
+    width: 60%;
+  `}
+  ${above.ipadPro`
+    margin: 0 0 80px 120px;
+    width: 50%;
+  `}
 `
 
 const SignUpForm = styled.form`

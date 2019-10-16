@@ -12,11 +12,10 @@ import ResetStep1Form from '../components/Forms/ResetStep1Form'
 import ResetStep2Form from '../components/Forms/ResetStep2Form'
 import ResetStep3Form from '../components/Forms/ResetStep3Form'
 import ResetStep4Form from '../components/Forms/ResetStep4Form'
-import { above } from '../styles/Theme'
 
 const ResetSignUp = () => {
   const [reverse, setReverse] = useState(false)
-  const [activeQuestion, setActiveQuestion] = useState(1)
+  const [activeQuestion, setActiveQuestion] = useState(0)
 
   const title = 'Create your Reset program account'
   const alt =
@@ -78,17 +77,10 @@ const ResetSignUpContainer = styled.div`
 `
 
 const ContentWrapper = styled.div`
-  margin-bottom: 340px;
   grid-column: 1 / -1;
   grid-row: 1 / -1;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   z-index: 1;
-  ${above.mobile`
-    margin: 0 0 460px 60px;
-    width: 60%;
-  `}
-  ${above.ipadPro`
-    margin: 0 0 80px 120px;
-    width: 50%;
-  `}
 `

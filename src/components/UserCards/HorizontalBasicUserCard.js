@@ -14,14 +14,13 @@ export default HorizontalBasicUserCard
 
 const CardContainer = styled.div`
   margin: 20px 0 0 0;
-  padding: 8px;
+  padding: 8px 14px;
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 12px;
   align-items: center;
   background: ${props => props.theme.mainBackgroundBorderColor};
   border-radius: 8px;
-  width: 120px;
 `
 
 const UserName = styled.p`
