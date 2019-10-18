@@ -19,7 +19,7 @@ const ResetStep1Form = ({ activeQuestion, setActiveQuestion, setReverse }) => {
   useEffect(() => {
     if (
       formState.biggestObstacleValue.valid &&
-      formState.signupFirstNameValue.valid &&
+      formState.firstNameValue.valid &&
       formState.emailValue.valid
     ) {
       setFormButtonActive(true)
@@ -28,7 +28,7 @@ const ResetStep1Form = ({ activeQuestion, setActiveQuestion, setReverse }) => {
     }
   }, [
     formState.biggestObstacleValue.valid,
-    formState.signupFirstNameValue.valid,
+    formState.firstNameValue.valid,
     formState.emailValue.valid
   ])
 
@@ -62,16 +62,16 @@ const ResetStep1Form = ({ activeQuestion, setActiveQuestion, setReverse }) => {
           />
           <TextInput
             type="text"
-            name="signupFirstName"
+            name="firstName"
             labelName="name:"
-            labelFor="signupFirstName"
+            labelFor="firstName"
             labelInstructions="Only your first name..."
             labelError="Need at least two characters..."
-            value={formState.signupFirstNameValue.value}
-            valid={formState.signupFirstNameValue.valid}
-            initial={formState.signupFirstNameOptions.initial}
-            touched={formState.signupFirstNameOptions.touched}
-            showInstructions={formState.signupFirstNameOptions.showInstructions}
+            value={formState.firstNameValue.value}
+            valid={formState.firstNameValue.valid}
+            initial={formState.firstNameOptions.initial}
+            touched={formState.firstNameOptions.touched}
+            showInstructions={formState.firstNameOptions.showInstructions}
             onChange={updateInputValues}
             onFocus={updateInputOptions}
             onBlur={updateInputOptions}

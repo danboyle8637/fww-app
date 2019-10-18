@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Header3 } from '../../styles/Typography'
+import { Header5 } from '../../styles/Typography'
 
 const ReviewGuidelines = () => {
   return (
     <BulletContainer>
-      <Header3>Review:</Header3>
+      <Header5>Your Review:</Header5>
       <BulletList>
         <ListItem>1. How did you like the app? Navigation? Design?</ListItem>
         <ListItem>2. Was the app fast to use?</ListItem>

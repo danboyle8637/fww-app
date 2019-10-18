@@ -45,9 +45,9 @@ const useUpdateFormControls = () => {
         })
         break
       }
-      case 'signupFirstName': {
+      case 'firstName': {
         dispatch({
-          type: 'setSignUpFirstNameValue',
+          type: 'setFirstNameValue',
           value: inputValue
         })
         break
@@ -63,6 +63,13 @@ const useUpdateFormControls = () => {
         dispatch({
           type: 'setResetWorkoutValue',
           value: inputValue
+        })
+        break
+      }
+      case 'leaveReview': {
+        dispatch({
+          type: 'setReviewValue',
+          valud: inputValue
         })
         break
       }
@@ -115,8 +122,8 @@ const useUpdateFormControls = () => {
         dispatch({ type: 'setWorkoutGoalOptions' })
         break
       }
-      case 'signupFirstName': {
-        dispatch({ type: 'setSignUpFirstNameOptions' })
+      case 'firstName': {
+        dispatch({ type: 'setFirstNameOptions' })
         break
       }
       case 'biggestObstacle': {
@@ -125,6 +132,10 @@ const useUpdateFormControls = () => {
       }
       case 'chooseResetWorkout': {
         dispatch({ type: 'setResetWorkoutOptions' })
+        break
+      }
+      case 'leaveReview': {
+        dispatch({ type: 'setReviewOptions' })
         break
       }
       default: {

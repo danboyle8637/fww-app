@@ -5,7 +5,7 @@ import KindalProfile from '../images/kindal-test-avatar-image.jpg'
 import FWWLogo from '../components/Logos/FWWLogo'
 import HorizontalUserCard from '../components/UserCards/HorizontalBasicUserCard'
 import VimeoPlayer from '../components/Shared/VimeoPlayer'
-import ReviewGuidlines from '../components/ContentBlocks/ReviewGuidlines'
+import ReviewForm from '../components/Forms/ReviewForm'
 import { above } from '../styles/Theme'
 
 const Review = () => {
@@ -14,7 +14,7 @@ const Review = () => {
       <FWWLogo />
       <HorizontalUserCard photoUrl={KindalProfile} firstName="Kindal" />
       <VimeoPlayer videoId={354274924} />
-      <ReviewGuidlines />
+      <ReviewForm />
     </ReviewContainer>
   )
 }

@@ -30,7 +30,7 @@ const workoutGoalValidationRules = {
   isNumber: true
 }
 
-const signupFirstNameValidationRules = {
+const firstNameValidationRules = {
   minLength: 2,
   isRequired: true
 }
@@ -43,8 +43,12 @@ const setResetWorkoutValidationRules = {
   isSelected: true
 }
 
-const setSignUpMethodValidation = {
-  isSelected: true
+// const setSignUpMethodValidation = {
+//   isSelected: true
+// }
+
+const setReviewValidation = {
+  isRequired: true
 }
 
 const formState = {
@@ -84,11 +88,11 @@ const formState = {
     touched: false,
     showInstructions: false
   },
-  signupFirstNameValue: {
+  firstNameValue: {
     value: '',
     valid: false
   },
-  signupFirstNameOptions: {
+  firstNameOptions: {
     initial: true,
     touched: false,
     showInstructions: false
@@ -138,15 +142,6 @@ const formState = {
   resetWorkoutOptions: {
     initial: true
   },
-  signUpMethodValue: {
-    value: '',
-    valid: false,
-    options: [
-      { value: 'Google', checked: false },
-      { value: 'Facebook', checked: false },
-      { value: 'EmailPassword', checked: false }
-    ]
-  },
   signUpMethodOptions: {
     initial: true
   },
@@ -175,17 +170,18 @@ const formState = {
   biggestObstacleOptions: {
     initial: true
   },
-  completeWorkout: {
-    value: [],
-    options: [
-      { id: 1, value: 'complete1', checked: false },
-      { id: 2, value: 'complete2', checked: false },
-      { id: 3, value: 'complete3', checked: false }
-    ]
+  starRatingValue: {
+    value: 0,
+    valid: false
   },
-  isFavoriteWorkout: {
+  reviewValue: {
     value: '',
-    options: [{ value: 'isFavoriteWorkout', checked: false }]
+    valid: false
+  },
+  reviewOptions: {
+    initial: true,
+    touched: false,
+    showInstructions: false
   }
 }
 
@@ -275,8 +271,8 @@ const formReducer = (state, action) => {
         }
       }
     }
-    case 'setSignUpFirstNameValue': {
-      const valid = validate(action.value, signupFirstNameValidationRules)
+    case 'setFirstNameValue': {
+      const valid = validate(action.value, firstNameValidationRules)
       return {
         ...state,
         signupFirstNameValue: {
@@ -285,13 +281,13 @@ const formReducer = (state, action) => {
         }
       }
     }
-    case 'setSignUpFirstNameOptions': {
+    case 'setFirstNameOptions': {
       return {
         ...state,
         signupFirstNameOptions: {
           initial: false,
-          touched: !state.signupFirstNameOptions.touched,
-          showInstructions: !state.signupFirstNameOptions.showInstructions
+          touched: !state.firstNameOptions.touched,
+          showInstructions: !state.firstNameOptions.showInstructions
         }
       }
     }
@@ -443,125 +439,33 @@ const formReducer = (state, action) => {
         }
       }
     }
-    case 'setSignUpMethodValue': {
-      const options = state.signUpMethodValue.options.map(option => {
-        if (action.value === option.value) {
-          return {
-            ...option,
-            checked: true
-          }
-        } else if (option.checked) {
-          return {
-            ...option,
-            checked: !option.checked
-          }
-        } else {
-          return {
-            ...option,
-            checked: option.checked
-          }
-        }
-      })
-
-      const valid = validate(options, setSignUpMethodValidation)
-
+    case 'setStarRatingValue': {
       return {
         ...state,
-        signUpMethodValue: {
+        starRatingValue: {
           value: action.value,
-          valid: valid,
-          options: options
+          valid: true
         }
       }
     }
-    case 'setSignUpMethodOptions': {
-      return {
-        ...state,
-        signUpMethodOptions: {
-          initial: false
-        }
-      }
-    }
-    case 'setCompleteWorkoutValue': {
-      // You can't spread a string because it will spread out the letters
-      let completedArray = [...state.completeWorkout.value]
-      const options = state.completeWorkout.options
-
-      const completedFirst = completedArray.includes(1)
-      const completedSecond = completedArray.includes(2)
-
-      const newOptions = options.map(option => {
-        if (action.value === option.value && action.value === 'complete1') {
-          return {
-            ...option,
-            checked: true
-          }
-        } else if (
-          action.value === option.value &&
-          action.value === 'complete2' &&
-          completedFirst
-        ) {
-          return {
-            ...option,
-            checked: true
-          }
-        } else if (
-          action.value === option.value &&
-          action.value === 'complete3' &&
-          completedSecond
-        ) {
-          return {
-            ...option,
-            checked: true
-          }
-        } else {
-          return {
-            ...option,
-            checked: option.checked
-          }
-        }
-      })
-
-      newOptions.forEach(option => {
-        if (action.value === option.value && option.checked) {
-          completedArray.push(option.id)
-        } else if (action.value === option.value && !option.checked) {
-          completedArray = completedArray.filter(el => {
-            return option.id !== el
-          })
-        } else {
-          return completedArray
-        }
-      })
+    case 'setReviewValue': {
+      const valid = validate(action.value, setReviewValidation)
 
       return {
         ...state,
-        completeWorkout: {
-          value: completedArray,
-          options: newOptions
-        }
-      }
-    }
-    case 'setIsFavoriteWorkout': {
-      const options = state.isFavoriteWorkout.options.map(option => {
-        if (action.value === option.value) {
-          return {
-            ...option,
-            checked: !option.checked
-          }
-        } else {
-          return {
-            ...option,
-            checked: option.checked
-          }
-        }
-      })
-
-      return {
-        ...state,
-        isFavoriteWorkout: {
+        reviewValue: {
           value: action.value,
-          options: options
+          valid: valid
+        }
+      }
+    }
+    case 'setReviewOptions': {
+      return {
+        ...state,
+        reviewOptions: {
+          initial: false,
+          touched: !state.reviewOptions.touched,
+          showInstructions: !state.reviewOptions.showInstructions
         }
       }
     }
