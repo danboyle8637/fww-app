@@ -58,6 +58,10 @@ const Global = createGlobalStyle`
     font-family: QuicksandSemiBold;
   }
 
+  input, textarea {
+    font-family: QuicksandSemiBold;
+  }
+
   #root {
     width: 100%;
     display: flex;

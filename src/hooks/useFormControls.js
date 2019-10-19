@@ -8,6 +8,11 @@ const useUpdateFormControls = () => {
     event.persist()
     const inputName = event.target.name
     const inputValue = event.target.value
+    let inputFile
+
+    if (event.target.files) {
+      inputFile = event.target.files[0]
+    }
 
     switch (inputName) {
       case 'loginUsername': {
@@ -69,7 +74,17 @@ const useUpdateFormControls = () => {
       case 'leaveReview': {
         dispatch({
           type: 'setReviewValue',
-          valud: inputValue
+          value: inputValue
+        })
+        break
+      }
+      case 'reviewSelfie': {
+        dispatch({
+          type: 'setReviewSelfieImage',
+          value: {
+            file: inputFile,
+            fileName: inputFile.name
+          }
         })
         break
       }

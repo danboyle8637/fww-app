@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 
 import { reviewStarAni, resetStars } from '../Animations/Tweens/reviewStar'
 import { useFormStore } from '../context/FormContext'
@@ -12,10 +12,6 @@ const ReviewStars = ({ width, height, className }) => {
 
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
-
-  useEffect(() => {
-    console.log(formState.starRatingValue.value)
-  }, [formState.starRatingValue.value])
 
   const handleFillInStar = value => {
     const star1 = star1Ref.current

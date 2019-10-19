@@ -18,7 +18,7 @@ const reviewStarAni = starArray => {
     0.8,
     {
       transformOrigin: '50% 50%',
-      scale: 1.2,
+      scale: 1.1,
       fill: '#B44CFF',
       ease: Power2.easeOut
     },

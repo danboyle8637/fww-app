@@ -13,7 +13,9 @@ const Review = () => {
     <ReviewContainer>
       <FWWLogo />
       <HorizontalUserCard photoUrl={KindalProfile} firstName="Kindal" />
-      <VimeoPlayer videoId={354274924} />
+      <VideoWrapper>
+        <VimeoPlayer videoId={354274924} />
+      </VideoWrapper>
       <ReviewForm />
     </ReviewContainer>
   )
@@ -29,7 +31,14 @@ const ReviewContainer = styled.div`
   gap: 16px;
   justify-items: center;
   width: 100%;
-  ${above.ipadPro`
+  ${above.tablet`
     margin: 80px 0 120px 0;
+  `}
+`
+
+const VideoWrapper = styled.div`
+  width: 100%;
+  ${above.tablet`
+    width: 60%;
   `}
 `

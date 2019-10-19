@@ -182,6 +182,11 @@ const formState = {
     initial: true,
     touched: false,
     showInstructions: false
+  },
+  reviewSelfieImage: {
+    file: '',
+    fileName: '',
+    imageSet: false
   }
 }
 
@@ -275,7 +280,7 @@ const formReducer = (state, action) => {
       const valid = validate(action.value, firstNameValidationRules)
       return {
         ...state,
-        signupFirstNameValue: {
+        firstNameValue: {
           value: action.value,
           valid: valid
         }
@@ -284,7 +289,7 @@ const formReducer = (state, action) => {
     case 'setFirstNameOptions': {
       return {
         ...state,
-        signupFirstNameOptions: {
+        firstNameOptions: {
           initial: false,
           touched: !state.firstNameOptions.touched,
           showInstructions: !state.firstNameOptions.showInstructions
@@ -466,6 +471,16 @@ const formReducer = (state, action) => {
           initial: false,
           touched: !state.reviewOptions.touched,
           showInstructions: !state.reviewOptions.showInstructions
+        }
+      }
+    }
+    case 'setReviewSelfieImage': {
+      return {
+        ...state,
+        reviewSelfieImage: {
+          file: action.value.file,
+          fileName: action.value.fileName,
+          imageSet: true
         }
       }
     }

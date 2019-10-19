@@ -11,14 +11,25 @@ import TextArea from '../Forms/Inputs/TextArea'
 import FileUpload from '../Forms/Inputs/FileUpload'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
+import { above } from '../../styles/Theme'
 
 const ReviewForm = () => {
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
 
+  const handleReviewSubmit = event => {
+    event.preventDefault()
+
+    console.log(`Stars: ${formState.starRatingValue.value}`)
+    console.log(`First Name: ${formState.firstNameValue.value}`)
+    console.log(`Email: ${formState.emailValue.value}`)
+    console.log(`Review: ${formState.reviewValue.value}`)
+    console.log(formState.reviewSelfieImage.file)
+  }
+
   return (
-    <StarRatingForm>
+    <StarRatingForm onSubmit={handleReviewSubmit}>
       <FormLabel>Review:</FormLabel>
       <StarRating />
       <TextInput
@@ -80,13 +91,22 @@ const ReviewForm = () => {
 export default ReviewForm
 
 const StarRatingForm = styled.form`
-  margin: 0;
+  margin: 40px 0 0 0;
   padding: 0 16px;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   gap: 20px;
   width: 100%;
+  ${above.mobile`
+    width: 70%;
+  `}
+  ${above.tablet`
+    width: 60%;
+  `}
+  ${above.ipadPro`
+    width: 50%;
+  `}
 `
 
 const FormLabel = styled.h4`
