@@ -38,9 +38,12 @@ const ResetStep4Form = ({
     event.preventDefault()
     setIsLoading(true)
 
-    const firstName = formState.signupFirstNameValue.value
-    // const biggestObstacle = formState.biggestObstacleValue.value
-    const program = formState.resetWorkoutValue.value
+    const firstName = formState.firstNameValue.value
+    const biggestObstacle = formState.biggestObstacleValue.value
+    const programId = formState.resetWorkoutValue.value
+    const totalWorkouts = formState.resetWorkoutValue.options.find(
+      option => option.value === programId
+    )
     const email = formState.emailValue.value
     const username = formState.usernameValue.value
     const password = formState.passwordValue.value
@@ -53,13 +56,14 @@ const ResetStep4Form = ({
 
         const signUpData = {
           userId: userId,
-          program: program,
-          totalWorkouts: 5,
+          programId: programId,
+          totalWorkouts: totalWorkouts['numberOfWorkouts'],
           firstName: firstName,
           username: username,
           password: password,
           confirmPassword: confirmPassword,
-          email: email
+          email: email,
+          biggestObstacle: biggestObstacle
         }
         // Call our Signup endpoint...
         const url = `http://localhost:5000/sign-up`

@@ -69,6 +69,8 @@ const ResetDashboard = ({ match }) => {
   //       programs: userState.programs
   //     }
   //     const baseUrl = siteConfig.api.baseUrl
+  //     // For Get Programs you need to pass an array of programIds
+  //     // You already have this in the object above
   //     const programsPath = '/get-programs'
   //     const percentCompletePath = '/get-percent-complete'
   //     const programsPromise = fetch(`${baseUrl}${programsPath}`)

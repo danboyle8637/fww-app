@@ -1,18 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useLocation, useHistory } from 'react-router-dom'
 
 import MenuChicklet from './MenuChicklet'
 import NavigationArrow from '../../svgs/NavigationArrow'
 import BackButtonTransition from '../../Animations/Transitions/BackButtonTransition'
-import ScreenWidthContext from '../../context/ScreenWidthContext'
 import { above } from '../../styles/Theme'
 
 const MainNav = () => {
-  // eslint-disable-next-line
-  const [showLogo, setShowLogo] = useState(false)
   const [showBackButton, setShowBackButton] = useState(false)
-  const device = useContext(ScreenWidthContext)
   const location = useLocation()
   const history = useHistory()
 
@@ -22,18 +18,12 @@ const MainNav = () => {
 
     if (elementsOfPath[0] === 'dashboard' && elementsOfPath.length > 1) {
       setShowBackButton(true)
+    } else if (elementsOfPath[0] === 'review') {
+      setShowBackButton(true)
     } else {
       setShowBackButton(false)
     }
   }, [location])
-
-  useEffect(() => {
-    if (device !== 'mobile') {
-      setShowLogo(true)
-    } else {
-      setShowLogo(false)
-    }
-  }, [device])
 
   const handleGoBack = () => {
     history.goBack()
