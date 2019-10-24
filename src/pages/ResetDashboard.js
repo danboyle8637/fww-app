@@ -19,44 +19,44 @@ const ResetDashboard = ({ match }) => {
   // eslint-disable-next-line
   const [programsState, dispatchProgramsAction] = useProgramsContext()
   // eslint-disable-next-line
-  const [isLoadingPrograms, setIsLoadingPrograms] = useState(true)
+  const [isLoadingPrograms, setIsLoadingPrograms] = useState(false)
   const [isLoaderingUser, setIsLoadingUser] = useState(false)
   const [toLogin, setToLogin] = useState(false)
 
-  useEffect(() => {
-    setIsLoadingPrograms(false)
-  }, [])
+  // useEffect(() => {
+  //   setIsLoadingPrograms(false)
+  // }, [])
 
-  useEffect(() => {
-    if (Object.values(userState).length === 0) {
-      setIsLoadingUser(true)
-      console.log('user not set... fetching user data')
-      auth.getCurrentUser().then(user => {
-        const username = user.displayName
+  // useEffect(() => {
+  //   if (Object.values(userState).length === 0) {
+  //     setIsLoadingUser(true)
+  //     console.log('user not set... fetching user data')
+  //     auth.getCurrentUser().then(user => {
+  //       const username = user.displayName
 
-        fetch('http://localhost:5000/get-user', {
-          method: 'POST',
-          body: JSON.stringify({
-            username: username
-          })
-        })
-          .then(response => response.json())
-          .then(userData => {
-            dispatchUserAction({
-              type: 'setLoggedInUser',
-              value: {
-                userData: userData,
-                photoUrl: user.photoURL
-              }
-            })
-            setIsLoadingUser(false)
-          })
-          .catch(error => {
-            console.log('Error fetching user data', error)
-          })
-      })
-    }
-  }, [auth, dispatchUserAction, userState])
+  //       fetch('http://localhost:5000/get-user', {
+  //         method: 'POST',
+  //         body: JSON.stringify({
+  //           username: username
+  //         })
+  //       })
+  //         .then(response => response.json())
+  //         .then(userData => {
+  //           dispatchUserAction({
+  //             type: 'setLoggedInUser',
+  //             value: {
+  //               userData: userData,
+  //               photoUrl: user.photoURL
+  //             }
+  //           })
+  //           setIsLoadingUser(false)
+  //         })
+  //         .catch(error => {
+  //           console.log('Error fetching user data', error)
+  //         })
+  //     })
+  //   }
+  // }, [auth, dispatchUserAction, userState])
 
   // useEffect(() => {
   //   if (

@@ -26,7 +26,7 @@ const AdminButton = ({
     tl.to(button, 0.13, {
       scale: 1.01,
       y: -0.5,
-      boxShadow: '0 3px 10px 10px rgba(0,0,0,0.4)',
+      boxShadow: '0 3px 6px 6px rgba(0,0,0,0.4)',
       background: `${purple ? '#28273d' : '#2e2e38'}`,
       ease: Power2.easeOut
     }).to(

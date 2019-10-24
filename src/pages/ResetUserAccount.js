@@ -5,6 +5,7 @@ import FWWLogo from '../components/Logos/FWWLogo'
 import VerticalUserCard from '../components/UserCards/VerticalUserCard'
 import AccountOptions from '../components/AccountPage/AccountOptions'
 import ConnectSocialAccount from '../components/AccountPage/ConnectSocialAccount'
+import AccountUpdateProfilePicForm from '../components/Forms/AccountUpdateProfilePicForm'
 import { above } from '../styles/Theme'
 
 const ResetUserAccount = () => {
@@ -13,6 +14,7 @@ const ResetUserAccount = () => {
       <FWWLogo />
       <VerticalUserCard />
       <SectionWrapper>
+        <AccountUpdateProfilePicForm />
         <AccountOptions />
         <ConnectSocialAccount />
       </SectionWrapper>

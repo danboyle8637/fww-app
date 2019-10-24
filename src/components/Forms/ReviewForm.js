@@ -82,7 +82,12 @@ const ReviewForm = () => {
         onBlur={updateInputOptions}
       />
       <ReviewWhySelfie />
-      <FileUpload />
+      <FileUpload
+        name="reviewSelfie"
+        value={formState.reviewSelfieImage.fileName}
+        valid={formState.reviewSelfieImage.imageSet}
+        updateInputValues={updateInputValues}
+      />
       <BaseButton type="submit">Send Review</BaseButton>
     </StarRatingForm>
   )

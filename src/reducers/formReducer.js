@@ -186,7 +186,12 @@ const formState = {
   reviewSelfieImage: {
     file: '',
     fileName: '',
-    imageSet: false
+    valid: false
+  },
+  updateProfileImage: {
+    file: '',
+    fileName: '',
+    valid: false
   }
 }
 
@@ -480,7 +485,19 @@ const formReducer = (state, action) => {
         reviewSelfieImage: {
           file: action.value.file,
           fileName: action.value.fileName,
-          imageSet: true
+          valid: true
+        }
+      }
+    }
+    case 'setUpdateProfileImage': {
+      console.log(action.value.file)
+      console.log(action.value.fileName)
+      return {
+        ...state,
+        updateProfileImage: {
+          file: action.value.file,
+          fileName: action.value.fileName,
+          valid: true
         }
       }
     }

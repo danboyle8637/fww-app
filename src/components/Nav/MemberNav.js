@@ -9,9 +9,13 @@ import AccountIcon from '../../svgs/AccountIcon'
 import ContactIcon from '../../svgs/ContactIcon'
 import ReviewIcon from '../../svgs/ReviewIcon'
 import LogoutIcon from '../../svgs/LogoutIcon'
+import { useUserContext } from '../../context/UserContext'
 import { above } from '../../styles/Theme'
 
 const MemberNav = () => {
+  // eslint-disable-next-line
+  const [userState, dispatchUserAction] = useUserContext()
+
   const resetNavigation = [
     {
       id: 1,
@@ -19,9 +23,14 @@ const MemberNav = () => {
       component: <DashboardIcon />,
       slug: '/dashboard'
     },
-    { id: 2, label: 'account', component: <AccountIcon />, slug: '/' },
-    { id: 3, label: 'contact', component: <ContactIcon />, slug: '/' },
-    { id: 4, label: 'review', component: <ReviewIcon />, slug: '/' },
+    {
+      id: 2,
+      label: 'account',
+      component: <AccountIcon />,
+      slug: `/account/${userState.username}`
+    },
+    { id: 3, label: 'contact', component: <ContactIcon />, slug: '/contact' },
+    { id: 4, label: 'review', component: <ReviewIcon />, slug: '/review' },
     { id: 5, label: 'logout', component: <LogoutIcon />, slug: null }
   ]
 

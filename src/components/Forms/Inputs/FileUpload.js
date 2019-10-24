@@ -1,31 +1,54 @@
-import React from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 
 import FileUploadIndicator from '../../../svgs/FileUploadIndicator'
-import useFormControls from '../../../hooks/useFormControls'
 import { useFormStore } from '../../../context/FormContext'
 import '../Inputs/inputs.css'
 
-const FileUpload = () => {
+const FileUpload = props => {
+  const { name, updateInputValues } = props
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
-  // eslint-disable-next-line
-  const [updateInputValues, updateInputOptions] = useFormControls()
+  const [startAnimation, setStartAnimation] = useState(false)
+
+  const setLabel = useCallback(() => {
+    switch (name) {
+      case 'reviewSelfie': {
+        return formState.reviewSelfieImage.valid
+          ? formState.reviewSelfieImage.fileName
+          : 'Click to Upload Selfie'
+      }
+      case 'updateProfileImage': {
+        return formState.updateProfileImage.valid
+          ? formState.updateProfileImage.fileName
+          : 'Click to Update Image'
+      }
+      default: {
+        return 'Click to Upload Image'
+      }
+    }
+  }, [formState.reviewSelfieImage, formState.updateProfileImage, name])
+
+  useEffect(() => {
+    if (
+      formState.reviewSelfieImage.valid ||
+      formState.updateProfileImage.valid
+    ) {
+      setStartAnimation(true)
+    }
+  }, [formState.reviewSelfieImage, formState.updateProfileImage])
 
   return (
     <UploadSelfieContainer>
       <Upload
         type="file"
-        name="reviewSelfie"
+        name={name}
         accept="image/*"
         onChange={updateInputValues}
+        {...props}
       />
-      <UploadIcon />
-      <UploadLabel>
-        {formState.reviewSelfieImage.imageSet
-          ? formState.reviewSelfieImage.fileName
-          : 'Click To Upload Selfie'}
-      </UploadLabel>
+      <UploadIcon startAnimation={startAnimation} />
+      <UploadLabel>{setLabel()}</UploadLabel>
     </UploadSelfieContainer>
   )
 }

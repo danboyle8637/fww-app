@@ -88,6 +88,16 @@ const useUpdateFormControls = () => {
         })
         break
       }
+      case 'updateProfileImage': {
+        dispatch({
+          type: 'setUpdateProfileImage',
+          value: {
+            file: inputFile,
+            fileName: inputFile.name
+          }
+        })
+        break
+      }
       case 'complete1': {
         dispatch({ type: 'setCompleteWorkoutValue', value: inputName })
         break

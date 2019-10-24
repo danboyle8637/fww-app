@@ -10,12 +10,13 @@ import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import ResetSignUp from './pages/ResetSignUp'
 import Review from './pages/Review'
+import Contact from './pages/Contact'
 import ResetProgramDashboard from './pages/ResetProgramDashboard'
 import ResetWorkout from './pages/ResetWorkout'
 import ResetWorkoutCoaching from './pages/ResetWorkoutCoaching'
 import ResetUserAccount from './pages/ResetUserAccount'
 
-function App() {
+const App = () => {
   return (
     <>
       <Global />
@@ -29,6 +30,7 @@ function App() {
             <Route path="/login" component={Login} />
             <Route path="/7-day-reset-step1" component={ResetSignUp} />
             <Route path="/review" component={Review} />
+            <Route path="/contact" component={Contact} />
             <Route path="/account/:username" component={ResetUserAccount} />
             <Route
               exact
