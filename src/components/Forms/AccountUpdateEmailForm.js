@@ -8,51 +8,51 @@ import TextInput from './Inputs/TextInput'
 import useFormControls from '../../hooks/useFormControls'
 import { useFormStore } from '../../context/FormContext'
 
-const AccountUpdateUsernameForm = ({ activeSlide, setActiveSlide }) => {
+const AccountUpdateEmailForm = ({ activeSlide, setActiveSlide }) => {
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
 
-  const handleSaveNewUsername = event => {
+  const handleSaveNewEmail = event => {
     event.preventDefault()
-    console.log(formState.usernameValue.value)
+    console.log(formState.emailValue.value)
     // Check username and update it in database
   }
 
   const handleBack = () => setActiveSlide(0)
 
   return (
-    <UpdateAccountFormTransition showNode={activeSlide === 2}>
-      <UsernameForm onSubmit={handleSaveNewUsername}>
+    <UpdateAccountFormTransition showNode={activeSlide === 3}>
+      <EmailAddressForm onSubmit={handleSaveNewEmail}>
         <BackChip handleClick={handleBack}>Back</BackChip>
-        <Header3>Update Username:</Header3>
+        <Header3>Update Email Address:</Header3>
         <InputWrapper>
           <TextInput
             type="text"
-            name="username"
-            labelName="New Username:"
-            labelFor="username"
-            labelInstructions="Enter new username..."
+            name="emailAddress"
+            labelName="New Email:"
+            labelFor="emailAddress"
+            labelInstructions="Enter new email address..."
             labelError="Can't leave blank!"
-            value={formState.usernameValue.value}
-            valid={formState.usernameValue.valid}
-            initial={formState.usernameOptions.initial}
-            touched={formState.usernameOptions.touched}
-            showInstructions={formState.usernameOptions.showInstructions}
+            value={formState.emailValue.value}
+            valid={formState.emailValue.valid}
+            initial={formState.emailOptions.initial}
+            touched={formState.emailOptions.touched}
+            showInstructions={formState.emailOptions.showInstructions}
             onChange={updateInputValues}
             onFocus={updateInputOptions}
             onBlur={updateInputOptions}
           />
         </InputWrapper>
-        <BaseButton type="submit">Save New Username</BaseButton>
-      </UsernameForm>
+        <BaseButton type="submit">Save New Email</BaseButton>
+      </EmailAddressForm>
     </UpdateAccountFormTransition>
   )
 }
 
-export default AccountUpdateUsernameForm
+export default AccountUpdateEmailForm
 
-const UsernameForm = styled.form`
+const EmailAddressForm = styled.form`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
   display: flex;
