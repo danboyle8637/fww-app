@@ -5,6 +5,7 @@ import { BodyText } from '../../styles/Typography'
 import Google from '../../svgs/GoogleButtonIcon'
 import Facebook from '../../svgs/FacebookButtonIcon'
 import EmailPassword from '../../svgs/EmailPasswordButtonIcon'
+import NavigationArrow from '../../svgs/NavigationArrow'
 import { above } from '../../styles/Theme'
 
 const ChooseSignUpMethodCard = ({
@@ -41,6 +42,7 @@ const ChooseSignUpMethodCard = ({
       {icon === 'facebook' ? <FacebookIcon /> : null}
       {icon === 'emailpassword' ? <EmailPasswordIcon /> : null}
       <BodyText>{buttonText}</BodyText>
+      <Arrow />
     </CardContainer>
   )
 }
@@ -48,9 +50,9 @@ const ChooseSignUpMethodCard = ({
 export default ChooseSignUpMethodCard
 
 const CardContainer = styled.div`
-  padding: 6px;
+  padding: 6px 20px 6px 6px;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr auto;
   gap: 12px;
   align-items: center;
   background: ${props => props.theme.mainBackgroundBorderColor};
@@ -75,4 +77,8 @@ const FacebookIcon = styled(Facebook)`
 
 const EmailPasswordIcon = styled(EmailPassword)`
   width: 60px;
+`
+
+const Arrow = styled(NavigationArrow)`
+  width: 12px;
 `

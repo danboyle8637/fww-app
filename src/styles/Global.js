@@ -8,16 +8,19 @@ const Global = createGlobalStyle`
   @font-face {
     font-family: 'RobotoBold';
     src: url(${RobotoBold}) format('woff2');
+    font-display: fallback;
   }
 
   @font-face {
     font-family: 'QuicksandMedium';
     src: url(${QuicksandMedium}) format('woff2');
+    font-display: fallback;
   }
 
   @font-face {
     font-family: 'QuicksandSemiBold';
     src: url(${QuicksandSemiBold}) format('woff2');
+    font-display: fallback;
   }
 
   html {

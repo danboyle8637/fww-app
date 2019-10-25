@@ -5,6 +5,7 @@ import {
   ProgramHeaderGrid,
   ProgramBackgroundWrapper
 } from '../../../styles/Containers'
+import BodyBurnResetProgramCoverTiny from '../../../images/bbc-reset-program-cover-tiny.jpg'
 import BodyBurnResetProgramCover from '../../../images/bbc-reset-program-cover.jpg'
 import BodyBurnResetLogo from '../../../svgs/BodyBurnResetLogo'
 import useBlurUp from '../../../hooks/useBlurUp'
@@ -23,7 +24,7 @@ const BodyBurnResetHeader = ({ coverImage, tinyCoverImage, signUpCard }) => {
         />
         <PlaceholderImage
           ref={setSmallImage}
-          src={tinyCoverImage}
+          src={signUpCard ? BodyBurnResetProgramCoverTiny : tinyCoverImage}
           alt="7 Day Body Burn Reset Program Cover"
           title="7 Day Body Burn Reset Program"
         />

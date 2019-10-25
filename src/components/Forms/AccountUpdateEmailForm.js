@@ -21,8 +21,9 @@ const AccountUpdateEmailForm = ({ activeSlide, setActiveSlide }) => {
 
   const handleBack = () => setActiveSlide(0)
 
+  // TODO Possibly make a popup to make sure they typed in their email correctly.
   return (
-    <UpdateAccountFormTransition showNode={activeSlide === 3}>
+    <UpdateAccountFormTransition showNode={activeSlide === 2}>
       <EmailAddressForm onSubmit={handleSaveNewEmail}>
         <BackChip handleClick={handleBack}>Back</BackChip>
         <Header3>Update Email Address:</Header3>

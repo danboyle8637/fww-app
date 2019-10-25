@@ -15,7 +15,7 @@ import ResetStep4Form from '../components/Forms/ResetStep4Form'
 
 const ResetSignUp = () => {
   const [reverse, setReverse] = useState(false)
-  const [activeQuestion, setActiveQuestion] = useState(0)
+  const [activeQuestion, setActiveQuestion] = useState(2)
 
   const title = 'Create your Reset program account'
   const alt =
@@ -34,31 +34,33 @@ const ResetSignUp = () => {
     <ResetSignUpContainer>
       <ContentWrapper>
         <ResetSignUpHeader />
-        <TransitionGroup component={null}>
-          <ResetStep1Form
-            activeQuestion={activeQuestion}
-            setActiveQuestion={setActiveQuestion}
-            setReverse={setReverse}
-          />
-          <ResetStep2Form
-            activeQuestion={activeQuestion}
-            setActiveQuestion={setActiveQuestion}
-            reverse={reverse}
-            setReverse={setReverse}
-          />
-          <ResetStep3Form
-            reverse={reverse}
-            setReverse={setReverse}
-            activeQuestion={activeQuestion}
-            setActiveQuestion={setActiveQuestion}
-          />
-          <ResetStep4Form
-            activeQuestion={activeQuestion}
-            setActiveQuestion={setActiveQuestion}
-            reverse={reverse}
-            setReverse={setReverse}
-          />
-        </TransitionGroup>
+        <FormWrapper>
+          <TransitionGroup component={null}>
+            <ResetStep1Form
+              activeQuestion={activeQuestion}
+              setActiveQuestion={setActiveQuestion}
+              setReverse={setReverse}
+            />
+            <ResetStep2Form
+              activeQuestion={activeQuestion}
+              setActiveQuestion={setActiveQuestion}
+              reverse={reverse}
+              setReverse={setReverse}
+            />
+            <ResetStep3Form
+              reverse={reverse}
+              setReverse={setReverse}
+              activeQuestion={activeQuestion}
+              setActiveQuestion={setActiveQuestion}
+            />
+            <ResetStep4Form
+              activeQuestion={activeQuestion}
+              setActiveQuestion={setActiveQuestion}
+              reverse={reverse}
+              setReverse={setReverse}
+            />
+          </TransitionGroup>
+        </FormWrapper>
       </ContentWrapper>
       {background}
     </ResetSignUpContainer>
@@ -83,4 +85,10 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   z-index: 1;
+`
+
+const FormWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
 `

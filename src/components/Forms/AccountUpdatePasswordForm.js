@@ -28,7 +28,7 @@ const AccountUpdatePasswordForm = ({ activeSlide, setActiveSlide }) => {
   const handleBack = () => setActiveSlide(0)
 
   return (
-    <UpdateAccountFormTransition showNode={activeSlide === 4}>
+    <UpdateAccountFormTransition showNode={activeSlide === 3}>
       <UsernameForm onSubmit={handleSaveNewPassword}>
         <BackChip handleClick={handleBack}>Back</BackChip>
         <Header3>Update Password:</Header3>

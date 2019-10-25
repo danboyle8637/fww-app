@@ -15,20 +15,6 @@ const useUpdateFormControls = () => {
     }
 
     switch (inputName) {
-      case 'username': {
-        dispatch({
-          type: 'setUsernameValue',
-          value: inputValue
-        })
-        break
-      }
-      case 'loginUsername': {
-        dispatch({
-          type: 'setUsernameValue',
-          value: inputValue
-        })
-        break
-      }
       case 'loginPassword': {
         dispatch({
           type: 'setPasswordValue',
@@ -134,10 +120,6 @@ const useUpdateFormControls = () => {
     const inputName = event.target.name
 
     switch (inputName) {
-      case 'username': {
-        dispatch({ type: 'setUsernameOptions' })
-        break
-      }
       case 'loginUsername': {
         dispatch({ type: 'setUsernameOptions' })
         break

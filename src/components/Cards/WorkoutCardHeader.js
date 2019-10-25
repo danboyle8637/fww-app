@@ -79,6 +79,7 @@ const ImageContainer = styled.div`
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   width: 100%;
+  height: auto;
   overflow: hidden;
 `
 
@@ -87,6 +88,7 @@ const WorkoutImage = styled.img`
   grid-row: 1 / -1;
   border-radius: 10px 10px 0 0;
   width: 100%;
+  height: auto;
   z-index: 1;
 `
 
@@ -95,6 +97,7 @@ const PlaceholderImage = styled.img`
   grid-row: 1 / -1;
   border-radius: 10px 10px 0 0;
   width: 100%;
+  height: auto;
   filter: blur(6px);
   transform: scale(1);
   z-index: 2;

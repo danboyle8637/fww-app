@@ -2,11 +2,6 @@ import validate from '../utils/validate'
 
 // Validation rules for intputs
 
-const usernameValidationRules = {
-  minLength: 4,
-  isRequired: true
-}
-
 const passwordValidationRules = {
   minLength: 6,
   isRequired: true
@@ -52,15 +47,6 @@ const setReviewValidation = {
 }
 
 const formState = {
-  usernameValue: {
-    value: '',
-    valid: false
-  },
-  usernameOptions: {
-    initial: true,
-    touched: false,
-    showInstructions: false
-  },
   passwordValue: {
     value: '',
     valid: false
@@ -157,7 +143,7 @@ const formState = {
       },
       {
         value: 'coaching',
-        displayValue: `I feel like I'm ignored`,
+        displayValue: `I need accountability`,
         checked: false
       },
       {
@@ -197,26 +183,6 @@ const formState = {
 
 const formReducer = (state, action) => {
   switch (action.type) {
-    case 'setUsernameValue': {
-      const valid = validate(action.value, usernameValidationRules)
-      return {
-        ...state,
-        usernameValue: {
-          value: action.value,
-          valid: valid
-        }
-      }
-    }
-    case 'setUsernameOptions': {
-      return {
-        ...state,
-        usernameOptions: {
-          initial: false,
-          touched: !state.usernameOptions.touched,
-          showInstructions: !state.usernameOptions.showInstructions
-        }
-      }
-    }
     case 'setPasswordValue': {
       const valid = validate(action.value, passwordValidationRules)
       return {

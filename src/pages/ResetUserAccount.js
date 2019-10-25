@@ -7,7 +7,6 @@ import VerticalUserCard from '../components/UserCards/VerticalUserCard'
 import AccountMenu from '../components/AccountPage/AccountMenu'
 import ConnectSocialAccount from '../components/AccountPage/ConnectSocialAccount'
 import AccountUpdateProfilePicForm from '../components/Forms/AccountUpdateProfilePicForm'
-import AccountUpdateUsernameForm from '../components/Forms/AccountUpdateUsernameForm'
 import AccountUpdateEmailForm from '../components/Forms/AccountUpdateEmailForm'
 import AccountUpdatePasswordForm from '../components/Forms/AccountUpdatePasswordForm'
 import { above } from '../styles/Theme'
@@ -27,10 +26,6 @@ const ResetUserAccount = () => {
               setActiveSlide={setActiveSlide}
             />
             <AccountUpdateProfilePicForm
-              activeSlide={activeSlide}
-              setActiveSlide={setActiveSlide}
-            />
-            <AccountUpdateUsernameForm
               activeSlide={activeSlide}
               setActiveSlide={setActiveSlide}
             />

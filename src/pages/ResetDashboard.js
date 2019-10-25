@@ -10,7 +10,7 @@ import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLo
 import { useUserContext } from '../context/UserContext'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
 import { useProgramsContext } from '../context/ProgramsContext'
-// import siteConfig from '../utils/siteConfig'
+import siteConfig from '../utils/siteConfig'
 
 const ResetDashboard = ({ match }) => {
   const auth = useFireBase()
@@ -23,104 +23,104 @@ const ResetDashboard = ({ match }) => {
   const [isLoaderingUser, setIsLoadingUser] = useState(false)
   const [toLogin, setToLogin] = useState(false)
 
-  // useEffect(() => {
-  //   setIsLoadingPrograms(false)
-  // }, [])
+  useEffect(() => {
+    setIsLoadingPrograms(false)
+  }, [])
 
-  // useEffect(() => {
-  //   if (Object.values(userState).length === 0) {
-  //     setIsLoadingUser(true)
-  //     console.log('user not set... fetching user data')
-  //     auth.getCurrentUser().then(user => {
-  //       const username = user.displayName
+  useEffect(() => {
+    if (Object.values(userState).length === 0) {
+      setIsLoadingUser(true)
+      console.log('user not set... fetching user data')
+      auth.getCurrentUser().then(user => {
+        const username = user.displayName
 
-  //       fetch('http://localhost:5000/get-user', {
-  //         method: 'POST',
-  //         body: JSON.stringify({
-  //           username: username
-  //         })
-  //       })
-  //         .then(response => response.json())
-  //         .then(userData => {
-  //           dispatchUserAction({
-  //             type: 'setLoggedInUser',
-  //             value: {
-  //               userData: userData,
-  //               photoUrl: user.photoURL
-  //             }
-  //           })
-  //           setIsLoadingUser(false)
-  //         })
-  //         .catch(error => {
-  //           console.log('Error fetching user data', error)
-  //         })
-  //     })
-  //   }
-  // }, [auth, dispatchUserAction, userState])
+        fetch('http://localhost:5000/get-user', {
+          method: 'POST',
+          body: JSON.stringify({
+            username: username
+          })
+        })
+          .then(response => response.json())
+          .then(userData => {
+            dispatchUserAction({
+              type: 'setLoggedInUser',
+              value: {
+                userData: userData,
+                photoUrl: user.photoURL
+              }
+            })
+            setIsLoadingUser(false)
+          })
+          .catch(error => {
+            console.log('Error fetching user data', error)
+          })
+      })
+    }
+  }, [auth, dispatchUserAction, userState])
 
-  // useEffect(() => {
-  //   if (
-  //     programsState.programs.length === 0 &&
-  //     programsState.percentComplete.length === 0
-  //   ) {
-  //     console.log('Fetching Data - Setting Up Program State')
-  //     const getProgramData = {
-  //       username: userState.username,
-  //       programs: userState.programs
-  //     }
-  //     const baseUrl = siteConfig.api.baseUrl
-  //     // For Get Programs you need to pass an array of programIds
-  //     // You already have this in the object above
-  //     const programsPath = '/get-programs'
-  //     const percentCompletePath = '/get-percent-complete'
-  //     const programsPromise = fetch(`${baseUrl}${programsPath}`)
-  //     const percentCompletePromise = fetch(`${baseUrl}${percentCompletePath}`, {
-  //       method: 'POST',
-  //       body: JSON.stringify(getProgramData)
-  //     })
+  useEffect(() => {
+    if (
+      programsState.programs.length === 0 &&
+      programsState.percentComplete.length === 0
+    ) {
+      console.log('Fetching Data - Setting Up Program State')
+      const getProgramData = {
+        username: userState.username,
+        programs: userState.programs
+      }
+      const baseUrl = siteConfig.api.baseUrl
+      // For Get Programs you need to pass an array of programIds
+      // You already have this in the object above
+      const programsPath = '/get-programs'
+      const percentCompletePath = '/get-percent-complete'
+      const programsPromise = fetch(`${baseUrl}${programsPath}`)
+      const percentCompletePromise = fetch(`${baseUrl}${percentCompletePath}`, {
+        method: 'POST',
+        body: JSON.stringify(getProgramData)
+      })
 
-  //     Promise.all([programsPromise, percentCompletePromise])
-  //       .then(response => {
-  //         const data = response.map(res => res.json())
-  //         return Promise.all(data)
-  //       })
-  //       .then(dataArray => {
-  //         const programs = dataArray[0]
-  //         const percentComplete = dataArray[1]
+      Promise.all([programsPromise, percentCompletePromise])
+        .then(response => {
+          const data = response.map(res => res.json())
+          return Promise.all(data)
+        })
+        .then(dataArray => {
+          const programs = dataArray[0]
+          const percentComplete = dataArray[1]
 
-  //         dispatchProgramsAction({
-  //           type: 'setProgramsState',
-  //           value: programs.programs
-  //         })
+          dispatchProgramsAction({
+            type: 'setProgramsState',
+            value: programs.programs
+          })
 
-  //         dispatchProgramsAction({
-  //           type: 'setPercentComplete',
-  //           value: percentComplete.percentComplete
-  //         })
+          dispatchProgramsAction({
+            type: 'setPercentComplete',
+            value: percentComplete.percentComplete
+          })
 
-  //         setIsLoadingPrograms(false)
-  //       })
-  //       .catch(error => {
-  //         console.log(error)
-  //       })
-  //   }
-  // }, [
-  //   dispatchProgramsAction,
-  //   programsState.percentComplete,
-  //   programsState.programs,
-  //   userState.programs,
-  //   userState.username
-  // ])
+          setIsLoadingPrograms(false)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  }, [
+    dispatchProgramsAction,
+    programsState.percentComplete,
+    programsState.programs,
+    userState.programs,
+    userState.username
+  ])
 
-  // // Check for real loading... use this!!!!
-  // useEffect(() => {
-  //   if (
-  //     programsState.programs.length > 0 &&
-  //     programsState.percentComplete.length > 0
-  //   ) {
-  //     setIsLoadingPrograms(false)
-  //   }
-  // }, [isLoadingPrograms, programsState])
+  // Check for real loading... use this!!!!
+  useEffect(() => {
+    if (
+      programsState.programs.length > 0 &&
+      programsState.percentComplete.length > 0
+    ) {
+      setIsLoadingPrograms(false)
+    }
+  }, [isLoadingPrograms, programsState])
 
   const handleSignOut = () => {
     auth.logUserOut()

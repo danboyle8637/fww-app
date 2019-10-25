@@ -45,11 +45,7 @@ const LoginUsernamePassword = ({
     if (emailValid && passwordValid) {
       setLoginButtonValid(true)
     }
-  }, [
-    formState.usernameValue.valid,
-    formState.passwordValue.valid,
-    formState.emailValue.valid
-  ])
+  }, [formState.passwordValue.valid, formState.emailValue.valid])
 
   const handleLoginSubmit = event => {
     event.preventDefault()
@@ -61,9 +57,9 @@ const LoginUsernamePassword = ({
     auth
       .loginUserWithEmailAndPassword(email, password)
       .then(userCredential => {
-        const username = userCredential.user.displayName
+        const userId = userCredential.user.uid
         photoUrl = userCredential.user.photoURL
-        const getUserRequestObject = { username: username }
+        const getUserRequestObject = { userId: userId }
         const baseUrl = siteConfig.api.baseUrl
         const url = `${baseUrl}/get-user`
 

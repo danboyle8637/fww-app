@@ -8,6 +8,7 @@ import BaseButton from '../Buttons/BaseButton'
 import BackChip from '../Chips/BackChip'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
 import FullPageKettlebellLoader from '../Loaders/FullPageKettlebellLoader'
+import PasswordShowHideIndicator from '../Indicators/PasswordShowHideIndicator'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
 import { useUserContext } from '../../context/UserContext'
@@ -22,10 +23,11 @@ const ResetStep4Form = ({
 }) => {
   const auth = useContext(FirebaseContext)
   // eslint-disable-next-line
-  const [formState, _] = useFormStore()
+  const [formState, dispatchFormAction] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [toDashboard, setToDashboard] = useState(false)
 
@@ -33,6 +35,8 @@ const ResetStep4Form = ({
     setReverse(true)
     setActiveQuestion(prevValue => prevValue - 1)
   }
+
+  const toggleShowPassword = () => setShowPassword(prevValue => !prevValue)
 
   const handleSignUpForm = event => {
     event.preventDefault()
@@ -45,7 +49,6 @@ const ResetStep4Form = ({
       option => option.value === programId
     )
     const email = formState.emailValue.value
-    const username = formState.usernameValue.value
     const password = formState.passwordValue.value
     const confirmPassword = formState.confirmPasswordValue.value
 
@@ -59,7 +62,6 @@ const ResetStep4Form = ({
           programId: programId,
           totalWorkouts: totalWorkouts['numberOfWorkouts'],
           firstName: firstName,
-          username: username,
           password: password,
           confirmPassword: confirmPassword,
           email: email,
@@ -109,29 +111,33 @@ const ResetStep4Form = ({
             <ContentWrapper>
               <Header1>Last Step:</Header1>
               <BodyText>
-                Enter your email and create a password. Then click Create My
+                Check your email and create a password. Then click Create My
                 Program.
               </BodyText>
             </ContentWrapper>
             <SignUpForm onSubmit={handleSignUpForm}>
               <TextInput
                 type="text"
-                name="loginUsername"
-                labelName="Username"
-                labelFor="loginUsername"
-                labelInstructions="Create a unique username"
-                labelError="ERROR MESSAGE FROM SERVER"
-                value={formState.usernameValue.value}
-                valid={formState.usernameValue.valid}
-                initial={formState.usernameOptions.initial}
-                touched={formState.usernameOptions.touched}
-                showInstructions={formState.usernameOptions.showInstructions}
+                name="emailAddress"
+                labelName="Email"
+                labelFor="emailAddress"
+                labelInstructions="Check your email address"
+                labelError="Enter a valid email"
+                value={formState.emailValue.value}
+                valid={formState.emailValue.valid}
+                initial={formState.emailOptions.initial}
+                touched={formState.emailOptions.touched}
+                showInstructions={formState.emailOptions.showInstructions}
                 onChange={updateInputValues}
                 onFocus={updateInputOptions}
                 onBlur={updateInputOptions}
               />
+              <PasswordShowHideIndicator
+                showPassword={showPassword}
+                toggleShowPassword={toggleShowPassword}
+              />
               <TextInput
-                type="text"
+                type={showPassword ? 'text' : 'password'}
                 name="loginPassword"
                 labelName="Password"
                 labelFor="loginPassword"
@@ -147,7 +153,7 @@ const ResetStep4Form = ({
                 onBlur={updateInputOptions}
               />
               <TextInput
-                type="text"
+                type={showPassword ? 'text' : 'password'}
                 name="loginConfirmPassword"
                 labelName="Confirm Password"
                 labelFor="loginConfirmPassword"
@@ -177,6 +183,8 @@ const ResetStep4Form = ({
 export default ResetStep4Form
 
 const Step3Container = styled.div`
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
   margin: 0 0 320px 0;
   padding: 0 16px;
   display: flex;

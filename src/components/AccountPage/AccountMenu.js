@@ -15,12 +15,9 @@ const AccountMenu = ({ activeSlide, setActiveSlide }) => {
           Update Profile Picture
         </AdminButton>
         <AdminButton handleClick={() => setActiveSlide(2)}>
-          Update Username
-        </AdminButton>
-        <AdminButton handleClick={() => setActiveSlide(3)}>
           Update Email Address
         </AdminButton>
-        <AdminButton handleClick={() => setActiveSlide(4)}>
+        <AdminButton handleClick={() => setActiveSlide(3)}>
           Update Password
         </AdminButton>
       </ButtonWrapper>

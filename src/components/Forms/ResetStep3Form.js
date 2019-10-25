@@ -24,7 +24,7 @@ const ResetStep3Form = ({
     {
       id: 3,
       icon: 'emailpassword',
-      text: 'Username and Password',
+      text: 'Email and Password',
       loginType: 'next'
     }
   ]
@@ -72,6 +72,8 @@ const ResetStep3Form = ({
 export default ResetStep3Form
 
 const Step3Container = styled.div`
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
   margin: 0 0 340px 0;
   padding: 0 16px;
   display: flex;

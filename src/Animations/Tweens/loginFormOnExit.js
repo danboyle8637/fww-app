@@ -1,11 +1,19 @@
-import { TweenMax, Power2 } from 'gsap/TweenMax'
+import { TweenMax, Linear } from 'gsap/TweenMax'
 
 const loginFormOnExit = node => {
-  TweenMax.to(node, 0.3, {
-    x: -300,
-    autoAlpha: 0,
-    ease: Power2.easeIn
-  })
+  TweenMax.fromTo(
+    node,
+    0.3,
+    {
+      x: 0,
+      autoAlpha: 1
+    },
+    {
+      x: -300,
+      autoAlpha: 0,
+      ease: Linear.easeNone
+    }
+  )
 }
 
 export default loginFormOnExit
