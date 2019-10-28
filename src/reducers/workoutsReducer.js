@@ -1,4 +1,6 @@
-const workoutsState = {}
+const workoutsState = {
+  workouts: []
+}
 
 const workoutsReducer = (state, action) => {
   switch (action.type) {
@@ -12,22 +14,24 @@ const workoutsReducer = (state, action) => {
 
       // It must get cleaned up when user goes back to main Dashboard
       // In real app it will clean up when use goes back to Program Dashbaord
-      const newWorkoutsState = workoutsArray.reduce(
-        (accumulator, currentValue) => {
-          // accumulator[currentValue.workoutId] = { ...currentValue }
-          accumulator.push({ ...currentValue })
+      // const newWorkoutsState = workoutsArray.reduce(
+      //   (accumulator, currentValue) => {
+      //     // accumulator[currentValue.workoutId] = { ...currentValue }
+      //     accumulator.push({ ...currentValue })
 
-          return accumulator
-        },
-        []
-      )
+      //     return accumulator
+      //   },
+      //   []
+      // )
       return {
         ...state,
-        workouts: newWorkoutsState
+        workouts: workoutsArray
       }
     }
     case 'cleanWorkoutsState': {
-      return {}
+      return {
+        workouts: []
+      }
     }
     default: {
       return state

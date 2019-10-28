@@ -21,10 +21,6 @@ const ResetProgramDashboard = ({ match }) => {
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
 
   useEffect(() => {
-    setIsLoadingWorkouts(false)
-  }, [match])
-
-  useEffect(() => {
     const programData = {
       programId: match.params.programId
     }
@@ -49,11 +45,14 @@ const ResetProgramDashboard = ({ match }) => {
             value: array
           })
 
+          const programId = match.params.programId
+          localStorage.setItem(`${programId}`, JSON.stringify(array))
+
           const workoutTrackingArray = array.reduce(
             (accumulator, currentValue) => {
-              const workoutName = currentValue.name
+              const workoutName = currentValue.title
               const workoutId = currentValue.workoutId
-              const workoutObject = { workoutId: workoutId, name: workoutName }
+              const workoutObject = { workoutId: workoutId, title: workoutName }
 
               accumulator.push(workoutObject)
 
@@ -64,7 +63,7 @@ const ResetProgramDashboard = ({ match }) => {
 
           const trackingRequest = {
             programId: programData.programId,
-            username: 'pampam', // TODO Switch this out - userState.username
+            userId: userState.userId,
             workoutsArray: workoutTrackingArray
           }
 
@@ -74,16 +73,11 @@ const ResetProgramDashboard = ({ match }) => {
           })
             .then(response => response.json())
             .then(data => {
-              const keyArray = Object.keys(data)
-              if (keyArray.includes('stats')) {
-                dispatchStatsAction({
-                  type: 'setWorkoutStatsState',
-                  value: {
-                    percentComplete: data.percentComplete,
-                    stats: data.stats
-                  }
-                })
-              }
+              console.log(data.stats)
+              dispatchStatsAction({
+                type: 'setWorkoutStatsState',
+                value: data.stats
+              })
             })
             .catch(error => {
               // TODO Hand this error of not getting the tracking setup.
@@ -99,9 +93,9 @@ const ResetProgramDashboard = ({ match }) => {
     dispatchStatsAction,
     dispatchWorkoutsAction,
     match,
-    userState.username,
-    workoutStatsState,
-    workoutsState
+    userState.userId,
+    workoutStatsState.stats,
+    workoutsState.workouts
   ])
 
   // TODO: Only this time check for the state that actually matters.
@@ -121,7 +115,7 @@ const ResetProgramDashboard = ({ match }) => {
       const key = workout.order
       const coverImage = workout.workoutBackgrounds[0]
       const tinyImage = workout.workoutTinyBackground
-      const title = workout.name
+      const title = workout.title
       const description = workout.description
       const workoutId = workout.workoutId
 
@@ -157,7 +151,7 @@ const ResetProgramDashboard = ({ match }) => {
   return (
     <ProgramDashboardContainer>
       <ResetProgramDashboardHeader programId={match.params.programId} />
-      <DashboardStatsCard />
+      <DashboardStatsCard programId={match.params.programId} />
       <WorkoutCardWrapper>
         {isLoadingWorkouts ? <div>Loading...</div> : <>{renderWorkouts()}</>}
       </WorkoutCardWrapper>

@@ -1,5 +1,5 @@
 const workoutStatsState = {
-  percentComplete: {}
+  stats: {}
 }
 
 const workoutStatsReducer = (state, action) => {
@@ -8,12 +8,12 @@ const workoutStatsReducer = (state, action) => {
     // Called to setup the stats that show on card
     // Called to setup the stats that show on workout page
     case 'setWorkoutStatsState': {
-      const stats = action.value.stats
-      const percentComplete = action.value.percentComplete
+      const stats = action.value
+
+      console.log(stats)
 
       return {
-        PercentComplete: percentComplete,
-        stats
+        stats: stats
       }
     }
     case 'setTrackingNumber': {
@@ -124,7 +124,10 @@ const workoutStatsReducer = (state, action) => {
       }
     }
     case 'cleanWorkoutStatsState': {
-      return {}
+      return {
+        stats: {},
+        percentComplete: {}
+      }
     }
     default: {
       return state

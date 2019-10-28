@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { TransitionGroup } from 'react-transition-group'
+import { Redirect } from 'react-router-dom'
 
 import MobileBackground from '../images/signup-back-kb-rack-600x700.jpg'
 import TabletBackground from '../images/signup-back-kb-rack-834x1112.jpg'
@@ -12,10 +13,13 @@ import ResetStep1Form from '../components/Forms/ResetStep1Form'
 import ResetStep2Form from '../components/Forms/ResetStep2Form'
 import ResetStep3Form from '../components/Forms/ResetStep3Form'
 import ResetStep4Form from '../components/Forms/ResetStep4Form'
+import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
 
 const ResetSignUp = () => {
   const [reverse, setReverse] = useState(false)
-  const [activeQuestion, setActiveQuestion] = useState(2)
+  const [activeQuestion, setActiveQuestion] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
+  const [toDashboard, setToDashboard] = useState(false)
 
   const title = 'Create your Reset program account'
   const alt =
@@ -31,39 +35,49 @@ const ResetSignUp = () => {
   )
 
   return (
-    <ResetSignUpContainer>
-      <ContentWrapper>
-        <ResetSignUpHeader />
-        <FormWrapper>
-          <TransitionGroup component={null}>
-            <ResetStep1Form
-              activeQuestion={activeQuestion}
-              setActiveQuestion={setActiveQuestion}
-              setReverse={setReverse}
-            />
-            <ResetStep2Form
-              activeQuestion={activeQuestion}
-              setActiveQuestion={setActiveQuestion}
-              reverse={reverse}
-              setReverse={setReverse}
-            />
-            <ResetStep3Form
-              reverse={reverse}
-              setReverse={setReverse}
-              activeQuestion={activeQuestion}
-              setActiveQuestion={setActiveQuestion}
-            />
-            <ResetStep4Form
-              activeQuestion={activeQuestion}
-              setActiveQuestion={setActiveQuestion}
-              reverse={reverse}
-              setReverse={setReverse}
-            />
-          </TransitionGroup>
-        </FormWrapper>
-      </ContentWrapper>
-      {background}
-    </ResetSignUpContainer>
+    <>
+      <ResetSignUpContainer>
+        <ContentWrapper>
+          <ResetSignUpHeader />
+          <FormWrapper>
+            <TransitionGroup component={null}>
+              <ResetStep1Form
+                activeQuestion={activeQuestion}
+                setActiveQuestion={setActiveQuestion}
+                setReverse={setReverse}
+              />
+              <ResetStep2Form
+                activeQuestion={activeQuestion}
+                setActiveQuestion={setActiveQuestion}
+                reverse={reverse}
+                setReverse={setReverse}
+              />
+              <ResetStep3Form
+                reverse={reverse}
+                setReverse={setReverse}
+                activeQuestion={activeQuestion}
+                setActiveQuestion={setActiveQuestion}
+              />
+              <ResetStep4Form
+                activeQuestion={activeQuestion}
+                setActiveQuestion={setActiveQuestion}
+                reverse={reverse}
+                setReverse={setReverse}
+                setIsLoading={setIsLoading}
+                setToDashboard={setToDashboard}
+              />
+            </TransitionGroup>
+          </FormWrapper>
+        </ContentWrapper>
+        {background}
+      </ResetSignUpContainer>
+      {isLoading ? (
+        <FullPageKettlebellLoader
+          loadingMessage={'Creating Your Fit Profile'}
+        />
+      ) : null}
+      {toDashboard ? <Redirect to="/dashboard" /> : null}
+    </>
   )
 }
 

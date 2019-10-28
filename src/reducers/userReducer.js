@@ -3,12 +3,11 @@ const userState = {}
 const userReducer = (state, action) => {
   switch (action.type) {
     case 'setLoggedInUser': {
-      const programsArray = action.value.userData.programs
-
       return {
-        firstName: action.value.userData.firstName,
+        userId: action.value.userId,
+        firstName: action.value.firstName,
         photoUrl: action.value.photoUrl,
-        programs: programsArray
+        programs: action.value.programs
       }
     }
     default: {

@@ -39,11 +39,11 @@ const LoadingKettlebell = ({ width, height, className }) => {
       className={className}
       width={width}
       height={height}
-      viewBox="0 0 138.39 189.6"
+      viewBox="0 0 142.39 193.6"
     >
       <defs>
         <linearGradient
-          id="loadingKettlebellGradient"
+          id="loadingKettlebellGradient1"
           x1="32.21"
           y1="57.38"
           x2="175.44"
@@ -71,30 +71,48 @@ const LoadingKettlebell = ({ width, height, className }) => {
           <stop offset="1" stopColor="#8b53f6" />
         </linearGradient>
       </defs>
-      <g id="kettlebell-loader">
-        <path
-          ref={kettlebellRef}
-          id="kettlebell"
-          d="M103.65 10.05c-16.56.29-36.41 4.47-47.82 17.64-19 21.89 1.36 53.79 1.36 53.79a64.19 64.19 0 1 0 92.81-.75c2.91-5.83 8-13.63 9.38-26.77 1.92-18.28-15.15-35.08-30.63-40.85-4.61-1.72-14-3.21-24.81-3"
-          transform="translate(-34.78 -5.03)"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="10"
-          stroke="url(#loadingKettlebellGradient)"
-        />
-      </g>
-      <path
-        ref={handleRef}
-        d="M76.32 37.84c15.05-12.84 47.35-8.93 56.61 2.75 5.82 7.33 5 18.77-1.38 25.73a64.24 64.24 0 0 0-55.89.56c-1.61-1.88-13.44-17 .66-29.04z"
-        transform="translate(-34.78 -5.03)"
+      <g
+        id="kettlebell-loader"
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="10"
-        stroke="url(#loadingKettlebellGradient2)"
-        id="loading-kettlebell-handle"
-      />
+      >
+        <path
+          id="track-kettlebell"
+          d="M70.87 7.02c-16.56.29-36.41 4.47-47.82 17.64-19 21.89 1.36 53.79 1.36 53.79h0a64.19 64.19 0 1092.81-.75h0c2.91-5.83 8-13.63 9.38-26.77 1.92-18.28-15.15-35.08-30.63-40.85-4.61-1.72-14-3.21-24.81-3"
+          stroke="#000"
+          strokeWidth="14"
+        />
+        <path
+          ref={kettlebellRef}
+          id="kettlebell"
+          d="M103.65 10.05c-16.56.29-36.41 4.47-47.82 17.64-19 21.89 1.36 53.79 1.36 53.79h0a64.19 64.19 0 1092.81-.75h0c2.91-5.83 8-13.63 9.38-26.77 1.92-18.28-15.15-35.08-30.63-40.85-4.61-1.72-14-3.21-24.81-3"
+          transform="translate(-32.78 -3.03)"
+          strokeWidth="10"
+          stroke="url(#loadingKettlebellGradient1)"
+        />
+      </g>
+      <g
+        id="handle-hole"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path
+          id="track"
+          d="M43.54 34.81c15.05-12.84 47.35-8.93 56.61 2.75 5.82 7.33 5 18.77-1.38 25.73h0a64.24 64.24 0 00-55.89.56c-1.61-1.88-13.44-17 .66-29.04z"
+          stroke="#000"
+          strokeWidth="14"
+        />
+        <path
+          ref={handleRef}
+          id="handle-path"
+          d="M76.32 37.84c15.05-12.84 47.35-8.93 56.61 2.75 5.82 7.33 5 18.77-1.38 25.73h0a64.24 64.24 0 00-55.89.56c-1.61-1.88-13.44-17 .66-29.04z"
+          transform="translate(-32.78 -3.03)"
+          strokeWidth="10"
+          stroke="url(#loadingKettlebellGradient2)"
+        />
+      </g>
     </svg>
   )
 }

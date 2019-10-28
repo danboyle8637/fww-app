@@ -6,6 +6,7 @@ import BaseButton from '../Buttons/BaseButton'
 import DidForgetPassword from './DidForgotPassword'
 import BackChip from '../Chips/BackChip'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
+import PasswordShowHideIndicator from '../Indicators/PasswordShowHideIndicator'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
 import { useUserContext } from '../../context/UserContext'
@@ -24,6 +25,7 @@ const LoginUsernamePassword = ({
   const [loginButtonValid, setLoginButtonValid] = useState(false)
   const [emailErrorMessage, setEmailErrorMessage] = useState('')
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('')
+  const [showPassword, setShowPassword] = useState(true)
   const [formState, dispatch] = useFormStore()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
@@ -72,10 +74,14 @@ const LoginUsernamePassword = ({
             dispatchUserAction({
               type: 'setLoggedInUser',
               value: {
-                userData: userData,
-                photoUrl: photoUrl
+                userId: userData.userId,
+                firstName: userData.firstName,
+                photoUrl: photoUrl,
+                programs: userData.programs
               }
             })
+
+            localStorage.setItem('fwwUser', JSON.stringify(userData))
 
             // Empty the form state
             dispatch({ type: 'resetUsernamePasswordForm' })
@@ -114,6 +120,10 @@ const LoginUsernamePassword = ({
     setActiveForm(prevValue => prevValue + 1)
   }
 
+  const toggleShowPassword = () => {
+    setShowPassword(prevValue => !prevValue)
+  }
+
   return (
     <LoginFormTransition
       showNode={activeForm === 1}
@@ -122,6 +132,10 @@ const LoginUsernamePassword = ({
     >
       <FormContainer>
         <BackChip handleClick={handleBackButton}>Back</BackChip>
+        <PasswordShowHideIndicator
+          showPassword={showPassword}
+          toggleShowPassword={toggleShowPassword}
+        />
         <LoginForm onSubmit={handleLoginSubmit}>
           <TextInput
             type="text"
@@ -140,7 +154,7 @@ const LoginUsernamePassword = ({
             onBlur={updateInputOptions}
           />
           <TextInput
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             name="loginPassword"
             labelName="Password"
             labelFor="loginPassword"

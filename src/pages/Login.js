@@ -31,7 +31,7 @@ const Login = () => {
   return (
     <>
       {isLoggingIn ? (
-        <FullPageKettlebellLoader loadingMessage="Setting up programs!" />
+        <FullPageKettlebellLoader loadingMessage="Setting Up Dashboard..." />
       ) : (
         <LoginContainer>
           {background}

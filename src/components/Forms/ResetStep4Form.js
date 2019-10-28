@@ -1,13 +1,11 @@
 import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
-import { Redirect } from 'react-router-dom'
 
 import { Header1, BodyText } from '../../styles/Typography'
 import TextInput from '../Forms/Inputs/TextInput'
 import BaseButton from '../Buttons/BaseButton'
 import BackChip from '../Chips/BackChip'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
-import FullPageKettlebellLoader from '../Loaders/FullPageKettlebellLoader'
 import PasswordShowHideIndicator from '../Indicators/PasswordShowHideIndicator'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
@@ -19,7 +17,9 @@ const ResetStep4Form = ({
   activeQuestion,
   setActiveQuestion,
   reverse,
-  setReverse
+  setReverse,
+  setIsLoading,
+  setToDashboard
 }) => {
   const auth = useContext(FirebaseContext)
   // eslint-disable-next-line
@@ -28,8 +28,6 @@ const ResetStep4Form = ({
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
   const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [toDashboard, setToDashboard] = useState(false)
 
   const handleBackClick = () => {
     setReverse(true)
@@ -78,10 +76,15 @@ const ResetStep4Form = ({
             dispatchUserAction({
               type: 'setLoggedInUser',
               value: {
-                userData: userData,
-                photoUrl: userData.photoUrl
+                userId: userData.userId,
+                firstName: userData.firstName,
+                photoUrl: userData.photoUrl,
+                programs: userData.programs
               }
             })
+
+            localStorage.setItem('fwwUser', JSON.stringify(userData))
+
             setIsLoading(false)
             setToDashboard(true)
           })
@@ -98,84 +101,79 @@ const ResetStep4Form = ({
 
   return (
     <>
-      {isLoading ? (
-        <FullPageKettlebellLoader loadingMessage={'Setting up programs!'} />
-      ) : (
-        <LoginFormTransition
-          showNode={activeQuestion === 3}
-          reverse={reverse}
-          formName="ResetSignUpStep3Form"
-        >
-          <Step3Container>
-            <BackChip handleClick={handleBackClick}>Back</BackChip>
-            <ContentWrapper>
-              <Header1>Last Step:</Header1>
-              <BodyText>
-                Check your email and create a password. Then click Create My
-                Program.
-              </BodyText>
-            </ContentWrapper>
-            <SignUpForm onSubmit={handleSignUpForm}>
-              <TextInput
-                type="text"
-                name="emailAddress"
-                labelName="Email"
-                labelFor="emailAddress"
-                labelInstructions="Check your email address"
-                labelError="Enter a valid email"
-                value={formState.emailValue.value}
-                valid={formState.emailValue.valid}
-                initial={formState.emailOptions.initial}
-                touched={formState.emailOptions.touched}
-                showInstructions={formState.emailOptions.showInstructions}
-                onChange={updateInputValues}
-                onFocus={updateInputOptions}
-                onBlur={updateInputOptions}
-              />
-              <PasswordShowHideIndicator
-                showPassword={showPassword}
-                toggleShowPassword={toggleShowPassword}
-              />
-              <TextInput
-                type={showPassword ? 'text' : 'password'}
-                name="loginPassword"
-                labelName="Password"
-                labelFor="loginPassword"
-                labelInstructions="Create a password"
-                labelError="ERROR MESSAGE FROM SERVER"
-                value={formState.passwordValue.value}
-                valid={formState.passwordValue.valid}
-                initial={formState.passwordOptions.initial}
-                touched={formState.passwordOptions.touched}
-                showInstructions={formState.passwordOptions.showInstructions}
-                onChange={updateInputValues}
-                onFocus={updateInputOptions}
-                onBlur={updateInputOptions}
-              />
-              <TextInput
-                type={showPassword ? 'text' : 'password'}
-                name="loginConfirmPassword"
-                labelName="Confirm Password"
-                labelFor="loginConfirmPassword"
-                labelInstructions="Confirm password"
-                labelError="ERROR MESSAGE FROM SERVER"
-                value={formState.confirmPasswordValue.value}
-                valid={formState.confirmPasswordValue.valid}
-                initial={formState.confirmPasswordOptions.initial}
-                touched={formState.confirmPasswordOptions.touched}
-                showInstructions={
-                  formState.confirmPasswordOptions.showInstructions
-                }
-                onChange={updateInputValues}
-                onFocus={updateInputOptions}
-                onBlur={updateInputOptions}
-              />
-              <BaseButton type="submit">Create My Program</BaseButton>
-            </SignUpForm>
-          </Step3Container>
-        </LoginFormTransition>
-      )}
-      {toDashboard ? <Redirect to="/dashboard" /> : null}
+      <LoginFormTransition
+        showNode={activeQuestion === 3}
+        reverse={reverse}
+        formName="ResetSignUpStep3Form"
+      >
+        <Step3Container>
+          <BackChip handleClick={handleBackClick}>Back</BackChip>
+          <ContentWrapper>
+            <Header1>Last Step:</Header1>
+            <BodyText>
+              Check your email and create a password. Then click Create My
+              Program.
+            </BodyText>
+          </ContentWrapper>
+          <SignUpForm onSubmit={handleSignUpForm}>
+            <TextInput
+              type="text"
+              name="emailAddress"
+              labelName="Email"
+              labelFor="emailAddress"
+              labelInstructions="Check your email address"
+              labelError="Enter a valid email"
+              value={formState.emailValue.value}
+              valid={formState.emailValue.valid}
+              initial={formState.emailOptions.initial}
+              touched={formState.emailOptions.touched}
+              showInstructions={formState.emailOptions.showInstructions}
+              onChange={updateInputValues}
+              onFocus={updateInputOptions}
+              onBlur={updateInputOptions}
+            />
+            <PasswordShowHideIndicator
+              showPassword={showPassword}
+              toggleShowPassword={toggleShowPassword}
+            />
+            <TextInput
+              type={showPassword ? 'text' : 'password'}
+              name="loginPassword"
+              labelName="Password"
+              labelFor="loginPassword"
+              labelInstructions="Create a password"
+              labelError="ERROR MESSAGE FROM SERVER"
+              value={formState.passwordValue.value}
+              valid={formState.passwordValue.valid}
+              initial={formState.passwordOptions.initial}
+              touched={formState.passwordOptions.touched}
+              showInstructions={formState.passwordOptions.showInstructions}
+              onChange={updateInputValues}
+              onFocus={updateInputOptions}
+              onBlur={updateInputOptions}
+            />
+            <TextInput
+              type={showPassword ? 'text' : 'password'}
+              name="loginConfirmPassword"
+              labelName="Confirm Password"
+              labelFor="loginConfirmPassword"
+              labelInstructions="Confirm password"
+              labelError="ERROR MESSAGE FROM SERVER"
+              value={formState.confirmPasswordValue.value}
+              valid={formState.confirmPasswordValue.valid}
+              initial={formState.confirmPasswordOptions.initial}
+              touched={formState.confirmPasswordOptions.touched}
+              showInstructions={
+                formState.confirmPasswordOptions.showInstructions
+              }
+              onChange={updateInputValues}
+              onFocus={updateInputOptions}
+              onBlur={updateInputOptions}
+            />
+            <BaseButton type="submit">Create My Program</BaseButton>
+          </SignUpForm>
+        </Step3Container>
+      </LoginFormTransition>
     </>
   )
 }

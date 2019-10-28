@@ -1,62 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Redirect, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import FWWLogo from '../components/Logos/FWWLogo'
-import BaseButton from '../components/Buttons/BaseButton'
 import ProgramCard from '../components/Cards/WorkoutProgramCard'
 import HorizontalBasicUserCard from '../components/UserCards/HorizontalBasicUserCard'
 import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
 import { useUserContext } from '../context/UserContext'
-import { useFireBase } from '../components/Firebase/FirebaseContext'
 import { useProgramsContext } from '../context/ProgramsContext'
 import siteConfig from '../utils/siteConfig'
 
 const ResetDashboard = ({ match }) => {
-  const auth = useFireBase()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
   // eslint-disable-next-line
   const [programsState, dispatchProgramsAction] = useProgramsContext()
   // eslint-disable-next-line
   const [isLoadingPrograms, setIsLoadingPrograms] = useState(false)
-  const [isLoaderingUser, setIsLoadingUser] = useState(false)
-  const [toLogin, setToLogin] = useState(false)
-
-  useEffect(() => {
-    setIsLoadingPrograms(false)
-  }, [])
-
-  useEffect(() => {
-    if (Object.values(userState).length === 0) {
-      setIsLoadingUser(true)
-      console.log('user not set... fetching user data')
-      auth.getCurrentUser().then(user => {
-        const username = user.displayName
-
-        fetch('http://localhost:5000/get-user', {
-          method: 'POST',
-          body: JSON.stringify({
-            username: username
-          })
-        })
-          .then(response => response.json())
-          .then(userData => {
-            dispatchUserAction({
-              type: 'setLoggedInUser',
-              value: {
-                userData: userData,
-                photoUrl: user.photoURL
-              }
-            })
-            setIsLoadingUser(false)
-          })
-          .catch(error => {
-            console.log('Error fetching user data', error)
-          })
-      })
-    }
-  }, [auth, dispatchUserAction, userState])
 
   useEffect(() => {
     if (
@@ -64,8 +24,13 @@ const ResetDashboard = ({ match }) => {
       programsState.percentComplete.length === 0
     ) {
       console.log('Fetching Data - Setting Up Program State')
-      const getProgramData = {
-        username: userState.username,
+      setIsLoadingPrograms(true)
+      const getPrograms = {
+        programIdArray: userState.programs
+      }
+
+      const getPercentComplete = {
+        userId: userState.userId,
         programs: userState.programs
       }
       const baseUrl = siteConfig.api.baseUrl
@@ -73,10 +38,13 @@ const ResetDashboard = ({ match }) => {
       // You already have this in the object above
       const programsPath = '/get-programs'
       const percentCompletePath = '/get-percent-complete'
-      const programsPromise = fetch(`${baseUrl}${programsPath}`)
+      const programsPromise = fetch(`${baseUrl}${programsPath}`, {
+        method: 'POST',
+        body: JSON.stringify(getPrograms)
+      })
       const percentCompletePromise = fetch(`${baseUrl}${percentCompletePath}`, {
         method: 'POST',
-        body: JSON.stringify(getProgramData)
+        body: JSON.stringify(getPercentComplete)
       })
 
       Promise.all([programsPromise, percentCompletePromise])
@@ -109,23 +77,8 @@ const ResetDashboard = ({ match }) => {
     programsState.percentComplete,
     programsState.programs,
     userState.programs,
-    userState.username
+    userState.userId
   ])
-
-  // Check for real loading... use this!!!!
-  useEffect(() => {
-    if (
-      programsState.programs.length > 0 &&
-      programsState.percentComplete.length > 0
-    ) {
-      setIsLoadingPrograms(false)
-    }
-  }, [isLoadingPrograms, programsState])
-
-  const handleSignOut = () => {
-    auth.logUserOut()
-    setToLogin(true)
-  }
 
   const renderPrograms = () => {
     const programs = programsState.programs.map(program => {
@@ -135,34 +88,51 @@ const ResetDashboard = ({ match }) => {
       const description = program.description
       const title = program.name
       const programId = program.programId
+      const userPrograms = userState.programs
 
-      return (
-        <Link
-          key={key}
-          to={`${match.url}/${programId}`}
-          style={{ textDecoration: 'none' }}
-        >
+      const activeProgram = userPrograms.includes(programId)
+
+      if (activeProgram) {
+        return (
+          <Link
+            key={key}
+            to={`${match.url}/${programId}`}
+            style={{ textDecoration: 'none' }}
+          >
+            <ProgramCard
+              isProgram
+              coverImage={coverImage}
+              tinyCoverImage={tinyCoverImage}
+              programId={programId}
+              title={title}
+              description={description}
+              activeProgram={activeProgram}
+            />
+          </Link>
+        )
+      } else {
+        return (
           <ProgramCard
+            key={key}
             isProgram
             coverImage={coverImage}
             tinyCoverImage={tinyCoverImage}
             programId={programId}
             title={title}
             description={description}
+            activeProgram={activeProgram}
           />
-        </Link>
-      )
+        )
+      }
     })
 
     return programs
   }
 
-  // TODO Check to make sure you are showing the loading screen...
-  // When you actually need to. The conditional might be off a little.
   return (
     <>
-      {toLogin ? (
-        <Redirect to="/login" />
+      {isLoadingPrograms ? (
+        <FullPageKettlebellLoader loadingMessage="Loading Your Programs..." />
       ) : (
         <DashboardContainer>
           <FWWLogo />
@@ -170,14 +140,7 @@ const ResetDashboard = ({ match }) => {
             photoUrl={userState.photoUrl}
             firstName={userState.firstName}
           />
-          <ProgramCardsWrapper>
-            {isLoadingPrograms || isLoaderingUser ? (
-              <FullPageKettlebellLoader loadingMessage="Loading your data..." />
-            ) : (
-              <>{renderPrograms()}</>
-            )}
-          </ProgramCardsWrapper>
-          <BaseButton handleClick={handleSignOut}>Sign Out</BaseButton>
+          <ProgramCardsWrapper>{renderPrograms()}</ProgramCardsWrapper>
         </DashboardContainer>
       )}
     </>
@@ -198,7 +161,7 @@ const ProgramCardsWrapper = styled.div`
   padding: 0 16px;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(3, auto);
   gap: 40px;
   justify-items: center;
 `

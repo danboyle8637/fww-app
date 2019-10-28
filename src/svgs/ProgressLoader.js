@@ -7,10 +7,9 @@ const ProgressLoader = ({
   height,
   className,
   gradientId,
-  programId,
-  totalWorkouts,
   workoutsCompleted,
-  setPercentComplete
+  setPercentComplete,
+  percentage
 }) => {
   const loaderRef = useRef(null)
   // eslint-disable-next-line
@@ -23,8 +22,10 @@ const ProgressLoader = ({
 
     const maxLength = DrawSVG.getLength(loader)
 
-    const programPercent =
-      (((workoutsCompleted / totalWorkouts) * maxLength) / maxLength) * 100
+    const programPercent = (((percentage / 100) * maxLength) / maxLength) * 100
+
+    // const programPercent =
+    //   (((workoutsCompleted / totalWorkouts) * maxLength) / maxLength) * 100
 
     TweenMax.set(loader, { drawSVG: '0%' })
 
@@ -40,7 +41,7 @@ const ProgressLoader = ({
     return () => {
       TweenMax.killTweensOf(loader)
     }
-  }, [drawSVG, setPercentComplete, totalWorkouts, workoutsCompleted])
+  }, [drawSVG, setPercentComplete, workoutsCompleted, percentage])
 
   return (
     <svg

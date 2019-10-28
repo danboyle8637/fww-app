@@ -17,7 +17,7 @@ const FullPageKettlebellLoader = ({ loadingMessage }) => {
 export default FullPageKettlebellLoader
 
 const LoaderContainer = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -26,7 +26,7 @@ const LoaderContainer = styled.div`
   justify-content: center;
   align-items: center;
   background: ${props => props.theme.mainBackgroundBorderColor};
-  z-index: 5;
+  z-index: 8;
 `
 
 const ContentWrapper = styled.div`

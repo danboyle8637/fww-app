@@ -6,20 +6,20 @@ const programsState = {
 const programsReducer = (state, action) => {
   switch (action.type) {
     case 'setProgramsState': {
-      const programsArray = action.value
+      // const programsArray = action.value
 
-      const newProgramsState = programsArray.reduce(
-        (accumulator, currentValue) => {
-          accumulator.push({ ...currentValue })
+      // const newProgramsState = programsArray.reduce(
+      //   (accumulator, currentValue) => {
+      //     accumulator.push({ ...currentValue })
 
-          return accumulator
-        },
-        []
-      )
+      //     return accumulator
+      //   },
+      //   []
+      // )
 
       return {
         ...state,
-        programs: newProgramsState
+        programs: action.value
       }
     }
     case 'setPercentComplete': {

@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-// import { Link } from 'react-router-dom'
 
 import WorkoutCardHeader from './WorkoutCardHeader'
 import ChooseProgramHeader from './ProgramHeaders/ChooseProgramHeader'
 import WorkoutProgramDescription from './WorkoutProgramDescription'
 import WorkoutCardFooter from './WorkoutCardFooter'
 import ProgramCardFooter from './ProgramCardFooter'
+import AddProgramCardFooter from './AddProgramCardFooter'
 import { above } from '../../styles/Theme'
 
 const WorkoutProgramCard = ({
@@ -18,7 +18,8 @@ const WorkoutProgramCard = ({
   tinyCoverImage,
   tinyImage,
   title = 'Workout Title',
-  description
+  description,
+  activeProgram
 }) => {
   return (
     <CardContainer>
@@ -43,16 +44,26 @@ const WorkoutProgramCard = ({
         description={description}
       />
       {isWorkout ? <WorkoutCardFooter workoutId={workoutId} /> : null}
-      {isProgram ? <ProgramCardFooter programId={programId} /> : null}
+      {isProgram ? (
+        activeProgram ? (
+          <ProgramCardFooter programId={programId} />
+        ) : (
+          <AddProgramCardFooter />
+        )
+      ) : null}
     </CardContainer>
   )
 }
 
+// {isProgram ? <ProgramCardFooter programId={programId} /> : null}
+
 export default WorkoutProgramCard
 
 const CardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 2px;
   background: ${props => props.theme.mainBackgroundBorderColor};
   border-radius: 10px 10px 40px 10px;
   width: 100%;

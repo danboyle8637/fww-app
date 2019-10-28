@@ -2,23 +2,25 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import ProgressLoader from '../../svgs/ProgressLoader'
-import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
+import { useProgramsContext } from '../../context/ProgramsContext'
 
-const DashboardProgressCard = () => {
+const DashboardProgressCard = ({ programId }) => {
   const [percentComplete, setPercentComplete] = useState(0)
   // eslint-disable-next-line
-  const [statsState, dispatchStatsAction] = useWorkoutStatsContext()
+  const [programState, dispatchProgramAction] = useProgramsContext()
 
-  const totalWorkouts = statsState.percentComplete.totalWorkouts
-  const workoutsCompleted = statsState.percentComplete.workoutsCompleted
+  const program = programState.percentComplete.find(
+    program => program.programId === programId
+  )
+
+  const percentage = program.percentage
 
   return (
     <CardContainer>
       <ProgressHeadline>Progress:</ProgressHeadline>
       <GraphWrapper>
         <ProgressGraph
-          totalWorkouts={totalWorkouts}
-          workoutsCompleted={workoutsCompleted}
+          percentage={percentage}
           setPercentComplete={setPercentComplete}
         />
         <PercentComplete>{percentComplete}%</PercentComplete>

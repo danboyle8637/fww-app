@@ -49,7 +49,6 @@ const InputLabel = styled.label`
   font-weight: 400;
   letter-spacing: 1.4px;
   color: ${props => props.theme.whiteText};
-  text-transform: uppercase;
   &:last-child {
     margin-bottom: 0;
   }
@@ -57,6 +56,7 @@ const InputLabel = styled.label`
 
 const QuestionLabel = styled(InputLabel)`
   padding: 0;
+  font-size: 18px;
   font-family: QuicksandMedium;
   color: ${props => props.theme.strongBodyText};
 `
@@ -77,10 +77,12 @@ const FormRadioInput = styled.div`
   height: 24px;
   background: ${props =>
     props.checked
-      ? props.theme.secondaryAccent
+      ? props.theme.tertiaryAccent
       : props.theme.mainBackgroundColor};
   border-radius: 12px;
   border: 2px solid;
-  border-color: ${props => props.theme.strongBodyText};
+  border-color: ${props => props.theme.secondaryAccent};
+  box-shadow: ${props =>
+    props.checked ? 'inset 1px 1px 3px 2px rgba(0, 0, 0, 0.4)' : 'none'};
   transform: translateY(-2px);
 `

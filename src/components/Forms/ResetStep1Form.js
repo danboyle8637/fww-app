@@ -55,7 +55,7 @@ const ResetStep1Form = ({ activeQuestion, setActiveQuestion, setReverse }) => {
           <RadioInput
             type="radio"
             name="biggestObstacle"
-            labelName="1. What is your biggest obstacle?"
+            labelName="1. What's your biggest obstacle?"
             value={formState.biggestObstacleValue.value}
             options={formState.biggestObstacleValue.options}
             updateInputValue={updateInputValues}

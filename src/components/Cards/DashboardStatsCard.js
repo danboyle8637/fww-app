@@ -5,10 +5,10 @@ import styled from 'styled-components'
 import DashboardProgressCard from './DashboardProgressCard'
 import DashboardTrainingPlanCard from './DashboardTrainingPlanCard'
 
-const DashboardStatsCard = () => {
+const DashboardStatsCard = ({ programId }) => {
   return (
     <CardContainer>
-      <DashboardProgressCard />
+      <DashboardProgressCard programId={programId} />
       <DashboardTrainingPlanCard />
     </CardContainer>
   )
