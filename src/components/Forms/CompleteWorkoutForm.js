@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import CompleteWorkoutIcon from '../../svgs/CompleteWorkoutIcon'
 import { useUserContext } from '../../context/UserContext'
+import { useProgramsContext } from '../../context/ProgramsContext'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 import siteConfig from '../../utils/siteConfig'
 
@@ -15,6 +16,8 @@ const CompleteWorkoutForm = ({
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
+  // eslint-disable-next-line
+  const [programState, dispatchProgramAction] = useProgramsContext()
 
   const completed = workoutStatsState.stats[workoutId].completed
 
@@ -23,6 +26,11 @@ const CompleteWorkoutForm = ({
       dispatchStatsAction({
         type: 'setComplete1',
         value: workoutId
+      })
+
+      dispatchProgramAction({
+        type: 'incrementPercentComplete',
+        value: programId
       })
 
       handleToggleSync()
@@ -59,7 +67,7 @@ const CompleteWorkoutForm = ({
     }
 
     const baseUrl = siteConfig.api.baseUrl
-    const toggleComplete = '/toggle-complete'
+    const toggleComplete = '/set-complete'
     const url = `${baseUrl}${toggleComplete}`
 
     fetch(url, {

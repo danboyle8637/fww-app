@@ -13,14 +13,16 @@ const DashboardProgressCard = ({ programId }) => {
     program => program.programId === programId
   )
 
-  const percentage = program.percentage
+  const totalWorkouts = program.totalWorkouts
+  const workoutsCompleted = program.workoutsCompleted
 
   return (
     <CardContainer>
       <ProgressHeadline>Progress:</ProgressHeadline>
       <GraphWrapper>
         <ProgressGraph
-          percentage={percentage}
+          totalWorkouts={totalWorkouts}
+          workoutsCompleted={workoutsCompleted}
           setPercentComplete={setPercentComplete}
         />
         <PercentComplete>{percentComplete}%</PercentComplete>

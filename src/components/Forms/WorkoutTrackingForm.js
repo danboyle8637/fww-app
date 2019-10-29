@@ -10,6 +10,7 @@ import {
 import { createDate } from '../../utils/helpers'
 import { useUserContext } from '../../context/UserContext'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
+import { useProgramsContext } from '../../context/ProgramsContext'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
 import siteConfig from '../../utils/siteConfig'
@@ -26,9 +27,11 @@ const WorkoutTrackingForm = ({
   // eslint-disable-next-line
   const [statsState, dispatchWorkoutStatsAction] = useWorkoutStatsContext()
   // eslint-disable-next-line
-  const [formState, dispatch] = useFormStore()
+  const [formState, dispatchFormAction] = useFormStore()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  // eslint-disable-next-line
+  const [programState, dispatchProgramAction] = useProgramsContext()
   const [updateInputValues, updateInputOptions] = useFormControls()
 
   useEffect(() => {
@@ -56,6 +59,15 @@ const WorkoutTrackingForm = ({
       }
     })
 
+    // Update percent complete in local state
+    if (!statsState.stats[workoutId].completed.complete1.isComplete) {
+      console.log('Incrementing workouts Completed')
+      dispatchProgramAction({
+        type: 'incrementPercentComplete',
+        value: programId
+      })
+    }
+
     handleToggleSync()
 
     const userId = userState.userId
@@ -80,6 +92,7 @@ const WorkoutTrackingForm = ({
       .then(data => {
         // TODO make the request to mark the workout complete
         // We'll need complete id.
+        dispatchFormAction({ type: 'resetWorkoutGoalForm' })
         handleSetSyncMessage(data.message)
         handleToggleSync()
       })

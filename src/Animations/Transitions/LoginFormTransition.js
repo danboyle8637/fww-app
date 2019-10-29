@@ -12,11 +12,8 @@ const LoginFormTransition = ({ showNode, reverse, formName, children }) => {
   const [formState, dispatch] = useFormStore()
 
   const resetForm = () => {
-    if (
-      formName === 'UsernamePasswordForm' ||
-      formName === 'ForgotPasswordForm'
-    ) {
-      dispatch({ type: 'resetUsernamePasswordForm' })
+    if (formName === 'EmailPasswordForm' || formName === 'ForgotPasswordForm') {
+      dispatch({ type: 'resetEmailPasswordForm' })
       dispatch({ type: 'resetForgotPasswordForm' })
     }
   }

@@ -25,42 +25,45 @@ const workoutStatsReducer = (state, action) => {
 
       const statsArray = Object.keys(copyOfState.stats[workoutId].trackingStats)
 
-      if (statsArray < 1) {
+      if (!statsArray.includes('first')) {
         const first = {
-          first: {
-            number: number,
-            date: date
-          }
+          number: number,
+          date: date
         }
 
         workoutStats.trackingStats.first = first
+
         if (!workoutStats.completed.complete1.isComplete) {
           workoutStats.completed.complete1.isComplete = true
         }
-      } else if (workoutStats.trackingStats.first.number && statsArray < 2) {
+      } else if (
+        workoutStats.trackingStats.first.number &&
+        !statsArray.includes('second')
+      ) {
         const second = {
-          second: {
-            number: number,
-            date: date
-          }
+          number: number,
+          date: date
         }
 
         workoutStats.trackingStats.second = second
         if (!workoutStats.completed.complete2.isComplete) {
           workoutStats.completed.complete2.isComplete = true
         }
-      } else {
+      } else if (
+        workoutStats.trackingStats.second.number &&
+        !statsArray.includes('third')
+      ) {
         const third = {
-          third: {
-            number: number,
-            date: date
-          }
+          number: number,
+          date: date
         }
 
         workoutStats.trackingStats.third = third
         if (!workoutStats.completed.complete3.isComplete) {
           workoutStats.completed.complete3.isComplete = true
         }
+      } else {
+        console.log('MAJOR ERROR UPDATING TRACKING NUMBERS')
       }
 
       return {
@@ -74,9 +77,6 @@ const workoutStatsReducer = (state, action) => {
 
       const workoutStats = copyOfState.stats[workoutId]
       workoutStats.completed.complete1.isComplete = true
-
-      const percentComplete = copyOfState.percentComplete
-      percentComplete.workoutsCompleted += 1
 
       return {
         ...copyOfState
@@ -107,10 +107,8 @@ const workoutStatsReducer = (state, action) => {
 
       const workoutStats = copyOfState.stats[workoutId]
 
-      const isFirstCompleted =
-        workoutStats.stats[workoutId].completed.complete1.isComplete
-      const isSecondCompleted =
-        copyOfState.stats[workoutId].completed.complete2.isComplete
+      const isFirstCompleted = workoutStats.completed.complete1.isComplete
+      const isSecondCompleted = workoutStats.completed.complete2.isComplete
 
       if (isFirstCompleted && isSecondCompleted) {
         workoutStats.completed.complete3.isComplete = true

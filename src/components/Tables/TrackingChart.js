@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import HeaderRow from './HeaderRow'
@@ -8,8 +8,14 @@ import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 const TrackingChart = ({ trackingGoal, workoutId }) => {
   // eslint-disable-next-line
   const [statsState, dispathStatsAction] = useWorkoutStatsContext()
+  const [trackingArrayLength, setTrackingArrayLength] = useState([])
 
   const data = Object.keys(statsState.stats[workoutId].trackingStats)
+
+  useEffect(() => {
+    const legnth = data.length
+    setTrackingArrayLength(legnth)
+  }, [data])
 
   return (
     <ChartContainer>
@@ -18,12 +24,12 @@ const TrackingChart = ({ trackingGoal, workoutId }) => {
         id="workoutGoal1"
         goal={trackingGoal}
         date={
-          data.length > 0
+          trackingArrayLength > 0
             ? statsState.stats[workoutId].trackingStats.first.date
             : null
         }
         numbers={
-          data.length > 0
+          trackingArrayLength > 0
             ? statsState.stats[workoutId].trackingStats.first.number
             : null
         }
@@ -32,12 +38,12 @@ const TrackingChart = ({ trackingGoal, workoutId }) => {
         id="workoutGoal2"
         goal={trackingGoal}
         date={
-          data.length > 1
+          trackingArrayLength > 1
             ? statsState.stats[workoutId].trackingStats.second.date
             : null
         }
         numbers={
-          data.length > 1
+          trackingArrayLength > 1
             ? statsState.stats[workoutId].trackingStats.second.number
             : null
         }
@@ -46,12 +52,12 @@ const TrackingChart = ({ trackingGoal, workoutId }) => {
         id="workoutGoal3"
         goal={trackingGoal}
         date={
-          data.length > 2
+          trackingArrayLength > 2
             ? statsState.stats[workoutId].trackingStats.third.date
             : null
         }
         numbers={
-          data.length > 2
+          trackingArrayLength > 2
             ? statsState.stats[workoutId].trackingStats.third.number
             : null
         }

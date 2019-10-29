@@ -287,6 +287,20 @@ const formReducer = (state, action) => {
         }
       }
     }
+    case 'resetWorkoutGoalForm': {
+      return {
+        ...state,
+        workoutGoalValue: {
+          value: '',
+          valid: false
+        },
+        workoutGoalOptions: {
+          initial: true,
+          touched: false,
+          showInstructions: false
+        }
+      }
+    }
     case 'setLoggedInUser': {
       return {
         ...state,
@@ -296,14 +310,14 @@ const formReducer = (state, action) => {
         }
       }
     }
-    case 'resetUsernamePasswordForm': {
+    case 'resetEmailPasswordForm': {
       return {
         ...state,
-        usernameValue: {
+        emailValue: {
           value: '',
           valid: false
         },
-        usernameOptions: {
+        emailOptions: {
           initial: true,
           touched: false,
           showInstructions: false

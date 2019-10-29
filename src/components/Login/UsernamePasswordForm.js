@@ -85,7 +85,7 @@ const LoginUsernamePassword = ({
             localStorage.setItem('fwwUser', JSON.stringify(userData))
 
             // Empty the form state
-            dispatch({ type: 'resetUsernamePasswordForm' })
+            dispatch({ type: 'resetEmailPasswordForm' })
 
             // Navigate to the Dashboard
             setShowDashboard(true)
@@ -129,7 +129,7 @@ const LoginUsernamePassword = ({
     <LoginFormTransition
       showNode={activeForm === 1}
       reverse={reverse}
-      formName="UsernamePasswordForm"
+      formName="EmailPasswordForm"
     >
       <FormContainer>
         <BackChip handleClick={handleBackButton}>Back</BackChip>
