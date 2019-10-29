@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import LoginSignUpHeader from '../components/PageHeaders/LoginSignUpHeader'
-import CreateAccountForm from '../components/Signup/CreateAccountForm'
+import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
 import { formState, formReducer } from '../reducers/formReducer'
 import { FormStore } from '../context/FormContext'
 
@@ -12,7 +12,7 @@ const SignUp = () => {
       <SignUpContainer>
         <ContentWrapper>
           <LoginSignUpHeader>Sign Up</LoginSignUpHeader>
-          <CreateAccountForm />
+          <WorkoutCardLoader />
         </ContentWrapper>
       </SignUpContainer>
     </FormStore>
@@ -30,5 +30,6 @@ const SignUpContainer = styled.div`
 
 const ContentWrapper = styled.div`
   margin: 80px 0 0 0;
+  padding: 0 16px;
   width: 100%;
 `

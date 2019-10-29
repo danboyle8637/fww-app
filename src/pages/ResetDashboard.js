@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import FWWLogo from '../components/Logos/FWWLogo'
 import ProgramCard from '../components/Cards/WorkoutProgramCard'
 import HorizontalBasicUserCard from '../components/UserCards/HorizontalBasicUserCard'
-import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
+import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
 import { useUserContext } from '../context/UserContext'
 import { useProgramsContext } from '../context/ProgramsContext'
 import siteConfig from '../utils/siteConfig'
@@ -129,21 +129,25 @@ const ResetDashboard = ({ match }) => {
     return programs
   }
 
-  return (
+  const programCardLoader = (
     <>
-      {isLoadingPrograms ? (
-        <FullPageKettlebellLoader loadingMessage="Loading Your Programs..." />
-      ) : (
-        <DashboardContainer>
-          <FWWLogo />
-          <HorizontalBasicUserCard
-            photoUrl={userState.photoUrl}
-            firstName={userState.firstName}
-          />
-          <ProgramCardsWrapper>{renderPrograms()}</ProgramCardsWrapper>
-        </DashboardContainer>
-      )}
+      <WorkoutCardLoader />
+      <WorkoutCardLoader />
+      <WorkoutCardLoader />
     </>
+  )
+
+  return (
+    <DashboardContainer>
+      <FWWLogo />
+      <HorizontalBasicUserCard
+        photoUrl={userState.photoUrl}
+        firstName={userState.firstName}
+      />
+      <ProgramCardsWrapper>
+        {isLoadingPrograms ? <>{programCardLoader}</> : renderPrograms()}
+      </ProgramCardsWrapper>
+    </DashboardContainer>
   )
 }
 
@@ -164,4 +168,22 @@ const ProgramCardsWrapper = styled.div`
   grid-template-rows: repeat(3, auto);
   gap: 40px;
   justify-items: center;
+  width: 100%;
 `
+
+// {
+//   /* <>
+// {isLoadingPrograms ? (
+//   <FullPageKettlebellLoader loadingMessage="Loading Your Programs..." />
+// ) : (
+//   <DashboardContainer>
+//     <FWWLogo />
+//     <HorizontalBasicUserCard
+//       photoUrl={userState.photoUrl}
+//       firstName={userState.firstName}
+//     />
+//     <ProgramCardsWrapper>{isLoadingPrograms ? <>{programCardLoader}</> : renderPrograms()}</ProgramCardsWrapper>
+//   </DashboardContainer>
+// )}
+// </> */
+// }

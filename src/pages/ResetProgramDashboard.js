@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import ResetProgramDashboardHeader from '../components/PageHeaders/ResetProgramDashboardHeader'
 import WorkoutCard from '../components/Cards/WorkoutProgramCard'
 import DashboardStatsCard from '../components/Cards/DashboardStatsCard'
+import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
 import { useWorkoutState } from '../context/WorkoutsContext'
 import { useUserContext } from '../context/UserContext'
 import { useWorkoutStatsContext } from '../context/WorkoutStatsContext'
@@ -12,7 +13,7 @@ import { above } from '../styles/Theme'
 import siteConfig from '../utils/siteConfig'
 
 const ResetProgramDashboard = ({ match }) => {
-  const [isLoadingWorkouts, setIsLoadingWorkouts] = useState(true)
+  const [isLoadingWorkouts, setIsLoadingWorkouts] = useState(false)
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
   // eslint-disable-next-line
@@ -33,6 +34,7 @@ const ResetProgramDashboard = ({ match }) => {
       Object.keys(workoutStatsState.stats).length === 0
     ) {
       console.log('Fetching Data - Setting Up Workout State and Stats State')
+      setIsLoadingWorkouts(true)
       fetch(`${baseUrl}${getWorkoutsPath}`, {
         method: 'POST',
         body: JSON.stringify(programData)
@@ -73,11 +75,12 @@ const ResetProgramDashboard = ({ match }) => {
           })
             .then(response => response.json())
             .then(data => {
-              console.log(data.stats)
               dispatchStatsAction({
                 type: 'setWorkoutStatsState',
                 value: data.stats
               })
+
+              setIsLoadingWorkouts(false)
             })
             .catch(error => {
               // TODO Hand this error of not getting the tracking setup.
@@ -97,18 +100,6 @@ const ResetProgramDashboard = ({ match }) => {
     workoutStatsState.stats,
     workoutsState.workouts
   ])
-
-  // TODO: Only this time check for the state that actually matters.
-  useEffect(() => {
-    if (
-      workoutsState.workouts.length > 0 &&
-      Object.keys(workoutStatsState).length > 0
-    ) {
-      setIsLoadingWorkouts(false)
-    } else {
-      setIsLoadingWorkouts(true)
-    }
-  }, [workoutStatsState, workoutsState.workouts])
 
   const renderWorkouts = () => {
     const workouts = workoutsState.workouts.map(workout => {
@@ -148,12 +139,27 @@ const ResetProgramDashboard = ({ match }) => {
     return workouts
   }
 
+  // TODO Make it so it reads number of workouts and shows the correct number.
+  const workoutLoaderCards = (
+    <>
+      <WorkoutCardLoader />
+      <WorkoutCardLoader />
+      <WorkoutCardLoader />
+      <WorkoutCardLoader />
+      <WorkoutCardLoader />
+    </>
+  )
+
   return (
     <ProgramDashboardContainer>
       <ResetProgramDashboardHeader programId={match.params.programId} />
       <DashboardStatsCard programId={match.params.programId} />
       <WorkoutCardWrapper>
-        {isLoadingWorkouts ? <div>Loading...</div> : <>{renderWorkouts()}</>}
+        {isLoadingWorkouts ? (
+          <>{workoutLoaderCards}</>
+        ) : (
+          <>{renderWorkouts()}</>
+        )}
       </WorkoutCardWrapper>
     </ProgramDashboardContainer>
   )
@@ -177,6 +183,7 @@ const WorkoutCardWrapper = styled.div`
   grid-template-rows: auto;
   gap: 40px;
   justify-items: center;
+  width: 100%;
   ${above.mobile`
     grid-template-columns: 1fr 1fr;
     column-gap: 20px;

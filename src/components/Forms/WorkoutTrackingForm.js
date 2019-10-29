@@ -44,7 +44,6 @@ const WorkoutTrackingForm = ({
     event.preventDefault()
 
     const now = new Date()
-    console.log(now)
     const date = createDate(now)
 
     // Update local state first with a timestamp
@@ -59,13 +58,12 @@ const WorkoutTrackingForm = ({
 
     handleToggleSync()
 
-    // TODO replace this with the user from state
-    const username = 'pampam'
+    const userId = userState.userId
 
     const trackingBody = {
       programId: programId,
       workoutId: workoutId,
-      username: username,
+      userId: userId,
       number: formState.workoutGoalValue.value,
       date: date
     }
@@ -80,7 +78,6 @@ const WorkoutTrackingForm = ({
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         // TODO make the request to mark the workout complete
         // We'll need complete id.
         handleSetSyncMessage(data.message)

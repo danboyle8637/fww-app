@@ -51,6 +51,7 @@ const LoginUsernamePassword = ({
 
   const handleLoginSubmit = event => {
     event.preventDefault()
+    setShowPassword(false)
     setIsLoggingIn(true)
     const email = formState.emailValue.value
     const password = formState.passwordValue.value

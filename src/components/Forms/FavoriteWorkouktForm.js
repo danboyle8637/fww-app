@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import FavoriteWorkoutIcon from '../../svgs/FavoriteWorkoutIcon'
+import { useUserContext } from '../../context/UserContext'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 import siteConfig from '../../utils/siteConfig'
 
@@ -11,6 +12,8 @@ const FavoriteWorkoutForm = ({
   handleToggleSync,
   handleSetSyncMessage
 }) => {
+  // eslint-disable-next-line
+  const [userState, dispatchUserAction] = useUserContext()
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
 
   const isFavorite = workoutStatsState.stats[workoutId].isFavorite
@@ -26,13 +29,12 @@ const FavoriteWorkoutForm = ({
   }
 
   const handleToggleFavoriteInDatebase = () => {
-    // TODO replace username with username from state
-    const username = 'pampam'
+    const userId = userState.userId
 
     const favoriteBody = {
       programId: programId,
       workoutId: workoutId,
-      username: username
+      userId: userId
     }
 
     const baseUrl = siteConfig.api.baseUrl

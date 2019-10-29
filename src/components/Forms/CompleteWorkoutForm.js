@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import CompleteWorkoutIcon from '../../svgs/CompleteWorkoutIcon'
+import { useUserContext } from '../../context/UserContext'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 import siteConfig from '../../utils/siteConfig'
 
@@ -11,6 +12,8 @@ const CompleteWorkoutForm = ({
   handleToggleSync,
   handleSetSyncMessage
 }) => {
+  // eslint-disable-next-line
+  const [userState, dispatchUserAction] = useUserContext()
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
 
   const completed = workoutStatsState.stats[workoutId].completed
@@ -46,13 +49,12 @@ const CompleteWorkoutForm = ({
   }
 
   const handleSetCompleteInDatabase = completeId => {
-    // TODO replace this with the user from state
-    const username = 'pampam'
+    const userId = userState.userId
 
     const completeBody = {
       programId: programId,
       workoutId: workoutId,
-      username: username,
+      userId: userId,
       completeId: completeId
     }
 

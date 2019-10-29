@@ -7,9 +7,9 @@ import { useProgramsContext } from '../../context/ProgramsContext'
 const DashboardProgressCard = ({ programId }) => {
   const [percentComplete, setPercentComplete] = useState(0)
   // eslint-disable-next-line
-  const [programState, dispatchProgramAction] = useProgramsContext()
+  const [programsState, dispatchProgramsAction] = useProgramsContext()
 
-  const program = programState.percentComplete.find(
+  const program = programsState.percentComplete.find(
     program => program.programId === programId
   )
 

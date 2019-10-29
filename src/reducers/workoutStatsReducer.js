@@ -10,8 +10,6 @@ const workoutStatsReducer = (state, action) => {
     case 'setWorkoutStatsState': {
       const stats = action.value
 
-      console.log(stats)
-
       return {
         stats: stats
       }
@@ -24,27 +22,42 @@ const workoutStatsReducer = (state, action) => {
       const copyOfState = { ...state }
 
       const workoutStats = copyOfState.stats[workoutId]
-      const percentComplete = copyOfState.percentComplete
 
-      if (workoutStats.trackingStats.first.number === null) {
-        workoutStats.trackingStats.first.number = number
-        workoutStats.trackingStats.first.date = date
+      const statsArray = Object.keys(copyOfState.stats[workoutId].trackingStats)
+
+      if (statsArray < 1) {
+        const first = {
+          first: {
+            number: number,
+            date: date
+          }
+        }
+
+        workoutStats.trackingStats.first = first
         if (!workoutStats.completed.complete1.isComplete) {
           workoutStats.completed.complete1.isComplete = true
-          percentComplete.workoutsCompleted += 1
         }
-      } else if (
-        workoutStats.trackingStats.first.number &&
-        workoutStats.trackingStats.second.number === null
-      ) {
-        workoutStats.trackingStats.second.number = number
-        workoutStats.trackingStats.second.date = date
+      } else if (workoutStats.trackingStats.first.number && statsArray < 2) {
+        const second = {
+          second: {
+            number: number,
+            date: date
+          }
+        }
+
+        workoutStats.trackingStats.second = second
         if (!workoutStats.completed.complete2.isComplete) {
           workoutStats.completed.complete2.isComplete = true
         }
       } else {
-        workoutStats.trackingStats.third.number = number
-        workoutStats.trackingStats.third.date = date
+        const third = {
+          third: {
+            number: number,
+            date: date
+          }
+        }
+
+        workoutStats.trackingStats.third = third
         if (!workoutStats.completed.complete3.isComplete) {
           workoutStats.completed.complete3.isComplete = true
         }

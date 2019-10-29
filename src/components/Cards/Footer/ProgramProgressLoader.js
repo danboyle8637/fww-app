@@ -2,28 +2,23 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import ProgressLoader from '../../../svgs/ProgressLoader'
-import { useWorkoutStatsContext } from '../../../context/WorkoutStatsContext'
+import { useProgramsContext } from '../../../context/ProgramsContext'
 
 const ProgramProgressLoader = ({ programId }) => {
   const [percentComplete, setPercentComplete] = useState(0)
   // eslint-disable-next-line
-  const [statsState, dispatchStatsAction] = useWorkoutStatsContext()
+  const [programsState, dispatchProgramsAction] = useProgramsContext()
 
-  const totalWorkouts = statsState.percentComplete.totalWorkouts
-  const workoutsCompleted = statsState.percentComplete.workoutsCompleted
-  const percentCompleteProgramId = statsState.percentComplete.programId
+  const program = programsState.percentComplete.find(
+    program => program.programId === programId
+  )
 
-  if (programId === percentCompleteProgramId) {
-    console.log(programId)
-  }
-
-  // It's going to get 50 or more program
+  const percentage = program.percentage
 
   return (
     <ProgressContainer>
       <ProgressGraph
-        totalWorkouts={totalWorkouts}
-        workoutsCompleted={workoutsCompleted}
+        percentage={percentage}
         setPercentComplete={setPercentComplete}
       />
       <PercentNumber>{`${percentComplete}%`}</PercentNumber>
