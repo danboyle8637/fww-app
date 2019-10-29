@@ -5,7 +5,7 @@ import KindalProfileTiny from '../../images/kindal-test-avatar-image-tiny.jpg'
 import KindalProfileLarge from '../../images/kindal-test-avatar-image.jpg'
 import useBlurUp from '../../hooks/useBlurUp'
 
-const VerticalUserCard = () => {
+const VerticalUserCard = ({ firstName }) => {
   const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
 
   return (
@@ -25,7 +25,7 @@ const VerticalUserCard = () => {
         />
       </ImageContainer>
 
-      <UserName>KettlebellKindal</UserName>
+      <UserName>{firstName}</UserName>
     </CardContainer>
   )
 }

@@ -11,7 +11,7 @@ import { above } from '../../styles/Theme'
 const CoachingSection = ({
   coachingTinyBackground,
   coachingBackground,
-  name,
+  title,
   coachingUrl,
   coachingVideo
 }) => {
@@ -31,14 +31,14 @@ const CoachingSection = ({
         <CoachingImage
           ref={setLargeImage}
           src={coachingBackground}
-          title={`${name} coaching video`}
-          alt={`Learn how the ${name} is going to work.`}
+          title={`${title} coaching video`}
+          alt={`Learn how the ${title} is going to work.`}
         />
         <PlaceholderImage
           ref={setSmallImage}
           src={coachingTinyBackground}
-          title={`${name} coaching video`}
-          alt={`Learn how the ${name} is going to work.`}
+          title={`${title} coaching video`}
+          alt={`Learn how the ${title} is going to work.`}
         />
       </BlurUpImageGrid>
       <WorkoutLabelIndicator type={'coaching'} />

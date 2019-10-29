@@ -8,8 +8,15 @@ import TextInput from './Inputs/TextInput'
 import PasswordShowHideIndicator from '../Indicators/PasswordShowHideIndicator'
 import useFormControls from '../../hooks/useFormControls'
 import { useFormStore } from '../../context/FormContext'
+import { siteConfig } from '../../utils/siteConfig'
 
-const AccountUpdatePasswordForm = ({ activeSlide, setActiveSlide }) => {
+const AccountUpdatePasswordForm = ({
+  userId,
+  activeSlide,
+  setActiveSlide,
+  handleToggleSync,
+  handleSetSyncMessage
+}) => {
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
@@ -17,8 +24,28 @@ const AccountUpdatePasswordForm = ({ activeSlide, setActiveSlide }) => {
 
   const handleSaveNewPassword = event => {
     event.preventDefault()
-    console.log(formState.usernameValue.value)
-    // Check username and update it in database
+
+    const newPassword = formState.passwordValue.value
+    const confirmPassword = formState.confirmPasswordValue.value
+    const url = siteConfig.api.baseUrl
+
+    const updatePasswordReq = {
+      userId: userId,
+      newPassword: newPassword,
+      confirmPassword: confirmPassword
+    }
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(updatePasswordReq)
+    })
+      .then(response => response.json())
+      .then(data => {
+        handleSetSyncMessage(data.message)
+      })
+      .catch(error => {
+        handleSetSyncMessage(error.message)
+      })
   }
 
   const toggleShowPassword = () => {

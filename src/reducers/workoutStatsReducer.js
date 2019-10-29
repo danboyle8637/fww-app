@@ -78,6 +78,15 @@ const workoutStatsReducer = (state, action) => {
       const workoutStats = copyOfState.stats[workoutId]
       workoutStats.completed.complete1.isComplete = true
 
+      if (!Object.keys(workoutStats.trackingStats).includes('first')) {
+        const first = {
+          number: '--',
+          date: '--'
+        }
+
+        workoutStats.trackingStats.first = first
+      }
+
       return {
         ...copyOfState
       }
@@ -91,6 +100,15 @@ const workoutStatsReducer = (state, action) => {
 
       if (workoutStats.completed.complete1.isComplete) {
         workoutStats.completed.complete2.isComplete = true
+
+        if (!Object.keys(workoutStats.trackingStats).includes('second')) {
+          const second = {
+            number: '--',
+            date: '--'
+          }
+
+          workoutStats.trackingStats.second = second
+        }
 
         return {
           ...copyOfState
@@ -112,6 +130,15 @@ const workoutStatsReducer = (state, action) => {
 
       if (isFirstCompleted && isSecondCompleted) {
         workoutStats.completed.complete3.isComplete = true
+
+        if (!Object.keys(workoutStats.trackingStats).includes('third')) {
+          const third = {
+            number: '--',
+            date: '--'
+          }
+
+          workoutStats.trackingStats.third = third
+        }
 
         return {
           ...copyOfState

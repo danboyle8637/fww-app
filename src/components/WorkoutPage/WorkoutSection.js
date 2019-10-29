@@ -15,7 +15,7 @@ import { above } from '../../styles/Theme'
 const WorkoutSection = ({
   workoutTinyBackground,
   workoutBackgrounds,
-  name,
+  title,
   workoutVideos
 }) => {
   // eslint-disable-next-line
@@ -51,7 +51,7 @@ const WorkoutSection = ({
           activeVideo={activeVideo}
           workoutBackgroundAction={workoutBackgroundAction}
           workoutBackgrounds={workoutBackgrounds}
-          name={name}
+          title={title}
         />
         <PlaceholderImage ref={setSmallImage} src={workoutTinyBackground} />
       </BlurUpImageGrid>

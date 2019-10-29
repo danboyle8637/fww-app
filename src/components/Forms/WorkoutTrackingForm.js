@@ -49,6 +49,15 @@ const WorkoutTrackingForm = ({
     const now = new Date()
     const date = createDate(now)
 
+    // Update percent complete in local state
+    if (!statsState.stats[workoutId].completed.complete1.isComplete) {
+      console.log('Incrementing workouts Completed')
+      dispatchProgramAction({
+        type: 'incrementPercentComplete',
+        value: programId
+      })
+    }
+
     // Update local state first with a timestamp
     dispatchWorkoutStatsAction({
       type: 'setTrackingNumber',
@@ -58,15 +67,6 @@ const WorkoutTrackingForm = ({
         date: date
       }
     })
-
-    // Update percent complete in local state
-    if (!statsState.stats[workoutId].completed.complete1.isComplete) {
-      console.log('Incrementing workouts Completed')
-      dispatchProgramAction({
-        type: 'incrementPercentComplete',
-        value: programId
-      })
-    }
 
     handleToggleSync()
 

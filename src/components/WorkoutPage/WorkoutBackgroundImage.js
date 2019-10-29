@@ -4,7 +4,10 @@ import { TweenMax } from 'gsap/TweenMax'
 import TimelineMax from 'gsap/TimelineMax'
 
 const WorkoutBackgroundImage = forwardRef(
-  ({ workoutBackgrounds, name, activeVideo, workoutBackgroundAction }, ref) => {
+  (
+    { workoutBackgrounds, title, activeVideo, workoutBackgroundAction },
+    ref
+  ) => {
     const imageArrayRef = useRef([])
     const nextTlRef = useRef(new TimelineMax({ paused: true }))
     const prevTlRef = useRef(new TimelineMax({ paused: true }))
@@ -70,8 +73,8 @@ const WorkoutBackgroundImage = forwardRef(
           ref={ref => (imageArrayRef.current[index] = ref)}
           key={index}
           src={image}
-          title={`${name} workout background`}
-          alt={`Let's do the ${name} together and get the ultimate burn, press the play button.`}
+          title={`${title} workout background`}
+          alt={`Let's do the ${title} together and get the ultimate burn, press the play button.`}
         />
       )
     })

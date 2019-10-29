@@ -189,4 +189,7 @@ const WorkoutCardWrapper = styled.div`
     column-gap: 20px;
     row-gap: 40px;
   `}
+  ${above.tablet`
+    width: auto;
+  `}
 `

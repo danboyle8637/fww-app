@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { Header3 } from '../../styles/Typography'
 import LoadingKettlebell from '../../svgs/LoadingKettlebell'
+import { above } from '../../styles/Theme'
 
 const WorkoutCardLoader = () => {
   return (
@@ -28,6 +29,9 @@ const CardContainer = styled.div`
   width: 100%;
   max-width: 390px;
   box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.3);
+  ${above.tablet`
+    width: 390px;
+  `}
 `
 
 const Loader = styled(LoadingKettlebell)`

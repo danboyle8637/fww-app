@@ -9,6 +9,7 @@ import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
 import { useUserContext } from '../context/UserContext'
 import { useProgramsContext } from '../context/ProgramsContext'
 import siteConfig from '../utils/siteConfig'
+import { above } from '../styles/Theme'
 
 const ResetDashboard = ({ match }) => {
   // eslint-disable-next-line
@@ -169,21 +170,13 @@ const ProgramCardsWrapper = styled.div`
   gap: 40px;
   justify-items: center;
   width: 100%;
+  ${above.mobile`
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 12px;
+  `}
+  ${above.tablet`
+    width: auto;
+    gap: 20px;
+  `}
 `
-
-// {
-//   /* <>
-// {isLoadingPrograms ? (
-//   <FullPageKettlebellLoader loadingMessage="Loading Your Programs..." />
-// ) : (
-//   <DashboardContainer>
-//     <FWWLogo />
-//     <HorizontalBasicUserCard
-//       photoUrl={userState.photoUrl}
-//       firstName={userState.firstName}
-//     />
-//     <ProgramCardsWrapper>{isLoadingPrograms ? <>{programCardLoader}</> : renderPrograms()}</ProgramCardsWrapper>
-//   </DashboardContainer>
-// )}
-// </> */
-// }

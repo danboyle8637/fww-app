@@ -13,20 +13,20 @@ const VideoSection = ({
   workoutBackgrounds,
   coachingVideo,
   workoutVideos,
-  name,
+  title,
   coachingUrl
 }) => {
   return (
     <VideoContainer>
       <CoachingSection
-        name={name}
+        title={title}
         coachingTinyBackground={coachingTinyBackground}
         coachingBackground={coachingBackground}
         coachingUrl={coachingUrl}
         coachingVideo={coachingVideo}
       />
       <WorkoutSection
-        name={name}
+        title={title}
         workoutTinyBackground={workoutTinyBackground}
         workoutBackgrounds={workoutBackgrounds}
         workoutVideos={workoutVideos}

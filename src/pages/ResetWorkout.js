@@ -14,13 +14,13 @@ import { above } from '../styles/Theme'
 
 const ResetWorkout = () => {
   const [isSyncing, setIsSyncing] = useState(false)
-  const [syncMessage, setSyncMessage] = useState('Syncing...')
+  const [syncMessage, setSyncMessage] = useState('Updating...')
 
   const location = useLocation()
   const urlData = useRouteMatch()
 
   const {
-    name,
+    title,
     coachingTinyBackground,
     coachingBackground,
     workoutTinyBackground,
@@ -43,9 +43,9 @@ const ResetWorkout = () => {
 
   return (
     <>
-      <ResetWorkoutPageHeader name={name} />
+      <ResetWorkoutPageHeader title={title} />
       <VideoSection
-        name={name}
+        title={title}
         coachingTinyBackground={coachingTinyBackground}
         coachingBackground={coachingBackground}
         workoutTinyBackground={workoutTinyBackground}

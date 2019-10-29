@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import { Header4 } from '../../styles/Typography'
 import { above } from '../../styles/Theme'
 
-const ResetWorkoutPageHeader = ({ name }) => {
+const ResetWorkoutPageHeader = ({ title }) => {
   return (
     <HeaderContainer>
-      <WorkoutName>{name}</WorkoutName>
+      <WorkoutName>{title}</WorkoutName>
     </HeaderContainer>
   )
 }

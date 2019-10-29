@@ -7,8 +7,15 @@ import BackChip from '../Chips/BackChip'
 import TextInput from './Inputs/TextInput'
 import useFormControls from '../../hooks/useFormControls'
 import { useFormStore } from '../../context/FormContext'
+import { siteConfig } from '../../utils/siteConfig'
 
-const AccountUpdateEmailForm = ({ activeSlide, setActiveSlide }) => {
+const AccountUpdateEmailForm = ({
+  userId,
+  activeSlide,
+  setActiveSlide,
+  handleToggleSync,
+  handleSetSyncMessage
+}) => {
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
@@ -16,7 +23,26 @@ const AccountUpdateEmailForm = ({ activeSlide, setActiveSlide }) => {
   const handleSaveNewEmail = event => {
     event.preventDefault()
     console.log(formState.emailValue.value)
-    // Check username and update it in database
+
+    handleToggleSync()
+
+    const updateEmailReq = {
+      userId: userId,
+      newEmail: formState.emailValue.value
+    }
+
+    const url = `${siteConfig.api.baseUrl}/update-email`
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(updateEmailReq)
+    })
+      .then(response => response.json())
+      .then(data => {
+        handleSetSyncMessage(data.message)
+      })
+      .catch(error => {
+        handleSetSyncMessage(error.message)
+      })
   }
 
   const handleBack = () => setActiveSlide(0)
@@ -29,12 +55,12 @@ const AccountUpdateEmailForm = ({ activeSlide, setActiveSlide }) => {
         <Header3>Update Email Address:</Header3>
         <InputWrapper>
           <TextInput
-            type="text"
+            type="email"
             name="emailAddress"
             labelName="New Email:"
             labelFor="emailAddress"
             labelInstructions="Enter new email address..."
-            labelError="Can't leave blank!"
+            labelError="Use a valid email"
             value={formState.emailValue.value}
             valid={formState.emailValue.valid}
             initial={formState.emailOptions.initial}

@@ -21,11 +21,11 @@ const ReviewForm = () => {
   const handleReviewSubmit = event => {
     event.preventDefault()
 
-    console.log(`Stars: ${formState.starRatingValue.value}`)
-    console.log(`First Name: ${formState.firstNameValue.value}`)
-    console.log(`Email: ${formState.emailValue.value}`)
-    console.log(`Review: ${formState.reviewValue.value}`)
-    console.log(formState.reviewSelfieImage.file)
+    // const starRating = formState.starRatingValue.value
+    // const firstName = formState.firstNameValue.value
+    // const email = formState.emailValue.value
+    // const reviewText = formState.reviewValue.value
+    // const selfiePhoto = formState.reviewSelfieImage.file
   }
 
   return (
