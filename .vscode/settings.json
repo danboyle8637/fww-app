@@ -4,5 +4,39 @@
     "titleBar.activeForeground": "#f8f8f8",
     "titleBar.inactiveBackground": "#59477b",
     "titleBar.inactiveForeground": "#cccccc"
-  }
+  },
+  "better-comments.tags": [
+    {
+      "tag": "!",
+      "color": "#152524",
+      "strikethrough": false,
+      "backgroundColor": "#5afdf2",
+      "borderRadius": "10px"
+    },
+    {
+      "tag": "?",
+      "color": "#3498DB",
+      "strikethrough": false,
+      "backgroundColor": "transparent"
+    },
+    {
+      "tag": "//",
+      "color": "#474747",
+      "strikethrough": true,
+      "backgroundColor": "transparent"
+    },
+    {
+      "tag": "todo",
+      "color": "#f8f8f8",
+      "strikethrough": false,
+      "backgroundColor": "#e58514",
+      "borderRadius": "10px"
+    },
+    {
+      "tag": "*",
+      "color": "#f8f8f8",
+      "strikethrough": false,
+      "backgroundColor": "#ff1ca2"
+    }
+  ]
 }

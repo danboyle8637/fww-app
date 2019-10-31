@@ -5,6 +5,7 @@ import CompleteWorkoutIcon from '../../svgs/CompleteWorkoutIcon'
 import { useUserContext } from '../../context/UserContext'
 import { useProgramsContext } from '../../context/ProgramsContext'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
+import { useFireBase } from '../Firebase/FirebaseContext'
 import siteConfig from '../../utils/siteConfig'
 
 const CompleteWorkoutForm = ({
@@ -13,6 +14,7 @@ const CompleteWorkoutForm = ({
   handleToggleSync,
   handleSetSyncMessage
 }) => {
+  const auth = useFireBase()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
@@ -57,12 +59,9 @@ const CompleteWorkoutForm = ({
   }
 
   const handleSetCompleteInDatabase = completeId => {
-    const userId = userState.userId
-
     const completeBody = {
       programId: programId,
       workoutId: workoutId,
-      userId: userId,
       completeId: completeId
     }
 
@@ -70,19 +69,26 @@ const CompleteWorkoutForm = ({
     const toggleComplete = '/set-complete'
     const url = `${baseUrl}${toggleComplete}`
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(completeBody)
+    auth.getCurrentUser().then(user => {
+      user.getIdToken(true).then(token => {
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(completeBody)
+        })
+          .then(response => response.json())
+          .then(data => {
+            handleSetSyncMessage(data.message)
+            handleToggleSync()
+          })
+          .catch(errorObj => {
+            handleSetSyncMessage(errorObj.message)
+            handleToggleSync()
+          })
+      })
     })
-      .then(response => response.json())
-      .then(data => {
-        handleSetSyncMessage(data.message)
-        handleToggleSync()
-      })
-      .catch(errorObj => {
-        handleSetSyncMessage(errorObj.message)
-        handleToggleSync()
-      })
   }
 
   return (

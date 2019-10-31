@@ -20,6 +20,8 @@ const MainNav = () => {
       setShowBackButton(true)
     } else if (elementsOfPath[0] === 'review') {
       setShowBackButton(true)
+    } else if (elementsOfPath[0] === 'account') {
+      setShowBackButton(true)
     } else {
       setShowBackButton(false)
     }

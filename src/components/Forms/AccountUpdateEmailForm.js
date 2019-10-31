@@ -7,15 +7,16 @@ import BackChip from '../Chips/BackChip'
 import TextInput from './Inputs/TextInput'
 import useFormControls from '../../hooks/useFormControls'
 import { useFormStore } from '../../context/FormContext'
+import { useFireBase } from '../Firebase/FirebaseContext'
 import { siteConfig } from '../../utils/siteConfig'
 
 const AccountUpdateEmailForm = ({
-  userId,
   activeSlide,
   setActiveSlide,
   handleToggleSync,
   handleSetSyncMessage
 }) => {
+  const auth = useFireBase()
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
@@ -27,22 +28,29 @@ const AccountUpdateEmailForm = ({
     handleToggleSync()
 
     const updateEmailReq = {
-      userId: userId,
       newEmail: formState.emailValue.value
     }
 
     const url = `${siteConfig.api.baseUrl}/update-email`
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(updateEmailReq)
+
+    auth.getCurrentUser().then(user => {
+      user.getIdToken(true).then(token => {
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(updateEmailReq)
+        })
+          .then(response => response.json())
+          .then(data => {
+            handleSetSyncMessage(data.message)
+          })
+          .catch(error => {
+            handleSetSyncMessage(error.message)
+          })
+      })
     })
-      .then(response => response.json())
-      .then(data => {
-        handleSetSyncMessage(data.message)
-      })
-      .catch(error => {
-        handleSetSyncMessage(error.message)
-      })
   }
 
   const handleBack = () => setActiveSlide(0)

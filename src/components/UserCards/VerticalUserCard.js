@@ -39,6 +39,7 @@ const CardContainer = styled.div`
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   gap: 12px;
+  justify-items: center;
   align-items: center;
   width: 150px;
   overflow: hidden;

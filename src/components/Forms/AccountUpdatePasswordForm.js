@@ -8,15 +8,16 @@ import TextInput from './Inputs/TextInput'
 import PasswordShowHideIndicator from '../Indicators/PasswordShowHideIndicator'
 import useFormControls from '../../hooks/useFormControls'
 import { useFormStore } from '../../context/FormContext'
+import { useFireBase } from '../Firebase/FirebaseContext'
 import { siteConfig } from '../../utils/siteConfig'
 
 const AccountUpdatePasswordForm = ({
-  userId,
   activeSlide,
   setActiveSlide,
   handleToggleSync,
   handleSetSyncMessage
 }) => {
+  const auth = useFireBase()
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
@@ -25,27 +26,37 @@ const AccountUpdatePasswordForm = ({
   const handleSaveNewPassword = event => {
     event.preventDefault()
 
+    handleToggleSync()
+
     const newPassword = formState.passwordValue.value
     const confirmPassword = formState.confirmPasswordValue.value
     const url = siteConfig.api.baseUrl
 
     const updatePasswordReq = {
-      userId: userId,
       newPassword: newPassword,
       confirmPassword: confirmPassword
     }
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(updatePasswordReq)
+    auth.getCurrentUser().then(user => {
+      user.getIdToken(true).then(token => {
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(updatePasswordReq)
+        })
+          .then(response => response.json())
+          .then(data => {
+            handleSetSyncMessage(data.message)
+            handleToggleSync()
+          })
+          .catch(error => {
+            handleSetSyncMessage(error.message)
+            handleToggleSync()
+          })
+      })
     })
-      .then(response => response.json())
-      .then(data => {
-        handleSetSyncMessage(data.message)
-      })
-      .catch(error => {
-        handleSetSyncMessage(error.message)
-      })
   }
 
   const toggleShowPassword = () => {

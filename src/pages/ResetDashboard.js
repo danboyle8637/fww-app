@@ -8,10 +8,12 @@ import HorizontalBasicUserCard from '../components/UserCards/HorizontalBasicUser
 import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
 import { useUserContext } from '../context/UserContext'
 import { useProgramsContext } from '../context/ProgramsContext'
+import { useFireBase } from '../components/Firebase/FirebaseContext'
 import siteConfig from '../utils/siteConfig'
 import { above } from '../styles/Theme'
 
-const ResetDashboard = ({ match }) => {
+const ResetDashboard = ({ location }) => {
+  const auth = useFireBase()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
   // eslint-disable-next-line
@@ -24,56 +26,106 @@ const ResetDashboard = ({ match }) => {
       programsState.programs.length === 0 &&
       programsState.percentComplete.length === 0
     ) {
-      console.log('Fetching Data - Setting Up Program State')
       setIsLoadingPrograms(true)
+
       const getPrograms = {
         programIdArray: userState.programs
       }
 
       const getPercentComplete = {
-        userId: userState.userId,
         programs: userState.programs
       }
       const baseUrl = siteConfig.api.baseUrl
-      // For Get Programs you need to pass an array of programIds
-      // You already have this in the object above
+
       const programsPath = '/get-programs'
       const percentCompletePath = '/get-percent-complete'
-      const programsPromise = fetch(`${baseUrl}${programsPath}`, {
-        method: 'POST',
-        body: JSON.stringify(getPrograms)
-      })
-      const percentCompletePromise = fetch(`${baseUrl}${percentCompletePath}`, {
-        method: 'POST',
-        body: JSON.stringify(getPercentComplete)
-      })
 
-      Promise.all([programsPromise, percentCompletePromise])
-        .then(response => {
-          const data = response.map(res => res.json())
-          return Promise.all(data)
+      // ! Checking local storage for programs
+      if (localStorage.getItem('fwwPrograms')) {
+        console.log('fwwPrograms are in local storage')
+        const data = localStorage.getItem('fwwPrograms')
+        const programData = JSON.parse(data)
+
+        dispatchProgramsAction({
+          type: 'setProgramsState',
+          value: programData.programs
         })
-        .then(dataArray => {
-          const programs = dataArray[0]
-          const percentComplete = dataArray[1]
 
-          dispatchProgramsAction({
-            type: 'setProgramsState',
-            value: programs.programs
+        dispatchProgramsAction({
+          type: 'setPercentComplete',
+          value: programData.percentComplete
+        })
+
+        setIsLoadingPrograms(false)
+      } else {
+        console.log('fwwPrograms are not in local storage')
+        console.log('Fetching Data - Setting Up Program State')
+        auth
+          .getCurrentUser()
+          .then(user => {
+            user.getIdToken().then(token => {
+              const programsPromise = fetch(`${baseUrl}${programsPath}`, {
+                method: 'POST',
+                headers: {
+                  Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(getPrograms)
+              })
+              const percentCompletePromise = fetch(
+                `${baseUrl}${percentCompletePath}`,
+                {
+                  method: 'POST',
+                  headers: {
+                    Authorization: `Bearer ${token}`
+                  },
+                  body: JSON.stringify(getPercentComplete)
+                }
+              )
+
+              Promise.all([programsPromise, percentCompletePromise])
+                .then(response => {
+                  const data = response.map(res => res.json())
+                  return Promise.all(data)
+                })
+                .then(dataArray => {
+                  const programs = dataArray[0]
+                  const percentComplete = dataArray[1]
+
+                  dispatchProgramsAction({
+                    type: 'setProgramsState',
+                    value: programs.programs
+                  })
+
+                  dispatchProgramsAction({
+                    type: 'setPercentComplete',
+                    value: percentComplete.percentComplete
+                  })
+
+                  // ! Set program data to local storage
+                  const fwwPrograms = {
+                    programs: programs.programs,
+                    percentComplete: percentComplete.percentComplete
+                  }
+
+                  localStorage.setItem(
+                    'fwwPrograms',
+                    JSON.stringify(fwwPrograms)
+                  )
+
+                  setIsLoadingPrograms(false)
+                })
+                .catch(error => {
+                  console.log(error)
+                })
+            })
           })
-
-          dispatchProgramsAction({
-            type: 'setPercentComplete',
-            value: percentComplete.percentComplete
+          .catch(error => {
+            console.log(`The whole things crashed down`, error)
           })
-
-          setIsLoadingPrograms(false)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      }
     }
   }, [
+    auth,
     dispatchProgramsAction,
     programsState.percentComplete,
     programsState.programs,
@@ -97,7 +149,7 @@ const ResetDashboard = ({ match }) => {
         return (
           <Link
             key={key}
-            to={`${match.url}/${programId}`}
+            to={`${location.pathname}/${programId}`}
             style={{ textDecoration: 'none' }}
           >
             <ProgramCard
@@ -132,9 +184,9 @@ const ResetDashboard = ({ match }) => {
 
   const programCardLoader = (
     <>
-      <WorkoutCardLoader />
-      <WorkoutCardLoader />
-      <WorkoutCardLoader />
+      <WorkoutCardLoader loadingMessage={'Loading programs...'} />
+      <WorkoutCardLoader loadingMessage={'Loading programs...'} />
+      <WorkoutCardLoader loadingMessage={'Loading programs...'} />
     </>
   )
 

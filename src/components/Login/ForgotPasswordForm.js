@@ -7,6 +7,7 @@ import BackChip from '../Chips/BackChip'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
+import { useFireBase } from '../Firebase/FirebaseContext'
 
 const ForgetPasswordForm = ({
   reverse,
@@ -14,6 +15,7 @@ const ForgetPasswordForm = ({
   activeForm,
   setActiveForm
 }) => {
+  const auth = useFireBase()
   // eslint-disable-next-line
   const [formState, dispatch] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
@@ -33,7 +35,16 @@ const ForgetPasswordForm = ({
   const handleResetPassword = event => {
     event.preventDefault()
 
-    console.log('Hit the API.')
+    const email = formState.emailValue.value
+
+    auth
+      .resetUserPassword(email)
+      .then(() => {
+        //set message to say message sent
+      })
+      .catch(() => {
+        // set message to say error and try again
+      })
   }
 
   const handleBackButton = () => {

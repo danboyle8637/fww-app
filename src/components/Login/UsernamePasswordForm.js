@@ -53,46 +53,82 @@ const LoginUsernamePassword = ({
     event.preventDefault()
     setShowPassword(false)
     setIsLoggingIn(true)
+
     const email = formState.emailValue.value
     const password = formState.passwordValue.value
+
+    const baseUrl = siteConfig.api.baseUrl
+    const url = `${baseUrl}/get-user`
     let photoUrl
 
+    console.log('Logging user in...')
     auth
       .loginUserWithEmailAndPassword(email, password)
       .then(userCredential => {
-        const userId = userCredential.user.uid
+        auth.isAuthenticated = true
         photoUrl = userCredential.user.photoURL
-        const getUserRequestObject = { userId: userId }
-        const baseUrl = siteConfig.api.baseUrl
-        const url = `${baseUrl}/get-user`
 
-        fetch(url, {
-          method: 'POST',
-          body: JSON.stringify(getUserRequestObject)
-        })
-          .then(response => response.json())
-          .then(userData => {
-            dispatchUserAction({
-              type: 'setLoggedInUser',
-              value: {
-                userId: userData.userId,
-                firstName: userData.firstName,
-                photoUrl: photoUrl,
-                programs: userData.programs
+        // ! Get fwwUser from local storage
+        if (localStorage.getItem('fwwUser')) {
+          console.log('fwwUser exists in local storage')
+          const data = localStorage.getItem('fwwUser')
+          const user = JSON.parse(data)
+
+          dispatchUserAction({
+            type: 'setLoggedInUser',
+            value: {
+              firstName: user.firstName,
+              photoUrl: user.photoUrl,
+              programs: user.programs
+            }
+          })
+
+          // Empty the form state
+          dispatch({ type: 'resetEmailPasswordForm' })
+
+          // Navigate to the Dashboard
+          setShowDashboard(true)
+        } else {
+          console.log('fwwUser does not exist in local storage')
+
+          userCredential.user.getIdToken(true).then(token => {
+            fetch(url, {
+              method: 'GET',
+              headers: {
+                Authorization: `Bearer ${token}`
               }
             })
+              .then(response => response.json())
+              .then(userData => {
+                dispatchUserAction({
+                  type: 'setLoggedInUser',
+                  value: {
+                    firstName: userData.firstName,
+                    photoUrl: photoUrl,
+                    programs: userData.programs
+                  }
+                })
 
-            localStorage.setItem('fwwUser', JSON.stringify(userData))
+                // ! Setting up local Storage saving fwwUser
+                const fwwUser = {
+                  firstName: userData.firstName,
+                  photoUrl: photoUrl,
+                  programs: userData.programs
+                }
 
-            // Empty the form state
-            dispatch({ type: 'resetEmailPasswordForm' })
+                localStorage.setItem('fwwUser', JSON.stringify(fwwUser))
 
-            // Navigate to the Dashboard
-            setShowDashboard(true)
+                // Empty the form state
+                dispatch({ type: 'resetEmailPasswordForm' })
+
+                // Navigate to the Dashboard
+                setShowDashboard(true)
+              })
+              .catch(error => {
+                console.log('Could not set user', error)
+              })
           })
-          .catch(error => {
-            console.log('Could not set user', error)
-          })
+        }
       })
       .catch(error => {
         if (error.code === 'auth/invalid-email') {

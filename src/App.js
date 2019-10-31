@@ -15,6 +15,7 @@ import ResetProgramDashboard from './pages/ResetProgramDashboard'
 import ResetWorkout from './pages/ResetWorkout'
 import ResetWorkoutCoaching from './pages/ResetWorkoutCoaching'
 import ResetUserAccount from './pages/ResetUserAccount'
+import PrivateRoute from './components/Shared/PrivateRoute'
 
 const App = () => {
   return (
@@ -25,24 +26,27 @@ const App = () => {
           <MainNav />
           <Switch>
             <Route exact path="/" component={Login} />
-            <Route exact path="/dashboard" component={ResetDashboard} />
-            <Route path="/signup" component={SignUp} />
+            <PrivateRoute exact path="/dashboard" component={ResetDashboard} />
             <Route path="/login" component={Login} />
+            <Route path="/playground" component={SignUp} />
             <Route path="/7-day-reset-step1" component={ResetSignUp} />
-            <Route path="/review" component={Review} />
+            <PrivateRoute path="/review" component={Review} />
             <Route path="/contact" component={Contact} />
-            <Route path="/account/:username" component={ResetUserAccount} />
-            <Route
+            <PrivateRoute
+              path="/account/:username"
+              component={ResetUserAccount}
+            />
+            <PrivateRoute
               exact
               path="/dashboard/:programId"
               component={ResetProgramDashboard}
             />
-            <Route
+            <PrivateRoute
               exact
               path="/dashboard/:programId/:workoutId"
               component={ResetWorkout}
             />
-            <Route
+            <PrivateRoute
               path="/dashboard/:programId/:workoutId/coaching"
               component={ResetWorkoutCoaching}
             />

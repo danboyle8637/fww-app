@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 import BaseButton from '../Buttons/BaseButton'
@@ -6,6 +6,7 @@ import GoogleFacebookButton from '../Buttons/GoogleFacebookButton'
 import SignUp from './SignUp'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
 import { useFireBase } from '../Firebase/FirebaseContext'
+import ScreenWidthContext from '../../context/ScreenWidthContext'
 
 const ChooseLoginMethod = ({
   setShowDashboard,
@@ -13,23 +14,40 @@ const ChooseLoginMethod = ({
   setActiveForm,
   setReverse
 }) => {
+  const device = useContext(ScreenWidthContext)
   const auth = useFireBase()
 
   const handleLoginWithGoogle = () => {
-    auth
-      .signInWithGoogleProviderPopUp()
-      .then(result => {
-        const user = result.user
-        console.log(user)
-        setShowDashboard(true)
-      })
-      .catch(error => {
-        // const errorCode = error.code
-        // const errorMessage = error.message
-        // const email = error.email
-        // const credential = error.credential
-        console.log(error)
-      })
+    if (device === 'mobile') {
+      auth
+        .signInWithGoogleProviderRedirect()
+        .then(result => {
+          const user = result.user
+          console.log(user)
+        })
+        .catch(error => {
+          // const errorCode = error.code
+          // const errorMessage = error.message
+          // const email = error.email
+          // const credential = error.credential
+          console.log(error)
+        })
+    } else {
+      auth
+        .signInWithGoogleProviderPopUp()
+        .then(result => {
+          const user = result.user
+          console.log(user)
+          setShowDashboard(true)
+        })
+        .catch(error => {
+          // const errorCode = error.code
+          // const errorMessage = error.message
+          // const email = error.email
+          // const credential = error.credential
+          console.log(error)
+        })
+    }
   }
 
   const handleLoginWithFacebook = () => {

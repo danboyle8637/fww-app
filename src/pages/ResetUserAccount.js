@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { TransitionGroup } from 'react-transition-group'
+import { Redirect } from 'react-router-dom'
 
 import FWWLogo from '../components/Logos/FWWLogo'
 import VerticalUserCard from '../components/UserCards/VerticalUserCard'
@@ -9,15 +10,20 @@ import ConnectSocialAccount from '../components/AccountPage/ConnectSocialAccount
 import AccountUpdateProfilePicForm from '../components/Forms/AccountUpdateProfilePicForm'
 import AccountUpdateEmailForm from '../components/Forms/AccountUpdateEmailForm'
 import AccountUpdatePasswordForm from '../components/Forms/AccountUpdatePasswordForm'
+import DeleteAccountCard from '../components/AccountPage/DeleteAccountCard'
 import Portal from '../components/Shared/Portal'
 import SyncingIndicator from '../components/Indicators/SyncingIndicator'
 import { useUserContext } from '../context/UserContext'
+import { useFireBase } from '../components/Firebase/FirebaseContext'
+import siteConfig from '../utils/siteConfig'
 import { above } from '../styles/Theme'
 
 const ResetUserAccount = () => {
+  const auth = useFireBase()
   const [activeSlide, setActiveSlide] = useState(0)
   const [isSyncing, setIsSyncing] = useState(false)
   const [syncMessage, setSyncMessage] = useState('Syncing...')
+  const [toLogin, setToLogin] = useState(false)
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
 
@@ -27,6 +33,44 @@ const ResetUserAccount = () => {
 
   const handleSetSyncMessage = message => {
     setSyncMessage(message)
+  }
+
+  const handleDeleteAccount = () => {
+    const url = `${siteConfig.api.baseUrl}/delete-account`
+
+    setIsSyncing(true)
+
+    // TODO rewrite my endpoint to let us know what users want
+    // their account to be deleted. We can then finish it off
+    // with a custom callable function by using a custom
+    // admin section of the app.
+    auth
+      .getCurrentUser()
+      .then(user => {
+        user.getIdToken(true).then(token => {
+          fetch(url, {
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+              setSyncMessage(data.message)
+              setIsSyncing(false)
+              setToLogin(true)
+            })
+            .catch(error => {
+              setSyncMessage(error.message)
+              setIsSyncing(false)
+            })
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+    console.log('handle delete account')
   }
 
   return (
@@ -49,14 +93,12 @@ const ResetUserAccount = () => {
                 setActiveSlide={setActiveSlide}
               />
               <AccountUpdateEmailForm
-                userId={userState.userId}
                 activeSlide={activeSlide}
                 setActiveSlide={setActiveSlide}
                 handleToggleSync={handleToggleSync}
                 handleSetSyncMessage={handleSetSyncMessage}
               />
               <AccountUpdatePasswordForm
-                userId={userState.userId}
                 activeSlide={activeSlide}
                 setActiveSlide={setActiveSlide}
                 handleToggleSync={handleToggleSync}
@@ -66,12 +108,14 @@ const ResetUserAccount = () => {
           </FormWrapper>
           <ConnectSocialAccount />
         </SectionWrapper>
+        <DeleteAccountCard handleDeleteAccount={handleDeleteAccount} />
       </UserAccountContainer>
       <Portal
         component={
           <SyncingIndicator isSyncing={isSyncing} syncMessage={syncMessage} />
         }
       />
+      {toLogin ? <Redirect to="/login" /> : null}
     </>
   )
 }

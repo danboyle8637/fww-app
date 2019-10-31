@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import FavoriteWorkoutIcon from '../../svgs/FavoriteWorkoutIcon'
 import { useUserContext } from '../../context/UserContext'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
+import { useFireBase } from '../Firebase/FirebaseContext'
 import siteConfig from '../../utils/siteConfig'
 
 const FavoriteWorkoutForm = ({
@@ -12,6 +13,7 @@ const FavoriteWorkoutForm = ({
   handleToggleSync,
   handleSetSyncMessage
 }) => {
+  const auth = useFireBase()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
@@ -29,31 +31,35 @@ const FavoriteWorkoutForm = ({
   }
 
   const handleToggleFavoriteInDatebase = () => {
-    const userId = userState.userId
-
     const favoriteBody = {
       programId: programId,
-      workoutId: workoutId,
-      userId: userId
+      workoutId: workoutId
     }
 
     const baseUrl = siteConfig.api.baseUrl
     const toggleFavorite = '/toggle-favorite'
     const url = `${baseUrl}${toggleFavorite}`
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(favoriteBody)
+    auth.getCurrentUser().then(user => {
+      user.getIdToken(true).then(token => {
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(favoriteBody)
+        })
+          .then(response => response.json())
+          .then(data => {
+            handleSetSyncMessage(data.message)
+            handleToggleSync()
+          })
+          .catch(errorObj => {
+            handleSetSyncMessage(errorObj.message)
+            handleToggleSync()
+          })
+      })
     })
-      .then(response => response.json())
-      .then(data => {
-        handleSetSyncMessage(data.message)
-        handleToggleSync()
-      })
-      .catch(errorObj => {
-        handleSetSyncMessage(errorObj.message)
-        handleToggleSync()
-      })
   }
 
   return (

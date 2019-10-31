@@ -5,11 +5,11 @@ import { Header3 } from '../../styles/Typography'
 import LoadingKettlebell from '../../svgs/LoadingKettlebell'
 import { above } from '../../styles/Theme'
 
-const WorkoutCardLoader = () => {
+const WorkoutCardLoader = ({ loadingMessage }) => {
   return (
     <CardContainer>
       <Loader />
-      <LoadingText>Loading workouts...</LoadingText>
+      <LoadingText>{loadingMessage}</LoadingText>
     </CardContainer>
   )
 }

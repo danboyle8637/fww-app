@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import LoginSignUpHeader from '../components/PageHeaders/LoginSignUpHeader'
-import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
+import DeleteAccountCard from '../components/AccountPage/DeleteAccountCard'
 import { formState, formReducer } from '../reducers/formReducer'
 import { FormStore } from '../context/FormContext'
 
@@ -12,7 +12,7 @@ const SignUp = () => {
       <SignUpContainer>
         <ContentWrapper>
           <LoginSignUpHeader>Sign Up</LoginSignUpHeader>
-          <WorkoutCardLoader />
+          <DeleteAccountCard />
         </ContentWrapper>
       </SignUpContainer>
     </FormStore>

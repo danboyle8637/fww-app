@@ -12,6 +12,7 @@ import { useUserContext } from '../../context/UserContext'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 import { useProgramsContext } from '../../context/ProgramsContext'
 import { useFormStore } from '../../context/FormContext'
+import { useFireBase } from '../Firebase/FirebaseContext'
 import useFormControls from '../../hooks/useFormControls'
 import siteConfig from '../../utils/siteConfig'
 
@@ -23,6 +24,7 @@ const WorkoutTrackingForm = ({
   handleToggleSync,
   handleSetSyncMessage
 }) => {
+  const auth = useFireBase()
   const [wiggle, setWiggle] = useState(false)
   // eslint-disable-next-line
   const [statsState, dispatchWorkoutStatsAction] = useWorkoutStatsContext()
@@ -70,12 +72,9 @@ const WorkoutTrackingForm = ({
 
     handleToggleSync()
 
-    const userId = userState.userId
-
     const trackingBody = {
       programId: programId,
       workoutId: workoutId,
-      userId: userId,
       number: formState.workoutGoalValue.value,
       date: date
     }
@@ -84,21 +83,26 @@ const WorkoutTrackingForm = ({
     const postWorkoutNumbers = '/post-workout-numbers'
     const url = `${baseUrl}${postWorkoutNumbers}`
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(trackingBody)
+    auth.getCurrentUser().then(user => {
+      user.getIdToken(true).then(token => {
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(trackingBody)
+        })
+          .then(response => response.json())
+          .then(data => {
+            dispatchFormAction({ type: 'resetWorkoutGoalForm' })
+            handleSetSyncMessage(data.message)
+            handleToggleSync()
+          })
+          .catch(errorObj => {
+            console.log(errorObj)
+          })
+      })
     })
-      .then(response => response.json())
-      .then(data => {
-        // TODO make the request to mark the workout complete
-        // We'll need complete id.
-        dispatchFormAction({ type: 'resetWorkoutGoalForm' })
-        handleSetSyncMessage(data.message)
-        handleToggleSync()
-      })
-      .catch(errorObj => {
-        console.log(errorObj)
-      })
   }
 
   return (
