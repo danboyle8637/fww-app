@@ -34,6 +34,10 @@ const biggestObstacleValidationRules = {
   isRequired: true
 }
 
+const contactValidationRules = {
+  isRequired: true
+}
+
 const setResetWorkoutValidationRules = {
   isSelected: true
 }
@@ -178,6 +182,33 @@ const formState = {
     file: '',
     fileName: '',
     valid: false
+  },
+  contactReasonValue: {
+    value: '',
+    valid: false,
+    options: [
+      { value: 'question', displayValue: 'General question', checked: false },
+      { value: 'workout', displayValue: 'Workout question', checked: false },
+      {
+        value: 'app_technical',
+        displayValue: 'App technical issue',
+        checked: false
+      },
+      {
+        value: 'personal_coaching',
+        displayValue: 'Personal coaching question',
+        checked: false
+      }
+    ]
+  },
+  contactTellMeMoreValue: {
+    value: '',
+    valid: false
+  },
+  contactTellMeMoreOptions: {
+    initial: true,
+    touched: false,
+    showInstructions: false
   }
 }
 
@@ -478,6 +509,56 @@ const formReducer = (state, action) => {
           file: action.value.file,
           fileName: action.value.fileName,
           valid: true
+        }
+      }
+    }
+    case 'setContactReason': {
+      const options = state.contactReasonValue.options.map(option => {
+        if (action.value === option.value) {
+          return {
+            ...option,
+            checked: true
+          }
+        } else if (option.checked) {
+          return {
+            ...option,
+            checked: !option.checked
+          }
+        } else {
+          return {
+            ...option,
+            checked: option.checked
+          }
+        }
+      })
+
+      return {
+        ...state,
+        contactReasonValue: {
+          value: action.value,
+          valid: true,
+          options: options
+        }
+      }
+    }
+    case 'setContactTellMeMoreValue': {
+      const valid = validate(action.value, contactValidationRules)
+
+      return {
+        ...state,
+        contactTellMeMoreValue: {
+          value: action.value,
+          valid: valid
+        }
+      }
+    }
+    case 'setContactTellMeMoreOptions': {
+      return {
+        ...state,
+        contactTellMeMoreOptions: {
+          initial: false,
+          touched: !state.contactTellMeMoreOptions.touched,
+          showInstructions: !state.contactTellMeMoreOptions.showInstructions
         }
       }
     }

@@ -4,9 +4,6 @@ import ViemoPlayer from '@vimeo/player'
 
 import LoadingKettlebell from '../../svgs/LoadingKettlebell'
 
-// TODO you could create the player and leave it empty
-// Then you can use the load method to laod the player
-// Then when it's loaded you can play it.
 const VimeoPlayer = ({ videoId }) => {
   const [videoLoaded, setVideoLoaded] = useState(false)
   const videoContainerRef = useRef(null)
