@@ -7,8 +7,11 @@ import FileUpload from '../Forms/Inputs/FileUpload'
 import BackChip from '../Chips/BackChip'
 import useFormControls from '../../hooks/useFormControls'
 import { useFormStore } from '../../context/FormContext'
+import { useFireBase } from '../Firebase/FirebaseContext'
+import siteConfig from '../../utils/siteConfig'
 
 const AccountUpdateProfilePicForm = ({ activeSlide, setActiveSlide }) => {
+  const auth = useFireBase()
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
   // eslint-disable-next-line
@@ -16,8 +19,31 @@ const AccountUpdateProfilePicForm = ({ activeSlide, setActiveSlide }) => {
 
   const handleUploadPhoto = event => {
     event.preventDefault()
-    console.log(formState.updateProfileImage.file)
-    // Make functions call and handle file on server
+
+    const newAvatar = formState.updateProfileImage.file
+    const formData = new FormData()
+    formData.append('avatar', newAvatar)
+
+    const url = `${siteConfig.api.baseUrl}/upload-profile-image`
+
+    auth.getCurrentUser().then(user => {
+      user.getIdToken(true).then(token => {
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      })
+    })
   }
 
   const handleBack = () => setActiveSlide(0)

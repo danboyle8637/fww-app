@@ -501,8 +501,6 @@ const formReducer = (state, action) => {
       }
     }
     case 'setUpdateProfileImage': {
-      console.log(action.value.file)
-      console.log(action.value.fileName)
       return {
         ...state,
         updateProfileImage: {
