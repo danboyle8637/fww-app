@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import { Header1, BodyText } from '../../styles/Typography'
@@ -10,7 +10,7 @@ import PasswordShowHideIndicator from '../Indicators/PasswordShowHideIndicator'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
 import { useUserContext } from '../../context/UserContext'
-import { FirebaseContext } from '../Firebase/FirebaseContext'
+import { useFireBase } from '../Firebase/FirebaseContext'
 import { above } from '../../styles/Theme'
 
 const ResetStep4Form = ({
@@ -21,7 +21,7 @@ const ResetStep4Form = ({
   setIsLoading,
   setToDashboard
 }) => {
-  const auth = useContext(FirebaseContext)
+  const auth = useFireBase()
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
@@ -38,6 +38,7 @@ const ResetStep4Form = ({
 
   const handleSignUpForm = event => {
     event.preventDefault()
+    setShowPassword(false)
     setIsLoading(true)
 
     const firstName = formState.firstNameValue.value
@@ -73,17 +74,25 @@ const ResetStep4Form = ({
         })
           .then(response => response.json())
           .then(userData => {
+            auth.isAuthenticated = true
             dispatchUserAction({
               type: 'setLoggedInUser',
               value: {
-                userId: userData.userId,
                 firstName: userData.firstName,
                 photoUrl: userData.photoUrl,
+                photoUrlTiny: userData.photoUrlTiny,
                 programs: userData.programs
               }
             })
 
-            localStorage.setItem('fwwUser', JSON.stringify(userData))
+            const fwwUser = {
+              firstName: userData.firstName,
+              photoUrl: userData.photoUrl,
+              photoUrlTiny: userData.photoUrlTiny,
+              programs: userData.programs
+            }
+
+            localStorage.setItem('fwwUser', JSON.stringify(fwwUser))
 
             setIsLoading(false)
             setToDashboard(true)

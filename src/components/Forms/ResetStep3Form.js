@@ -11,7 +11,9 @@ const ResetStep3Form = ({
   activeQuestion,
   setActiveQuestion,
   reverse,
-  setReverse
+  setReverse,
+  setToDashboard,
+  setIsLoading
 }) => {
   const options = [
     { id: 1, icon: 'google', text: 'Google Account', loginType: 'google' },
@@ -43,6 +45,8 @@ const ResetStep3Form = ({
         loginType={loginType}
         setActiveQuestion={setActiveQuestion}
         setReverse={setReverse}
+        setToDashboard={setToDashboard}
+        setIsLoading={setIsLoading}
       />
     )
   })
@@ -89,7 +93,7 @@ const Step3Container = styled.div`
     align-self: center;
   `}
   ${above.ipadPro`
-    margin: 0 0 120px 0px;
+    margin: 0 0 120px 80px;
     width: 50%;
   `}
 `

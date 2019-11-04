@@ -57,6 +57,8 @@ const ResetSignUp = () => {
                 setReverse={setReverse}
                 activeQuestion={activeQuestion}
                 setActiveQuestion={setActiveQuestion}
+                setIsLoading={setIsLoading}
+                setToDashboard={setToDashboard}
               />
               <ResetStep4Form
                 activeQuestion={activeQuestion}

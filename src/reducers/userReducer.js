@@ -7,6 +7,7 @@ const userReducer = (state, action) => {
         userId: action.value.userId,
         firstName: action.value.firstName,
         photoUrl: action.value.photoUrl,
+        photoUrlTiny: action.value.photoUrlTiny,
         programs: action.value.programs
       }
     }

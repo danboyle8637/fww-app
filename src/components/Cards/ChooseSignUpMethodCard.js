@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 import { BodyText } from '../../styles/Typography'
@@ -6,6 +6,11 @@ import Google from '../../svgs/GoogleButtonIcon'
 import Facebook from '../../svgs/FacebookButtonIcon'
 import EmailPassword from '../../svgs/EmailPasswordButtonIcon'
 import NavigationArrow from '../../svgs/NavigationArrow'
+import { useFormStore } from '../../context/FormContext'
+import { useUserContext } from '../../context/UserContext'
+import { useFireBase } from '../Firebase/FirebaseContext'
+import ScreenWidthContext from '../../context/ScreenWidthContext'
+import siteConfig from '../../utils/siteConfig'
 import { above } from '../../styles/Theme'
 
 const ChooseSignUpMethodCard = ({
@@ -13,14 +18,162 @@ const ChooseSignUpMethodCard = ({
   buttonText,
   loginType,
   setActiveQuestion,
-  setReverse
+  setReverse,
+  setToDashboard,
+  setIsLoading
 }) => {
+  const device = useContext(ScreenWidthContext)
+  // eslint-disable-next-line
+  const [formState, dispatchFormAction] = useFormStore()
+  // eslint-disable-next-line
+  const [userState, dispatchUserAction] = useUserContext()
+  const auth = useFireBase()
+
   const handleGoogleSignUp = () => {
-    console.log('Active Google SignUp and Redirect')
+    setIsLoading(true)
+
+    const firstName = formState.firstNameValue.value
+    const biggestObstacle = formState.biggestObstacleValue.value
+    const programId = formState.resetWorkoutValue.value
+    const totalWorkouts = formState.resetWorkoutValue.options.find(
+      option => option.value === programId
+    )
+    const url = `${siteConfig.api.baseUrl}/sign-up-google`
+
+    if (device === 'mobile') {
+      auth
+        .signInWithGoogleProviderRedirect()
+        .then(result => {
+          const user = result.user
+          console.log(user)
+
+          const userId = user.uid
+          const email = user.email
+          const photoUrl = user.photoURL
+
+          const signUpData = {
+            userId: userId,
+            programId: programId,
+            totalWorkouts: totalWorkouts['numberOfWorkouts'],
+            firstName: firstName,
+            email: email,
+            biggestObstacle: biggestObstacle,
+            photoUrl: photoUrl
+          }
+
+          fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(signUpData)
+          })
+            .then(response => response.json())
+            .then(userData => {
+              auth.isAuthenticated = true
+              dispatchUserAction({
+                type: 'setLoggedInUser',
+                value: {
+                  firstName: userData.firstName,
+                  photoUrl: userData.photoUrl,
+                  photoUrlTiny: userData.photoUrlTiny,
+                  programs: userData.programs
+                }
+              })
+
+              const fwwUser = {
+                firstName: userData.firstName,
+                photoUrl: userData.photoUrl,
+                photoUrlTiny: userData.photoUrlTiny,
+                programs: userData.programs
+              }
+
+              localStorage.setItem('fwwUser', JSON.stringify(fwwUser))
+
+              setIsLoading(false)
+              setToDashboard(true)
+            })
+        })
+        .catch(error => {
+          // const errorCode = error.code
+          // const errorMessage = error.message
+          // const email = error.email
+          // const credential = error.credential
+          console.log(error)
+        })
+    } else {
+      auth
+        .signInWithGoogleProviderPopUp()
+        .then(result => {
+          const user = result.user
+          console.log(user)
+
+          const userId = user.uid
+          const email = user.email
+          const photoUrl = user.photoURL
+
+          const signUpData = {
+            userId: userId,
+            programId: programId,
+            totalWorkouts: totalWorkouts['numberOfWorkouts'],
+            firstName: firstName,
+            email: email,
+            biggestObstacle: biggestObstacle,
+            photoUrl: photoUrl
+          }
+
+          fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(signUpData)
+          })
+            .then(response => response.json())
+            .then(userData => {
+              auth.isAuthenticated = true
+              dispatchUserAction({
+                type: 'setLoggedInUser',
+                value: {
+                  userId: userData.userId,
+                  firstName: userData.firstName,
+                  photoUrl: userData.photoUrl,
+                  photoUrlTiny: userData.photoUrlTiny,
+                  programs: userData.programs
+                }
+              })
+
+              const fwwUser = {
+                firstName: userData.firstName,
+                photoUrl: userData.photoUrl,
+                programs: userData.programs
+              }
+
+              localStorage.setItem('fwwUser', JSON.stringify(fwwUser))
+
+              setIsLoading(false)
+              setToDashboard(true)
+            })
+        })
+        .catch(error => {
+          // const errorCode = error.code
+          // const errorMessage = error.message
+          // const email = error.email
+          // const credential = error.credential
+          console.log(error)
+        })
+    }
   }
 
   const handleFacebookSignUp = () => {
-    console.log('Active Facebook SignUp and Redirect')
+    auth
+      .signInWithFacebookProviderPopUp()
+      .then(result => {
+        const user = result.user
+        console.log(user)
+        setToDashboard(true)
+      })
+      .catch(error => {
+        // const errorCode = error.code
+        // const errorMessage = error.message
+        // const email = error.email
+        // const credential = error.credential
+        console.log(error)
+      })
   }
 
   const handleMoveToStep4 = () => {

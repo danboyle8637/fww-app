@@ -105,6 +105,7 @@ const LoginUsernamePassword = ({
                   value: {
                     firstName: userData.firstName,
                     photoUrl: photoUrl,
+                    photoUrlTiny: userData.photoUrlTiny,
                     programs: userData.programs
                   }
                 })
@@ -113,6 +114,7 @@ const LoginUsernamePassword = ({
                 const fwwUser = {
                   firstName: userData.firstName,
                   photoUrl: photoUrl,
+                  photoUrlTiny: userData.photoUrlTiny,
                   programs: userData.programs
                 }
 

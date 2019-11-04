@@ -53,28 +53,34 @@ const ResetProgramDashboard = ({ match, location }) => {
     }
 
     auth.getCurrentUser().then(user => {
-      user.getIdToken(true).then(token => {
-        fetch(`${baseUrl}${setupTrackingPath}`, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          body: JSON.stringify(trackingRequest)
-        })
-          .then(response => response.json())
-          .then(data => {
-            dispatchStatsAction({
-              type: 'setWorkoutStatsState',
-              value: data.stats
-            })
+      user
+        .getIdToken(true)
+        .then(token => {
+          fetch(`${baseUrl}${setupTrackingPath}`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(trackingRequest)
+          })
+            .then(response => response.json())
+            .then(data => {
+              dispatchStatsAction({
+                type: 'setWorkoutStatsState',
+                value: data.stats
+              })
 
-            setIsLoadingWorkouts(false)
-          })
-          .catch(error => {
-            // TODO Hand this error of not getting the tracking setup.
-            console.log(error)
-          })
-      })
+              setIsLoadingWorkouts(false)
+            })
+            .catch(error => {
+              // TODO Hand this error of not getting the tracking setup.
+              console.log(error)
+            })
+        })
+        .catch(error => {
+          // Token was not retrieved and needs to be reset
+          console.log(error)
+        })
     })
   }, [auth, dispatchStatsAction, match.params.programId, workoutsState])
 
@@ -109,38 +115,47 @@ const ResetProgramDashboard = ({ match, location }) => {
         console.log('Fetching Data - Setting Up Workout State')
 
         auth.getCurrentUser().then(user => {
-          user.getIdToken(true).then(token => {
-            fetch(`${baseUrl}${getWorkoutsPath}`, {
-              method: 'POST',
-              headers: {
-                Authorization: `Bearer ${token}`
-              },
-              body: JSON.stringify(programData)
-            })
-              .then(response => response.json())
-              .then(workoutsArray => {
-                dispatchWorkoutsAction({
-                  type: 'setWorkoutsState',
-                  value: workoutsArray.workouts
+          user
+            .getIdToken(true)
+            .then(token => {
+              fetch(`${baseUrl}${getWorkoutsPath}`, {
+                method: 'POST',
+                headers: {
+                  Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(programData)
+              })
+                .then(response => response.json())
+                .then(workoutsArray => {
+                  dispatchWorkoutsAction({
+                    type: 'setWorkoutsState',
+                    value: workoutsArray.workouts
+                  })
+
+                  // TODO Set fwwWorkouts in local storage
+                  const fwwWorkouts = {
+                    workouts: workoutsArray.workouts
+                  }
+
+                  localStorage.setItem(
+                    'fwwWorkouts',
+                    JSON.stringify(fwwWorkouts)
+                  )
+
+                  setupWorkoutStats()
                 })
-
-                // TODO Set fwwWorkouts in local storage
-                const fwwWorkouts = {
-                  workouts: workoutsArray.workouts
-                }
-
-                localStorage.setItem('fwwWorkouts', JSON.stringify(fwwWorkouts))
-
-                setupWorkoutStats()
-              })
-              .catch(error => {
-                // error in getting data.
-                // Should get message from server
-                // let user know to refresh screen
-                // TODO Handle this error
-                console.log(error)
-              })
-          })
+                .catch(error => {
+                  // error in getting data.
+                  // Should get message from server
+                  // let user know to refresh screen
+                  // TODO Handle this error
+                  console.log(error)
+                })
+            })
+            .catch(error => {
+              // The token was not reterieved and needs to be reset
+              console.log(error)
+            })
         })
       }
     }

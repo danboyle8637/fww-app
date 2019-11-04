@@ -63,61 +63,68 @@ const ResetDashboard = ({ location }) => {
         auth
           .getCurrentUser()
           .then(user => {
-            user.getIdToken().then(token => {
-              const programsPromise = fetch(`${baseUrl}${programsPath}`, {
-                method: 'POST',
-                headers: {
-                  Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify(getPrograms)
-              })
-              const percentCompletePromise = fetch(
-                `${baseUrl}${percentCompletePath}`,
-                {
+            console.log(user)
+            user
+              .getIdToken(true)
+              .then(token => {
+                const programsPromise = fetch(`${baseUrl}${programsPath}`, {
                   method: 'POST',
                   headers: {
                     Authorization: `Bearer ${token}`
                   },
-                  body: JSON.stringify(getPercentComplete)
-                }
-              )
-
-              Promise.all([programsPromise, percentCompletePromise])
-                .then(response => {
-                  const data = response.map(res => res.json())
-                  return Promise.all(data)
+                  body: JSON.stringify(getPrograms)
                 })
-                .then(dataArray => {
-                  const programs = dataArray[0]
-                  const percentComplete = dataArray[1]
-
-                  dispatchProgramsAction({
-                    type: 'setProgramsState',
-                    value: programs.programs
-                  })
-
-                  dispatchProgramsAction({
-                    type: 'setPercentComplete',
-                    value: percentComplete.percentComplete
-                  })
-
-                  // ! Set program data to local storage
-                  const fwwPrograms = {
-                    programs: programs.programs,
-                    percentComplete: percentComplete.percentComplete
+                const percentCompletePromise = fetch(
+                  `${baseUrl}${percentCompletePath}`,
+                  {
+                    method: 'POST',
+                    headers: {
+                      Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify(getPercentComplete)
                   }
+                )
 
-                  localStorage.setItem(
-                    'fwwPrograms',
-                    JSON.stringify(fwwPrograms)
-                  )
+                Promise.all([programsPromise, percentCompletePromise])
+                  .then(response => {
+                    const data = response.map(res => res.json())
+                    return Promise.all(data)
+                  })
+                  .then(dataArray => {
+                    const programs = dataArray[0]
+                    const percentComplete = dataArray[1]
 
-                  setIsLoadingPrograms(false)
-                })
-                .catch(error => {
-                  console.log(error)
-                })
-            })
+                    dispatchProgramsAction({
+                      type: 'setProgramsState',
+                      value: programs.programs
+                    })
+
+                    dispatchProgramsAction({
+                      type: 'setPercentComplete',
+                      value: percentComplete.percentComplete
+                    })
+
+                    // ! Set program data to local storage
+                    const fwwPrograms = {
+                      programs: programs.programs,
+                      percentComplete: percentComplete.percentComplete
+                    }
+
+                    localStorage.setItem(
+                      'fwwPrograms',
+                      JSON.stringify(fwwPrograms)
+                    )
+
+                    setIsLoadingPrograms(false)
+                  })
+                  .catch(error => {
+                    console.log(error)
+                  })
+              })
+              .catch(error => {
+                // Token error
+                console.log(error)
+              })
           })
           .catch(error => {
             console.log(`The whole things crashed down`, error)

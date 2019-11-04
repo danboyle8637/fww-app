@@ -4,8 +4,11 @@ import styled from 'styled-components'
 import KindalProfileTiny from '../../images/kindal-test-avatar-image-tiny.jpg'
 import KindalProfileLarge from '../../images/kindal-test-avatar-image.jpg'
 import useBlurUp from '../../hooks/useBlurUp'
+import { useUserContext } from '../../context/UserContext'
 
 const VerticalUserCard = ({ firstName }) => {
+  // eslint-disable-next-line
+  const [userState, dispatchUserAction] = useUserContext()
   const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
 
   return (
