@@ -4,7 +4,8 @@ const DialogCloseIcon = ({
   width,
   height,
   className,
-  handleCloseDialogBox
+  handleCloseDialogBox,
+  lightMode
 }) => {
   return (
     <svg
@@ -27,12 +28,12 @@ const DialogCloseIcon = ({
       <path
         d="M25 5A20 20 0 1 1 5 25 20 20 0 0 1 25 5m0-3a23 23 0 1 0 23 23A23 23 0 0 0 25 2z"
         transform="translate(-2 -2)"
-        fill="#b44cff"
+        fill={lightMode ? '#f8f8f8' : '#b44cff'}
         id="circle-border"
       />
       <path
         fill="none"
-        stroke="#b44cff"
+        stroke={lightMode ? '#f8f8f8' : '#b44cff'}
         strokeLinecap="round"
         strokeMiterlimit="10"
         strokeWidth="4"
@@ -41,7 +42,7 @@ const DialogCloseIcon = ({
       />
       <path
         fill="none"
-        stroke="#b44cff"
+        stroke={lightMode ? '#f8f8f8' : '#b44cff'}
         strokeLinecap="round"
         strokeMiterlimit="10"
         strokeWidth="4"

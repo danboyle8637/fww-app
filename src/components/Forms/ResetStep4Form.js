@@ -19,7 +19,7 @@ const ResetStep4Form = ({
   reverse,
   setReverse,
   setIsLoading,
-  setToDashboard
+  setShowSecurityLogin
 }) => {
   const auth = useFireBase()
   // eslint-disable-next-line
@@ -36,6 +36,18 @@ const ResetStep4Form = ({
 
   const toggleShowPassword = () => setShowPassword(prevValue => !prevValue)
 
+  // const handleFormErrors = () => {
+  //   const firstName = formState.firstNameValue.value
+  //   const biggestObstacle = formState.biggestObstacleValue.value
+  //   const programId = formState.resetWorkoutValue.value
+  //   const totalWorkouts = formState.resetWorkoutValue.options.find(
+  //     option => option.value === programId
+  //   )
+  //   const email = formState.emailValue.value
+  //   const password = formState.passwordValue.value
+  //   const confirmPassword = formState.confirmPasswordValue.value
+  // }
+
   const handleSignUpForm = event => {
     event.preventDefault()
     setShowPassword(false)
@@ -47,7 +59,7 @@ const ResetStep4Form = ({
     const totalWorkouts = formState.resetWorkoutValue.options.find(
       option => option.value === programId
     )
-    const email = formState.emailValue.value
+    const email = formState.emailValue.value.toLowerCase()
     const password = formState.passwordValue.value
     const confirmPassword = formState.confirmPasswordValue.value
 
@@ -74,7 +86,6 @@ const ResetStep4Form = ({
         })
           .then(response => response.json())
           .then(userData => {
-            auth.isAuthenticated = true
             dispatchUserAction({
               type: 'setLoggedInUser',
               value: {
@@ -95,7 +106,7 @@ const ResetStep4Form = ({
             localStorage.setItem('fwwUser', JSON.stringify(fwwUser))
 
             setIsLoading(false)
-            setToDashboard(true)
+            setShowSecurityLogin(true)
           })
           .catch(error => {
             if (error) {

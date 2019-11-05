@@ -21,6 +21,9 @@ const portalState = {
       { id: 'workoutGoal2', isOpen: false },
       { id: 'workoutGoal3', isOpen: false }
     ]
+  },
+  errorMessage: {
+    isOpen: true
   }
 }
 
@@ -127,6 +130,14 @@ const portalReducer = (state, action) => {
         dialogBox: {
           openBox: '',
           boxes: boxes
+        }
+      }
+    }
+    case 'toggleErrorMessage': {
+      return {
+        ...state,
+        errorMessage: {
+          isOpen: !state.errorMessage.isOpen
         }
       }
     }

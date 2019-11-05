@@ -208,11 +208,7 @@ const LoginUsernamePassword = ({
             onFocus={updateInputOptions}
             onBlur={updateInputOptions}
           />
-          <BaseButton
-            disabled={!loginButtonValid}
-            type="submit"
-            handleClick={handleLoginSubmit}
-          >
+          <BaseButton disabled={!loginButtonValid} type="submit">
             {loginButtonValid ? 'Login' : 'Enter Your Info'}
           </BaseButton>
         </LoginForm>
