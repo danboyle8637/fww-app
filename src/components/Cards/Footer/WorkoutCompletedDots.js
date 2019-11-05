@@ -2,13 +2,31 @@ import React from 'react'
 import styled from 'styled-components'
 
 import FooterCircleIcon from './FooterCircleIcon'
+import { useWorkoutStatsContext } from '../../../context/WorkoutStatsContext'
 
-const WorkoutCompletedDots = ({ completed }) => {
+const WorkoutCompletedDots = ({ workoutId }) => {
+  // eslint-disable-next-line
+  const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
+
+  const completedStats = workoutStatsState.stats[`${workoutId}`]
+
   return (
     <DotContainer>
-      <FooterCircleIcon active={completed.complete1.isComplete} />
-      <FooterCircleIcon active={completed.complete2.isComplete} />
-      <FooterCircleIcon active={completed.complete3.isComplete} />
+      <FooterCircleIcon
+        active={
+          completedStats ? completedStats.completed.complete1.isComplete : false
+        }
+      />
+      <FooterCircleIcon
+        active={
+          completedStats ? completedStats.completed.complete2.isComplete : false
+        }
+      />
+      <FooterCircleIcon
+        active={
+          completedStats ? completedStats.completed.complete3.isComplete : false
+        }
+      />
     </DotContainer>
   )
 }

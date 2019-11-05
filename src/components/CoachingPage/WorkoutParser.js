@@ -50,6 +50,7 @@ export default WorkoutParser
 const WorkoutSectionContainer = styled.div`
   margin: 80px 0;
   padding: 0 16px;
+  align-self: center;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;

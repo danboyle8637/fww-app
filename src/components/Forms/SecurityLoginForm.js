@@ -10,11 +10,7 @@ import useFormControls from '../../hooks/useFormControls'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import { above } from '../../styles/Theme'
 
-const SecurityLoginForm = ({
-  setIsLoggingIn,
-  setShowDashboard,
-  setErrorMessage
-}) => {
+const SecurityLoginForm = ({ setIsLoggingIn, setShowDashboard }) => {
   const auth = useFireBase()
   const [loginButtonValid, setLoginButtonValid] = useState(false)
   const [showPassword, setShowPassword] = useState(true)
@@ -60,9 +56,10 @@ const SecurityLoginForm = ({
         setShowDashboard(true)
       })
       .catch(() => {
-        const errorMessage = `Couldn't log you in. It's not your fault. It's probably a connection issue. Refresh the page and try again.`
-        setErrorMessage(errorMessage)
-        dispatchPortalAction({ type: 'toggleErrorMessage' })
+        dispatchPortalAction({
+          type: 'toggleErrorMessage',
+          value: `Couldn't log you in. It's not your fault. It's probably a connection issue. Refresh the page and try again.`
+        })
       })
   }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
@@ -23,80 +23,79 @@ const ResetProgramDashboard = ({ match, location }) => {
   // eslint-disable-next-line
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
 
-  const setupWorkoutStats = useCallback(() => {
-    const programId = match.params.programId
-    const programData = {
-      programId: programId
-    }
-    const baseUrl = siteConfig.api.baseUrl
-    const setupTrackingPath = '/setup-workout-tracking'
-
-    const workoutTrackingArray = workoutsState.workouts.reduce(
-      (accumulator, currentValue) => {
-        const workoutName = currentValue.title
-        const workoutId = currentValue.workoutId
-        const workoutObject = {
-          workoutId: workoutId,
-          title: workoutName
-        }
-
-        accumulator.push(workoutObject)
-
-        return accumulator
-      },
-      []
-    )
-
-    const trackingRequest = {
-      programId: programData.programId,
-      workoutsArray: workoutTrackingArray
-    }
-
-    auth.getCurrentUser().then(user => {
-      user
-        .getIdToken(true)
-        .then(token => {
-          fetch(`${baseUrl}${setupTrackingPath}`, {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify(trackingRequest)
-          })
-            .then(response => response.json())
-            .then(data => {
-              dispatchStatsAction({
-                type: 'setWorkoutStatsState',
-                value: data.stats
-              })
-
-              setIsLoadingWorkouts(false)
-            })
-            .catch(error => {
-              // TODO Hand this error of not getting the tracking setup.
-              console.log(error)
-            })
-        })
-        .catch(error => {
-          // Token was not retrieved and needs to be reset
-          console.log(error)
-        })
-    })
-  }, [auth, dispatchStatsAction, match.params.programId, workoutsState])
-
   useEffect(() => {
-    const programId = match.params.programId
-    const programData = {
-      programId: programId
+    const setupWorkoutStats = workoutsArray => {
+      const programId = match.params.programId
+      const programData = {
+        programId: programId
+      }
+      const baseUrl = siteConfig.api.baseUrl
+      const setupTrackingPath = '/setup-workout-tracking'
+
+      const workoutTrackingArray = workoutsArray.reduce(
+        (accumulator, currentValue) => {
+          const workoutName = currentValue.title
+          const workoutId = currentValue.workoutId
+          const workoutObject = {
+            workoutId: workoutId,
+            title: workoutName
+          }
+
+          accumulator.push(workoutObject)
+
+          return accumulator
+        },
+        []
+      )
+
+      const trackingRequest = {
+        programId: programData.programId,
+        workoutsArray: workoutTrackingArray
+      }
+
+      auth.getCurrentUser().then(user => {
+        user
+          .getIdToken(true)
+          .then(token => {
+            fetch(`${baseUrl}${setupTrackingPath}`, {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${token}`
+              },
+              body: JSON.stringify(trackingRequest)
+            })
+              .then(response => response.json())
+              .then(data => {
+                dispatchStatsAction({
+                  type: 'setWorkoutStatsState',
+                  value: data.stats
+                })
+                setIsLoadingWorkouts(false)
+              })
+              .catch(error => {
+                // TODO Hand this error of not getting the tracking setup.
+                console.log(error)
+              })
+          })
+          .catch(error => {
+            // Token was not retrieved and needs to be reset
+            console.log(error)
+          })
+      })
     }
-    const baseUrl = siteConfig.api.baseUrl
-    const getWorkoutsPath = '/get-workouts'
 
     if (
       workoutsState.workouts.length === 0 &&
       Object.keys(workoutStatsState.stats).length === 0
     ) {
       setIsLoadingWorkouts(true)
+
+      const programId = match.params.programId
+      const programData = {
+        programId: programId
+      }
+      const baseUrl = siteConfig.api.baseUrl
+      const getWorkoutsPath = '/get-workouts'
 
       // ! checking local storage for workout and tracking
       if (localStorage.getItem('fwwWorkouts')) {
@@ -109,7 +108,7 @@ const ResetProgramDashboard = ({ match, location }) => {
           value: workoutsData.workouts
         })
 
-        setupWorkoutStats()
+        setupWorkoutStats(workoutsData.workouts)
       } else {
         console.log(`fwwWorkouts workouts are not in storage`)
         console.log('Fetching Data - Setting Up Workout State')
@@ -142,7 +141,7 @@ const ResetProgramDashboard = ({ match, location }) => {
                     JSON.stringify(fwwWorkouts)
                   )
 
-                  setupWorkoutStats()
+                  setupWorkoutStats(workoutsArray.workouts)
                 })
                 .catch(error => {
                   // error in getting data.
@@ -164,11 +163,7 @@ const ResetProgramDashboard = ({ match, location }) => {
     dispatchStatsAction,
     dispatchWorkoutsAction,
     match.params.programId,
-    setupWorkoutStats,
-    userState.userId,
-    workoutStatsState,
     workoutStatsState.stats,
-    workoutsState,
     workoutsState.workouts
   ])
 
@@ -266,76 +261,3 @@ const WorkoutCardWrapper = styled.div`
     width: auto;
   `}
 `
-
-// auth.getCurrentUser().then(user => {
-//   user.getIdToken(true).then(token => {
-//     fetch(`${baseUrl}${getWorkoutsPath}`, {
-//       method: 'POST',
-//       headers: {
-//         Authorization: `Bearer ${token}`
-//       },
-//       body: JSON.stringify(programData)
-//     })
-//       .then(response => response.json())
-//       .then(workoutsArray => {
-//         const array = workoutsArray.workouts
-//         dispatchWorkoutsAction({
-//           type: 'setWorkoutsState',
-//           value: array
-//         })
-
-//         // TODO Set fwwWorkouts in local storage
-//         const fwwWorkouts = {
-//           workouts: array
-//         }
-
-//         localStorage.setItem('fwwWorkouts', JSON.stringify(fwwWorkouts))
-
-//         const workoutTrackingArray = array.reduce(
-//           (accumulator, currentValue) => {
-//             const workoutName = currentValue.title
-//             const workoutId = currentValue.workoutId
-//             const workoutObject = {
-//               workoutId: workoutId,
-//               title: workoutName
-//             }
-
-//             accumulator.push(workoutObject)
-
-//             return accumulator
-//           },
-//           []
-//         )
-
-//         const trackingRequest = {
-//           programId: programData.programId,
-//           workoutsArray: workoutTrackingArray
-//         }
-
-//         fetch(`${baseUrl}${setupTrackingPath}`, {
-//           method: 'POST',
-//           headers: {
-//             Authorization: `Bearer ${token}`
-//           },
-//           body: JSON.stringify(trackingRequest)
-//         })
-//           .then(response => response.json())
-//           .then(data => {
-//             dispatchStatsAction({
-//               type: 'setWorkoutStatsState',
-//               value: data.stats
-//             })
-
-//             setIsLoadingWorkouts(false)
-//           })
-//           .catch(error => {
-//             // TODO Hand this error of not getting the tracking setup.
-//             console.log(error)
-//           })
-//       })
-//       .catch(error => {
-//         // TODO Handle this error about getting the workouts
-//         console.log('Error getting workouts from the database.', error)
-//       })
-//   })
-// })

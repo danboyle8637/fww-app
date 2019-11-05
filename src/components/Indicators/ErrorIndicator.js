@@ -4,18 +4,19 @@ import styled from 'styled-components'
 import DialogTransition from '../../Animations/Transitions/DialogBoxTransition'
 import DialogCloseIcon from '../../svgs/DialogCloseIcon'
 import { usePortalContext } from '../../context/portalContext'
+import { above } from '../../styles/Theme'
 
-const ErrorIndicator = ({ errorMessage }) => {
+const ErrorIndicator = () => {
   const [portalState, dispatchPortalAction] = usePortalContext()
 
   const handleCloseDialogBox = () => {
-    dispatchPortalAction({ type: 'toggleErrorMessage' })
+    dispatchPortalAction({ type: 'toggleErrorMessage', value: '' })
   }
 
   return (
     <DialogTransition toggleDialog={portalState.errorMessage.isOpen}>
       <ErrorContainer>
-        <ErrorText>{errorMessage}</ErrorText>
+        <ErrorText>{portalState.errorMessage.message}</ErrorText>
         <CloseIcon
           lightMode={true}
           handleCloseDialogBox={handleCloseDialogBox}
@@ -37,6 +38,9 @@ const ErrorContainer = styled.div`
   border-radius: 10px;
   box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.3);
   z-index: 2;
+  ${above.mobile`
+    width: 375px;
+  `}
 `
 
 const ErrorText = styled.p`

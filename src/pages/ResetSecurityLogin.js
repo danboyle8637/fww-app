@@ -21,7 +21,6 @@ import { above } from '../styles/Theme'
 const ResetSecurityLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const [showDashboard, setShowDashboard] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
 
@@ -46,10 +45,9 @@ const ResetSecurityLogin = () => {
           <SecurityLoginForm
             setIsLoggingIn={setIsLoggingIn}
             setShowDashboard={setShowDashboard}
-            setErrorMessage={setErrorMessage}
           />
         </ContentWrapper>
-        <Portal component={<ErrorIndicator errorMessage={`Couldn't log you in. It's not your fault. It's probably a connection issue. Refresh the page and try again.`} />} />
+        <Portal component={<ErrorIndicator />} />
       </LoginContainer>
       {isLoggingIn ? (
         <FullPageKettlebellLoader loadingMessage="Setting Up Dashboard" />

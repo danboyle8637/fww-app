@@ -23,7 +23,8 @@ const portalState = {
     ]
   },
   errorMessage: {
-    isOpen: true
+    isOpen: true,
+    message: ''
   }
 }
 
@@ -137,7 +138,8 @@ const portalReducer = (state, action) => {
       return {
         ...state,
         errorMessage: {
-          isOpen: !state.errorMessage.isOpen
+          isOpen: !state.errorMessage.isOpen,
+          message: action.value
         }
       }
     }

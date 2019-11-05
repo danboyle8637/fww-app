@@ -63,7 +63,6 @@ const ResetDashboard = ({ location }) => {
         auth
           .getCurrentUser()
           .then(user => {
-            console.log(user)
             user
               .getIdToken(true)
               .then(token => {

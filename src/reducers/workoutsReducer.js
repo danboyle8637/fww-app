@@ -23,9 +23,15 @@ const workoutsReducer = (state, action) => {
       //   },
       //   []
       // )
+
+      const copyOfState = { ...state }
+
+      copyOfState.workouts = workoutsArray
+
+      console.log('Inside Reducer')
+
       return {
-        ...state,
-        workouts: workoutsArray
+        ...copyOfState
       }
     }
     case 'cleanWorkoutsState': {
