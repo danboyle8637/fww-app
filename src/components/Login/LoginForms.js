@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { TransitionGroup } from 'react-transition-group'
+import React, { useState } from "react";
+import styled from "styled-components";
+import { TransitionGroup } from "react-transition-group";
 
-import ChooseLoginMethod from './ChooseLoginMethod'
-import UsernamePasswordForm from './UsernamePasswordForm'
-import ForgotPasswordForm from './ForgotPasswordForm'
+import ChooseLoginMethod from "./ChooseLoginMethod";
+import UsernamePasswordForm from "./UsernamePasswordForm";
+import ForgotPasswordForm from "./ForgotPasswordForm";
 
-const LoginForms = ({ setIsLoggingIn, setShowDashboard }) => {
-  const [reverse, setReverse] = useState(false)
-  const [activeForm, setActiveForm] = useState(0)
+const LoginForms = ({
+  setIsLoggingIn,
+  setShowDashboard,
+  setLoadingMessage
+}) => {
+  const [reverse, setReverse] = useState(false);
+  const [activeForm, setActiveForm] = useState(0);
 
   return (
     <FormWrapper>
@@ -19,6 +23,7 @@ const LoginForms = ({ setIsLoggingIn, setShowDashboard }) => {
           setReverse={setReverse}
           setShowDashboard={setShowDashboard}
           setIsLoggingIn={setIsLoggingIn}
+          setLoadingMessage={setLoadingMessage}
         />
         <UsernamePasswordForm
           reverse={reverse}
@@ -36,12 +41,12 @@ const LoginForms = ({ setIsLoggingIn, setShowDashboard }) => {
         />
       </TransitionGroup>
     </FormWrapper>
-  )
-}
+  );
+};
 
-export default LoginForms
+export default LoginForms;
 
 const FormWrapper = styled.div`
   position: relative;
   width: 100%;
-`
+`;
