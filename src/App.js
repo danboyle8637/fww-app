@@ -17,6 +17,7 @@ import ResetWorkoutCoaching from "./pages/ResetWorkoutCoaching";
 import ResetUserAccount from "./pages/ResetUserAccount";
 import ResetSecurityLogin from "./pages/ResetSecurityLogin";
 import SocialLogin from "./pages/SocialLogin";
+import SocialSignUp from "./pages/SocialSignUp";
 import PrivateRoute from "./components/Shared/PrivateRoute";
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/login" component={Login} />
             <Route path="/security-login" component={ResetSecurityLogin} />
             <Route path="/social-login" component={SocialLogin} />
+            <Route path="/social-sign-up" component={SocialSignUp} />
             <Route path="/playground" component={SignUp} />
             <Route path="/7-day-reset-step1" component={ResetSignUp} />
             <PrivateRoute path="/review" component={Review} />

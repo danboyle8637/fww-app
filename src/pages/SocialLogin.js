@@ -51,6 +51,8 @@ const SocialLogin = () => {
               })
                 .then(response => response.json())
                 .then(userData => {
+                  // TODO Check if the suer data contains my error.
+                  // If it does... set error and redirect to sign up flow.
                   dispatchUserAction({
                     type: "setLoggedInUser",
                     value: {

@@ -37,11 +37,11 @@ const LoginUsernamePassword = ({
     const passwordValid = formState.passwordValue.valid;
 
     if (!emailValid) {
-      setEmailErrorMessage("Please enter a valid email");
+      setEmailErrorMessage("Enter a valid email");
     }
 
     if (!passwordValid) {
-      setPasswordErrorMessage("Must be over 6 characters");
+      setPasswordErrorMessage("Must be over 6 chars");
     }
 
     if (emailValid && passwordValid) {
@@ -71,7 +71,6 @@ const LoginUsernamePassword = ({
             auth.isAuthenticated = true;
             photoUrl = userCredential.user.photoURL;
 
-            // ! Get fwwUser from local storage
             if (localStorage.getItem("fwwUser")) {
               console.log("fwwUser exists in local storage");
               const data = localStorage.getItem("fwwUser");
@@ -113,7 +112,6 @@ const LoginUsernamePassword = ({
                       }
                     });
 
-                    // ! Setting up local Storage saving fwwUser
                     const fwwUser = {
                       firstName: userData.firstName,
                       photoUrl: photoUrl,
