@@ -14,10 +14,11 @@ const LoginForms = ({ setIsLoggingIn, setShowDashboard }) => {
     <FormWrapper>
       <TransitionGroup component={null}>
         <ChooseLoginMethod
-          setShowDashboard={setShowDashboard}
           activeForm={activeForm}
           setActiveForm={setActiveForm}
           setReverse={setReverse}
+          setShowDashboard={setShowDashboard}
+          setIsLoggingIn={setIsLoggingIn}
         />
         <UsernamePasswordForm
           reverse={reverse}

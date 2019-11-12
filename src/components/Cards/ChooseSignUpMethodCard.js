@@ -38,14 +38,13 @@ const ChooseSignUpMethodCard = ({
     const totalWorkouts = formState.resetWorkoutValue.options.find(
       option => option.value === programId
     )
-    const url = `${siteConfig.api.baseUrl}/sign-up-google`
+    const url = `${siteConfig.api.baseUrl}/sign-up-social-account`
 
     if (device === 'mobile') {
       auth
         .signInWithGoogleProviderRedirect()
         .then(result => {
           const user = result.user
-          console.log(user)
 
           const userId = user.uid
           const email = user.email
@@ -103,7 +102,6 @@ const ChooseSignUpMethodCard = ({
         .signInWithGoogleProviderPopUp()
         .then(result => {
           const user = result.user
-          console.log(user)
 
           const userId = user.uid
           const email = user.email
@@ -160,20 +158,131 @@ const ChooseSignUpMethodCard = ({
   }
 
   const handleFacebookSignUp = () => {
-    auth
-      .signInWithFacebookProviderPopUp()
-      .then(result => {
-        const user = result.user
-        console.log(user)
-        setToDashboard(true)
-      })
-      .catch(error => {
-        // const errorCode = error.code
-        // const errorMessage = error.message
-        // const email = error.email
-        // const credential = error.credential
-        console.log(error)
-      })
+    setIsLoading(true)
+
+    const firstName = formState.firstNameValue.value
+    const biggestObstacle = formState.biggestObstacleValue.value
+    const programId = formState.resetWorkoutValue.value
+    const totalWorkouts = formState.resetWorkoutValue.options.find(
+      option => option.value === programId
+    )
+    const url = `${siteConfig.api.baseUrl}/sign-up-social-account`
+
+    if (device === 'mobile') {
+      auth
+        .signInWithFacebookProviderRedirect()
+        .then(result => {
+          const user = result.user
+
+          const userId = user.uid
+          const email = user.email
+          const photoUrl = user.photoURL
+
+          const signUpData = {
+            userId: userId,
+            programId: programId,
+            totalWorkouts: totalWorkouts['numberOfWorkouts'],
+            firstName: firstName,
+            email: email,
+            biggestObstacle: biggestObstacle,
+            photoUrl: photoUrl
+          }
+
+          fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(signUpData)
+          })
+            .then(response => response.json())
+            .then(userData => {
+              auth.isAuthenticated = true
+              dispatchUserAction({
+                type: 'setLoggedInUser',
+                value: {
+                  firstName: userData.firstName,
+                  photoUrl: userData.photoUrl,
+                  photoUrlTiny: userData.photoUrlTiny,
+                  programs: userData.programs
+                }
+              })
+
+              const fwwUser = {
+                firstName: userData.firstName,
+                photoUrl: userData.photoUrl,
+                photoUrlTiny: userData.photoUrlTiny,
+                programs: userData.programs
+              }
+
+              localStorage.setItem('fwwUser', JSON.stringify(fwwUser))
+
+              setIsLoading(false)
+              setToDashboard(true)
+            })
+        })
+        .catch(error => {
+          // const errorCode = error.code
+          // const errorMessage = error.message
+          // const email = error.email
+          // const credential = error.credential
+          console.log(error)
+        })
+    } else {
+      auth
+        .signInWithFacebookProviderPopUp()
+        .then(result => {
+          const user = result.user
+
+          const userId = user.uid
+          const email = user.email
+          const photoUrl = user.photoURL
+
+          const signUpData = {
+            userId: userId,
+            programId: programId,
+            totalWorkouts: totalWorkouts['numberOfWorkouts'],
+            firstName: firstName,
+            email: email,
+            biggestObstacle: biggestObstacle,
+            photoUrl: photoUrl
+          }
+
+          fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(signUpData)
+          })
+            .then(response => response.json())
+            .then(userData => {
+              auth.isAuthenticated = true
+              dispatchUserAction({
+                type: 'setLoggedInUser',
+                value: {
+                  userId: userData.userId,
+                  firstName: userData.firstName,
+                  photoUrl: userData.photoUrl,
+                  photoUrlTiny: userData.photoUrlTiny,
+                  programs: userData.programs
+                }
+              })
+
+              const fwwUser = {
+                firstName: userData.firstName,
+                photoUrl: userData.photoUrl,
+                programs: userData.programs
+              }
+
+              localStorage.setItem('fwwUser', JSON.stringify(fwwUser))
+
+              setIsLoading(false)
+              setToDashboard(true)
+            })
+        })
+        .catch(error => {
+          // const errorCode = error.code
+          // const errorMessage = error.message
+          // const email = error.email
+          // const credential = error.credential
+          console.log(error)
+        })
+    }
   }
 
   const handleMoveToStep4 = () => {

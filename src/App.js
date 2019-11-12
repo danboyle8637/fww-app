@@ -49,6 +49,7 @@ const App = () => {
               component={ResetWorkout}
             />
             <PrivateRoute
+              exact
               path="/dashboard/:programId/:workoutId/coaching"
               component={ResetWorkoutCoaching}
             />
