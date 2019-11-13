@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import KindalProfileTiny from '../../images/kindal-test-avatar-image-tiny.jpg'
-import KindalProfileLarge from '../../images/kindal-test-avatar-image.jpg'
+import FWWUserAvatarTiny from '../../images/fww-user-avatar-tiny.jpg'
 import useBlurUp from '../../hooks/useBlurUp'
 import { useUserContext } from '../../context/UserContext'
 
@@ -16,18 +15,17 @@ const VerticalUserCard = ({ firstName }) => {
       <ImageContainer ref={setParentContainer}>
         <UserPhoto
           ref={setLargeImage}
-          src={KindalProfileLarge}
+          src={userState.photoUrl}
           alt="Profile picture of the current user"
           title="Profile picture"
         />
         <PlaceholderImage
           ref={setSmallImage}
-          src={KindalProfileTiny}
+          src={FWWUserAvatarTiny}
           alt="Placeholder picture of the current user"
           title="Profile placeholder"
         />
       </ImageContainer>
-
       <UserName>{firstName}</UserName>
     </CardContainer>
   )

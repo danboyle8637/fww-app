@@ -41,7 +41,7 @@ const LoginUsernamePassword = ({
     }
 
     if (!passwordValid) {
-      setPasswordErrorMessage('Must be over 6 chars')
+      setPasswordErrorMessage('Must be over 6 characters')
     }
 
     if (emailValid && passwordValid) {

@@ -4,24 +4,28 @@ import styled from 'styled-components'
 import MenuTransition from '../../Animations/Transitions/MenuTransition'
 import MemberNav from './MemberNav'
 import NonMemberNav from './NonMemberNav'
-import { useUserContext } from '../../context/UserContext'
 import { usePortalContext } from '../../context/portalContext'
+import { useFireBase } from '../Firebase/FirebaseContext'
 import { above } from '../../styles/Theme'
 
 const MenuBar = () => {
+  const auth = useFireBase()
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
-  // eslint-disable-next-line
-  const [userState, dispatchUserAction] = useUserContext()
   const [showNonMemberMenu, setShowNonMemberMenu] = useState(true)
 
   useEffect(() => {
-    if (Object.keys(userState).length === 0) {
-      setShowNonMemberMenu(true)
-    } else {
-      setShowNonMemberMenu(false)
-    }
-  }, [userState])
+    auth
+      .getCurrentUser()
+      .then(user => {
+        if (user) {
+          setShowNonMemberMenu(false)
+        } else {
+          setShowNonMemberMenu(true)
+        }
+      })
+      .catch(() => setShowNonMemberMenu(true))
+  }, [auth])
 
   return (
     <MenuTransition menuOpen={portalState.menu.isOpen}>

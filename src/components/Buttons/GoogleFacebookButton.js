@@ -44,6 +44,9 @@ const Button = styled.button`
   cursor: pointer;
   transition: background-color, border-color, border-width, border-style, color,
     200ms ease-in-out;
+  &:focus {
+    box-shadow: 0 0 0 2px #000, 0 0 0 5px ${props => props.theme.tertiaryAccent};
+  }
 `
 
 const ButtonText = styled.h5`

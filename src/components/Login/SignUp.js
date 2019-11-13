@@ -8,9 +8,9 @@ const SignUp = () => {
   return (
     <SignUpContainer>
       <SignUpHeadline>Don't have an account?</SignUpHeadline>
-      <Link to="/7-day-reset-step1">
+      <SignUpLink to="/7-day-reset-step1">
         <TextButton>Create a Free Account</TextButton>
-      </Link>
+      </SignUpLink>
     </SignUpContainer>
   )
 }
@@ -29,4 +29,10 @@ const SignUpHeadline = styled.h4`
   font-size: 18px;
   color: ${props => props.theme.headlineSecondary};
   letter-spacing: 0.1rem;
+`
+
+const SignUpLink = styled(Link)`
+  &:focus {
+    outline: none;
+  }
 `

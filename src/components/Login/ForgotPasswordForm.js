@@ -13,7 +13,9 @@ const ForgetPasswordForm = ({
   reverse,
   setReverse,
   activeForm,
-  setActiveForm
+  setActiveForm,
+  handleToggleSyncing,
+  setSyncingMessage
 }) => {
   const auth = useFireBase()
   // eslint-disable-next-line
@@ -35,15 +37,19 @@ const ForgetPasswordForm = ({
   const handleResetPassword = event => {
     event.preventDefault()
 
+    handleToggleSyncing()
+    setSyncingMessage('✉️ Sending reset email')
     const email = formState.emailValue.value
 
     auth
       .resetUserPassword(email)
       .then(() => {
-        //set message to say message sent
+        setSyncingMessage('✉️ Reset email sent!')
+        handleToggleSyncing()
       })
       .catch(() => {
-        // set message to say error and try again
+        setSyncingMessage('😢 Error. Try again!')
+        handleToggleSyncing()
       })
   }
 
