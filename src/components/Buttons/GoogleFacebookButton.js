@@ -4,9 +4,14 @@ import styled from 'styled-components'
 import Google from '../../svgs/GoogleButtonIcon'
 import Facebook from '../../svgs/FacebookButtonIcon'
 
-const GoogleFacebookButton = ({ children, provider, handleClick }) => {
+const GoogleFacebookButton = ({
+  children,
+  provider,
+  handleClick,
+  isLinkedUp
+}) => {
   return (
-    <Button onClick={handleClick} provider={provider}>
+    <Button onClick={handleClick} provider={provider} isLinkedUp={isLinkedUp}>
       {provider === 'google' ? <GoogleIcon /> : <FacebookIcon />}
       <ButtonText>{children}</ButtonText>
     </Button>
@@ -22,7 +27,13 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   background-color: ${props =>
-    props.provider === 'google' ? '#e1e1e1' : '#4267B2'};
+    props.provider === 'google' && props.isLinkedUp
+      ? 'rgba(255, 255, 255, 0.2)'
+      : props.provider === 'google'
+      ? '#e1e1e1'
+      : props.isLinkedUp
+      ? 'rgba(66, 103, 178, 0.2)'
+      : '#4267B2'};
   border: none;
   border-radius: 6px;
   box-shadow: 0 2px 3px 3px rgba(0, 0, 0, 0.2);

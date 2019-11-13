@@ -1,24 +1,25 @@
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import Global from "./styles/Global";
-import AppLayout from "./layouts/AppLayout";
-import MainNav from "./components/Nav/MainNav";
-import ResetDashboard from "./pages/ResetDashboard";
-import FourOhFour from "./pages/FourOhFour";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import ResetSignUp from "./pages/ResetSignUp";
-import Review from "./pages/Review";
-import Contact from "./pages/Contact";
-import ResetProgramDashboard from "./pages/ResetProgramDashboard";
-import ResetWorkout from "./pages/ResetWorkout";
-import ResetWorkoutCoaching from "./pages/ResetWorkoutCoaching";
-import ResetUserAccount from "./pages/ResetUserAccount";
-import ResetSecurityLogin from "./pages/ResetSecurityLogin";
-import SocialLogin from "./pages/SocialLogin";
-import SocialSignUp from "./pages/SocialSignUp";
-import PrivateRoute from "./components/Shared/PrivateRoute";
+import Global from './styles/Global'
+import AppLayout from './layouts/AppLayout'
+import MainNav from './components/Nav/MainNav'
+import ResetDashboard from './pages/ResetDashboard'
+import FourOhFour from './pages/FourOhFour'
+import Login from './pages/Login'
+import SignUp from './pages/SignUp'
+import ResetSignUp from './pages/ResetSignUp'
+import Review from './pages/Review'
+import Contact from './pages/Contact'
+import ResetProgramDashboard from './pages/ResetProgramDashboard'
+import ResetWorkout from './pages/ResetWorkout'
+import ResetWorkoutCoaching from './pages/ResetWorkoutCoaching'
+import ResetUserAccount from './pages/ResetUserAccount'
+import ResetSecurityLogin from './pages/ResetSecurityLogin'
+import SocialLogin from './pages/SocialLogin'
+import SocialSignUp from './pages/SocialSignUp'
+import SocialLink from './pages/SocialLink'
+import PrivateRoute from './components/Shared/PrivateRoute'
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
             <Route path="/security-login" component={ResetSecurityLogin} />
             <Route path="/social-login" component={SocialLogin} />
             <Route path="/social-sign-up" component={SocialSignUp} />
+            <Route path="/social-link" component={SocialLink} />
             <Route path="/playground" component={SignUp} />
             <Route path="/7-day-reset-step1" component={ResetSignUp} />
             <PrivateRoute path="/review" component={Review} />
@@ -62,7 +64,7 @@ const App = () => {
         </BrowserRouter>
       </AppLayout>
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App

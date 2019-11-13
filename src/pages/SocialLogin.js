@@ -53,24 +53,28 @@ const SocialLogin = () => {
                 .then(userData => {
                   // TODO Check if the suer data contains my error.
                   // If it does... set error and redirect to sign up flow.
-                  dispatchUserAction({
-                    type: "setLoggedInUser",
-                    value: {
+                  if (userData.error) {
+                    // Set error and redirect
+                  } else {
+                    dispatchUserAction({
+                      type: "setLoggedInUser",
+                      value: {
+                        firstName: userData.firstName,
+                        photoUrl: photoUrl,
+                        programs: userData.programs
+                      }
+                    });
+  
+                    const fwwUser = {
                       firstName: userData.firstName,
                       photoUrl: photoUrl,
                       programs: userData.programs
-                    }
-                  });
-
-                  const fwwUser = {
-                    firstName: userData.firstName,
-                    photoUrl: photoUrl,
-                    programs: userData.programs
-                  };
-
-                  localStorage.setItem("fwwUser", JSON.stringify(fwwUser));
-
-                  setShowDashboard(true);
+                    };
+  
+                    localStorage.setItem("fwwUser", JSON.stringify(fwwUser));
+  
+                    setShowDashboard(true);
+                  }
                 })
                 .catch(error => {
                   // TODO Set the error message that user could not be found. Try again.

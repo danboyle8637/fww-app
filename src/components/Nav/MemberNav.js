@@ -27,7 +27,7 @@ const MemberNav = () => {
       id: 2,
       label: 'account',
       component: <AccountIcon />,
-      slug: `/account/${userState.username}`
+      slug: `/account/${userState.firstName}`
     },
     { id: 3, label: 'contact', component: <ContactIcon />, slug: '/contact' },
     { id: 4, label: 'review', component: <ReviewIcon />, slug: '/review' },

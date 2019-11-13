@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { TransitionGroup } from 'react-transition-group'
-import { Redirect } from 'react-router-dom'
+import { Redirect, useLocation } from 'react-router-dom'
 
 import FWWLogo from '../components/Logos/FWWLogo'
 import VerticalUserCard from '../components/UserCards/VerticalUserCard'
@@ -26,6 +26,25 @@ const ResetUserAccount = () => {
   const [toLogin, setToLogin] = useState(false)
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+
+  const routerData = useLocation()
+
+  useEffect(() => {
+    if (routerData.state) {
+      setSyncMessage(routerData.state.success)
+      setIsSyncing(true)
+
+      setTimeout(() => {
+        setIsSyncing(false)
+      }, 800)
+
+      return () => {
+        clearTimeout()
+      }
+    } else {
+      console.log('Not running sync success message')
+    }
+  }, [routerData])
 
   const handleToggleSync = () => {
     setIsSyncing(prevValue => !prevValue)
@@ -106,9 +125,13 @@ const ResetUserAccount = () => {
               />
             </TransitionGroup>
           </FormWrapper>
-          <ConnectSocialAccount />
+          <ConnectSocialAccount
+            firstName={userState.firstName}
+            handleToggleSync={handleToggleSync}
+            handleSetSyncMessage={handleSetSyncMessage}
+          />
+          <DeleteAccountCard handleDeleteAccount={handleDeleteAccount} />
         </SectionWrapper>
-        <DeleteAccountCard handleDeleteAccount={handleDeleteAccount} />
       </UserAccountContainer>
       <Portal
         component={
