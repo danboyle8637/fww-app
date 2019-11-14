@@ -19,7 +19,7 @@ class Portal extends Component {
   }
 
   render() {
-    return createPortal(this.props.component, this.el)
+    return createPortal(this.props.children, this.el)
   }
 }
 

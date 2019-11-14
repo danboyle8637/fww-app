@@ -14,8 +14,6 @@ import SecurityLoginHeader from '../components/PageHeaders/SecurityLoginHeader'
 import SecurityLoginForm from '../components/Forms/SecurityLoginForm'
 import useRenderBackgroundImage from '../hooks/useRenderBackgroundImage'
 import { useFormStore } from '../context/FormContext'
-import Portal from '../components/Shared/Portal'
-import ErrorIndicator from '../components/Indicators/ErrorIndicator'
 import { above } from '../styles/Theme'
 
 const ResetSecurityLogin = () => {
@@ -47,7 +45,6 @@ const ResetSecurityLogin = () => {
             setShowDashboard={setShowDashboard}
           />
         </ContentWrapper>
-        <Portal component={<ErrorIndicator />} />
       </LoginContainer>
       {isLoggingIn ? (
         <FullPageKettlebellLoader loadingMessage="Setting Up Dashboard" />

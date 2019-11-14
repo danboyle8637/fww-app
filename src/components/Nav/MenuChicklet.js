@@ -56,7 +56,9 @@ const MenuChicklet = () => {
   return (
     <Chicklet ref={menuIconRef} onClick={handleMenuOpen}>
       <Menu menuOpen={portalState.menu.isOpen} />
-      <Portal component={<MenuBar />} />
+      <Portal>
+        <MenuBar />
+      </Portal>
     </Chicklet>
   )
 }

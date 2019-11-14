@@ -74,11 +74,9 @@ const ResetWorkout = () => {
         />
         <DownloadTrackingSheet trackingSheet={trackingSheetUrl} />
       </Row2Wrapper>
-      <Portal
-        component={
-          <SyncingIndicator isSyncing={isSyncing} syncMessage={syncMessage} />
-        }
-      />
+      <Portal>
+        <SyncingIndicator isSyncing={isSyncing} syncMessage={syncMessage} />
+      </Portal>
     </>
   )
 }

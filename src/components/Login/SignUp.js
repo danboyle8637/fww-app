@@ -1,17 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import TextButton from '../Buttons/TextButton'
 
 const SignUp = () => {
+  const [toSignUp, setToSignUp] = useState(false)
+
+  const handleGotoSignUp = () => {
+    setToSignUp(true)
+  }
+
   return (
-    <SignUpContainer>
-      <SignUpHeadline>Don't have an account?</SignUpHeadline>
-      <SignUpLink to="/7-day-reset-step1">
-        <TextButton>Create a Free Account</TextButton>
-      </SignUpLink>
-    </SignUpContainer>
+    <>
+      <SignUpContainer>
+        <SignUpHeadline>Don't have an account?</SignUpHeadline>
+        <TextButton handleClick={handleGotoSignUp}>
+          Create a Free Account
+        </TextButton>
+      </SignUpContainer>
+      {toSignUp ? <Redirect push to="/7-day-reset-step1" /> : null}
+    </>
   )
 }
 
@@ -29,10 +38,4 @@ const SignUpHeadline = styled.h4`
   font-size: 18px;
   color: ${props => props.theme.headlineSecondary};
   letter-spacing: 0.1rem;
-`
-
-const SignUpLink = styled(Link)`
-  &:focus {
-    outline: none;
-  }
 `

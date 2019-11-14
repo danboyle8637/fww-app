@@ -23,7 +23,7 @@ const portalState = {
     ]
   },
   errorMessage: {
-    isOpen: true,
+    isOpen: false,
     message: ''
   }
 }

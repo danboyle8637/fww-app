@@ -133,11 +133,9 @@ const ResetUserAccount = () => {
           <DeleteAccountCard handleDeleteAccount={handleDeleteAccount} />
         </SectionWrapper>
       </UserAccountContainer>
-      <Portal
-        component={
-          <SyncingIndicator isSyncing={isSyncing} syncMessage={syncMessage} />
-        }
-      />
+      <Portal>
+        <SyncingIndicator isSyncing={isSyncing} syncMessage={syncMessage} />
+      </Portal>
       {toLogin ? <Redirect to="/login" /> : null}
     </>
   )

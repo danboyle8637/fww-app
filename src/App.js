@@ -20,6 +20,8 @@ import SocialLogin from './pages/SocialLogin'
 import SocialSignUp from './pages/SocialSignUp'
 import SocialLink from './pages/SocialLink'
 import PrivateRoute from './components/Shared/PrivateRoute'
+import Portal from './components/Shared/Portal'
+import ErrorIndicator from './components/Indicators/ErrorIndicator'
 
 const App = () => {
   return (
@@ -62,6 +64,9 @@ const App = () => {
             <Route component={FourOhFour} />
           </Switch>
         </BrowserRouter>
+        <Portal>
+          <ErrorIndicator />
+        </Portal>
       </AppLayout>
     </>
   )

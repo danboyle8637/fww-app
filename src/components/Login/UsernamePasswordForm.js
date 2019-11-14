@@ -61,7 +61,6 @@ const LoginUsernamePassword = ({
     const url = `${baseUrl}/get-user`
     let photoUrl
 
-    console.log('Logging user in...')
     auth
       .loginUserWithEmailAndPassword(email, password)
       .then(userCredential => {
@@ -69,7 +68,6 @@ const LoginUsernamePassword = ({
         photoUrl = userCredential.user.photoURL
 
         if (localStorage.getItem('fwwUser')) {
-          console.log('fwwUser exists in local storage')
           const data = localStorage.getItem('fwwUser')
           const user = JSON.parse(data)
 
@@ -88,8 +86,6 @@ const LoginUsernamePassword = ({
           // Navigate to the Dashboard
           setShowDashboard(true)
         } else {
-          console.log('fwwUser does not exist in local storage')
-
           userCredential.user.getIdToken(true).then(token => {
             fetch(url, {
               method: 'GET',

@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { useLocation, useHistory } from 'react-router-dom'
+import { Redirect, useLocation, useHistory } from 'react-router-dom'
 
 import MenuChicklet from './MenuChicklet'
 import NavigationArrow from '../../svgs/NavigationArrow'
 import BackButtonTransition from '../../Animations/Transitions/BackButtonTransition'
+import { useUserContext } from '../../context/UserContext'
 import { above } from '../../styles/Theme'
 
 const MainNav = () => {
   const [showBackButton, setShowBackButton] = useState(false)
+  // eslint-disable-next-line
+  const [userState, dispatchUserAction] = useUserContext()
   const location = useLocation()
   const history = useHistory()
 
@@ -32,14 +35,17 @@ const MainNav = () => {
   }
 
   return (
-    <MainNavBar>
-      <BackButtonTransition showBackButton={showBackButton}>
-        <NavArrowBackground onClick={handleGoBack}>
-          <NavArrow />
-        </NavArrowBackground>
-      </BackButtonTransition>
-      <MenuChicklet />
-    </MainNavBar>
+    <>
+      <MainNavBar>
+        <BackButtonTransition showBackButton={showBackButton}>
+          <NavArrowBackground onClick={handleGoBack}>
+            <NavArrow />
+          </NavArrowBackground>
+        </BackButtonTransition>
+        <MenuChicklet />
+      </MainNavBar>
+      {!userState.isLoggedIn ? <Redirect to="/login" /> : null}
+    </>
   )
 }
 

@@ -71,6 +71,6 @@ const Button = styled.button`
   cursor: pointer;
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px #000, 0 0 0 5px ${props => props.theme.tertiaryAccent};
+    box-shadow: 0 0 0 3px ${props => props.theme.tertiaryAccent};
   }
 `
