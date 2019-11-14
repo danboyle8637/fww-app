@@ -19,7 +19,7 @@ const WorkoutSection = ({
   workoutVideos
 }) => {
   // eslint-disable-next-line
-  const [portalState, dispatch] = usePortalContext()
+  const [portalState, dispatchPortalAction] = usePortalContext()
   const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
 
   const [activeVideo, setActiveVideo] = useState(0)
@@ -40,7 +40,7 @@ const WorkoutSection = ({
   }
 
   const handleToggleVideo = () => {
-    dispatch({ type: 'toggleWorkoutVideo' })
+    dispatchPortalAction({ type: 'toggleWorkoutVideo' })
   }
 
   return (
@@ -67,15 +67,13 @@ const WorkoutSection = ({
         activeVideo={activeVideo}
       />
       <Play handleToggleVideo={handleToggleVideo} />
-      <Portal
-        component={
-          <PopUpVideo
-            title={'Workout'}
-            workoutVideos={workoutVideos}
-            activeVideo={activeVideo}
-          />
-        }
-      />
+      <Portal>
+        <PopUpVideo
+          title={'Workout'}
+          workoutVideos={workoutVideos}
+          activeVideo={activeVideo}
+        />
+      </Portal>
     </WorkoutSectionGrid>
   )
 }

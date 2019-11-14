@@ -13,6 +13,7 @@ import SyncingIndicator from '../components/Indicators/SyncingIndicator'
 import useRenderBackgroundImage from '../hooks/useRenderBackgroundImage'
 import fetchAndGetUserData from '../components/Firebase/fetchAndGetUserData'
 import { useUserContext } from '../context/UserContext'
+import { usePortalContext } from '../context/portalContext'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
 import { above } from '../styles/Theme'
 
@@ -26,6 +27,8 @@ const Login = () => {
   const [syncingMessage, setSyncingMessage] = useState('')
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  // eslint-disable-next-line
+  const [portalState, dispatchPortalAction] = usePortalContext()
   const auth = useFireBase()
 
   useEffect(() => {
@@ -46,13 +49,18 @@ const Login = () => {
             })
             setShowDashboard(true)
           })
-          .catch(() => {})
+          .catch(error => {
+            dispatchPortalAction({
+              type: 'toggleErrorMessage',
+              value: `😩 ${error.message}`
+            })
+          })
       })
       .catch(() => {
         auth.isAuthenticated = false
         setShowDashboard(false)
       })
-  }, [auth, dispatchUserAction])
+  }, [auth, dispatchPortalAction, dispatchUserAction])
 
   const title = 'Login to Fit Womens Weekly app'
   const alt = 'Kindal sitting and recovering after a hard workout'

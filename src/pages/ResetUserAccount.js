@@ -14,6 +14,7 @@ import DeleteAccountCard from '../components/AccountPage/DeleteAccountCard'
 import Portal from '../components/Shared/Portal'
 import SyncingIndicator from '../components/Indicators/SyncingIndicator'
 import { useUserContext } from '../context/UserContext'
+import { usePortalContext } from '../context/portalContext'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
 import siteConfig from '../utils/siteConfig'
 import { above } from '../styles/Theme'
@@ -26,6 +27,8 @@ const ResetUserAccount = () => {
   const [toLogin, setToLogin] = useState(false)
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  // eslint-disable-next-line
+  const [portalState, dispatchPortalAction] = usePortalContext()
 
   const routerData = useLocation()
 

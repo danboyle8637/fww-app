@@ -6,9 +6,8 @@ import VideoTransition from '../../Animations/Transitions/VideoTransition'
 import VimeoPlayer from '../Shared/VimeoPlayer'
 import { usePortalContext } from '../../context/portalContext'
 
-const PopUpVideo = ({ title, workoutVideos, activeVideo }) => {
-  // eslint-disable-next-line
-  const [portalState, dispatch] = usePortalContext()
+const PopUpVideo = ({ title, workoutVideos, activeVideo, programId }) => {
+  const [portalState, dispatchPortalAction] = usePortalContext()
   const [showVideo, setShowVideo] = useState(false)
   const [videoId, setVideoId] = useState(0)
 
@@ -22,15 +21,15 @@ const PopUpVideo = ({ title, workoutVideos, activeVideo }) => {
       setShowVideo(workoutIsOpen)
     }
 
-    if (title === 'Cool Down') {
+    if (title === 'Cool_Down') {
       setShowVideo(coolDownIsOpen)
     }
 
-    if (title === 'Warm Up') {
+    if (title === 'Warm_Up') {
       setShowVideo(warmUpIsOpen)
     }
 
-    if (title === 'Training Plan') {
+    if (title === 'Training_Plan') {
       setShowVideo(trainingPlanIsOpen)
     }
   }, [workoutIsOpen, warmUpIsOpen, coolDownIsOpen, title, trainingPlanIsOpen])
@@ -39,14 +38,38 @@ const PopUpVideo = ({ title, workoutVideos, activeVideo }) => {
     if (title === 'Workout') {
       setVideoId(workoutVideos[activeVideo])
     }
-  }, [activeVideo, title, workoutVideos])
+
+    if (title === 'Cool_Down') {
+      setVideoId(371274054)
+    }
+
+    if (title === 'Warm_Up') {
+      setVideoId(371272410)
+    }
+
+    if (title === 'Training_Plan') {
+      if (programId === '7DayIgniteReset') {
+        setVideoId(370761992)
+      }
+
+      if (programId === '7DayBodyBurnReset') {
+        setVideoId(370760838)
+      }
+
+      if (programId === '7DayStrongReset') {
+        setVideoId(370763080)
+      }
+    }
+  }, [activeVideo, programId, title, workoutVideos])
 
   return (
     <VideoTransition showVideo={showVideo}>
       <VideoContainer>
         <VimeoPlayer videoId={videoId} />
         <ButtonContainer>
-          <BaseButton handleClick={() => dispatch({ type: 'closeVideo' })}>
+          <BaseButton
+            handleClick={() => dispatchPortalAction({ type: 'closeVideo' })}
+          >
             Close Video
           </BaseButton>
         </ButtonContainer>

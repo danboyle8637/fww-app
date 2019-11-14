@@ -8,6 +8,7 @@ import TextInput from './Inputs/TextInput'
 import PasswordShowHideIndicator from '../Indicators/PasswordShowHideIndicator'
 import useFormControls from '../../hooks/useFormControls'
 import { useFormStore } from '../../context/FormContext'
+import { usePortalContext } from '../../context/portalContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import { siteConfig } from '../../utils/siteConfig'
 
@@ -20,6 +21,8 @@ const AccountUpdatePasswordForm = ({
   const auth = useFireBase()
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
+  // eslint-disable-next-line
+  const [portalState, dispatchPortalAction] = usePortalContext()
   const [updateInputValues, updateInputOptions] = useFormControls()
   const [showPassword, setShowPassword] = useState(false)
 
@@ -37,26 +40,34 @@ const AccountUpdatePasswordForm = ({
       confirmPassword: confirmPassword
     }
 
-    auth.getCurrentUser().then(user => {
-      user.getIdToken(true).then(token => {
-        fetch(url, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          body: JSON.stringify(updatePasswordReq)
+    auth
+      .getCurrentUser()
+      .then(user => {
+        user.getIdToken(true).then(token => {
+          fetch(url, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(updatePasswordReq)
+          })
+            .then(response => response.json())
+            .then(data => {
+              handleSetSyncMessage(data.message)
+              handleToggleSync()
+            })
+            .catch(error => {
+              handleSetSyncMessage(error.message)
+              handleToggleSync()
+            })
         })
-          .then(response => response.json())
-          .then(data => {
-            handleSetSyncMessage(data.message)
-            handleToggleSync()
-          })
-          .catch(error => {
-            handleSetSyncMessage(error.message)
-            handleToggleSync()
-          })
       })
-    })
+      .catch(() => {
+        dispatchPortalAction({
+          type: 'toggleErrorMessage',
+          value: `😢 Could not get your user account. Just try again. If it keeps happening, let us know.`
+        })
+      })
   }
 
   const toggleShowPassword = () => {

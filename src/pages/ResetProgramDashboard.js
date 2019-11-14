@@ -179,7 +179,7 @@ const ResetProgramDashboard = ({ match, location }) => {
       const workoutStats = workoutStatsState.stats[`${workoutId}`]
 
       return (
-        <Link
+        <CardLink
           key={key}
           to={{
             pathname: `${location.pathname}/${workoutId}`,
@@ -188,7 +188,6 @@ const ResetProgramDashboard = ({ match, location }) => {
               stats: workoutStats
             }
           }}
-          style={{ textDecoration: 'none' }}
         >
           <WorkoutCard
             isWorkout
@@ -198,7 +197,7 @@ const ResetProgramDashboard = ({ match, location }) => {
             description={description}
             workoutId={workoutId}
           />
-        </Link>
+        </CardLink>
       )
     })
 
@@ -260,4 +259,13 @@ const WorkoutCardWrapper = styled.div`
   ${above.tablet`
     width: auto;
   `}
+`
+
+const CardLink = styled(Link)`
+  text-decoration: none;
+  border-radius: 10px 10px 30px 10px;
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #000, 0 0 0 5px ${props => props.theme.primaryAccent};
+  }
 `

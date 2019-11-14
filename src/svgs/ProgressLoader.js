@@ -18,15 +18,13 @@ const ProgressLoader = ({
   useEffect(() => {
     // TODO We need to make sure this only runs when the percent has changed.
     // It's kicking off a state change everytime currently.
+    // I think we want this so it animates and just looks cool.
     const loader = loaderRef.current
 
     const maxLength = DrawSVG.getLength(loader)
     const percentage = Math.round((workoutsCompleted / totalWorkouts) * 100)
 
     const programPercent = (((percentage / 100) * maxLength) / maxLength) * 100
-
-    // const programPercent =
-    //   (((workoutsCompleted / totalWorkouts) * maxLength) / maxLength) * 100
 
     TweenMax.set(loader, { drawSVG: '0%' })
 

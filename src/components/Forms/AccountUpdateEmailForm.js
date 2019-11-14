@@ -23,8 +23,6 @@ const AccountUpdateEmailForm = ({
 
   const handleSaveNewEmail = event => {
     event.preventDefault()
-    console.log(formState.emailValue.value)
-
     handleToggleSync()
 
     const updateEmailReq = {

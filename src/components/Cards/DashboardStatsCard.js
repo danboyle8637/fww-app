@@ -9,7 +9,7 @@ const DashboardStatsCard = ({ programId }) => {
   return (
     <CardContainer>
       <DashboardProgressCard programId={programId} />
-      <DashboardTrainingPlanCard />
+      <DashboardTrainingPlanCard programId={programId} />
     </CardContainer>
   )
 }

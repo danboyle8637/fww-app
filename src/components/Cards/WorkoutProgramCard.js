@@ -55,8 +55,6 @@ const WorkoutProgramCard = ({
   )
 }
 
-// {isProgram ? <ProgramCardFooter programId={programId} /> : null}
-
 export default WorkoutProgramCard
 
 const CardContainer = styled.div`

@@ -13,12 +13,14 @@ const ProgramProgressLoader = ({ programId }) => {
     program => program.programId === programId
   )
 
-  const percentage = program.percentage
+  const totalWorkouts = program.totalWorkouts
+  const workoutsCompleted = program.workoutsCompleted
 
   return (
     <ProgressContainer>
       <ProgressGraph
-        percentage={percentage}
+        totalWorkouts={totalWorkouts}
+        workoutsCompleted={workoutsCompleted}
         setPercentComplete={setPercentComplete}
       />
       <PercentNumber>{`${percentComplete}%`}</PercentNumber>

@@ -10,6 +10,7 @@ import PasswordShowHideIndicator from '../Indicators/PasswordShowHideIndicator'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
 import { useUserContext } from '../../context/UserContext'
+import { usePortalContext } from '../../context/portalContext'
 import { useFireBase } from '../../components/Firebase/FirebaseContext'
 import siteConfig from '../../utils/siteConfig'
 
@@ -29,6 +30,8 @@ const LoginUsernamePassword = ({
   const [formState, dispatch] = useFormStore()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  // eslint-disable-next-line
+  const [portalState, dispatchPortalAction] = usePortalContext()
   const [updateInputValues, updateInputOptions] = useFormControls()
 
   // Check for form valid and set correct error message
@@ -121,23 +124,41 @@ const LoginUsernamePassword = ({
                 setShowDashboard(true)
               })
               .catch(error => {
-                console.log('Could not set user', error)
+                dispatchPortalAction({
+                  type: 'toggleErrorMessage',
+                  value: `😬 ${error.message}`
+                })
               })
           })
         }
       })
       .catch(error => {
         if (error.code === 'auth/invalid-email') {
-          // update error state and display to user
+          dispatchPortalAction({
+            type: 'toggleErrorMessage',
+            value: `😢 Invalid email address. Try again.`
+          })
         } else if (error.code === 'auth/user-disabled') {
-          // update error state and display to user
+          dispatchPortalAction({
+            type: 'toggleErrorMessage',
+            value: `😢 Your user account is disabled. Contact us to reactive it or create a new one.`
+          })
         } else if (error.code === 'auth/user-not-found') {
-          // update error state and display to user
+          dispatchPortalAction({
+            type: 'toggleErrorMessage',
+            value: `😢 User not found. If you're not a member yet go sign up. It's free!`
+          })
         } else if (error.code === 'auth/wrong-password') {
-          // update error state and display to user
-          setPasswordErrorMessage('Wrong password. Try again')
+          dispatchPortalAction({
+            type: 'toggleErrorMessage',
+            value: `🤐 Wrong password. Try againg!`
+          })
+          setPasswordErrorMessage('Wrong password.')
         } else {
-          // something crazy happened. Should never hit this.
+          dispatchPortalAction({
+            type: 'toggleErrorMessage',
+            value: `🤔 Something crazy happend. Refresh the page and try again. If this happens again, contact us please.`
+          })
         }
       })
   }

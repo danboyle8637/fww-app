@@ -23,12 +23,12 @@ const WarmUpCoolDownSection = ({
 
   const handleToggleWarmUp = () => {
     dispatch({ type: 'toggleWarmUpVideo' })
-    setTitle('Warm Up')
+    setTitle('Warm_Up')
   }
 
   const handleToggleCoolDown = () => {
     dispatch({ type: 'toggleCoolDownVideo' })
-    setTitle('Cool Down')
+    setTitle('Cool_Down')
   }
 
   return (
@@ -51,7 +51,9 @@ const WarmUpCoolDownSection = ({
         <WorkoutLabelIndicator type={'cooldown'} />
         <Play handleToggleVideo={handleToggleCoolDown} />
       </WorkoutSectionGrid>
-      <Portal component={<PopUpVideo title={title} />} />
+      <Portal>
+        <PopUpVideo title={title} />
+      </Portal>
     </WarmUpCoolDownContainer>
   )
 }

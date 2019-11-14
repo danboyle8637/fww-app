@@ -153,10 +153,10 @@ const ResetDashboard = ({ location }) => {
 
       if (activeProgram) {
         return (
-          <Link
+          <CardLink
             key={key}
             to={`${location.pathname}/${programId}`}
-            style={{ textDecoration: 'none' }}
+            // style={{ textDecoration: 'none' }}
           >
             <ProgramCard
               isProgram
@@ -167,7 +167,7 @@ const ResetDashboard = ({ location }) => {
               description={description}
               activeProgram={activeProgram}
             />
-          </Link>
+          </CardLink>
         )
       } else {
         return (
@@ -237,4 +237,13 @@ const ProgramCardsWrapper = styled.div`
     width: auto;
     gap: 20px;
   `}
+`
+
+const CardLink = styled(Link)`
+  text-decoration: none;
+  border-radius: 10px 10px 30px 10px;
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #000, 0 0 0 5px ${props => props.theme.primaryAccent};
+  }
 `

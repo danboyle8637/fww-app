@@ -6,7 +6,7 @@ import Portal from '../Shared/Portal'
 import PopUpVideo from '../WorkoutPage/PopUpVideo'
 import { usePortalContext } from '../../context/portalContext'
 
-const DashboardTrainingPlanCard = () => {
+const DashboardTrainingPlanCard = ({ programId }) => {
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
 
@@ -20,7 +20,7 @@ const DashboardTrainingPlanCard = () => {
       <TrainingPlanHeadline>The Plan:</TrainingPlanHeadline>
       <Play handleToggleVideo={handleToggleVideo} />
       <Portal>
-        <PopUpVideo title="Training Plan" />
+        <PopUpVideo title="Training_Plan" programId={programId} />
       </Portal>
     </CardContainer>
   )
