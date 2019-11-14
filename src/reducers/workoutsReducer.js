@@ -28,8 +28,6 @@ const workoutsReducer = (state, action) => {
 
       copyOfState.workouts = workoutsArray
 
-      console.log('Inside Reducer')
-
       return {
         ...copyOfState
       }

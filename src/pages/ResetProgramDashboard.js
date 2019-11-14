@@ -7,7 +7,7 @@ import WorkoutCard from '../components/Cards/WorkoutProgramCard'
 import DashboardStatsCard from '../components/Cards/DashboardStatsCard'
 import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
 import { useWorkoutState } from '../context/WorkoutsContext'
-import { useUserContext } from '../context/UserContext'
+import { usePortalContext } from '../context/portalContext'
 import { useWorkoutStatsContext } from '../context/WorkoutStatsContext'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
 import { above } from '../styles/Theme'
@@ -17,13 +17,14 @@ const ResetProgramDashboard = ({ match, location }) => {
   const auth = useFireBase()
   const [isLoadingWorkouts, setIsLoadingWorkouts] = useState(false)
   // eslint-disable-next-line
-  const [userState, dispatchUserAction] = useUserContext()
-  // eslint-disable-next-line
   const [workoutsState, dispatchWorkoutsAction] = useWorkoutState()
   // eslint-disable-next-line
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
+  // eslint-disable-next-line
+  const [portalState, dispatchPortalAction] = usePortalContext()
 
   useEffect(() => {
+    // * This is my function that sets up the workout stats for selected program
     const setupWorkoutStats = workoutsArray => {
       const programId = match.params.programId
       const programData = {
@@ -73,13 +74,18 @@ const ResetProgramDashboard = ({ match, location }) => {
                 setIsLoadingWorkouts(false)
               })
               .catch(error => {
-                // TODO Hand this error of not getting the tracking setup.
-                console.log(error)
+                dispatchPortalAction({
+                  type: 'toggleErrorMessage',
+                  value: error.message
+                })
               })
           })
           .catch(error => {
-            // Token was not retrieved and needs to be reset
-            console.log(error)
+            dispatchPortalAction({
+              type: 'toggleErrorMessage',
+              value:
+                '😢 A connection issue has stopped up from authenticating your account. Refresh and try again. Contact us if this keeps happening.'
+            })
           })
       })
     }
@@ -99,7 +105,7 @@ const ResetProgramDashboard = ({ match, location }) => {
 
       // ! checking local storage for workout and tracking
       if (localStorage.getItem('fwwWorkouts')) {
-        console.log(`Workouts are in storage`)
+        // Workouts are in storage
         const data = localStorage.getItem('fwwWorkouts')
         const workoutsData = JSON.parse(data)
 
@@ -110,8 +116,8 @@ const ResetProgramDashboard = ({ match, location }) => {
 
         setupWorkoutStats(workoutsData.workouts)
       } else {
-        console.log(`fwwWorkouts workouts are not in storage`)
-        console.log('Fetching Data - Setting Up Workout State')
+        // fwwWorkouts workouts are not in storage
+        // Fetching Data - Setting Up Workout State
 
         auth.getCurrentUser().then(user => {
           user
@@ -131,7 +137,6 @@ const ResetProgramDashboard = ({ match, location }) => {
                     value: workoutsArray.workouts
                   })
 
-                  // TODO Set fwwWorkouts in local storage
                   const fwwWorkouts = {
                     workouts: workoutsArray.workouts
                   }
@@ -144,22 +149,25 @@ const ResetProgramDashboard = ({ match, location }) => {
                   setupWorkoutStats(workoutsArray.workouts)
                 })
                 .catch(error => {
-                  // error in getting data.
-                  // Should get message from server
-                  // let user know to refresh screen
-                  // TODO Handle this error
-                  console.log(error)
+                  dispatchPortalAction({
+                    type: 'toggleErrorMessage',
+                    value: error.message
+                  })
                 })
             })
-            .catch(error => {
-              // The token was not reterieved and needs to be reset
-              console.log(error)
+            .catch(() => {
+              dispatchPortalAction({
+                type: 'toggleErrorMessage',
+                value:
+                  '😢 A connection issue has stopped up from authenticating your account. Refresh and try again. Contact us if this keeps happening.'
+              })
             })
         })
       }
     }
   }, [
     auth,
+    dispatchPortalAction,
     dispatchStatsAction,
     dispatchWorkoutsAction,
     match.params.programId,

@@ -8,6 +8,7 @@ import HorizontalBasicUserCard from '../components/UserCards/HorizontalBasicUser
 import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
 import { useUserContext } from '../context/UserContext'
 import { useProgramsContext } from '../context/ProgramsContext'
+import { usePortalContext } from '../context/portalContext'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
 import siteConfig from '../utils/siteConfig'
 import { above } from '../styles/Theme'
@@ -20,6 +21,8 @@ const ResetDashboard = ({ location }) => {
   const [programsState, dispatchProgramsAction] = useProgramsContext()
   // eslint-disable-next-line
   const [isLoadingPrograms, setIsLoadingPrograms] = useState(false)
+  // eslint-disable-next-line
+  const [portalState, dispatchPortalAction] = usePortalContext()
 
   useEffect(() => {
     if (
@@ -42,7 +45,6 @@ const ResetDashboard = ({ location }) => {
 
       // ! Checking local storage for programs
       if (localStorage.getItem('fwwPrograms')) {
-        console.log('fwwPrograms are in local storage')
         const data = localStorage.getItem('fwwPrograms')
         const programData = JSON.parse(data)
 
@@ -58,8 +60,6 @@ const ResetDashboard = ({ location }) => {
 
         setIsLoadingPrograms(false)
       } else {
-        console.log('fwwPrograms are not in local storage')
-        console.log('Fetching Data - Setting Up Program State')
         auth
           .getCurrentUser()
           .then(user => {
@@ -117,21 +117,31 @@ const ResetDashboard = ({ location }) => {
                     setIsLoadingPrograms(false)
                   })
                   .catch(error => {
-                    console.log(error)
+                    dispatchPortalAction({
+                      type: 'toggleErrorMessage',
+                      value: error.message
+                    })
                   })
               })
               .catch(error => {
-                // Token error
-                console.log(error)
+                dispatchPortalAction({
+                  type: 'toggleErrorMessage',
+                  value:
+                    '😬 Something happened. Refresh the page and try again.'
+                })
               })
           })
           .catch(error => {
-            console.log(`The whole things crashed down`, error)
+            dispatchPortalAction({
+              type: 'toggleErrorMessage',
+              value: `😬 Could not get your user account. Try again so we can setup your programs.`
+            })
           })
       }
     }
   }, [
     auth,
+    dispatchPortalAction,
     dispatchProgramsAction,
     programsState.percentComplete,
     programsState.programs,

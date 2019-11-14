@@ -10,6 +10,7 @@ import PasswordShowHideIndicator from '../Indicators/PasswordShowHideIndicator'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
 import { useUserContext } from '../../context/UserContext'
+import { usePortalContext } from '../../context/portalContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import { above } from '../../styles/Theme'
 
@@ -27,6 +28,8 @@ const ResetStep4Form = ({
   const [updateInputValues, updateInputOptions] = useFormControls()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  // eslint-disable-next-line
+  const [portalState, dispatchPortalAction] = usePortalContext()
   const [showPassword, setShowPassword] = useState(false)
 
   const handleBackClick = () => {
@@ -91,7 +94,6 @@ const ResetStep4Form = ({
               value: {
                 firstName: userData.firstName,
                 photoUrl: userData.photoUrl,
-                photoUrlTiny: userData.photoUrlTiny,
                 programs: userData.programs
               }
             })
@@ -99,7 +101,6 @@ const ResetStep4Form = ({
             const fwwUser = {
               firstName: userData.firstName,
               photoUrl: userData.photoUrl,
-              photoUrlTiny: userData.photoUrlTiny,
               programs: userData.programs
             }
 
@@ -109,9 +110,10 @@ const ResetStep4Form = ({
             setShowSecurityLogin(true)
           })
           .catch(error => {
-            if (error) {
-              console.log(error)
-            }
+            dispatchPortalAction({
+              type: 'toggleErrorMessage',
+              value: error.message
+            })
           })
       })
       .catch(error => {
