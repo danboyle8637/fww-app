@@ -6,6 +6,7 @@ import FWWLogo from '../components/Logos/FWWLogo'
 import ProgramCard from '../components/Cards/WorkoutProgramCard'
 import HorizontalBasicUserCard from '../components/UserCards/HorizontalBasicUserCard'
 import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
+import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
 import { useUserContext } from '../context/UserContext'
 import { useProgramsContext } from '../context/ProgramsContext'
 import { usePortalContext } from '../context/portalContext'
@@ -21,6 +22,8 @@ const ResetDashboard = ({ location }) => {
   const [programsState, dispatchProgramsAction] = useProgramsContext()
   // eslint-disable-next-line
   const [isLoadingPrograms, setIsLoadingPrograms] = useState(false)
+  const [addingProgramToAccount, setAddingProgramToAccount] = useState(false)
+  const [loadingMessage, setLoadingMessage] = useState('')
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
 
@@ -190,6 +193,8 @@ const ResetDashboard = ({ location }) => {
             title={title}
             description={description}
             activeProgram={activeProgram}
+            setAddingProgramToAccount={setAddingProgramToAccount}
+            setLoadingMessage={setLoadingMessage}
           />
         )
       }
@@ -207,16 +212,21 @@ const ResetDashboard = ({ location }) => {
   )
 
   return (
-    <DashboardContainer>
-      <FWWLogo />
-      <HorizontalBasicUserCard
-        photoUrl={userState.photoUrl}
-        firstName={userState.firstName}
-      />
-      <ProgramCardsWrapper>
-        {isLoadingPrograms ? <>{programCardLoader}</> : renderPrograms()}
-      </ProgramCardsWrapper>
-    </DashboardContainer>
+    <>
+      <DashboardContainer>
+        <FWWLogo />
+        <HorizontalBasicUserCard
+          photoUrl={userState.photoUrl}
+          firstName={userState.firstName}
+        />
+        <ProgramCardsWrapper>
+          {isLoadingPrograms ? <>{programCardLoader}</> : renderPrograms()}
+        </ProgramCardsWrapper>
+      </DashboardContainer>
+      {addingProgramToAccount ? (
+        <FullPageKettlebellLoader loadingMessage={loadingMessage} />
+      ) : null}
+    </>
   )
 }
 

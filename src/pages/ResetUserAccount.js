@@ -113,6 +113,8 @@ const ResetUserAccount = () => {
               <AccountUpdateProfilePicForm
                 activeSlide={activeSlide}
                 setActiveSlide={setActiveSlide}
+                handleToggleSync={handleToggleSync}
+                handleSetSyncMessage={handleSetSyncMessage}
               />
               <AccountUpdateEmailForm
                 activeSlide={activeSlide}

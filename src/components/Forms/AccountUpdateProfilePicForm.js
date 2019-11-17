@@ -6,19 +6,29 @@ import BaseButton from '../Buttons/BaseButton'
 import FileUpload from '../Forms/Inputs/FileUpload'
 import BackChip from '../Chips/BackChip'
 import useFormControls from '../../hooks/useFormControls'
+import { useUserContext } from '../../context/UserContext'
 import { useFormStore } from '../../context/FormContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import siteConfig from '../../utils/siteConfig'
 
-const AccountUpdateProfilePicForm = ({ activeSlide, setActiveSlide }) => {
+const AccountUpdateProfilePicForm = ({
+  activeSlide,
+  setActiveSlide,
+  handleToggleSync,
+  handleSetSyncMessage
+}) => {
   const auth = useFireBase()
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
   // eslint-disable-next-line
   const [updateInputValues, updateInputOptions] = useFormControls()
+  // eslint-disable-next-line
+  const [userState, dispatchUserAction] = useUserContext()
 
   const handleUploadPhoto = event => {
     event.preventDefault()
+    handleToggleSync()
+    handleSetSyncMessage('Updating your image...')
 
     const newAvatar = formState.updateProfileImage.file
     const formData = new FormData()
@@ -37,10 +47,24 @@ const AccountUpdateProfilePicForm = ({ activeSlide, setActiveSlide }) => {
         })
           .then(response => response.json())
           .then(data => {
-            console.log(data)
+            handleSetSyncMessage('😁 Image updated!')
+            dispatchUserAction({
+              type: 'setUpdatedProfileImage',
+              value: data.photoUrl
+            })
+            const userData = localStorage.getItem('fwwUser')
+            const fwwUser = JSON.parse(userData)
+
+            const updatedFWWUser = {
+              ...fwwUser,
+              photoUrl: data.photoUrl
+            }
+
+            localStorage.setItem('fwwUser', JSON.stringify(updatedFWWUser))
+            handleToggleSync()
           })
           .catch(error => {
-            console.log(error)
+            handleSetSyncMessage(`😢 ${error.errors.error}`)
           })
       })
     })

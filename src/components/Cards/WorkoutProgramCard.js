@@ -19,7 +19,9 @@ const WorkoutProgramCard = ({
   tinyImage,
   title = 'Workout Title',
   description,
-  activeProgram
+  activeProgram,
+  setAddingProgramToAccount,
+  setLoadingMessage
 }) => {
   return (
     <CardContainer>
@@ -48,7 +50,11 @@ const WorkoutProgramCard = ({
         activeProgram ? (
           <ProgramCardFooter programId={programId} />
         ) : (
-          <AddProgramCardFooter />
+          <AddProgramCardFooter
+            programId={programId}
+            setAddingProgramToAccount={setAddingProgramToAccount}
+            setLoadingMessage={setLoadingMessage}
+          />
         )
       ) : null}
     </CardContainer>
@@ -67,10 +73,11 @@ const CardContainer = styled.div`
   width: 100%;
   max-width: 390px;
   box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 300ms ease-in-out;
   ${above.ipadPro`
     &:hover {
-      transform: translateY(-4px);
-      transition: transform 250ms ease-in-out;
+      box-shadow: 0 0 0 2px #000, 0 0 0 5px ${props =>
+        props.theme.primaryAccent};
     }
   `}
 `

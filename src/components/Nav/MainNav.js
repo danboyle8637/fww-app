@@ -31,6 +31,7 @@ const MainNav = () => {
   }, [location])
 
   const handleGoBack = () => {
+    // TODO here is where you can possibly signal to cancel all fetch calls if they click this.
     history.goBack()
   }
 

@@ -14,6 +14,10 @@ import { above } from '../styles/Theme'
 import siteConfig from '../utils/siteConfig'
 
 const ResetProgramDashboard = ({ match, location }) => {
+  // * This sets the ability to cancel fetch requests
+  const controller = new AbortController()
+  const signal = controller.signal
+
   const auth = useFireBase()
   const [isLoadingWorkouts, setIsLoadingWorkouts] = useState(false)
   // eslint-disable-next-line
@@ -60,6 +64,7 @@ const ResetProgramDashboard = ({ match, location }) => {
           .then(token => {
             fetch(`${baseUrl}${setupTrackingPath}`, {
               method: 'POST',
+              signal: signal,
               headers: {
                 Authorization: `Bearer ${token}`
               },
@@ -104,9 +109,9 @@ const ResetProgramDashboard = ({ match, location }) => {
       const getWorkoutsPath = '/get-workouts'
 
       // ! checking local storage for workout and tracking
-      if (localStorage.getItem('fwwWorkouts')) {
+      if (localStorage.getItem(`${programId}`)) {
         // Workouts are in storage
-        const data = localStorage.getItem('fwwWorkouts')
+        const data = localStorage.getItem(`${programId}`)
         const workoutsData = JSON.parse(data)
 
         dispatchWorkoutsAction({
@@ -118,13 +123,13 @@ const ResetProgramDashboard = ({ match, location }) => {
       } else {
         // fwwWorkouts workouts are not in storage
         // Fetching Data - Setting Up Workout State
-
         auth.getCurrentUser().then(user => {
           user
             .getIdToken(true)
             .then(token => {
               fetch(`${baseUrl}${getWorkoutsPath}`, {
                 method: 'POST',
+                signal: signal,
                 headers: {
                   Authorization: `Bearer ${token}`
                 },
@@ -142,7 +147,7 @@ const ResetProgramDashboard = ({ match, location }) => {
                   }
 
                   localStorage.setItem(
-                    'fwwWorkouts',
+                    `${programId}`,
                     JSON.stringify(fwwWorkouts)
                   )
 
@@ -171,6 +176,7 @@ const ResetProgramDashboard = ({ match, location }) => {
     dispatchStatsAction,
     dispatchWorkoutsAction,
     match.params.programId,
+    signal,
     workoutStatsState.stats,
     workoutsState.workouts
   ])
@@ -226,17 +232,19 @@ const ResetProgramDashboard = ({ match, location }) => {
   )
 
   return (
-    <ProgramDashboardContainer>
-      <ResetProgramDashboardHeader programId={match.params.programId} />
-      <DashboardStatsCard programId={match.params.programId} />
-      <WorkoutCardWrapper>
-        {isLoadingWorkouts ? (
-          <>{workoutLoaderCards}</>
-        ) : (
-          <>{renderWorkouts()}</>
-        )}
-      </WorkoutCardWrapper>
-    </ProgramDashboardContainer>
+    <>
+      <ProgramDashboardContainer>
+        <ResetProgramDashboardHeader programId={match.params.programId} />
+        <DashboardStatsCard programId={match.params.programId} />
+        <WorkoutCardWrapper>
+          {isLoadingWorkouts ? (
+            <>{workoutLoaderCards}</>
+          ) : (
+            <>{renderWorkouts()}</>
+          )}
+        </WorkoutCardWrapper>
+      </ProgramDashboardContainer>
+    </>
   )
 }
 
@@ -272,6 +280,7 @@ const WorkoutCardWrapper = styled.div`
 const CardLink = styled(Link)`
   text-decoration: none;
   border-radius: 10px 10px 30px 10px;
+  transition: box-shadow 300ms ease-in-out;
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px #000, 0 0 0 5px ${props => props.theme.primaryAccent};

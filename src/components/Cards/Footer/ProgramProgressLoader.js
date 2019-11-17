@@ -9,6 +9,8 @@ const ProgramProgressLoader = ({ programId }) => {
   // eslint-disable-next-line
   const [programsState, dispatchProgramsAction] = useProgramsContext()
 
+  console.log(programsState)
+
   const program = programsState.percentComplete.find(
     program => program.programId === programId
   )

@@ -19,6 +19,18 @@ const userReducer = (state, action) => {
         isLoggedIn: !state.isLoggedIn
       }
     }
+    case 'setUpdatedProfileImage': {
+      return {
+        ...state,
+        photoUrl: action.value
+      }
+    }
+    case 'setUpdatedPrograms': {
+      return {
+        ...state,
+        programs: [...state.programs, action.value]
+      }
+    }
     default: {
       return state
     }
