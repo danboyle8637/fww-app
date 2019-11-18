@@ -41,10 +41,12 @@ const LoginUsernamePassword = ({
 
     if (!emailValid) {
       setEmailErrorMessage('Enter a valid email')
+      setLoginButtonValid(false)
     }
 
     if (!passwordValid) {
       setPasswordErrorMessage('Must be over 6 characters')
+      setLoginButtonValid(false)
     }
 
     if (emailValid && passwordValid) {
@@ -134,31 +136,41 @@ const LoginUsernamePassword = ({
       })
       .catch(error => {
         if (error.code === 'auth/invalid-email') {
+          setIsLoggingIn(false)
           dispatchPortalAction({
             type: 'toggleErrorMessage',
             value: `😢 Invalid email address. Try again.`
           })
+          dispatch({ type: 'resetEmailPasswordForm' })
         } else if (error.code === 'auth/user-disabled') {
+          setIsLoggingIn(false)
           dispatchPortalAction({
             type: 'toggleErrorMessage',
             value: `😢 Your user account is disabled. Contact us to reactive it or create a new one.`
           })
+          dispatch({ type: 'resetEmailPasswordForm' })
         } else if (error.code === 'auth/user-not-found') {
+          setIsLoggingIn(false)
           dispatchPortalAction({
             type: 'toggleErrorMessage',
             value: `😢 User not found. If you're not a member yet go sign up. It's free!`
           })
+          dispatch({ type: 'resetEmailPasswordForm' })
         } else if (error.code === 'auth/wrong-password') {
+          setIsLoggingIn(false)
           dispatchPortalAction({
             type: 'toggleErrorMessage',
-            value: `🤐 Wrong password. Try againg!`
+            value: `🤐 Wrong password. Try again!`
           })
+          dispatch({ type: 'resetEmailPasswordForm' })
           setPasswordErrorMessage('Wrong password.')
         } else {
+          setIsLoggingIn(false)
           dispatchPortalAction({
             type: 'toggleErrorMessage',
             value: `🤔 Something crazy happend. Refresh the page and try again. If this happens again, contact us please.`
           })
+          dispatch({ type: 'resetEmailPasswordForm' })
         }
       })
   }

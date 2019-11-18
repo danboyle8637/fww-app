@@ -34,18 +34,34 @@ const ErrorContainer = styled.div`
   left: 12px;
   right: 12px;
   padding: 12px;
+  display: flex;
+  justify-content: flex-start;
   background: ${props => props.theme.formErrorBackground};
   border-radius: 10px;
   box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.3);
   z-index: 2;
   ${above.mobile`
-    width: 375px;
+    left: 20px;
+    right: 20px;
+    justify-content: center;
+  `}
+  ${above.ipadPro`
+    left: 50%;
+    width: 1200px;
+    transform: translateX(-50%);
   `}
 `
 
 const ErrorText = styled.p`
   font-size: 15px;
   color: ${props => props.theme.whiteText};
+  ${above.mobile`
+    font-size: 20px;
+    font-weight: 800;
+  `}
+  ${above.tablet`
+    font-size: 22px;
+  `}
 `
 
 const CloseIcon = styled(DialogCloseIcon)`

@@ -9,6 +9,7 @@ import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
 import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
 import { useUserContext } from '../context/UserContext'
 import { useProgramsContext } from '../context/ProgramsContext'
+import { useWorkoutState } from '../context/WorkoutsContext'
 import { usePortalContext } from '../context/portalContext'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
 import siteConfig from '../utils/siteConfig'
@@ -18,14 +19,18 @@ const ResetDashboard = ({ location }) => {
   const auth = useFireBase()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
-  // eslint-disable-next-line
   const [programsState, dispatchProgramsAction] = useProgramsContext()
   // eslint-disable-next-line
+  const [workoutsState, dispatchWorkoutsAction] = useWorkoutState()
   const [isLoadingPrograms, setIsLoadingPrograms] = useState(false)
   const [addingProgramToAccount, setAddingProgramToAccount] = useState(false)
   const [loadingMessage, setLoadingMessage] = useState('')
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
+
+  useEffect(() => {
+    dispatchWorkoutsAction({ type: 'cleanWorkoutsState' })
+  }, [dispatchWorkoutsAction])
 
   useEffect(() => {
     if (
@@ -213,19 +218,20 @@ const ResetDashboard = ({ location }) => {
 
   return (
     <>
-      <DashboardContainer>
-        <FWWLogo />
-        <HorizontalBasicUserCard
-          photoUrl={userState.photoUrl}
-          firstName={userState.firstName}
-        />
-        <ProgramCardsWrapper>
-          {isLoadingPrograms ? <>{programCardLoader}</> : renderPrograms()}
-        </ProgramCardsWrapper>
-      </DashboardContainer>
       {addingProgramToAccount ? (
         <FullPageKettlebellLoader loadingMessage={loadingMessage} />
-      ) : null}
+      ) : (
+        <DashboardContainer>
+          <FWWLogo />
+          <HorizontalBasicUserCard
+            photoUrl={userState.photoUrl}
+            firstName={userState.firstName}
+          />
+          <ProgramCardsWrapper>
+            {isLoadingPrograms ? <>{programCardLoader}</> : renderPrograms()}
+          </ProgramCardsWrapper>
+        </DashboardContainer>
+      )}
     </>
   )
 }

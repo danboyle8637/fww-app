@@ -19,7 +19,6 @@ const AddProgramCardFooter = ({
   const [programsState, dispatchProgramsAction] = useProgramsContext()
 
   const handleAddProgram = () => {
-    console.log('Add program to user program array')
     // 1. Show the full page kettlebell loader
     setAddingProgramToAccount(true)
     setLoadingMessage('Adding Progam to Account...')
@@ -95,9 +94,6 @@ const AddProgramCardFooter = ({
           })
       })
     )
-
-    // 3. Update user state program array and localstorage program array
-    // 4. Reshow the dashboard with what should be active program card
   }
 
   return (

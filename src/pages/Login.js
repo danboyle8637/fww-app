@@ -78,23 +78,22 @@ const Login = () => {
 
   return (
     <>
+      <LoginContainer>
+        {background}
+        <ContentWrapper>
+          <LoginSignUpHeader />
+          <LoginForms
+            setIsLoggingIn={setIsLoggingIn}
+            setShowDashboard={setShowDashboard}
+            setLoadingMessage={setLoadingMessage}
+            handleToggleSyncing={handleToggleSyncing}
+            setSyncingMessage={setSyncingMessage}
+          />
+        </ContentWrapper>
+      </LoginContainer>
       {isLoggingIn ? (
         <FullPageKettlebellLoader loadingMessage={loadingMessage} />
-      ) : (
-        <LoginContainer>
-          {background}
-          <ContentWrapper>
-            <LoginSignUpHeader />
-            <LoginForms
-              setIsLoggingIn={setIsLoggingIn}
-              setShowDashboard={setShowDashboard}
-              setLoadingMessage={setLoadingMessage}
-              handleToggleSyncing={handleToggleSyncing}
-              setSyncingMessage={setSyncingMessage}
-            />
-          </ContentWrapper>
-        </LoginContainer>
-      )}
+      ) : null}
       {showDashboard ? <Redirect to="/dashboard" /> : null}
       {isSyncing ? (
         <SyncingIndicator isSyncing={isSyncing} syncMessage={syncingMessage} />

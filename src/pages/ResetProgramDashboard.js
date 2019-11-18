@@ -95,6 +95,12 @@ const ResetProgramDashboard = ({ match, location }) => {
       })
     }
 
+    /*
+    TODO You most likely need to restructure workout stats under programID
+    Once you have multiple workouts... workouts State will never be zero.
+    You need to restructure how you store workouts State... by the programID...
+    */
+
     if (
       workoutsState.workouts.length === 0 &&
       Object.keys(workoutStatsState.stats).length === 0
