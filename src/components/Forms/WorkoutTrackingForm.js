@@ -48,8 +48,11 @@ const WorkoutTrackingForm = ({
     const now = new Date()
     const date = createDate(now)
 
+    const programStats = statsState[programId]
+
     // Update percent complete in local state
-    if (!statsState.stats[workoutId].completed.complete1.isComplete) {
+    if (!programStats[workoutId].completed.complete1.isComplete) {
+      console.log('Should Increment Percent Complete')
       dispatchProgramAction({
         type: 'incrementPercentComplete',
         value: programId
@@ -60,6 +63,7 @@ const WorkoutTrackingForm = ({
     dispatchWorkoutStatsAction({
       type: 'setTrackingNumber',
       value: {
+        programId: programId,
         workoutId: workoutId,
         number: formState.workoutGoalValue.value,
         date: date

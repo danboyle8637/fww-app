@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import WorkoutStatsSection from './Footer/WorkoutStatsSection'
 import NavigationArrow from '../Shared/NavigationArrow'
 
-const WorkoutCardFooter = ({ workoutId }) => {
+const WorkoutCardFooter = ({ programId, workoutId }) => {
   return (
     <FooterContainer>
-      <WorkoutStatsSection workoutId={workoutId} />
+      <WorkoutStatsSection programId={programId} workoutId={workoutId} />
       <NavigationArrow />
     </FooterContainer>
   )

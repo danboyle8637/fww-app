@@ -63,7 +63,11 @@ const ResetWorkout = () => {
           handleToggleSync={handleToggleSync}
           handleSetSyncMessage={handleSetSyncMessage}
         />
-        <TrackingChart trackingGoal={trackingGoal} workoutId={workoutId} />
+        <TrackingChart
+          trackingGoal={trackingGoal}
+          programId={programId}
+          workoutId={workoutId}
+        />
       </Row1Wrapper>
       <Row2Wrapper>
         <CompleteFavoriteWorkoutForm

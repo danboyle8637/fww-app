@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 import FavoriteWorkoutIcon from '../../svgs/FavoriteWorkoutIcon'
-import { useUserContext } from '../../context/UserContext'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import siteConfig from '../../utils/siteConfig'
@@ -14,16 +13,18 @@ const FavoriteWorkoutForm = ({
   handleSetSyncMessage
 }) => {
   const auth = useFireBase()
-  // eslint-disable-next-line
-  const [userState, dispatchUserAction] = useUserContext()
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
 
-  const isFavorite = workoutStatsState.stats[workoutId].isFavorite
+  const programStats = workoutStatsState[programId]
+  const isFavorite = programStats[workoutId].isFavorite
 
   const handleFavoriteWorkoutClick = () => {
     dispatchStatsAction({
       type: 'toggleIsFavoriteWorkout',
-      value: workoutId
+      value: {
+        programId: programId,
+        workoutId: workoutId
+      }
     })
 
     handleToggleSync()

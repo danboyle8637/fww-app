@@ -29,10 +29,6 @@ const ResetDashboard = ({ location }) => {
   const [portalState, dispatchPortalAction] = usePortalContext()
 
   useEffect(() => {
-    dispatchWorkoutsAction({ type: 'cleanWorkoutsState' })
-  }, [dispatchWorkoutsAction])
-
-  useEffect(() => {
     if (
       programsState.programs.length === 0 &&
       programsState.percentComplete.length === 0

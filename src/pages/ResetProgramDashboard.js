@@ -37,6 +37,7 @@ const ResetProgramDashboard = ({ match, location }) => {
       const baseUrl = siteConfig.api.baseUrl
       const setupTrackingPath = '/setup-workout-tracking'
 
+      // Using reduce to construct my request object off a huge workout array
       const workoutTrackingArray = workoutsArray.reduce(
         (accumulator, currentValue) => {
           const workoutName = currentValue.title
@@ -74,7 +75,10 @@ const ResetProgramDashboard = ({ match, location }) => {
               .then(data => {
                 dispatchStatsAction({
                   type: 'setWorkoutStatsState',
-                  value: data.stats
+                  value: {
+                    programId: programId,
+                    stats: data.stats
+                  }
                 })
                 setIsLoadingWorkouts(false)
               })
@@ -101,13 +105,28 @@ const ResetProgramDashboard = ({ match, location }) => {
     You need to restructure how you store workouts State... by the programID...
     */
 
+    const programId = match.params.programId
     if (
-      workoutsState.workouts.length === 0 &&
-      Object.keys(workoutStatsState.stats).length === 0
+      Object.keys(workoutsState).includes(programId) === false &&
+      Object.keys(workoutStatsState).includes(programId) === false
     ) {
+      /*
+      If workouts state and stats state are empty... we need to get the data.
+      So this will first check localstorage for the data and it's not there
+      It will go to the network and get it.
+
+      But we don't store stats in local storage... only local state. So if the stats
+      are in state... it will use it... if not... it will hit the network.
+
+      But if we store the stats for each program under it's programId... the app
+      will become more performant because as long as they don't refresh the app... 
+      The stats will be there after the first fetch.
+
+      And if they are missing... then you can go get them based on the programId
+      */
+
       setIsLoadingWorkouts(true)
 
-      const programId = match.params.programId
       const programData = {
         programId: programId
       }
@@ -122,7 +141,10 @@ const ResetProgramDashboard = ({ match, location }) => {
 
         dispatchWorkoutsAction({
           type: 'setWorkoutsState',
-          value: workoutsData.workouts
+          value: {
+            programId: programId,
+            workouts: workoutsData.workouts
+          }
         })
 
         setupWorkoutStats(workoutsData.workouts)
@@ -145,7 +167,10 @@ const ResetProgramDashboard = ({ match, location }) => {
                 .then(workoutsArray => {
                   dispatchWorkoutsAction({
                     type: 'setWorkoutsState',
-                    value: workoutsArray.workouts
+                    value: {
+                      programId: programId,
+                      workouts: workoutsArray.workouts
+                    }
                   })
 
                   const fwwWorkouts = {
@@ -183,45 +208,52 @@ const ResetProgramDashboard = ({ match, location }) => {
     dispatchWorkoutsAction,
     match.params.programId,
     signal,
+    workoutStatsState,
     workoutStatsState.stats,
+    workoutsState,
     workoutsState.workouts
   ])
 
   const renderWorkouts = () => {
-    const workouts = workoutsState.workouts.map(workout => {
-      const key = workout.order
-      const coverImage = workout.workoutBackgrounds[0]
-      const tinyImage = workout.workoutTinyBackground
-      const title = workout.title
-      const description = workout.description
-      const workoutId = workout.workoutId
+    const programId = match.params.programId
 
-      const workoutStats = workoutStatsState.stats[`${workoutId}`]
+    if (workoutsState[programId]) {
+      const workouts = workoutsState[programId].map(workout => {
+        const key = workout.order
+        const coverImage = workout.workoutBackgrounds[0]
+        const tinyImage = workout.workoutTinyBackground
+        const title = workout.title
+        const description = workout.description
+        const workoutId = workout.workoutId
 
-      return (
-        <CardLink
-          key={key}
-          to={{
-            pathname: `${location.pathname}/${workoutId}`,
-            state: {
-              workout: workout,
-              stats: workoutStats
-            }
-          }}
-        >
-          <WorkoutCard
-            isWorkout
-            coverImage={coverImage}
-            tinyImage={tinyImage}
-            title={title}
-            description={description}
-            workoutId={workoutId}
-          />
-        </CardLink>
-      )
-    })
+        const workoutStats = workoutStatsState[`${programId}`][`${workoutId}`]
 
-    return workouts
+        return (
+          <CardLink
+            key={key}
+            to={{
+              pathname: `${location.pathname}/${workoutId}`,
+              state: {
+                workout: workout,
+                stats: workoutStats
+              }
+            }}
+          >
+            <WorkoutCard
+              isWorkout
+              coverImage={coverImage}
+              tinyImage={tinyImage}
+              title={title}
+              description={description}
+              programId={programId}
+              workoutId={workoutId}
+            />
+          </CardLink>
+        )
+      })
+
+      return workouts
+    }
   }
 
   // TODO Make it so it reads number of workouts and shows the correct number.

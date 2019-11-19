@@ -5,12 +5,13 @@ import HeaderRow from './HeaderRow'
 import TrackingRow from './TrackingRow'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 
-const TrackingChart = ({ trackingGoal, workoutId }) => {
+const TrackingChart = ({ trackingGoal, programId, workoutId }) => {
   // eslint-disable-next-line
   const [statsState, dispathStatsAction] = useWorkoutStatsContext()
   const [trackingArrayLength, setTrackingArrayLength] = useState([])
 
-  const data = Object.keys(statsState.stats[workoutId].trackingStats)
+  const programStats = statsState[programId]
+  const data = Object.keys(programStats[workoutId].trackingStats)
 
   useEffect(() => {
     const legnth = data.length
@@ -25,12 +26,12 @@ const TrackingChart = ({ trackingGoal, workoutId }) => {
         goal={trackingGoal}
         date={
           trackingArrayLength > 0
-            ? statsState.stats[workoutId].trackingStats.first.date
+            ? programStats[workoutId].trackingStats.first.date
             : null
         }
         numbers={
           trackingArrayLength > 0
-            ? statsState.stats[workoutId].trackingStats.first.number
+            ? programStats[workoutId].trackingStats.first.number
             : null
         }
       />
@@ -39,12 +40,12 @@ const TrackingChart = ({ trackingGoal, workoutId }) => {
         goal={trackingGoal}
         date={
           trackingArrayLength > 1
-            ? statsState.stats[workoutId].trackingStats.second.date
+            ? programStats[workoutId].trackingStats.second.date
             : null
         }
         numbers={
           trackingArrayLength > 1
-            ? statsState.stats[workoutId].trackingStats.second.number
+            ? programStats[workoutId].trackingStats.second.number
             : null
         }
       />
@@ -53,12 +54,12 @@ const TrackingChart = ({ trackingGoal, workoutId }) => {
         goal={trackingGoal}
         date={
           trackingArrayLength > 2
-            ? statsState.stats[workoutId].trackingStats.third.date
+            ? programStats[workoutId].trackingStats.third.date
             : null
         }
         numbers={
           trackingArrayLength > 2
-            ? statsState.stats[workoutId].trackingStats.third.number
+            ? programStats[workoutId].trackingStats.third.number
             : null
         }
       />

@@ -1,6 +1,4 @@
-const workoutStatsState = {
-  stats: {}
-}
+const workoutStatsState = {}
 
 const workoutStatsReducer = (state, action) => {
   switch (action.type) {
@@ -8,22 +6,27 @@ const workoutStatsReducer = (state, action) => {
     // Called to setup the stats that show on card
     // Called to setup the stats that show on workout page
     case 'setWorkoutStatsState': {
-      const stats = action.value
+      const programId = action.value.programId
+      const stats = action.value.stats
 
-      return {
-        stats: stats
-      }
+      const copyOfState = { ...state }
+
+      copyOfState[`${programId}`] = stats
+
+      return copyOfState
     }
     case 'setTrackingNumber': {
+      const programId = action.value.programId
       const workoutId = action.value.workoutId
       const number = Number(action.value.number)
       const date = action.value.date
 
       const copyOfState = { ...state }
 
-      const workoutStats = copyOfState.stats[workoutId]
+      const programStats = copyOfState[programId]
+      const workoutStats = programStats[workoutId]
 
-      const statsArray = Object.keys(copyOfState.stats[workoutId].trackingStats)
+      const statsArray = Object.keys(workoutStats.trackingStats)
 
       if (!statsArray.includes('first')) {
         const first = {
@@ -63,7 +66,7 @@ const workoutStatsReducer = (state, action) => {
           workoutStats.completed.complete3.isComplete = true
         }
       } else {
-        console.log('MAJOR ERROR UPDATING TRACKING NUMBERS')
+        return
       }
 
       return {
@@ -71,11 +74,13 @@ const workoutStatsReducer = (state, action) => {
       }
     }
     case 'setComplete1': {
-      const workoutId = action.value
+      const programId = action.value.programId
+      const workoutId = action.value.workoutId
 
       const copyOfState = { ...state }
 
-      const workoutStats = copyOfState.stats[workoutId]
+      const programStats = copyOfState[programId]
+      const workoutStats = programStats[workoutId]
       workoutStats.completed.complete1.isComplete = true
 
       if (!Object.keys(workoutStats.trackingStats).includes('first')) {
@@ -92,11 +97,13 @@ const workoutStatsReducer = (state, action) => {
       }
     }
     case 'setComplete2': {
-      const workoutId = action.value
+      const programId = action.value.programId
+      const workoutId = action.value.workoutId
 
       const copyOfState = { ...state }
 
-      const workoutStats = copyOfState.stats[workoutId]
+      const programStats = copyOfState[programId]
+      const workoutStats = programStats[workoutId]
 
       if (workoutStats.completed.complete1.isComplete) {
         workoutStats.completed.complete2.isComplete = true
@@ -114,16 +121,17 @@ const workoutStatsReducer = (state, action) => {
           ...copyOfState
         }
       } else {
-        console.log('Must complete the workout for a first time... first.')
         return state
       }
     }
     case 'setComplete3': {
-      const workoutId = action.value
+      const programId = action.value.programId
+      const workoutId = action.value.workoutId
 
       const copyOfState = { ...state }
 
-      const workoutStats = copyOfState.stats[workoutId]
+      const programStats = copyOfState[programId]
+      const workoutStats = programStats[workoutId]
 
       const isFirstCompleted = workoutStats.completed.complete1.isComplete
       const isSecondCompleted = workoutStats.completed.complete2.isComplete
@@ -144,16 +152,17 @@ const workoutStatsReducer = (state, action) => {
           ...copyOfState
         }
       } else {
-        console.log('Must complete the workout for a second time... first.')
         return state
       }
     }
     case 'toggleIsFavoriteWorkout': {
-      const workoutId = action.value
+      const programId = action.value.programId
+      const workoutId = action.value.workoutId
 
       const copyOfState = { ...state }
 
-      const workoutStats = copyOfState.stats[workoutId]
+      const programStats = copyOfState[programId]
+      const workoutStats = programStats[workoutId]
 
       workoutStats.isFavorite = !workoutStats.isFavorite
 
@@ -162,10 +171,7 @@ const workoutStatsReducer = (state, action) => {
       }
     }
     case 'cleanWorkoutStatsState': {
-      return {
-        stats: {},
-        percentComplete: {}
-      }
+      return {}
     }
     default: {
       return state

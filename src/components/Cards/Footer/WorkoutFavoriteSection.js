@@ -4,19 +4,18 @@ import styled from 'styled-components'
 import HeartIcon from '../../../svgs/HeartIcon'
 import { useWorkoutStatsContext } from '../../../context/WorkoutStatsContext'
 
-const WorkoutFavoriteSection = ({ workoutId }) => {
+const WorkoutFavoriteSection = ({ programId, workoutId }) => {
   // eslint-disable-next-line
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
+
+  const programStats = workoutStatsState[`${programId}`]
+  const isFavoriteStat = programStats[`${workoutId}`]
 
   return (
     <FavoriteContainer>
       <FooterLabel>Favorite</FooterLabel>
       <FavoriteIcon
-        isFavorite={
-          workoutStatsState.stats[workoutId]
-            ? workoutStatsState.stats[workoutId].isFavorite
-            : false
-        }
+        isFavorite={isFavoriteStat ? isFavoriteStat.isFavorite : false}
       />
     </FavoriteContainer>
   )

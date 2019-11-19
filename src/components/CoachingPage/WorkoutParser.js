@@ -9,11 +9,12 @@ import {
 import { useWorkoutState } from '../../context/WorkoutsContext'
 import { above } from '../../styles/Theme'
 
-const WorkoutParser = ({ workoutId }) => {
+const WorkoutParser = ({ programId, workoutId }) => {
   // eslint-disable-next-line
   const [workoutsState, dispatchWorkoutAction] = useWorkoutState()
 
-  const workoutData = workoutsState.workouts.find(
+  const programWorkouts = workoutsState[programId]
+  const workoutData = programWorkouts.find(
     workout => workout.workoutId === workoutId
   )
 

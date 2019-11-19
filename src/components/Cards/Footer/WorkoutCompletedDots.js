@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import FooterCircleIcon from './FooterCircleIcon'
 import { useWorkoutStatsContext } from '../../../context/WorkoutStatsContext'
 
-const WorkoutCompletedDots = ({ workoutId }) => {
+const WorkoutCompletedDots = ({ programId, workoutId }) => {
   // eslint-disable-next-line
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
-
-  const completedStats = workoutStatsState.stats[`${workoutId}`]
+  const programStats = workoutStatsState[`${programId}`]
+  const completedStats = programStats[`${workoutId}`]
 
   return (
     <DotContainer>

@@ -3,11 +3,11 @@ import styled from 'styled-components'
 
 import WorkoutCompletedDots from './WorkoutCompletedDots'
 
-const WorkoutCompletedSection = ({ workoutId }) => {
+const WorkoutCompletedSection = ({ programId, workoutId }) => {
   return (
     <CompletedContainer>
       <FooterLabel>Completed</FooterLabel>
-      <WorkoutCompletedDots workoutId={workoutId} />
+      <WorkoutCompletedDots programId={programId} workoutId={workoutId} />
     </CompletedContainer>
   )
 }

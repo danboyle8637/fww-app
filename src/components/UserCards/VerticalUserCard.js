@@ -1,30 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import FWWUserAvatarTiny from '../../images/fww-user-avatar-tiny.jpg'
-import useBlurUp from '../../hooks/useBlurUp'
-import { useUserContext } from '../../context/UserContext'
+import LoadingKettlebell from '../../svgs/LoadingKettlebell'
 
-const VerticalUserCard = ({ firstName }) => {
-  // eslint-disable-next-line
-  const [userState, dispatchUserAction] = useUserContext()
-  const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
-
+const VerticalUserCard = ({ firstName, profileImage, isSyncing }) => {
   return (
     <CardContainer>
-      <ImageContainer ref={setParentContainer}>
-        <UserPhoto
-          ref={setLargeImage}
-          src={userState.photoUrl}
-          alt="Profile picture of the current user"
-          title="Profile picture"
-        />
-        <PlaceholderImage
-          ref={setSmallImage}
-          src={FWWUserAvatarTiny}
-          alt="Placeholder picture of the current user"
-          title="Profile placeholder"
-        />
+      <ImageContainer>
+        {isSyncing ? (
+          <KettlebellLoader />
+        ) : (
+          <UserPhoto
+            src={profileImage}
+            alt="Profile picture of the current user"
+            title="Profile picture"
+          />
+        )}
       </ImageContainer>
       <UserName>{firstName}</UserName>
     </CardContainer>
@@ -53,6 +44,14 @@ const ImageContainer = styled.div`
   width: 100%;
 `
 
+const KettlebellLoader = styled(LoadingKettlebell)`
+  grid-column: 1 / -1;
+  grid-row: 1 /-1;
+  width: 100%;
+  justify-self: center;
+  align-self: center;
+`
+
 const UserName = styled.p`
   font-family: QuicksandSemiBold;
   font-size: 18px;
@@ -68,12 +67,12 @@ const UserPhoto = styled.img`
   z-index: 1;
 `
 
-const PlaceholderImage = styled.img`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
-  border-radius: 50%;
-  width: 100%;
-  filter: blur(6px);
-  transform: scale(1);
-  z-index: 2;
-`
+// const PlaceholderImage = styled.img`
+//   grid-column: 1 / -1;
+//   grid-row: 1 / -1;
+//   border-radius: 50%;
+//   width: 100%;
+//   filter: blur(6px);
+//   transform: scale(1);
+//   z-index: 2;
+// `

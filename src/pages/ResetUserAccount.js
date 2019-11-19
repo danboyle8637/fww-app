@@ -44,8 +44,6 @@ const ResetUserAccount = () => {
       return () => {
         clearTimeout()
       }
-    } else {
-      console.log('Not running sync success message')
     }
   }, [routerData])
 
@@ -102,6 +100,7 @@ const ResetUserAccount = () => {
         <VerticalUserCard
           firstName={userState.firstName}
           profileImage={userState.photoUrl}
+          isSyncing={isSyncing}
         />
         <SectionWrapper>
           <FormWrapper>

@@ -34,11 +34,11 @@ const AccountUpdateProfilePicForm = ({
     const formData = new FormData()
     formData.append('avatar', newAvatar)
 
-    const url = `${siteConfig.api.baseUrl}/upload-profile-image`
+    const updatePhotoUrl = `${siteConfig.api.baseUrl}/upload-profile-image`
 
     auth.getCurrentUser().then(user => {
       user.getIdToken(true).then(token => {
-        fetch(url, {
+        fetch(updatePhotoUrl, {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${token}`
@@ -47,24 +47,28 @@ const AccountUpdateProfilePicForm = ({
         })
           .then(response => response.json())
           .then(data => {
-            handleSetSyncMessage('😁 Image updated!')
+            handleSetSyncMessage(data.message)
+
+            console.log(user.photoURL)
+
             dispatchUserAction({
               type: 'setUpdatedProfileImage',
-              value: data.photoUrl
+              value: user.photoURL
             })
+
             const userData = localStorage.getItem('fwwUser')
             const fwwUser = JSON.parse(userData)
 
             const updatedFWWUser = {
               ...fwwUser,
-              photoUrl: data.photoUrl
+              photoUrl: user.photoURL
             }
 
             localStorage.setItem('fwwUser', JSON.stringify(updatedFWWUser))
             handleToggleSync()
           })
           .catch(error => {
-            handleSetSyncMessage(`😢 ${error.errors.error}`)
+            handleSetSyncMessage(`😢 ${error.errors}`)
           })
       })
     })

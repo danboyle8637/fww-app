@@ -130,7 +130,13 @@ const AddProgramButton = styled.button`
   border: none;
   border-radius: 10px;
   width: 100%;
+  box-shadow: none;
   cursor: pointer;
+  transition: box-shadow 300ms ease-in-out;
+  &:hover {
+    box-shadow: 0 0 0 2px #000,
+      0 0 0 5px ${props => props.theme.secondaryAccent};
+  }
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px #000, 0 0 0 5px ${props => props.theme.primaryAccent};

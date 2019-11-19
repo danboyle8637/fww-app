@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 import CompleteWorkoutIcon from '../../svgs/CompleteWorkoutIcon'
-import { useUserContext } from '../../context/UserContext'
 import { useProgramsContext } from '../../context/ProgramsContext'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
@@ -15,19 +14,21 @@ const CompleteWorkoutForm = ({
   handleSetSyncMessage
 }) => {
   const auth = useFireBase()
-  // eslint-disable-next-line
-  const [userState, dispatchUserAction] = useUserContext()
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
   // eslint-disable-next-line
   const [programState, dispatchProgramAction] = useProgramsContext()
 
-  const completed = workoutStatsState.stats[workoutId].completed
+  const programStats = workoutStatsState[programId]
+  const completed = programStats[workoutId].completed
 
   const handleCompleteWorkoutClick = id => {
     if (id === 1) {
       dispatchStatsAction({
         type: 'setComplete1',
-        value: workoutId
+        value: {
+          programId: programId,
+          workoutId: workoutId
+        }
       })
 
       dispatchProgramAction({
@@ -40,7 +41,10 @@ const CompleteWorkoutForm = ({
     } else if (id === 2) {
       dispatchStatsAction({
         type: 'setComplete2',
-        value: workoutId
+        value: {
+          programId: programId,
+          workoutId: workoutId
+        }
       })
 
       handleToggleSync()
@@ -48,13 +52,16 @@ const CompleteWorkoutForm = ({
     } else if (id === 3) {
       dispatchStatsAction({
         type: 'setComplete3',
-        value: workoutId
+        value: {
+          programId: programId,
+          workoutId: workoutId
+        }
       })
 
       handleToggleSync()
       handleSetCompleteInDatabase(3)
     } else {
-      console.log('How did you click a button that wasnt on the screen?')
+      return
     }
   }
 

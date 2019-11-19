@@ -45,7 +45,9 @@ const WorkoutProgramCard = ({
         title={title}
         description={description}
       />
-      {isWorkout ? <WorkoutCardFooter workoutId={workoutId} /> : null}
+      {isWorkout ? (
+        <WorkoutCardFooter programId={programId} workoutId={workoutId} />
+      ) : null}
       {isProgram ? (
         activeProgram ? (
           <ProgramCardFooter programId={programId} />

@@ -1,16 +1,13 @@
-const workoutsState = {
-  workouts: []
-}
+const workoutsState = {}
 
 const workoutsReducer = (state, action) => {
   switch (action.type) {
     case 'setWorkoutsState': {
-      const workoutsArray = action.value
+      const programId = action.value.programId
+      const workoutsArray = action.value.workouts
 
-      // This reducer generates workout state
-      // It get's called when the database is hit to generate the workout cards.
-      // It saves all the workout data so you don't have to hit the database again
-      // on each workout page.
+      // A funny way to learn how reduce works to reconstruct the same
+      // array you passed into it.
 
       // It must get cleaned up when user goes back to main Dashboard
       // In real app it will clean up when use goes back to Program Dashbaord
@@ -26,11 +23,9 @@ const workoutsReducer = (state, action) => {
 
       const copyOfState = { ...state }
 
-      copyOfState.workouts = workoutsArray
+      copyOfState[programId] = workoutsArray
 
-      return {
-        ...copyOfState
-      }
+      return copyOfState
     }
     case 'cleanWorkoutsState': {
       return {
