@@ -30,11 +30,13 @@ const programsReducer = (state, action) => {
     }
     case 'incrementPercentComplete': {
       const programId = action.value
-      const copyOfPercentComplete = [...state.percentComplete]
 
-      const updatedPercentComplete = copyOfPercentComplete.map(program => {
+      const copyOfState = { ...state }
+      const percentCompete = copyOfState.percentComplete
+
+      const updatedPercentComplete = percentCompete.map(program => {
         if (program.programId === programId) {
-          program.workoutsCompleted += 1
+          program.workoutsCompleted++
         }
 
         return program
