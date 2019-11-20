@@ -510,6 +510,16 @@ const formReducer = (state, action) => {
         }
       }
     }
+    case 'emptyProfileImage': {
+      return {
+        ...state,
+        updateProfileImage: {
+          file: '',
+          fileName: '',
+          valid: false
+        }
+      }
+    }
     case 'setContactReason': {
       const options = state.contactReasonValue.options.map(option => {
         if (action.value === option.value) {

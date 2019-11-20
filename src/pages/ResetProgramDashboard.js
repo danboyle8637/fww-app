@@ -63,6 +63,7 @@ const ResetProgramDashboard = ({ match, location }) => {
         user
           .getIdToken(true)
           .then(token => {
+            console.log(token)
             fetch(`${baseUrl}${setupTrackingPath}`, {
               method: 'POST',
               signal: signal,
@@ -99,32 +100,11 @@ const ResetProgramDashboard = ({ match, location }) => {
       })
     }
 
-    /*
-    TODO You most likely need to restructure workout stats under programID
-    Once you have multiple workouts... workouts State will never be zero.
-    You need to restructure how you store workouts State... by the programID...
-    */
-
     const programId = match.params.programId
     if (
       Object.keys(workoutsState).includes(programId) === false &&
       Object.keys(workoutStatsState).includes(programId) === false
     ) {
-      /*
-      If workouts state and stats state are empty... we need to get the data.
-      So this will first check localstorage for the data and it's not there
-      It will go to the network and get it.
-
-      But we don't store stats in local storage... only local state. So if the stats
-      are in state... it will use it... if not... it will hit the network.
-
-      But if we store the stats for each program under it's programId... the app
-      will become more performant because as long as they don't refresh the app... 
-      The stats will be there after the first fetch.
-
-      And if they are missing... then you can go get them based on the programId
-      */
-
       setIsLoadingWorkouts(true)
 
       const programData = {
@@ -133,7 +113,6 @@ const ResetProgramDashboard = ({ match, location }) => {
       const baseUrl = siteConfig.api.baseUrl
       const getWorkoutsPath = '/get-workouts'
 
-      // ! checking local storage for workout and tracking
       if (localStorage.getItem(`${programId}`)) {
         // Workouts are in storage
         const data = localStorage.getItem(`${programId}`)

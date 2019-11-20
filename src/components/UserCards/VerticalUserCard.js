@@ -47,7 +47,7 @@ const ImageContainer = styled.div`
 const KettlebellLoader = styled(LoadingKettlebell)`
   grid-column: 1 / -1;
   grid-row: 1 /-1;
-  width: 100%;
+  width: 100px;
   justify-self: center;
   align-self: center;
 `
@@ -66,13 +66,3 @@ const UserPhoto = styled.img`
   border-radius: 50%;
   z-index: 1;
 `
-
-// const PlaceholderImage = styled.img`
-//   grid-column: 1 / -1;
-//   grid-row: 1 / -1;
-//   border-radius: 50%;
-//   width: 100%;
-//   filter: blur(6px);
-//   transform: scale(1);
-//   z-index: 2;
-// `
