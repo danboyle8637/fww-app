@@ -15,7 +15,8 @@ const AccountUpdateProfilePicForm = ({
   activeSlide,
   setActiveSlide,
   handleToggleSync,
-  handleSetSyncMessage
+  handleSetSyncMessage,
+  setIsProfilePic
 }) => {
   const auth = useFireBase()
   // eslint-disable-next-line
@@ -28,6 +29,7 @@ const AccountUpdateProfilePicForm = ({
   const handleUploadPhoto = event => {
     event.preventDefault()
     handleToggleSync()
+    setIsProfilePic(true)
     handleSetSyncMessage('Updating your image...')
 
     const newAvatar = formState.updateProfileImage.file
@@ -67,6 +69,7 @@ const AccountUpdateProfilePicForm = ({
             dispatchFormAction({ type: 'emptyProfileImage' })
 
             handleToggleSync()
+            setIsProfilePic(false)
           })
           .catch(error => {
             handleSetSyncMessage(`😢 ${error.errors}`)

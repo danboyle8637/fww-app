@@ -45,9 +45,9 @@ const MemberNav = () => {
         {navItem.slug === null ? (
           <NavIcon>{component}</NavIcon>
         ) : (
-          <Link to={slug}>
+          <NavLink to={slug}>
             <NavIcon>{component}</NavIcon>
-          </Link>
+          </NavLink>
         )}
         <MenuLabel>{label}</MenuLabel>
       </MenuItemGrid>
@@ -61,7 +61,12 @@ export default MemberNav
 
 const NavIcon = styled.div`
   width: 40px;
+  cursor: pointer;
   ${above.tablet`
     width: 60px;
   `}
+`
+
+const NavLink = styled(Link)`
+  cursor: pointer;
 `

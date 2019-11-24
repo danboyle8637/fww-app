@@ -63,7 +63,6 @@ const ResetProgramDashboard = ({ match, location }) => {
         user
           .getIdToken(true)
           .then(token => {
-            console.log(token)
             fetch(`${baseUrl}${setupTrackingPath}`, {
               method: 'POST',
               signal: signal,

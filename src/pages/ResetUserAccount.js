@@ -24,6 +24,7 @@ const ResetUserAccount = () => {
   const [activeSlide, setActiveSlide] = useState(0)
   const [isSyncing, setIsSyncing] = useState(false)
   const [syncMessage, setSyncMessage] = useState('Syncing...')
+  const [isProfilePic, setIsProfilePic] = useState(false)
   const [toLogin, setToLogin] = useState(false)
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
@@ -101,6 +102,7 @@ const ResetUserAccount = () => {
           firstName={userState.firstName}
           profileImage={userState.photoUrl}
           isSyncing={isSyncing}
+          isProfilePic={isProfilePic}
         />
         <SectionWrapper>
           <FormWrapper>
@@ -114,18 +116,23 @@ const ResetUserAccount = () => {
                 setActiveSlide={setActiveSlide}
                 handleToggleSync={handleToggleSync}
                 handleSetSyncMessage={handleSetSyncMessage}
+                setIsProfilePic={setIsProfilePic}
               />
               <AccountUpdateEmailForm
                 activeSlide={activeSlide}
                 setActiveSlide={setActiveSlide}
+                isSyncing={isSyncing}
                 handleToggleSync={handleToggleSync}
                 handleSetSyncMessage={handleSetSyncMessage}
+                setToLogin={setToLogin}
               />
               <AccountUpdatePasswordForm
                 activeSlide={activeSlide}
                 setActiveSlide={setActiveSlide}
+                isSyncing={isSyncing}
                 handleToggleSync={handleToggleSync}
                 handleSetSyncMessage={handleSetSyncMessage}
+                setToLogin={setToLogin}
               />
             </TransitionGroup>
           </FormWrapper>

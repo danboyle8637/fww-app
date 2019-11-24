@@ -7,19 +7,23 @@ import BackChip from '../Chips/BackChip'
 import TextInput from './Inputs/TextInput'
 import useFormControls from '../../hooks/useFormControls'
 import { useFormStore } from '../../context/FormContext'
+import { usePortalContext } from '../../context/portalContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
-import { siteConfig } from '../../utils/siteConfig'
+import siteConfig from '../../utils/siteConfig'
 
 const AccountUpdateEmailForm = ({
   activeSlide,
   setActiveSlide,
+  isSyncing,
   handleToggleSync,
-  handleSetSyncMessage
+  handleSetSyncMessage,
+  setToLogin
 }) => {
   const auth = useFireBase()
-  // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
+  // eslint-disable-next-line
+  const [portalState, dispatchPortalAction] = usePortalContext()
 
   const handleSaveNewEmail = event => {
     event.preventDefault()
@@ -42,10 +46,20 @@ const AccountUpdateEmailForm = ({
         })
           .then(response => response.json())
           .then(data => {
+            dispatchFormAction({ type: 'resetChangeEmailForm' })
             handleSetSyncMessage(data.message)
+            handleToggleSync()
+            auth.logUserOut()
+            dispatchPortalAction({
+              type: 'toggleErrorMessage',
+              value: 'Credentials Changed. Please Log Back In!'
+            })
+            setToLogin(true)
           })
           .catch(error => {
+            dispatchFormAction({ type: 'resetChangeEmailForm' })
             handleSetSyncMessage(error.message)
+            handleToggleSync()
           })
       })
     })
@@ -77,7 +91,9 @@ const AccountUpdateEmailForm = ({
             onBlur={updateInputOptions}
           />
         </InputWrapper>
-        <BaseButton type="submit">Save New Email</BaseButton>
+        <BaseButton type="submit">
+          {isSyncing ? 'Updaing Email Address' : 'Save New Email'}
+        </BaseButton>
       </EmailAddressForm>
     </UpdateAccountFormTransition>
   )

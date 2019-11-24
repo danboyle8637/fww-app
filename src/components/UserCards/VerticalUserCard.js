@@ -3,11 +3,16 @@ import styled from 'styled-components'
 
 import LoadingKettlebell from '../../svgs/LoadingKettlebell'
 
-const VerticalUserCard = ({ firstName, profileImage, isSyncing }) => {
+const VerticalUserCard = ({
+  firstName,
+  profileImage,
+  isSyncing,
+  isProfilePic
+}) => {
   return (
     <CardContainer>
       <ImageContainer>
-        {isSyncing ? (
+        {isSyncing && isProfilePic ? (
           <KettlebellLoader />
         ) : (
           <UserPhoto

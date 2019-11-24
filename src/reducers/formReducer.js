@@ -365,7 +365,6 @@ const formReducer = (state, action) => {
       }
     }
     case 'resetForgotPasswordForm': {
-      console.log('Reset Forgot Password Reducer is Running!')
       return {
         ...state,
         emailValue: {
@@ -567,6 +566,43 @@ const formReducer = (state, action) => {
           initial: false,
           touched: !state.contactTellMeMoreOptions.touched,
           showInstructions: !state.contactTellMeMoreOptions.showInstructions
+        }
+      }
+    }
+    case 'resetChangeEmailForm': {
+      return {
+        ...state,
+        emailValue: {
+          value: '',
+          valid: false
+        },
+        emailOptions: {
+          initial: true,
+          touched: false,
+          showInstructions: false
+        }
+      }
+    }
+    case 'resetChangePasswordForm': {
+      return {
+        ...state,
+        passwordValue: {
+          value: '',
+          valid: false
+        },
+        passwordOptions: {
+          initial: true,
+          touched: false,
+          showInstructions: false
+        },
+        confirmPasswordValue: {
+          value: '',
+          valid: false
+        },
+        confirmPasswordOptions: {
+          initial: true,
+          touched: false,
+          showInstructions: false
         }
       }
     }

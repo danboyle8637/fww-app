@@ -10,13 +10,15 @@ import useFormControls from '../../hooks/useFormControls'
 import { useFormStore } from '../../context/FormContext'
 import { usePortalContext } from '../../context/portalContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
-import { siteConfig } from '../../utils/siteConfig'
+import siteConfig from '../../utils/siteConfig'
 
 const AccountUpdatePasswordForm = ({
   activeSlide,
   setActiveSlide,
+  isSyncing,
   handleToggleSync,
-  handleSetSyncMessage
+  handleSetSyncMessage,
+  setToLogin
 }) => {
   const auth = useFireBase()
   // eslint-disable-next-line
@@ -30,10 +32,11 @@ const AccountUpdatePasswordForm = ({
     event.preventDefault()
 
     handleToggleSync()
+    setShowPassword(false)
 
     const newPassword = formState.passwordValue.value
     const confirmPassword = formState.confirmPasswordValue.value
-    const url = siteConfig.api.baseUrl
+    const url = `${siteConfig.api.baseUrl}/update-password`
 
     const updatePasswordReq = {
       newPassword: newPassword,
@@ -53,10 +56,18 @@ const AccountUpdatePasswordForm = ({
           })
             .then(response => response.json())
             .then(data => {
+              dispatchFormAction({ type: 'resetChangePasswordForm' })
               handleSetSyncMessage(data.message)
               handleToggleSync()
+              auth.logUserOut()
+              dispatchPortalAction({
+                type: 'toggleErrorMessage',
+                value: 'User Credentials Change. Please Log Back In!'
+              })
+              setToLogin(true)
             })
             .catch(error => {
+              dispatchFormAction({ type: 'resetChangePasswordForm' })
               handleSetSyncMessage(error.message)
               handleToggleSync()
             })
@@ -119,7 +130,9 @@ const AccountUpdatePasswordForm = ({
             onBlur={updateInputOptions}
           />
         </InputWrapper>
-        <BaseButton type="submit">Save New Password</BaseButton>
+        <BaseButton type="submit">
+          {isSyncing ? 'Updaing Your Password' : 'Save New Password'}
+        </BaseButton>
       </UsernameForm>
     </UpdateAccountFormTransition>
   )

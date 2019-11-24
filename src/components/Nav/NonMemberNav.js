@@ -41,3 +41,7 @@ const NavIcon = styled.div`
     width: 60px;
   `}
 `
+
+// const NavLink = styled(Link)`
+//   cursor: pointer;
+// `
