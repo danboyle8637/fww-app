@@ -14,6 +14,7 @@ import ResetStep2Form from '../components/Forms/ResetStep2Form'
 import ResetStep3Form from '../components/Forms/ResetStep3Form'
 import ResetStep4Form from '../components/Forms/ResetStep4Form'
 import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
+import ErrorIndicator from '../components/Indicators/ErrorIndicator'
 
 const ResetSignUp = () => {
   const [reverse, setReverse] = useState(false)
@@ -41,45 +42,45 @@ const ResetSignUp = () => {
         <FullPageKettlebellLoader
           loadingMessage={'Creating Your Fit Profile'}
         />
-      ) : (
-        <ResetSignUpContainer>
-          <ContentWrapper>
-            <ResetSignUpHeader />
-            <FormWrapper>
-              <TransitionGroup component={null}>
-                <ResetStep1Form
-                  activeQuestion={activeQuestion}
-                  setActiveQuestion={setActiveQuestion}
-                  setReverse={setReverse}
-                />
-                <ResetStep2Form
-                  activeQuestion={activeQuestion}
-                  setActiveQuestion={setActiveQuestion}
-                  reverse={reverse}
-                  setReverse={setReverse}
-                />
-                <ResetStep3Form
-                  reverse={reverse}
-                  setReverse={setReverse}
-                  activeQuestion={activeQuestion}
-                  setActiveQuestion={setActiveQuestion}
-                  setIsLoading={setIsLoading}
-                  setToDashboard={setToDashboard}
-                />
-                <ResetStep4Form
-                  activeQuestion={activeQuestion}
-                  setActiveQuestion={setActiveQuestion}
-                  reverse={reverse}
-                  setReverse={setReverse}
-                  setIsLoading={setIsLoading}
-                  setShowSecurityLogin={setShowSecurityLogin}
-                />
-              </TransitionGroup>
-            </FormWrapper>
-          </ContentWrapper>
-          {background}
-        </ResetSignUpContainer>
-      )}
+      ) : null}
+      <ResetSignUpContainer>
+        <ContentWrapper>
+          <ResetSignUpHeader />
+          <FormWrapper>
+            <TransitionGroup component={null}>
+              <ResetStep1Form
+                activeQuestion={activeQuestion}
+                setActiveQuestion={setActiveQuestion}
+                setReverse={setReverse}
+              />
+              <ResetStep2Form
+                activeQuestion={activeQuestion}
+                setActiveQuestion={setActiveQuestion}
+                reverse={reverse}
+                setReverse={setReverse}
+              />
+              <ResetStep3Form
+                reverse={reverse}
+                setReverse={setReverse}
+                activeQuestion={activeQuestion}
+                setActiveQuestion={setActiveQuestion}
+                setIsLoading={setIsLoading}
+                setToDashboard={setToDashboard}
+              />
+              <ResetStep4Form
+                activeQuestion={activeQuestion}
+                setActiveQuestion={setActiveQuestion}
+                reverse={reverse}
+                setReverse={setReverse}
+                setIsLoading={setIsLoading}
+                setShowSecurityLogin={setShowSecurityLogin}
+              />
+            </TransitionGroup>
+          </FormWrapper>
+        </ContentWrapper>
+        {background}
+      </ResetSignUpContainer>
+      <ErrorIndicator />
       {toDashboard ? <Redirect to="/dashboard" /> : null}
       {showSecurityLogin ? <Redirect to="/security-login" /> : null}
     </>

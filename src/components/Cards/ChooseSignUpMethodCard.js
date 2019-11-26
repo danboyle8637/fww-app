@@ -9,6 +9,7 @@ import EmailPassword from '../../svgs/EmailPasswordButtonIcon'
 import NavigationArrow from '../../svgs/NavigationArrow'
 import { useFormStore } from '../../context/FormContext'
 import { useUserContext } from '../../context/UserContext'
+import { usePortalContext } from '../../context/portalContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import ScreenWidthContext from '../../context/ScreenWidthContext'
 import siteConfig from '../../utils/siteConfig'
@@ -29,6 +30,8 @@ const ChooseSignUpMethodCard = ({
   const [formState, dispatchFormAction] = useFormStore()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  // eslint-disable-next-line
+  const [portalState, dispatchPortalAction] = usePortalContext()
   const [showSocialSignUp, setShowSocialSignUp] = useState(false)
   const [socialProvider, setSocialProvider] = useState('')
 

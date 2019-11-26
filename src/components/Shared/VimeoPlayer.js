@@ -15,21 +15,16 @@ const VimeoPlayer = ({ videoId }) => {
       controls: true
     })
 
-    player.on('play', () => {
-      console.log('playing video!')
-    })
+    player.on('play', () => {})
 
     player.on('loaded', () => {
-      console.log('Video Loaded')
       setVideoLoaded(true)
     })
 
     return () => {
       player
         .destroy()
-        .then(() => {
-          console.log('Player was successfully destroyed!')
-        })
+        .then(() => {})
         .catch(error => console.log(error))
     }
   }, [videoId])

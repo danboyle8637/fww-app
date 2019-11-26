@@ -91,7 +91,7 @@ const ResetStep4Form = ({
         }
         // Call our Signup endpoint...
         const url = `${siteConfig.api.baseUrl}/sign-up`
-        const convertKitUrl = `${siteConfig.api.baseUrl}/add-member-to-convertkit`
+        const convertKitUrl = `${siteConfig.api.baseUrl}/add-member-to-convertki`
 
         const signUp = fetch(url, {
           method: 'POST',
@@ -132,6 +132,9 @@ const ResetStep4Form = ({
             setShowSecurityLogin(true)
           })
           .catch(error => {
+            // TODO you need to create a special error page... Look in Basecamp
+            // TODO make sure you setIsLoading to false and redirect them...
+            // TODO a special page where you can get their account set up.
             dispatchPortalAction({
               type: 'toggleErrorMessage',
               value: error.message
