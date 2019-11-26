@@ -22,6 +22,10 @@ const portalState = {
       { id: 'workoutGoal3', isOpen: false }
     ]
   },
+  messageDialog: {
+    isOpen: false,
+    message: ''
+  },
   errorMessage: {
     isOpen: false,
     message: ''
@@ -131,6 +135,24 @@ const portalReducer = (state, action) => {
         dialogBox: {
           openBox: '',
           boxes: boxes
+        }
+      }
+    }
+    case 'toggleMessageDialog': {
+      return {
+        ...state,
+        messageDialog: {
+          ...state.messageDialog,
+          isOpen: !state.messageDialog.isOpen
+        }
+      }
+    }
+    case 'setMessageDialogMessage': {
+      return {
+        ...state,
+        messageDialog: {
+          ...state.messageDialog,
+          message: action.value
         }
       }
     }

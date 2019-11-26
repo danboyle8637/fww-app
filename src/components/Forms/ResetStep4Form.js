@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { Header1, BodyText } from '../../styles/Typography'
@@ -12,6 +12,7 @@ import useFormControls from '../../hooks/useFormControls'
 import { useUserContext } from '../../context/UserContext'
 import { usePortalContext } from '../../context/portalContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
+import siteConfig from '../../utils/siteConfig'
 import { above } from '../../styles/Theme'
 
 const ResetStep4Form = ({
@@ -30,7 +31,19 @@ const ResetStep4Form = ({
   const [userState, dispatchUserAction] = useUserContext()
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+
+  useEffect(() => {
+    const password = String(formState.passwordValue.value)
+    const confirmPassword = String(formState.confirmPasswordValue.value)
+
+    const passwordsMatch = password === confirmPassword
+
+    if (!passwordsMatch) {
+      setPasswordErrorMessage(`Passwords don't match`)
+    }
+  }, [formState.confirmPasswordValue.value, formState.passwordValue.value])
 
   const handleBackClick = () => {
     setReverse(true)
@@ -38,18 +51,6 @@ const ResetStep4Form = ({
   }
 
   const toggleShowPassword = () => setShowPassword(prevValue => !prevValue)
-
-  // const handleFormErrors = () => {
-  //   const firstName = formState.firstNameValue.value
-  //   const biggestObstacle = formState.biggestObstacleValue.value
-  //   const programId = formState.resetWorkoutValue.value
-  //   const totalWorkouts = formState.resetWorkoutValue.options.find(
-  //     option => option.value === programId
-  //   )
-  //   const email = formState.emailValue.value
-  //   const password = formState.passwordValue.value
-  //   const confirmPassword = formState.confirmPasswordValue.value
-  // }
 
   const handleSignUpForm = event => {
     event.preventDefault()
@@ -81,14 +82,35 @@ const ResetStep4Form = ({
           email: email,
           biggestObstacle: biggestObstacle
         }
+
+        const convertKitData = {
+          firstName: firstName,
+          email: email,
+          program: programId,
+          biggestObstacle: biggestObstacle
+        }
         // Call our Signup endpoint...
-        const url = `http://localhost:5000/sign-up`
-        fetch(url, {
+        const url = `${siteConfig.api.baseUrl}/sign-up`
+        const convertKitUrl = `${siteConfig.api.baseUrl}/add-member-to-convertkit`
+
+        const signUp = fetch(url, {
           method: 'POST',
           body: JSON.stringify(signUpData)
         })
-          .then(response => response.json())
-          .then(userData => {
+
+        const convertKit = fetch(convertKitUrl, {
+          method: 'POST',
+          body: JSON.stringify(convertKitData)
+        })
+
+        Promise.all([signUp, convertKit])
+          .then(responseArray => {
+            const promiseData = responseArray.map(element => element.json())
+            return Promise.all(promiseData)
+          })
+          .then(dataArray => {
+            const userData = dataArray[0]
+
             dispatchUserAction({
               type: 'setLoggedInUser',
               value: {
@@ -164,7 +186,7 @@ const ResetStep4Form = ({
               labelName="Password"
               labelFor="loginPassword"
               labelInstructions="Create a password"
-              labelError="ERROR MESSAGE FROM SERVER"
+              labelError={passwordErrorMessage}
               value={formState.passwordValue.value}
               valid={formState.passwordValue.valid}
               initial={formState.passwordOptions.initial}
@@ -180,7 +202,7 @@ const ResetStep4Form = ({
               labelName="Confirm Password"
               labelFor="loginConfirmPassword"
               labelInstructions="Confirm password"
-              labelError="ERROR MESSAGE FROM SERVER"
+              labelError={passwordErrorMessage}
               value={formState.confirmPasswordValue.value}
               valid={formState.confirmPasswordValue.valid}
               initial={formState.confirmPasswordOptions.initial}

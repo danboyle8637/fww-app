@@ -7,18 +7,63 @@ import TextInput from '../Forms/Inputs/TextInput'
 import TextArea from '../Forms/Inputs/TextArea'
 import { useFormStore } from '../../context/FormContext'
 import { useUserContext } from '../../context/UserContext'
+import { usePortalContext } from '../../context/portalContext'
 import useFormControls from '../../hooks/useFormControls'
+import siteConfig from '../../utils/siteConfig'
 import { above } from '../../styles/Theme'
 
-const ContactForm = () => {
+const ContactForm = ({ isSyncing, toggleSyncing, setSyncingMessage }) => {
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
+  // eslint-disable-next-line
+  const [portalState, dispatchPortalAction] = usePortalContext()
 
   const handleContactFormSubmit = event => {
     event.preventDefault()
+    toggleSyncing()
+    setSyncingMessage('✉️ Sending info...')
+
+    const contactReason = formState.contactReasonValue.value
+    const firstName = formState.firstNameValue.value
+    const email = formState.emailValue.value
+    const message = formState.contactTellMeMoreValue.value
+    const url = `${siteConfig.api.baseUrl}/reset-contact-form`
+
+    const body = {
+      firstName: firstName,
+      email: email,
+      contactReason: contactReason,
+      message: message
+    }
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(body)
+    })
+      .then(response => response.json())
+      .then(data => {
+        dispatchFormAction({ type: 'resetContactForm' })
+        dispatchPortalAction({ type: 'toggleMessageDialog' })
+        dispatchPortalAction({
+          type: 'setMessageDialogMessage',
+          value: data.message
+        })
+        setSyncingMessage(data.message)
+        toggleSyncing()
+      })
+      .catch(error => {
+        dispatchFormAction({ type: 'resetContactForm' })
+        dispatchPortalAction({ type: 'toggleMessageDialog' })
+        dispatchPortalAction({
+          type: 'setMessageDialogMessage',
+          value: error.message
+        })
+        setSyncingMessage(error.message)
+        toggleSyncing()
+      })
   }
 
   return (
@@ -30,7 +75,7 @@ const ContactForm = () => {
           name="contactReason"
           labelName={
             userState.firstName
-              ? `How can I help ${userState.firstName}`
+              ? `How can I help ${userState.firstName}?`
               : 'How can we help you?'
           }
           value={formState.contactReasonValue.value}
@@ -58,7 +103,7 @@ const ContactForm = () => {
           name="emailAddress"
           labelName="email:"
           labelFor="emailAddress"
-          labelInstructions="Enter email for fit profile"
+          labelInstructions="Enter email for response"
           labelError="Please use a valid email address..."
           value={formState.emailValue.value}
           valid={formState.emailValue.valid}
@@ -85,7 +130,9 @@ const ContactForm = () => {
           onBlur={updateInputOptions}
         />
       </InputWrapper>
-      <BaseButton type="submit">Send Contact Info</BaseButton>
+      <BaseButton type="submit">
+        {isSyncing ? 'Sending Message...' : 'Send My Message'}
+      </BaseButton>
     </ContactFormContainer>
   )
 }

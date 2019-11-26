@@ -1,16 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import FWWLogo from '../components/Logos/FWWLogo'
 import ContactForm from '../components/Forms/ContactForm'
+import MessageDialog from '../components/Dialogs/MessageDialog'
+import SyncingIndicator from '../components/Indicators/SyncingIndicator'
 import { above } from '../styles/Theme'
 
 const Contact = () => {
+  const [isSyncing, setIsSyncing] = useState(false)
+  const [syncingMessage, setSyncingMessage] = useState('')
+
+  const toggleSyncing = () => setIsSyncing(prevValue => !prevValue)
+
   return (
-    <ContactContainer>
-      <FWWLogo />
-      <ContactForm />
-    </ContactContainer>
+    <>
+      <ContactContainer>
+        <FWWLogo />
+        <ContactForm
+          isSyncing={isSyncing}
+          toggleSyncing={toggleSyncing}
+          setSyncingMessage={setSyncingMessage}
+        />
+      </ContactContainer>
+      <SyncingIndicator isSyncing={isSyncing} syncMessage={syncingMessage} />
+      <MessageDialog />
+    </>
   )
 }
 

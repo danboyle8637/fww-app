@@ -66,7 +66,7 @@ const InputLabel = styled.label`
   background: ${props => props.theme.mainBackgroundColor};
   text-transform: uppercase;
   pointer-events: none;
-  transform: translate(2%, 10%);
+  transform: translate(6%, 38%);
 `
 
 const HelpLabel = styled(InputLabel)`

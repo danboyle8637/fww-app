@@ -8,6 +8,7 @@ import BaseButton from '../Buttons/BaseButton'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
 import { useFormStore } from '../../context/FormContext'
 import useFormControls from '../../hooks/useFormControls'
+import siteConfig from '../../utils/siteConfig'
 import { above } from '../../styles/Theme'
 
 const ResetStep1Form = ({ activeQuestion, setActiveQuestion, setReverse }) => {
@@ -34,6 +35,25 @@ const ResetStep1Form = ({ activeQuestion, setActiveQuestion, setReverse }) => {
 
   const handleButtonPress = event => {
     event.preventDefault()
+
+    const firstName = formState.firstNameValue.value
+    const email = formState.emailValue.value
+    const biggestObstacle = formState.biggestObstacleValue.value
+    const url = `${siteConfig.api.baseUrl}/not-finish-reset-signup`
+
+    const reqObj = {
+      firstName: firstName,
+      email: email,
+      biggestObstacle: biggestObstacle
+    }
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(reqObj)
+    })
+      .then(() => {})
+      .catch(() => {})
+
     setReverse(false)
     setActiveQuestion(prevValue => prevValue + 1)
   }

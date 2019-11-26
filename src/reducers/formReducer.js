@@ -1,6 +1,7 @@
 import validate from '../utils/validate'
 
 // Validation rules for intputs
+// It might be smart to add error messages to the value object
 
 const passwordValidationRules = {
   minLength: 6,
@@ -280,10 +281,14 @@ const formReducer = (state, action) => {
     }
     case 'setFirstNameValue': {
       const valid = validate(action.value, firstNameValidationRules)
+      const firstName = action.value.trim()
+      const firstLetter = firstName.charAt(0).toUpperCase()
+      const restOfName = firstName.slice(1)
+      const fullName = firstLetter + restOfName
       return {
         ...state,
         firstNameValue: {
-          value: action.value,
+          value: fullName,
           valid: valid
         }
       }
@@ -566,6 +571,64 @@ const formReducer = (state, action) => {
           initial: false,
           touched: !state.contactTellMeMoreOptions.touched,
           showInstructions: !state.contactTellMeMoreOptions.showInstructions
+        }
+      }
+    }
+    case 'resetContactForm': {
+      return {
+        ...state,
+        firstNameValue: {
+          value: '',
+          valid: false
+        },
+        firstNameOptions: {
+          initial: true,
+          touched: false,
+          showInstructions: false
+        },
+        emailValue: {
+          value: '',
+          valid: false
+        },
+        emailOptions: {
+          initial: true,
+          touched: false,
+          showInstructions: false
+        },
+        contactTellMeMoreValue: {
+          value: '',
+          valid: false
+        },
+        contactTellMeMoreOptions: {
+          initial: true,
+          touched: false,
+          showInstructions: false
+        },
+        contactReasonValue: {
+          value: '',
+          valid: false,
+          options: [
+            {
+              value: 'question',
+              displayValue: 'General question',
+              checked: false
+            },
+            {
+              value: 'workout',
+              displayValue: 'Workout question',
+              checked: false
+            },
+            {
+              value: 'app_technical',
+              displayValue: 'App technical issue',
+              checked: false
+            },
+            {
+              value: 'personal_coaching',
+              displayValue: 'Personal coaching question',
+              checked: false
+            }
+          ]
         }
       }
     }
