@@ -7,10 +7,9 @@ import NavigationArrow from '../../svgs/NavigationArrow'
 import { useUserContext } from '../../context/UserContext'
 import { usePortalContext } from '../../context/portalContext'
 
-const MoreMenuDrawer = () => {
+const MoreMenuDrawer = ({ handleNavigation }) => {
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
-  // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
 
   const moreMenuItems = [
@@ -24,14 +23,29 @@ const MoreMenuDrawer = () => {
     const label = menuItem.label
     const slug = menuItem.slug
 
-    return <MoreMenuItem key={id} label={label} slug={slug} />
+    return (
+      <MoreMenuItem
+        key={id}
+        label={label}
+        slug={slug}
+        handleNavigation={handleNavigation}
+      />
+    )
   })
+
+  const handleCloseMoreMenu = () => {
+    dispatchPortalAction({ type: 'toggleMoreMenu' })
+  }
 
   return (
     <MoreMenuDrawerTransition moreMenuOpen={portalState.moreMenu.isOpen}>
       <DrawerContainer>
         {moreMenu}
-        <CloseMoreMenu />
+        <CloseMoreMenu
+          isOpen={portalState.moreMenu.isOpen}
+          label={'moreMenu'}
+          handleCloseMoreMenu={handleCloseMoreMenu}
+        />
       </DrawerContainer>
     </MoreMenuDrawerTransition>
   )

@@ -1,8 +1,26 @@
 import React from 'react'
 
+import { useUserContext } from '../context/UserContext'
+import { usePortalContext } from '../context/portalContext'
+import { useFireBase } from '../components/Firebase/FirebaseContext'
+
 const BottomLogoutIcon = ({ width, height, className }) => {
+  const auth = useFireBase()
+  // eslint-disable-next-line
+  const [userState, dispatchUserAction] = useUserContext()
+  // eslint-disable-next-line
+  const [portalState, dispatchPortalAction] = usePortalContext()
+
+  const handleLogout = () => {
+    dispatchPortalAction({ type: 'closeMoreMenu' })
+    dispatchPortalAction({ type: 'closeMenu' })
+    dispatchUserAction({ type: 'setLoggedOutUser' })
+    auth.logUserOut()
+  }
+
   return (
     <svg
+      onClick={handleLogout}
       id="logout-icon"
       xmlns="http://www.w3.org/2000/svg"
       width={width}

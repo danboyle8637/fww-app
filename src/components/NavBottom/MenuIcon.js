@@ -9,12 +9,11 @@ import BottomDashboardIcon from '../../svgs/BottomDashboardIcon'
 import BottomLogoutIcon from '../../svgs/BottomLogoutIcon'
 import { usePortalContext } from '../../context/portalContext'
 
-const MenuIcon = ({ icon, label }) => {
+const MenuIcon = ({ icon, label, handleNavigation }) => {
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
 
   const handleMoreIconClick = () => {
-    console.log(portalState.moreMenu.isOpen)
     dispatchPortalAction({ type: 'toggleMoreMenu' })
   }
 
@@ -24,9 +23,14 @@ const MenuIcon = ({ icon, label }) => {
       {icon === 'blog' ? <BlogIcon /> : null}
       {icon === 'contact' ? <ContactIcon /> : null}
       {icon === 'more' ? (
-        <MoreIcon handleMoreIconClick={handleMoreIconClick} />
+        <MoreIcon
+          isOpen={portalState.moreMenu.isOpen}
+          handleMoreIconClick={handleMoreIconClick}
+        />
       ) : null}
-      {icon === 'dashboard' ? <DashboardIcon /> : null}
+      {icon === 'dashboard' ? (
+        <DashboardIcon handleNavigation={handleNavigation} />
+      ) : null}
       {icon === 'logout' ? <LogoutIcon /> : null}
       <Label>{label}</Label>
     </ItemContainer>

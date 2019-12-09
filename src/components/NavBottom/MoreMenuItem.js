@@ -1,10 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 
-const MoreMenuItem = ({ label, slug }) => {
+import AccountProfileIcon from '../../svgs/AccountProfileIcon'
+import ReviewIcon from '../../svgs/ReviewIcon'
+import ContactIcon from '../../svgs/BottomContactIcon'
+
+const MoreMenuItem = ({ label, slug, handleNavigation }) => {
   return (
-    <NavLink to={slug}>
+    <NavLink onClick={() => handleNavigation(slug)}>
+      {label === 'My Account' ? <ProfileIcon /> : null}
+      {label === 'Leave Review' ? <LeaveReviewIcon /> : null}
+      {label === 'Contact' ? <ContactMeIcon /> : null}
       <MenuLabel>{label}</MenuLabel>
     </NavLink>
   )
@@ -13,7 +19,7 @@ const MoreMenuItem = ({ label, slug }) => {
 export default MoreMenuItem
 
 const MenuLabel = styled.p`
-  margin: 0;
+  margin: 8px 0 0 0;
   padding: 0;
   font-family: Montserrat;
   font-size: 20px;
@@ -23,7 +29,22 @@ const MenuLabel = styled.p`
   color: ${props => props.theme.bodyText};
 `
 
-const NavLink = styled(Link)`
+const NavLink = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   cursor: pointer;
   text-decoration: none;
+`
+
+const ProfileIcon = styled(AccountProfileIcon)`
+  width: 40px;
+`
+
+const LeaveReviewIcon = styled(ReviewIcon)`
+  width: 80px;
+`
+
+const ContactMeIcon = styled(ContactIcon)`
+  width: 40px;
 `

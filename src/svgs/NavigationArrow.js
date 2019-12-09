@@ -1,9 +1,45 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { TweenMax, Power2 } from 'gsap/TweenMax'
 
-const NavigationArrow = ({ width, height, className }) => {
+const NavigationArrow = ({
+  width,
+  height,
+  className,
+  isOpen,
+  label,
+  handleCloseMoreMenu
+}) => {
+  const navArrowRef = useRef(null)
+
+  useEffect(() => {
+    const navArrow = navArrowRef.current
+
+    if (isOpen && label === 'moreMenu') {
+      TweenMax.fromTo(
+        navArrow,
+        1,
+        {
+          y: -5,
+          ease: Power2.easeInOut
+        },
+        {
+          y: 5,
+          ease: Power2.easeInOut,
+          yoyo: true,
+          repeat: -1
+        }
+      )
+    }
+
+    return () => {
+      TweenMax.killTweensOf(navArrow)
+    }
+  }, [isOpen, label])
+
   return (
     <svg
+      onClick={label === 'moreMenu' ? handleCloseMoreMenu : null}
+      ref={navArrowRef}
       id="navigation-arrow"
       xmlns="http://www.w3.org/2000/svg"
       className={className}

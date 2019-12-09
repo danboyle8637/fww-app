@@ -1,9 +1,37 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
+import { TweenMax, Power2 } from 'gsap/TweenMax'
 
-const BottomMoreIcon = ({ width, height, className, handleMoreIconClick }) => {
+const BottomMoreIcon = ({
+  width,
+  height,
+  className,
+  isOpen,
+  handleMoreIconClick
+}) => {
+  const moreIconRef = useRef(null)
+
+  useEffect(() => {
+    const moreIcon = moreIconRef.current
+
+    if (isOpen) {
+      TweenMax.to(moreIcon, 0.4, {
+        transformOrigin: '50% 50%',
+        rotation: 90,
+        ease: Power2.easeOut
+      })
+    } else {
+      TweenMax.to(moreIcon, 0.4, {
+        transformOrigin: '50% 50%',
+        rotation: 0,
+        ease: Power2.easeOut
+      })
+    }
+  }, [isOpen])
+
   return (
     <svg
       onClick={handleMoreIconClick}
+      ref={moreIconRef}
       id="more-dots-icon"
       data-name="more-dots-icon"
       xmlns="http://www.w3.org/2000/svg"

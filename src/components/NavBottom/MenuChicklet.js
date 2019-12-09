@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
+import { Redirect } from 'react-router-dom'
 import { TweenMax, Power2 } from 'gsap/TweenMax'
 
 import MainMenuIcon from '../../svgs/MainMenuIcon'
@@ -15,6 +16,8 @@ const MenuChicklet = () => {
   const [portalState, dispatchPortalAction] = usePortalContext()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  const [toLocation, setToLocation] = useState(false)
+  const [slug, setSlug] = useState('')
   const menuChickletRef = useRef(null)
 
   useEffect(() => {
@@ -36,8 +39,22 @@ const MenuChicklet = () => {
   }, [portalState.menu.isOpen])
 
   const handleMenuClick = () => {
+    setToLocation(false)
+    setSlug('')
     dispatchPortalAction({ type: 'closeMoreMenu' })
     dispatchPortalAction({ type: 'toggleMenu' })
+  }
+
+  const handleNavigation = destination => {
+    dispatchPortalAction({ type: 'closeMoreMenu' })
+    dispatchPortalAction({ type: 'closeMenu' })
+    setSlug(destination)
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(setToLocation(true))
+      }, 400)
+    })
   }
 
   return (
@@ -49,11 +66,13 @@ const MenuChicklet = () => {
         <BottomBar
           menuOpen={portalState.menu.isOpen}
           isLoggedIn={userState.isLoggedIn}
+          handleNavigation={handleNavigation}
         />
       </Portal>
       <Portal>
-        <MoreMenuDrawer />
+        <MoreMenuDrawer handleNavigation={handleNavigation} />
       </Portal>
+      {toLocation ? <Redirect to={`${slug}`} /> : null}
     </>
   )
 }

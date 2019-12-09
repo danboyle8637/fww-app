@@ -1,8 +1,14 @@
 import React from 'react'
 
-const BottomDashboardIcon = ({ width, height, className }) => {
+const BottomDashboardIcon = ({
+  width,
+  height,
+  className,
+  handleNavigation
+}) => {
   return (
     <svg
+      onClick={() => handleNavigation('/dashboard')}
       id="dashboard-icon"
       xmlns="http://www.w3.org/2000/svg"
       width={width}

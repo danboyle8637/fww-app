@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Redirect, useLocation, useHistory } from 'react-router-dom'
 
-import MenuChicklet from './MenuChicklet'
 import NavigationArrow from '../../svgs/NavigationArrow'
 import BackButtonTransition from '../../Animations/Transitions/BackButtonTransition'
 import { useUserContext } from '../../context/UserContext'
@@ -43,7 +42,6 @@ const MainNav = () => {
             <NavArrow />
           </NavArrowBackground>
         </BackButtonTransition>
-        {/* <MenuChicklet /> */}
       </MainNavBar>
       {!userState.isLoggedIn ? <Redirect to="/login" /> : null}
     </>

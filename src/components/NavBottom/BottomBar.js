@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import MenuIcon from './MenuIcon'
 import BottomMenuTransition from '../../Animations/Transitions/BottomMenuBarTransition'
 
-const BottomBar = ({ menuOpen, isLoggedIn }) => {
+const BottomBar = ({ menuOpen, isLoggedIn, handleNavigation }) => {
   const loggedOutIcons = [
     { id: 1, icon: 'home', label: 'home' },
     { id: 2, icon: 'blog', label: 'blog' },
@@ -30,7 +30,14 @@ const BottomBar = ({ menuOpen, isLoggedIn }) => {
     const icon = menuIcon.icon
     const label = menuIcon.label
 
-    return <MenuIcon key={id} icon={icon} label={label} />
+    return (
+      <MenuIcon
+        key={id}
+        icon={icon}
+        label={label}
+        handleNavigation={handleNavigation}
+      />
+    )
   })
 
   return (
