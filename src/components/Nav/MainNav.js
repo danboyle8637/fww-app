@@ -43,7 +43,7 @@ const MainNav = () => {
             <NavArrow />
           </NavArrowBackground>
         </BackButtonTransition>
-        <MenuChicklet />
+        {/* <MenuChicklet /> */}
       </MainNavBar>
       {!userState.isLoggedIn ? <Redirect to="/login" /> : null}
     </>

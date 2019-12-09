@@ -135,6 +135,8 @@ const ResetStep4Form = ({
             // TODO you need to create a special error page... Look in Basecamp
             // TODO make sure you setIsLoading to false and redirect them...
             // TODO a special page where you can get their account set up.
+            // userId
+            // email
             dispatchPortalAction({
               type: 'toggleErrorMessage',
               value: error.message

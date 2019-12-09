@@ -2,6 +2,9 @@ const portalState = {
   menu: {
     isOpen: false
   },
+  moreMenu: {
+    isOpen: false
+  },
   workoutVideo: {
     isOpen: false
   },
@@ -46,6 +49,22 @@ const portalReducer = (state, action) => {
       return {
         ...state,
         menu: {
+          isOpen: false
+        }
+      }
+    }
+    case 'toggleMoreMenu': {
+      return {
+        ...state,
+        moreMenu: {
+          isOpen: !state.moreMenu.isOpen
+        }
+      }
+    }
+    case 'closeMoreMenu': {
+      return {
+        ...state,
+        moreMenu: {
           isOpen: false
         }
       }

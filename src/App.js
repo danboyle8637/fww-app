@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Global from './styles/Global'
 import AppLayout from './layouts/AppLayout'
 import MainNav from './components/Nav/MainNav'
+import BottomNav from './components/NavBottom/MenuChicklet'
 import ResetDashboard from './pages/ResetDashboard'
 import FourOhFour from './pages/FourOhFour'
 import Login from './pages/Login'
@@ -63,6 +64,7 @@ const App = () => {
             />
             <Route component={FourOhFour} />
           </Switch>
+          <BottomNav />
         </BrowserRouter>
         <Portal>
           <ErrorIndicator />

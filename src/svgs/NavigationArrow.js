@@ -1,4 +1,5 @@
 import React from 'react'
+import { TweenMax, Power2 } from 'gsap/TweenMax'
 
 const NavigationArrow = ({ width, height, className }) => {
   return (
