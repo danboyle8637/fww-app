@@ -20,8 +20,12 @@ const MenuIcon = ({ icon, label, handleNavigation }) => {
   return (
     <ItemContainer>
       {icon === 'home' ? <HomeIcon /> : null}
-      {icon === 'blog' ? <BlogIcon /> : null}
-      {icon === 'contact' ? <ContactIcon /> : null}
+      {icon === 'blog' ? (
+        <BlogIcon handleNavigation={handleNavigation} />
+      ) : null}
+      {icon === 'contact' ? (
+        <ContactIcon handleNavigation={handleNavigation} />
+      ) : null}
       {icon === 'more' ? (
         <MoreIcon
           isOpen={portalState.moreMenu.isOpen}

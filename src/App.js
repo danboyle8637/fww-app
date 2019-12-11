@@ -1,5 +1,5 @@
-import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import React, { useState } from 'react'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import Global from './styles/Global'
 import AppLayout from './layouts/AppLayout'
@@ -19,12 +19,17 @@ import ResetUserAccount from './pages/ResetUserAccount'
 import ResetSecurityLogin from './pages/ResetSecurityLogin'
 import SocialLogin from './pages/SocialLogin'
 import SocialSignUp from './pages/SocialSignUp'
+import EmergencySignUp from './pages/EmergencySignUp'
+import ErrorPage from './pages/ErrorPage'
 import SocialLink from './pages/SocialLink'
 import PrivateRoute from './components/Shared/PrivateRoute'
 import Portal from './components/Shared/Portal'
 import ErrorIndicator from './components/Indicators/ErrorIndicator'
 
 const App = () => {
+  const [toEmergencySignUp, setToEmergencySignUp] = useState(false)
+  const [emergencySlug, setEmergencySlug] = useState('')
+
   return (
     <>
       <Global />
@@ -33,16 +38,18 @@ const App = () => {
           <MainNav />
           <Switch>
             <Route exact path="/" component={Login} />
-            <PrivateRoute exact path="/dashboard" component={ResetDashboard} />
             <Route path="/login" component={Login} />
             <Route path="/security-login" component={ResetSecurityLogin} />
             <Route path="/social-login" component={SocialLogin} />
             <Route path="/social-sign-up" component={SocialSignUp} />
+            <Route path="/emergency-sign-up" component={EmergencySignUp} />
+            <Route path="/error" component={ErrorPage} />
             <Route path="/social-link" component={SocialLink} />
             <Route path="/playground" component={SignUp} />
             <Route path="/7-day-reset-step1" component={ResetSignUp} />
-            <PrivateRoute path="/review" component={Review} />
             <Route path="/contact" component={Contact} />
+            <PrivateRoute exact path="/dashboard" component={ResetDashboard} />
+            <PrivateRoute path="/review" component={Review} />
             <PrivateRoute
               path="/account/:username"
               component={ResetUserAccount}
@@ -65,9 +72,13 @@ const App = () => {
             <Route component={FourOhFour} />
           </Switch>
           <BottomNav />
+          {toEmergencySignUp ? <Redirect to={emergencySlug} /> : null}
         </BrowserRouter>
         <Portal>
-          <ErrorIndicator />
+          <ErrorIndicator
+            setToEmergencySignUp={setToEmergencySignUp}
+            setEmergencySlug={setEmergencySlug}
+          />
         </Portal>
       </AppLayout>
     </>

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import MenuIcon from './MenuIcon'
 import BottomMenuTransition from '../../Animations/Transitions/BottomMenuBarTransition'
+import { above } from '../../styles/Theme'
 
 const BottomBar = ({ menuOpen, isLoggedIn, handleNavigation }) => {
   const loggedOutIcons = [
@@ -22,7 +23,14 @@ const BottomBar = ({ menuOpen, isLoggedIn, handleNavigation }) => {
     const icon = menuIcon.icon
     const label = menuIcon.label
 
-    return <MenuIcon key={id} icon={icon} label={label} />
+    return (
+      <MenuIcon
+        key={id}
+        icon={icon}
+        label={label}
+        handleNavigation={handleNavigation}
+      />
+    )
   })
 
   const loggedInNav = loggedInIcons.map(menuIcon => {
@@ -66,4 +74,9 @@ const BarContainer = styled.div`
   border-right: 3px solid ${props => props.theme.headlinePrimary};
   overflow: hidden;
   z-index: 9999;
+  ${above.tablet`
+    left: 50%;
+    width: 800px;
+    transform: translateX(-50%);
+  `}
 `

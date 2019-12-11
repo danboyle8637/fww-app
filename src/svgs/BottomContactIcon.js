@@ -1,8 +1,9 @@
 import React from 'react'
 
-const BottomContactIcon = ({ width, height, className }) => {
+const BottomContactIcon = ({ width, height, className, handleNavigation }) => {
   return (
     <svg
+      onClick={() => handleNavigation('/contact')}
       id="bottom-contact-icon"
       data-name="bottom-contact-icon"
       xmlns="http://www.w3.org/2000/svg"

@@ -31,6 +31,9 @@ const portalState = {
   },
   errorMessage: {
     isOpen: false,
+    redirectSlug: '',
+    showButton: false,
+    buttonText: '',
     message: ''
   }
 }
@@ -180,7 +183,22 @@ const portalReducer = (state, action) => {
         ...state,
         errorMessage: {
           isOpen: !state.errorMessage.isOpen,
+          redirectSlug: '',
+          showButton: false,
+          buttonText: '',
           message: action.value
+        }
+      }
+    }
+    case 'toggleEmergencyErrorMessage': {
+      return {
+        ...state,
+        errorMessage: {
+          isOpen: !state.errorMessage.isOpen,
+          redirectSlug: action.value.redirectSlug,
+          showButton: true,
+          buttonText: action.value.buttonText,
+          message: action.value.message
         }
       }
     }

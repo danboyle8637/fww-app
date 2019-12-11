@@ -21,7 +21,8 @@ const ResetStep4Form = ({
   reverse,
   setReverse,
   setIsLoading,
-  setShowSecurityLogin
+  setShowSecurityLogin,
+  setToErrorPage
 }) => {
   const auth = useFireBase()
   // eslint-disable-next-line
@@ -91,7 +92,7 @@ const ResetStep4Form = ({
         }
         // Call our Signup endpoint...
         const url = `${siteConfig.api.baseUrl}/sign-up`
-        const convertKitUrl = `${siteConfig.api.baseUrl}/add-member-to-convertki`
+        const convertKitUrl = `${siteConfig.api.baseUrl}/add-member-to-convertkit`
 
         const signUp = fetch(url, {
           method: 'POST',
@@ -131,19 +132,23 @@ const ResetStep4Form = ({
             setIsLoading(false)
             setShowSecurityLogin(true)
           })
-          .catch(error => {
-            // TODO you need to create a special error page... Look in Basecamp
-            // TODO make sure you setIsLoading to false and redirect them...
-            // TODO a special page where you can get their account set up.
-            // userId
-            // email
+          .catch(() => {
+            // 1. Setup emergency message
             dispatchPortalAction({
-              type: 'toggleErrorMessage',
-              value: error.message
+              type: 'toggleEmergencyErrorMessage',
+              value: {
+                redirectSlug: '/emergency-sign-up',
+                buttonText: 'Retry Sign Up Process',
+                message: `Network problems caused an incomplete signup process. No worries through, just click the button below and we'll try again to get you set up.`
+              }
             })
+            // 2. Redirect back to login and show message
+            setIsLoading(false)
+            setToErrorPage(true)
           })
       })
       .catch(error => {
+        // TODO Handle this error... use all the possible error codes given by Google
         console.log(error)
       })
   }

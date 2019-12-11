@@ -21,6 +21,7 @@ const ResetSignUp = () => {
   const [activeQuestion, setActiveQuestion] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const [toDashboard, setToDashboard] = useState(false)
+  const [toErrorPage, setToErrorPage] = useState(false)
   const [showSecurityLogin, setShowSecurityLogin] = useState(false)
 
   const title = 'Create your Reset program account'
@@ -74,6 +75,7 @@ const ResetSignUp = () => {
                 setReverse={setReverse}
                 setIsLoading={setIsLoading}
                 setShowSecurityLogin={setShowSecurityLogin}
+                setToErrorPage={setToErrorPage}
               />
             </TransitionGroup>
           </FormWrapper>
@@ -83,6 +85,7 @@ const ResetSignUp = () => {
       <ErrorIndicator />
       {toDashboard ? <Redirect to="/dashboard" /> : null}
       {showSecurityLogin ? <Redirect to="/security-login" /> : null}
+      {toErrorPage ? <Redirect to="/error" /> : null}
     </>
   )
 }

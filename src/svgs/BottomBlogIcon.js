@@ -1,8 +1,9 @@
 import React from 'react'
 
-const BottomBlogIcon = ({ width, height, className }) => {
+const BottomBlogIcon = ({ width, height, className, handleNavigation }) => {
   return (
     <svg
+      onClick={() => handleNavigation('/error')}
       id="bottom-blog-icon"
       xmlns="http://www.w3.org/2000/svg"
       width={width}
