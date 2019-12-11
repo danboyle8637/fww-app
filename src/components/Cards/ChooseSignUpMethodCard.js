@@ -22,7 +22,9 @@ const ChooseSignUpMethodCard = ({
   setActiveQuestion,
   setReverse,
   setToDashboard,
-  setIsLoading
+  setIsLoading,
+  setShowSocialSignUp,
+  setSocialProvider
 }) => {
   const auth = useFireBase()
   const device = useContext(ScreenWidthContext)
@@ -32,8 +34,10 @@ const ChooseSignUpMethodCard = ({
   const [userState, dispatchUserAction] = useUserContext()
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
-  const [showSocialSignUp, setShowSocialSignUp] = useState(false)
-  const [socialProvider, setSocialProvider] = useState('')
+
+  // * I moved these to the root signup component. If everythign works delete. If not... reuse in this component.
+  //const [showSocialSignUp, setShowSocialSignUp] = useState(false)
+  //const [socialProvider, setSocialProvider] = useState('')
 
   const url = `${siteConfig.api.baseUrl}/sign-up-social-account`
   const convertKitUrl = `${siteConfig.api.baseUrl}/add-member-to-convertkit`
@@ -266,14 +270,6 @@ const ChooseSignUpMethodCard = ({
         <BodyText>{buttonText}</BodyText>
         <Arrow />
       </CardContainer>
-      {showSocialSignUp ? (
-        <Redirect
-          to={{
-            pathname: '/social-sign-up',
-            state: { provider: socialProvider }
-          }}
-        />
-      ) : null}
     </>
   )
 }

@@ -6,6 +6,7 @@ import MoreMenuDrawerTransition from '../../Animations/Transitions/MoreMenuDrawe
 import NavigationArrow from '../../svgs/NavigationArrow'
 import { useUserContext } from '../../context/UserContext'
 import { usePortalContext } from '../../context/portalContext'
+import { above } from '../../styles/Theme'
 
 const MoreMenuDrawer = ({ handleNavigation }) => {
   // eslint-disable-next-line
@@ -72,12 +73,37 @@ const DrawerContainer = styled.div`
   border-bottom: 3px solid ${props => props.theme.headlinePrimary};
   border-left: 3px solid ${props => props.theme.headlinePrimary};
   border-right: 3px solid ${props => props.theme.headlinePrimary};
+  width: 100%;
   overflow: hidden;
   z-index: 9999;
+  ${above.mobile`
+    left: 50%;
+    width: 60%;
+    transform: translate(-50%, 0);
+  `}
+  ${above.tablet`
+    width: 50%;
+    bottom: 50%;
+  `}
+  ${above.ipadPro`
+    padding: 20px;
+    left: 50%;
+    bottom: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    justify-items: center;
+    align-items: end;
+    transform: translate(-50%, 0);
+  `}
 `
 
 const CloseMoreMenu = styled(NavigationArrow)`
   width: 20px;
   align-self: end;
   transform: rotate(-90deg);
+  ${above.ipadPro`
+    grid-column: 2 / 3;
+    grid-row: 2 / -1;
+  `}
 `

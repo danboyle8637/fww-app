@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Redirect } from 'react-router-dom'
-import { TweenMax, Power2 } from 'gsap/TweenMax'
 
 import MainMenuIcon from '../../svgs/MainMenuIcon'
 import BottomBar from './BottomBar'
@@ -23,9 +22,17 @@ const MenuChicklet = () => {
   const [slug, setSlug] = useState('')
   const [isLaptopMenu, setIsLaptopMenu] = useState(false)
   const menuChickletRef = useRef(null)
+  const mediaQueryRef = useRef(null)
 
   useEffect(() => {
-    const mql = window.matchMedia('(min-width: 1100px)')
+    mediaQueryRef.current = window.matchMedia('(min-width: 1100px)')
+
+    if (mediaQueryRef.current.matches) {
+      setIsLaptopMenu(true)
+    } else {
+      setIsLaptopMenu(false)
+    }
+
     const test = event => {
       if (event.matches) {
         setIsLaptopMenu(true)
@@ -33,10 +40,11 @@ const MenuChicklet = () => {
         setIsLaptopMenu(false)
       }
     }
-    mql.addListener(test)
+
+    mediaQueryRef.current.addListener(test)
 
     return () => {
-      mql.removeListener(test)
+      mediaQueryRef.current.removeListener(test)
     }
   }, [])
 
@@ -48,20 +56,6 @@ const MenuChicklet = () => {
     } else {
       mobileMenuTween(menuChicklet, portalState.menu.isOpen)
     }
-
-    // if (portalState.menu.isOpen) {
-    //   TweenMax.to(menuChicklet, 0.4, {
-    //     y: -60,
-    //     rotation: 360,
-    //     ease: Power2.easeOut
-    //   })
-    // } else {
-    //   TweenMax.to(menuChicklet, 0.4, {
-    //     y: 0,
-    //     rotation: -360,
-    //     ease: Power2.easeOut
-    //   })
-    // }
   }, [isLaptopMenu, portalState.menu.isOpen])
 
   const handleMenuClick = () => {
@@ -90,9 +84,9 @@ const MenuChicklet = () => {
           <MenuIcon menuOpen={portalState.menu.isOpen} />
         </LaptopContainer>
       ) : (
-        <NavBarContainer ref={menuChickletRef} onClick={handleMenuClick}>
+        <MobileContainer ref={menuChickletRef} onClick={handleMenuClick}>
           <MenuIcon menuOpen={portalState.menu.isOpen} />
-        </NavBarContainer>
+        </MobileContainer>
       )}
       <Portal>
         <BottomBar
@@ -104,14 +98,14 @@ const MenuChicklet = () => {
       <Portal>
         <MoreMenuDrawer handleNavigation={handleNavigation} />
       </Portal>
-      {toLocation ? <Redirect to={`${slug}`} /> : null}
+      {toLocation ? <Redirect push to={`${slug}`} /> : null}
     </>
   )
 }
 
 export default MenuChicklet
 
-const NavBarContainer = styled.div`
+const MobileContainer = styled.div`
   position: fixed;
   bottom: 16px;
   left: 16px;
@@ -128,7 +122,7 @@ const NavBarContainer = styled.div`
   z-index: 9999;
   ${above.tablet`
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, 0);
   `}
 `
 

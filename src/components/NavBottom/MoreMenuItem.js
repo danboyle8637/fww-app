@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import AccountProfileIcon from '../../svgs/AccountProfileIcon'
 import ReviewIcon from '../../svgs/ReviewIcon'
 import ContactIcon from '../../svgs/BottomContactIcon'
+import { above } from '../../styles/Theme'
 
 const MoreMenuItem = ({ label, slug, handleNavigation }) => {
   return (
@@ -27,6 +28,11 @@ const MenuLabel = styled.p`
   text-transform: uppercase;
   letter-spacing: 1.6;
   color: ${props => props.theme.bodyText};
+  ${above.ipadPro`
+    &:hover {
+      color: ${props => props.theme.primaryAccent};
+    }
+  `}
 `
 
 const NavLink = styled.div`

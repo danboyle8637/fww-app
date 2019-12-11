@@ -16,9 +16,6 @@ const ProgressLoader = ({
   const drawSVG = DrawSVG
 
   useEffect(() => {
-    // TODO We need to make sure this only runs when the percent has changed.
-    // It's kicking off a state change everytime currently.
-    // I think we want this so it animates and just looks cool.
     const loader = loaderRef.current
 
     const maxLength = DrawSVG.getLength(loader)

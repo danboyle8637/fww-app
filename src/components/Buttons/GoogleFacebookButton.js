@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import Google from '../../svgs/GoogleButtonIcon'
 import Facebook from '../../svgs/FacebookButtonIcon'
+import { above } from '../../styles/Theme'
 
 const GoogleFacebookButton = ({
   children,
@@ -42,11 +43,17 @@ const Button = styled.button`
   outline: none;
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;
-  transition: background-color, border-color, border-width, border-style, color,
-    200ms ease-in-out;
+  transition: box-shadow, background-color, border-color, border-width,
+    border-style, color, 300ms ease-in-out;
   &:focus {
     box-shadow: 0 0 0 2px #000, 0 0 0 5px ${props => props.theme.tertiaryAccent};
   }
+  ${above.ipadPro`
+    &:hover {
+      box-shadow: 0 0 0 2px #000, 0 0 0 5px ${props =>
+        props.theme.tertiaryAccent};
+    }
+  `}
 `
 
 const ButtonText = styled.h5`

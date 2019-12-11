@@ -49,7 +49,7 @@ const EmergencySignUp = () => {
           .then(() => {
             dispatchPortalAction({
               type: 'toggleErrorMessage',
-              message:
+              value:
                 'SUCCESS!! For security reasons we did not automatically log you in. So close this alert and login with the password you choose.'
             })
             auth.logUserOut()

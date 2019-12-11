@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { TimelineMax, Power2 } from 'gsap/all'
 
+import { above } from '../../styles/Theme'
+
 const AdminButton = ({
   children,
   purple,
@@ -75,4 +77,14 @@ const Button = styled.button`
   outline: none;
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;
+  transition: box-shadow 300ms ease-in-out;
+  &:focus {
+    box-shadow: 0 0 0 2px #000, 0 0 0 5px ${props => props.theme.tertiaryAccent};
+  }
+  ${above.ipadPro`
+    &:hover {
+      box-shadow: 0 0 0 2px #000, 0 0 0 5px ${props =>
+        props.theme.tertiaryAccent};
+    }
+  `}
 `

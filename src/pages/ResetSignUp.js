@@ -22,7 +22,13 @@ const ResetSignUp = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [toDashboard, setToDashboard] = useState(false)
   const [toErrorPage, setToErrorPage] = useState(false)
+
+  // This is for email and password login.
   const [showSecurityLogin, setShowSecurityLogin] = useState(false)
+
+  // These are for Google and Facebook signup.
+  const [showSocialSignUp, setShowSocialSignUp] = useState(false)
+  const [socialProvider, setSocialProvider] = useState('')
 
   const title = 'Create your Reset program account'
   const alt =
@@ -67,6 +73,8 @@ const ResetSignUp = () => {
                 setActiveQuestion={setActiveQuestion}
                 setIsLoading={setIsLoading}
                 setToDashboard={setToDashboard}
+                setShowSocialSignUp={setShowSocialSignUp}
+                setSocialProvider={setSocialProvider}
               />
               <ResetStep4Form
                 activeQuestion={activeQuestion}
@@ -86,6 +94,14 @@ const ResetSignUp = () => {
       {toDashboard ? <Redirect to="/dashboard" /> : null}
       {showSecurityLogin ? <Redirect to="/security-login" /> : null}
       {toErrorPage ? <Redirect to="/error" /> : null}
+      {showSocialSignUp ? (
+        <Redirect
+          to={{
+            pathname: '/social-sign-up',
+            state: { provider: socialProvider }
+          }}
+        />
+      ) : null}
     </>
   )
 }

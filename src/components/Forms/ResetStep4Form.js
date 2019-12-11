@@ -148,8 +148,46 @@ const ResetStep4Form = ({
           })
       })
       .catch(error => {
-        // TODO Handle this error... use all the possible error codes given by Google
-        console.log(error)
+        if (error.code === 'auth/email-already-in-use') {
+          dispatchPortalAction({
+            type: 'toggleEmergencyErrorMessage',
+            value: {
+              redirectSlug: '/contact',
+              buttonText: 'Go To Contact Page',
+              message: `😢 Email is already in use. Do you have an account? If so login, if not... contact us and we can help figure out what is going on.`
+            }
+          })
+        } else if (error.code === 'auth/invalid-email') {
+          dispatchPortalAction({
+            type: 'toggleErrorMessage',
+            action:
+              '😬 Your email address does not seem to be valid. Go check it out and try signing up again. Your data should still be there.'
+          })
+        } else if (error.code === 'auth/operation-not-allowed') {
+          dispatchPortalAction({
+            type: 'toggleEmergencyErrorMessage',
+            action: {
+              redirectSlug: '/contact',
+              buttonText: 'Go To Contact Page',
+              message: `😬 You should not be seeing this error. But if you are, contact us and let us know as soon as you can. We'll also help make sure you get signed up.`
+            }
+          })
+        } else if (error.code === 'auth/weak-password') {
+          dispatchPortalAction({
+            type: 'toggleErrorMessage',
+            action:
+              '😬 Your password is a little too weak. For the security of your account, go create one with some more UMPHH! ... your data should still be in the form.'
+          })
+        } else {
+          dispatchPortalAction({
+            type: 'toggleEmergencyErrorMessage',
+            action: {
+              redirectSlug: '/contact',
+              buttonText: 'Go To Contact Page',
+              message: `😬 You should not be seeing this error. But if you are, contact us and let us know as soon as you can. We'll also help make sure you get signed up.`
+            }
+          })
+        }
       })
   }
 
