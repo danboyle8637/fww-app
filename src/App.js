@@ -20,6 +20,7 @@ import ResetSecurityLogin from './pages/ResetSecurityLogin'
 import SocialLogin from './pages/SocialLogin'
 import SocialSignUp from './pages/SocialSignUp'
 import EmergencySignUp from './pages/EmergencySignUp'
+import EmergencySocialSignUp from './pages/EmergencySocialSignUp'
 import ErrorPage from './pages/ErrorPage'
 import SocialLink from './pages/SocialLink'
 import PrivateRoute from './components/Shared/PrivateRoute'
@@ -43,6 +44,10 @@ const App = () => {
             <Route path="/social-login" component={SocialLogin} />
             <Route path="/social-sign-up" component={SocialSignUp} />
             <Route path="/emergency-sign-up" component={EmergencySignUp} />
+            <Route
+              path="/emergency-social-sign-up"
+              component={EmergencySocialSignUp}
+            />
             <Route path="/error" component={ErrorPage} />
             <Route path="/social-link" component={SocialLink} />
             <Route path="/playground" component={SignUp} />

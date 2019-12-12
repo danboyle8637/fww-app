@@ -5,6 +5,7 @@ import FWWLogo from '../components/Logos/FWWLogo'
 import ContactForm from '../components/Forms/ContactForm'
 import MessageDialog from '../components/Dialogs/MessageDialog'
 import SyncingIndicator from '../components/Indicators/SyncingIndicator'
+import Portal from '../components/Shared/Portal'
 import { above } from '../styles/Theme'
 
 const Contact = () => {
@@ -24,7 +25,9 @@ const Contact = () => {
         />
       </ContactContainer>
       <SyncingIndicator isSyncing={isSyncing} syncMessage={syncingMessage} />
-      <MessageDialog />
+      <Portal>
+        <MessageDialog />
+      </Portal>
     </>
   )
 }

@@ -7,6 +7,7 @@ import WorkoutCard from '../components/Cards/WorkoutProgramCard'
 import DashboardStatsCard from '../components/Cards/DashboardStatsCard'
 import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
 import { useWorkoutState } from '../context/WorkoutsContext'
+import { useProgramsContext } from '../context/ProgramsContext'
 import { usePortalContext } from '../context/portalContext'
 import { useWorkoutStatsContext } from '../context/WorkoutStatsContext'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
@@ -20,12 +21,12 @@ const ResetProgramDashboard = ({ match, location }) => {
 
   const auth = useFireBase()
   const [isLoadingWorkouts, setIsLoadingWorkouts] = useState(false)
-  // eslint-disable-next-line
   const [workoutsState, dispatchWorkoutsAction] = useWorkoutState()
-  // eslint-disable-next-line
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
+  // eslint-disable-next-line
+  const [programState, dispatchProgramAction] = useProgramsContext()
 
   useEffect(() => {
     // * This is my function that sets up the workout stats for selected program
@@ -234,18 +235,26 @@ const ResetProgramDashboard = ({ match, location }) => {
     }
   }
 
-  // TODO Make it so it reads number of workouts and shows the correct number.
-  // This can only happen if you have workouts in local storage.
-  // Doesn't really matter for this app.
-  const workoutLoaderCards = (
-    <>
-      <WorkoutCardLoader loadingMessage={'Loading workouts...'} />
-      <WorkoutCardLoader loadingMessage={'Loading workouts...'} />
-      <WorkoutCardLoader loadingMessage={'Loading workouts...'} />
-      <WorkoutCardLoader loadingMessage={'Loading workouts...'} />
-      <WorkoutCardLoader loadingMessage={'Loading workouts...'} />
-    </>
-  )
+  const workoutLoaderCards = () => {
+    const programId = match.params.programId
+    const currentProgram = programState.percentComplete.find(program => {
+      return program.programId === programId
+    })
+
+    const totalWorkoutArray = []
+
+    for (let i = 0; i < currentProgram.totalWorkouts; i++) {
+      totalWorkoutArray.push(i)
+    }
+
+    const cards = totalWorkoutArray.map((workout, index) => {
+      return (
+        <WorkoutCardLoader key={index} loadingMessage={'Loading workouts...'} />
+      )
+    })
+
+    return <>{cards}</>
+  }
 
   return (
     <>
@@ -254,7 +263,7 @@ const ResetProgramDashboard = ({ match, location }) => {
         <DashboardStatsCard programId={match.params.programId} />
         <WorkoutCardWrapper>
           {isLoadingWorkouts ? (
-            <>{workoutLoaderCards}</>
+            <>{workoutLoaderCards()}</>
           ) : (
             <>{renderWorkouts()}</>
           )}

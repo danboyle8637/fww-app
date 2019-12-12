@@ -13,6 +13,7 @@ import AccountUpdatePasswordForm from '../components/Forms/AccountUpdatePassword
 import DeleteAccountCard from '../components/AccountPage/DeleteAccountCard'
 import Portal from '../components/Shared/Portal'
 import SyncingIndicator from '../components/Indicators/SyncingIndicator'
+import MessageDialog from '../components/Dialogs/MessageDialog'
 import { useUserContext } from '../context/UserContext'
 import { usePortalContext } from '../context/portalContext'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
@@ -26,6 +27,7 @@ const ResetUserAccount = () => {
   const [syncMessage, setSyncMessage] = useState('Syncing...')
   const [isProfilePic, setIsProfilePic] = useState(false)
   const [toLogin, setToLogin] = useState(false)
+  const [emailCorrect, setEmailCorrect] = useState(false)
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
   // eslint-disable-next-line
@@ -61,16 +63,12 @@ const ResetUserAccount = () => {
 
     setIsSyncing(true)
 
-    // TODO rewrite my endpoint to let us know what users want
-    // their account to be deleted. We can then finish it off
-    // with a custom callable function by using a custom
-    // admin section of the app.
     auth
       .getCurrentUser()
       .then(user => {
         user.getIdToken(true).then(token => {
           fetch(url, {
-            method: 'DELETE',
+            method: 'GET',
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -78,20 +76,42 @@ const ResetUserAccount = () => {
             .then(response => response.json())
             .then(data => {
               setSyncMessage(data.message)
+              dispatchPortalAction({
+                type: 'toggleErrorMessage',
+                value: `You're account is set to be deleted. You will receive an email now to confirm. We are terribly sorry to see you go.`
+              })
+              dispatchUserAction({ type: 'setLoggedOutUser' })
+              auth.logUserOut()
               setIsSyncing(false)
               setToLogin(true)
             })
             .catch(error => {
               setSyncMessage(error.message)
+              dispatchPortalAction({
+                type: 'toggleErrorMessage',
+                value: `A network issue caused this request to fail. Try it again so we can be notified and get your account deleted.`
+              })
               setIsSyncing(false)
             })
         })
       })
-      .catch(error => {
-        console.log(error)
+      .catch(() => {
+        dispatchPortalAction({
+          type: 'toggleErrorMessage',
+          value: `Could not get your user account to delete it. Please close this window and try it again.`
+        })
+        setIsSyncing(false)
       })
+  }
 
-    console.log('handle delete account')
+  const handleConfirmEmailClick = notice => {
+    if (notice === 'correct') {
+      setEmailCorrect(true)
+      dispatchPortalAction({ type: 'toggleMessageDialog' })
+    } else {
+      setEmailCorrect(false)
+      dispatchPortalAction({ type: 'toggleMessageDialog' })
+    }
   }
 
   return (
@@ -125,6 +145,8 @@ const ResetUserAccount = () => {
                 handleToggleSync={handleToggleSync}
                 handleSetSyncMessage={handleSetSyncMessage}
                 setToLogin={setToLogin}
+                emailCorrect={emailCorrect}
+                setEmailCorrect={setEmailCorrect}
               />
               <AccountUpdatePasswordForm
                 activeSlide={activeSlide}
@@ -146,6 +168,10 @@ const ResetUserAccount = () => {
       </UserAccountContainer>
       <Portal>
         <SyncingIndicator isSyncing={isSyncing} syncMessage={syncMessage} />
+        <MessageDialog
+          isEmailConfirm={true}
+          handleConfirmEmailClick={handleConfirmEmailClick}
+        />
       </Portal>
       {toLogin ? <Redirect to="/login" /> : null}
     </>

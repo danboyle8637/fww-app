@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 import UpdateAccountFormTransition from '../../Animations/Transitions/UpdateAccountFormTransition'
@@ -8,6 +8,7 @@ import TextInput from './Inputs/TextInput'
 import useFormControls from '../../hooks/useFormControls'
 import { useFormStore } from '../../context/FormContext'
 import { usePortalContext } from '../../context/portalContext'
+import { useUserContext } from '../../context/UserContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import siteConfig from '../../utils/siteConfig'
 
@@ -17,60 +18,88 @@ const AccountUpdateEmailForm = ({
   isSyncing,
   handleToggleSync,
   handleSetSyncMessage,
-  setToLogin
+  setToLogin,
+  emailCorrect,
+  setEmailCorrect
 }) => {
   const auth = useFireBase()
   const [formState, dispatchFormAction] = useFormStore()
   const [updateInputValues, updateInputOptions] = useFormControls()
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
+  // eslint-disable-next-line
+  const [userState, dispatchUserAction] = useUserContext()
 
-  const handleSaveNewEmail = event => {
+  const handleSaveEmailClick = event => {
     event.preventDefault()
-    handleToggleSync()
 
-    const updateEmailReq = {
-      newEmail: formState.emailValue.value
-    }
-
-    const url = `${siteConfig.api.baseUrl}/update-email`
-
-    auth.getCurrentUser().then(user => {
-      user.getIdToken(true).then(token => {
-        fetch(url, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          body: JSON.stringify(updateEmailReq)
-        })
-          .then(response => response.json())
-          .then(data => {
-            dispatchFormAction({ type: 'resetChangeEmailForm' })
-            handleSetSyncMessage(data.message)
-            handleToggleSync()
-            auth.logUserOut()
-            dispatchPortalAction({
-              type: 'toggleErrorMessage',
-              value: 'Credentials Changed. Please Log Back In!'
-            })
-            setToLogin(true)
-          })
-          .catch(error => {
-            dispatchFormAction({ type: 'resetChangeEmailForm' })
-            handleSetSyncMessage(error.message)
-            handleToggleSync()
-          })
-      })
+    dispatchPortalAction({ type: 'toggleMessageDialog' })
+    dispatchPortalAction({
+      type: 'setMessageDialogMessage',
+      value: `Are you sure ${formState.emailValue.value} is the correct email address?`
     })
   }
 
+  useEffect(() => {
+    if (emailCorrect) {
+      setEmailCorrect(false)
+      handleToggleSync()
+
+      const updateEmailReq = {
+        newEmail: formState.emailValue.value
+      }
+
+      const url = `${siteConfig.api.baseUrl}/update-email`
+
+      auth.getCurrentUser().then(user => {
+        user.getIdToken(true).then(token => {
+          fetch(url, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(updateEmailReq)
+          })
+            .then(response => response.json())
+            .then(data => {
+              dispatchFormAction({ type: 'resetChangeEmailForm' })
+              handleSetSyncMessage(data.message)
+              handleToggleSync()
+              auth.logUserOut()
+              dispatchUserAction({ type: 'setLoggedOutUser' })
+              dispatchPortalAction({
+                type: 'toggleErrorMessage',
+                value:
+                  '💪 Your email address has been updated! Please Log Back In!'
+              })
+              setToLogin(true)
+            })
+            .catch(error => {
+              dispatchFormAction({ type: 'resetChangeEmailForm' })
+              handleSetSyncMessage(error.message)
+              handleToggleSync()
+            })
+        })
+      })
+    }
+  }, [
+    auth,
+    dispatchFormAction,
+    dispatchPortalAction,
+    dispatchUserAction,
+    emailCorrect,
+    formState.emailValue.value,
+    handleSetSyncMessage,
+    handleToggleSync,
+    setEmailCorrect,
+    setToLogin
+  ])
+
   const handleBack = () => setActiveSlide(0)
 
-  // TODO Possibly make a popup to make sure they typed in their email correctly.
   return (
     <UpdateAccountFormTransition showNode={activeSlide === 2}>
-      <EmailAddressForm onSubmit={handleSaveNewEmail}>
+      <EmailAddressForm onSubmit={handleSaveEmailClick}>
         <BackChip handleClick={handleBack}>Back</BackChip>
         <Header3>Update Email Address:</Header3>
         <InputWrapper>

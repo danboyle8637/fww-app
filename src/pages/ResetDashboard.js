@@ -127,7 +127,7 @@ const ResetDashboard = ({ location }) => {
                     })
                   })
               })
-              .catch(error => {
+              .catch(() => {
                 dispatchPortalAction({
                   type: 'toggleErrorMessage',
                   value:
@@ -135,7 +135,7 @@ const ResetDashboard = ({ location }) => {
                 })
               })
           })
-          .catch(error => {
+          .catch(() => {
             dispatchPortalAction({
               type: 'toggleErrorMessage',
               value: `😬 Could not get your user account. Try again so we can setup your programs.`

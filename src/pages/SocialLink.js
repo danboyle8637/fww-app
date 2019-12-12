@@ -3,10 +3,14 @@ import { Redirect, useLocation } from 'react-router-dom'
 
 import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
+import { usePortalContext } from '../context/portalContext'
 
 const SocialLink = () => {
   const auth = useFireBase()
   const [showAccountPage, setShowAccountPage] = useState(false)
+  const [choosenProvider, setChoosenProvider] = useState('')
+  // eslint-disable-next-line
+  const [portalState, dispatchPortalAction] = usePortalContext()
 
   const data = useLocation()
 
@@ -28,12 +32,21 @@ const SocialLink = () => {
           }
         }
       })
-      .catch(error => {
-        // TODO set big error and have them try again.
-        // Maybe you can get an error message on the function logs
-        console.log(error)
+      .catch(() => {
+        if (data.state.provider === 'google') {
+          setChoosenProvider('Google')
+        } else if (data.state.provider === 'facebook') {
+          setChoosenProvider('Facebook')
+        } else {
+          setChoosenProvider('social')
+        }
+
+        dispatchPortalAction({
+          type: 'toggleErrorMessage',
+          value: `😢 There was a problem linking your ${choosenProvider}. Please try again.`
+        })
       })
-  }, [auth, data.state])
+  }, [auth, choosenProvider, data.state, dispatchPortalAction])
 
   return (
     <>
