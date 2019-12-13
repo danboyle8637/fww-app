@@ -77,6 +77,14 @@ const MenuChicklet = () => {
     })
   }
 
+  const handleOutNavigation = () => {
+    if (typeof window !== undefined) {
+      // TODO Make sure you set this url when the domain is set
+      console.log('Will navigate to Marketing Site')
+      // window.location.assign()
+    }
+  }
+
   return (
     <>
       {isLaptopMenu ? (
@@ -93,6 +101,7 @@ const MenuChicklet = () => {
           menuOpen={portalState.menu.isOpen}
           isLoggedIn={userState.isLoggedIn}
           handleNavigation={handleNavigation}
+          handleOutNavigation={handleOutNavigation}
         />
       </Portal>
       <Portal>

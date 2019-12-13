@@ -9,7 +9,7 @@ import BottomDashboardIcon from '../../svgs/BottomDashboardIcon'
 import BottomLogoutIcon from '../../svgs/BottomLogoutIcon'
 import { usePortalContext } from '../../context/portalContext'
 
-const MenuIcon = ({ icon, label, handleNavigation }) => {
+const MenuIcon = ({ icon, label, handleNavigation, handleOutNavigation }) => {
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
 
@@ -18,23 +18,26 @@ const MenuIcon = ({ icon, label, handleNavigation }) => {
   }
 
   return (
-    <ItemContainer>
+    <ItemContainer
+      onClick={() => {
+        if (label === 'home ' || label === 'blog') {
+          return handleOutNavigation(`/${label}`)
+        } else if (label === 'more') {
+          return handleMoreIconClick()
+        } else if (label === 'logout') {
+          return null
+        } else {
+          handleNavigation(`/${label}`)
+        }
+      }}
+    >
       {icon === 'home' ? <HomeIcon /> : null}
-      {icon === 'blog' ? (
-        <BlogIcon handleNavigation={handleNavigation} />
-      ) : null}
-      {icon === 'contact' ? (
-        <ContactIcon handleNavigation={handleNavigation} />
-      ) : null}
+      {icon === 'blog' ? <BlogIcon /> : null}
+      {icon === 'contact' ? <ContactIcon /> : null}
       {icon === 'more' ? (
-        <MoreIcon
-          isOpen={portalState.moreMenu.isOpen}
-          handleMoreIconClick={handleMoreIconClick}
-        />
+        <MoreIcon isOpen={portalState.moreMenu.isOpen} />
       ) : null}
-      {icon === 'dashboard' ? (
-        <DashboardIcon handleNavigation={handleNavigation} />
-      ) : null}
+      {icon === 'dashboard' ? <DashboardIcon /> : null}
       {icon === 'logout' ? <LogoutIcon /> : null}
       <Label>{label}</Label>
     </ItemContainer>
@@ -48,6 +51,7 @@ const ItemContainer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
+  cursor: pointer;
 `
 
 const HomeIcon = styled(BottomHomeIcon)`

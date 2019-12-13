@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import LoadingKettlebell from '../../svgs/LoadingKettlebell'
+import ShowUploadedImage from '../Shared/ShowUploadedImage'
+import { useFormStore } from '../../context/FormContext'
 
 const VerticalUserCard = ({
   firstName,
@@ -9,11 +10,16 @@ const VerticalUserCard = ({
   isSyncing,
   isProfilePic
 }) => {
+  // eslint-disable-next-line
+  const [formState, dispatchFormAction] = useFormStore()
+
   return (
     <CardContainer>
       <ImageContainer>
-        {isSyncing && isProfilePic ? (
-          <KettlebellLoader />
+        {isSyncing ||
+        isProfilePic ||
+        typeof formState.updateProfileImage.file === 'object' ? (
+          <ShowUploadedImage file={formState.updateProfileImage.file} />
         ) : (
           <UserPhoto
             src={profileImage}
@@ -47,14 +53,6 @@ const ImageContainer = styled.div`
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   width: 100%;
-`
-
-const KettlebellLoader = styled(LoadingKettlebell)`
-  grid-column: 1 / -1;
-  grid-row: 1 /-1;
-  width: 100px;
-  justify-self: center;
-  align-self: center;
 `
 
 const UserName = styled.p`

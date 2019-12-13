@@ -504,6 +504,20 @@ const formReducer = (state, action) => {
         }
       }
     }
+    case 'emptyReviewForm': {
+      return {
+        ...state,
+        reviewValue: {
+          value: '',
+          valid: false
+        },
+        reviewOptions: {
+          initial: true,
+          touched: false,
+          showInstructions: false
+        }
+      }
+    }
     case 'setUpdateProfileImage': {
       return {
         ...state,

@@ -5,6 +5,7 @@ import BaseButton from '../Buttons/BaseButton'
 import VideoTransition from '../../Animations/Transitions/VideoTransition'
 import VimeoPlayer from '../Shared/VimeoPlayer'
 import { usePortalContext } from '../../context/portalContext'
+import { above } from '../../styles/Theme'
 
 const PopUpVideo = ({ title, workoutVideos, activeVideo, programId }) => {
   const [portalState, dispatchPortalAction] = usePortalContext()
@@ -91,13 +92,15 @@ const VideoContainer = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.9);
-  width: 100vw;
-  height: 100vh;
   z-index: 20;
+  ${above.laptop`
+    padding-left: 200px;
+    padding-right: 200px;
+  `}
 `
 
 const ButtonContainer = styled.div`
-  margin: 40px;
+  margin: 20px;
   padding: 0 16px;
   width: 100%;
 `

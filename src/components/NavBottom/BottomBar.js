@@ -6,7 +6,12 @@ import BottomMobileMenuTransition from '../../Animations/Transitions/BottomMobil
 import BottomLaptopMenuTransition from '../../Animations/Transitions/BottomLaptopMenuBarTransition'
 import { above } from '../../styles/Theme'
 
-const BottomBar = ({ menuOpen, isLoggedIn, handleNavigation }) => {
+const BottomBar = ({
+  menuOpen,
+  isLoggedIn,
+  handleNavigation,
+  handleOutNavigation
+}) => {
   const [isLaptopMenu, setIsLaptopMenu] = useState(false)
   const mediaQueryRef = useRef(null)
 
@@ -74,6 +79,7 @@ const BottomBar = ({ menuOpen, isLoggedIn, handleNavigation }) => {
         icon={icon}
         label={label}
         handleNavigation={handleNavigation}
+        handleOutNavigation={handleOutNavigation}
       />
     )
   })

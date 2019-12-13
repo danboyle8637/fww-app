@@ -22,6 +22,7 @@ const ResetSignUp = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [toDashboard, setToDashboard] = useState(false)
   const [toErrorPage, setToErrorPage] = useState(false)
+  const [showLogin, setShowLogin] = useState(false)
 
   // This is for email and password login.
   const [showSecurityLogin, setShowSecurityLogin] = useState(false)
@@ -75,6 +76,8 @@ const ResetSignUp = () => {
                 setToDashboard={setToDashboard}
                 setShowSocialSignUp={setShowSocialSignUp}
                 setSocialProvider={setSocialProvider}
+                setToErrorPage={setToErrorPage}
+                setShowLogin={setShowLogin}
               />
               <ResetStep4Form
                 activeQuestion={activeQuestion}
@@ -84,6 +87,7 @@ const ResetSignUp = () => {
                 setIsLoading={setIsLoading}
                 setShowSecurityLogin={setShowSecurityLogin}
                 setToErrorPage={setToErrorPage}
+                setShowLogin={setShowLogin}
               />
             </TransitionGroup>
           </FormWrapper>
@@ -94,6 +98,7 @@ const ResetSignUp = () => {
       {toDashboard ? <Redirect to="/dashboard" /> : null}
       {showSecurityLogin ? <Redirect to="/security-login" /> : null}
       {toErrorPage ? <Redirect to="/error" /> : null}
+      {showLogin ? <Redirect to="/login" /> : null}
       {showSocialSignUp ? (
         <Redirect
           to={{

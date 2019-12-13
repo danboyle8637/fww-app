@@ -22,7 +22,8 @@ const ResetStep4Form = ({
   setReverse,
   setIsLoading,
   setShowSecurityLogin,
-  setToErrorPage
+  setToErrorPage,
+  setShowLogin
 }) => {
   const auth = useFireBase()
   // eslint-disable-next-line
@@ -157,12 +158,14 @@ const ResetStep4Form = ({
               message: `😢 Email is already in use. Do you have an account? If so login, if not... contact us and we can help figure out what is going on.`
             }
           })
+          setShowLogin(true)
         } else if (error.code === 'auth/invalid-email') {
           dispatchPortalAction({
             type: 'toggleErrorMessage',
             action:
               '😬 Your email address does not seem to be valid. Go check it out and try signing up again. Your data should still be there.'
           })
+          setShowLogin(true)
         } else if (error.code === 'auth/operation-not-allowed') {
           dispatchPortalAction({
             type: 'toggleEmergencyErrorMessage',
@@ -172,12 +175,14 @@ const ResetStep4Form = ({
               message: `😬 You should not be seeing this error. But if you are, contact us and let us know as soon as you can. We'll also help make sure you get signed up.`
             }
           })
+          setShowLogin(true)
         } else if (error.code === 'auth/weak-password') {
           dispatchPortalAction({
             type: 'toggleErrorMessage',
             action:
               '😬 Your password is a little too weak. For the security of your account, go create one with some more UMPHH! ... your data should still be in the form.'
           })
+          setShowLogin(true)
         } else {
           dispatchPortalAction({
             type: 'toggleEmergencyErrorMessage',
@@ -187,6 +192,7 @@ const ResetStep4Form = ({
               message: `😬 You should not be seeing this error. But if you are, contact us and let us know as soon as you can. We'll also help make sure you get signed up.`
             }
           })
+          setShowLogin(true)
         }
       })
   }

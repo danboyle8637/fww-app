@@ -9,23 +9,77 @@ import ReviewWhySelfie from '../ContentBlocks/ReviewWhySelfie'
 import TextInput from '../Forms/Inputs/TextInput'
 import TextArea from '../Forms/Inputs/TextArea'
 import FileUpload from '../Forms/Inputs/FileUpload'
+import ShowUploadedImage from '../Shared/ShowUploadedImage'
 import { useFormStore } from '../../context/FormContext'
+import { usePortalContext } from '../../context/portalContext'
+import { useFireBase } from '../Firebase/FirebaseContext'
 import useFormControls from '../../hooks/useFormControls'
+import siteConfig from '../../utils/siteConfig'
 import { above } from '../../styles/Theme'
 
-const ReviewForm = () => {
+const ReviewForm = ({ handleToggleSync, handleSetSyncMessage }) => {
+  const auth = useFireBase()
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
+  // eslint-disable-next-line
+  const [portalState, dispatchPortalAction] = usePortalContext()
   const [updateInputValues, updateInputOptions] = useFormControls()
 
   const handleReviewSubmit = event => {
     event.preventDefault()
+    handleToggleSync()
+    handleSetSyncMessage('Saving your review...')
 
-    // const starRating = formState.starRatingValue.value
-    // const firstName = formState.firstNameValue.value
-    // const email = formState.emailValue.value
-    // const reviewText = formState.reviewValue.value
-    // const selfiePhoto = formState.reviewSelfieImage.file
+    const starRating = formState.starRatingValue.value
+    const firstName = formState.firstNameValue.value
+    const email = formState.emailValue.value
+    const reviewText = formState.reviewValue.value
+    const selfiePhoto = formState.reviewSelfieImage.file
+
+    const reviewBody = {
+      stars: starRating,
+      firstName: firstName,
+      email: email,
+      review: reviewText
+    }
+
+    const formData = new FormData()
+    formData.append('selfie', selfiePhoto)
+    formData.append('reviewBody', reviewBody)
+
+    const saveReviewUrl = `${siteConfig.api.baseUrl}/save-review`
+
+    auth.getCurrentUser().then(user => {
+      user.getIdToken(true).then(token => {
+        return fetch(saveReviewUrl, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: formData
+        })
+          .then(response => response.json())
+          .then(() => {
+            handleSetSyncMessage('💪 Review saved!')
+            dispatchFormAction({ type: 'emptyReviewForm' })
+            dispatchPortalAction({ type: 'toggleMessageDialog' })
+            dispatchPortalAction({
+              type: 'setMessageDialogMessage',
+              value: `💪 Thank you so much for leaving a review. If I have questions, I'll email you... if you left your email. Also pay attention to your email because you'll get special offers as a reviewer of the app. Thank you again. It means a lot!`
+            })
+            handleToggleSync()
+          })
+          .catch(() => {
+            handleSetSyncMessage('😢 Review not saved.')
+            dispatchPortalAction({ type: 'toggleMessageDialog' })
+            dispatchPortalAction({
+              type: 'setMessageDialogMessage',
+              value: `😢 Noooo... it looks like some network issues casused your review to not save. I didn't clear your answers so do you mind submitting your form again? Thanks and if you keep getting an error... let me know!`
+            })
+            handleToggleSync()
+          })
+      })
+    })
   }
 
   return (
@@ -84,10 +138,12 @@ const ReviewForm = () => {
       <ReviewWhySelfie />
       <FileUpload
         name="reviewSelfie"
-        value={formState.reviewSelfieImage.fileName}
-        valid={formState.reviewSelfieImage.imageSet}
+        valid={formState.reviewSelfieImage.valid}
         updateInputValues={updateInputValues}
       />
+      {formState.reviewSelfieImage.fileName ? (
+        <ShowUploadedImage file={formState.reviewSelfieImage.file} />
+      ) : null}
       <BaseButton type="submit">Send Review</BaseButton>
     </StarRatingForm>
   )

@@ -1,13 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { TweenMax, Power2 } from 'gsap/TweenMax'
 
-const BottomMoreIcon = ({
-  width,
-  height,
-  className,
-  isOpen,
-  handleMoreIconClick
-}) => {
+const BottomMoreIcon = ({ width, height, className, isOpen }) => {
   const moreIconRef = useRef(null)
 
   useEffect(() => {
@@ -30,7 +24,6 @@ const BottomMoreIcon = ({
 
   return (
     <svg
-      onClick={handleMoreIconClick}
       ref={moreIconRef}
       id="more-dots-icon"
       data-name="more-dots-icon"
