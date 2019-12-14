@@ -45,7 +45,7 @@ const ReviewForm = ({ handleToggleSync, handleSetSyncMessage }) => {
 
     const formData = new FormData()
     formData.append('selfie', selfiePhoto)
-    formData.append('reviewBody', reviewBody)
+    formData.append('reviewBody', JSON.stringify(reviewBody))
 
     const saveReviewUrl = `${siteConfig.api.baseUrl}/save-review`
 

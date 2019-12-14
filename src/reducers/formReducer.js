@@ -507,6 +507,28 @@ const formReducer = (state, action) => {
     case 'emptyReviewForm': {
       return {
         ...state,
+        firstNameValue: {
+          value: '',
+          valid: false
+        },
+        firstNameOptions: {
+          initial: true,
+          touched: false,
+          showInstructions: false
+        },
+        emailValue: {
+          value: '',
+          valid: false
+        },
+        emailOptions: {
+          initial: true,
+          touched: false,
+          showInstructions: false
+        },
+        starRatingValue: {
+          value: 0,
+          valid: false
+        },
         reviewValue: {
           value: '',
           valid: false
