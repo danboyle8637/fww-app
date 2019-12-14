@@ -4,6 +4,8 @@
 # Firebase
 /src/components/Firebase
 firebaseConfig.js
+.firebaserc
+firebase.json
 
 # env
 .env
