@@ -9,6 +9,6 @@ module.exports = {
     ultraWide: helpers.getRems(1460)
   },
   api: {
-    baseUrl: 'http://localhost:5000'
+    baseUrl: 'https://resetapi.fitwomensweekly.com'
   }
 }
