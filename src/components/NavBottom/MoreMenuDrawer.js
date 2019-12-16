@@ -43,6 +43,7 @@ const MoreMenuDrawer = ({ handleNavigation }) => {
       <DrawerContainer>
         {moreMenu}
         <CloseMoreMenu
+          gradientId="closeMoreMenu"
           isOpen={portalState.moreMenu.isOpen}
           label={'moreMenu'}
           handleCloseMoreMenu={handleCloseMoreMenu}
@@ -64,7 +65,7 @@ const DrawerContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(4, auto);
-  gap: 20px;
+  gap: 40px;
   justify-items: center;
   align-items: center;
   background: rgba(25, 25, 28, 0.8);

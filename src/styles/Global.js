@@ -61,7 +61,7 @@ const Global = createGlobalStyle`
     font-family: QuicksandSemiBold;
   }
 
-  input, textarea {
+  input, textarea, label {
     font-family: QuicksandSemiBold;
   }
 

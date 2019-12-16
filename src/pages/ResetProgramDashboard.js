@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
@@ -16,8 +16,7 @@ import siteConfig from '../utils/siteConfig'
 
 const ResetProgramDashboard = ({ match, location }) => {
   // * This sets the ability to cancel fetch requests
-  const controller = new AbortController()
-  const signal = controller.signal
+  const abortFetchController = useRef(new AbortController())
 
   const auth = useFireBase()
   const [isLoadingWorkouts, setIsLoadingWorkouts] = useState(false)
@@ -29,6 +28,8 @@ const ResetProgramDashboard = ({ match, location }) => {
   const [programState, dispatchProgramAction] = useProgramsContext()
 
   useEffect(() => {
+    const abortController = abortFetchController.current
+    const signal = abortController.signal
     // * This is my function that sets up the workout stats for selected program
     const setupWorkoutStats = workoutsArray => {
       const programId = match.params.programId
@@ -84,13 +85,17 @@ const ResetProgramDashboard = ({ match, location }) => {
                 setIsLoadingWorkouts(false)
               })
               .catch(error => {
-                dispatchPortalAction({
-                  type: 'toggleErrorMessage',
-                  value: error.message
-                })
+                if (error.name === 'AbortError') {
+                  // Do nothing
+                } else {
+                  dispatchPortalAction({
+                    type: 'toggleErrorMessage',
+                    value: error.message
+                  })
+                }
               })
           })
-          .catch(error => {
+          .catch(() => {
             dispatchPortalAction({
               type: 'toggleErrorMessage',
               value:
@@ -164,10 +169,14 @@ const ResetProgramDashboard = ({ match, location }) => {
                   setupWorkoutStats(workoutsArray.workouts)
                 })
                 .catch(error => {
-                  dispatchPortalAction({
-                    type: 'toggleErrorMessage',
-                    value: error.message
-                  })
+                  if (error.name === 'AbortError') {
+                    // Do nothing
+                  } else {
+                    dispatchPortalAction({
+                      type: 'toggleErrorMessage',
+                      value: error.message
+                    })
+                  }
                 })
             })
             .catch(() => {
@@ -186,12 +195,18 @@ const ResetProgramDashboard = ({ match, location }) => {
     dispatchStatsAction,
     dispatchWorkoutsAction,
     match.params.programId,
-    signal,
     workoutStatsState,
     workoutStatsState.stats,
     workoutsState,
     workoutsState.workouts
   ])
+
+  useEffect(() => {
+    const abortController = abortFetchController.current
+    return () => {
+      abortController.abort()
+    }
+  }, [])
 
   const renderWorkouts = () => {
     const programId = match.params.programId

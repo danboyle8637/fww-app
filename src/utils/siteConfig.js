@@ -1,4 +1,5 @@
 const helpers = require('./helpers')
+const environment = process.env.NODE_ENV
 
 module.exports = {
   breakPoints: {
@@ -9,6 +10,10 @@ module.exports = {
     ultraWide: helpers.getRems(1460)
   },
   api: {
-    baseUrl: 'https://resetapi.fitwomensweekly.com'
+    baseUrl: `${
+      environment === 'development'
+        ? `http://localhost:5000`
+        : 'https://resetapi.fitwomensweekly.com'
+    }`
   }
 }

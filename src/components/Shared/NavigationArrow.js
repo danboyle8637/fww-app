@@ -6,7 +6,7 @@ import NavArrow from '../../svgs/NavigationArrow'
 const NavigationArrow = () => {
   return (
     <ArrowContainer>
-      <Arrow />
+      <Arrow gradientId="cardNavArrow" />
     </ArrowContainer>
   )
 }

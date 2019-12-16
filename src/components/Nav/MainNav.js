@@ -30,7 +30,6 @@ const MainNav = () => {
   }, [location])
 
   const handleGoBack = () => {
-    // TODO here is where you can possibly signal to cancel all fetch calls if they click this.
     history.goBack()
   }
 
@@ -39,11 +38,13 @@ const MainNav = () => {
       <MainNavBar>
         <BackButtonTransition showBackButton={showBackButton}>
           <NavArrowBackground onClick={handleGoBack}>
-            <NavArrow />
+            <NavArrow gradientId="topNavBar" />
           </NavArrowBackground>
         </BackButtonTransition>
       </MainNavBar>
-      {!userState.isLoggedIn ? <Redirect to="/login" /> : null}
+      {!userState.isLoggedIn && location.pathname !== '/7-day-reset-step1' ? (
+        <Redirect to="/login" />
+      ) : null}
     </>
   )
 }

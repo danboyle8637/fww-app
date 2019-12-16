@@ -7,7 +7,7 @@ import { above } from '../../styles/Theme'
 const BackChip = ({ children, handleClick }) => {
   return (
     <ChipContainer type="button" onClick={handleClick}>
-      <Arrow />
+      <Arrow gradientId="backButton" />
       <ChipLabel>{children}</ChipLabel>
     </ChipContainer>
   )
