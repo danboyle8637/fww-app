@@ -10,6 +10,7 @@ import CompleteFavoriteWorkoutForm from '../components/Forms/CompleteFavoriteWor
 import DownloadTrackingSheet from '../components/WorkoutPage/DownloadTrackingSection'
 import Portal from '../components/Shared/Portal'
 import SyncingIndicator from '../components/Indicators/SyncingIndicator'
+import ScrollToTop from '../components/Shared/ScrollToTop'
 import { above } from '../styles/Theme'
 
 const ResetWorkout = () => {
@@ -43,6 +44,7 @@ const ResetWorkout = () => {
 
   return (
     <>
+      <ScrollToTop />
       <ResetWorkoutPageHeader title={title} />
       <VideoSection
         title={title}

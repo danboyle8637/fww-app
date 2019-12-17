@@ -10,27 +10,32 @@ const useBlurUp = () => {
   // parentContainer is just that so you can remove the small image after load
   const [parentContainer, setParentContainer] = useState(null)
   const [largeImageLoaded, setLargeImageLoaded] = useState(false)
+  const [killTimeline, setKillTimeline] = useState(false)
+
+  useEffect(() => {
+    return () => setKillTimeline(true)
+  }, [])
 
   useEffect(() => {
     if (largeImage) {
-      const largeImageIsLoaded = () => {
-        return new Promise((resolve, reject) => {
-          largeImage.onload = () => {
-            resolve()
-          }
-        })
-      }
-
-      largeImageIsLoaded().then(() => setLargeImageLoaded(true))
+      largeImage.onload = () => setLargeImageLoaded(true)
+    } else {
+      setLargeImageLoaded(false)
     }
   }, [largeImage])
 
   useEffect(() => {
     if (largeImageLoaded) {
-      blurUp(smallImage, largeImage)
-      parentContainer.removeChild(smallImage)
+      blurUp(smallImage, largeImage, killTimeline)
+      setTimeout(() => {
+        parentContainer.removeChild(smallImage)
+      }, 500)
+
+      return () => {
+        clearTimeout()
+      }
     }
-  }, [largeImage, largeImageLoaded, parentContainer, smallImage])
+  }, [killTimeline, largeImage, largeImageLoaded, parentContainer, smallImage])
 
   return [setSmallImage, setLargeImage, setParentContainer]
 }

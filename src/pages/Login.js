@@ -25,6 +25,7 @@ const Login = () => {
   )
   const [isSyncing, setIsSyncing] = useState(false)
   const [syncingMessage, setSyncingMessage] = useState('')
+  const [showLogin, setShowLogin] = useState(false)
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
   // eslint-disable-next-line
@@ -88,12 +89,14 @@ const Login = () => {
             setLoadingMessage={setLoadingMessage}
             handleToggleSyncing={handleToggleSyncing}
             setSyncingMessage={setSyncingMessage}
+            setShowLogin={setShowLogin}
           />
         </ContentWrapper>
       </LoginContainer>
       {isLoggingIn ? (
         <FullPageKettlebellLoader loadingMessage={loadingMessage} />
       ) : null}
+      {showLogin ? <Redirect to="/login" /> : null}
       {showDashboard ? <Redirect to="/dashboard" /> : null}
       {isSyncing ? (
         <SyncingIndicator isSyncing={isSyncing} syncMessage={syncingMessage} />

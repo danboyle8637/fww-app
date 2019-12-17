@@ -14,6 +14,7 @@ import DeleteAccountCard from '../components/AccountPage/DeleteAccountCard'
 import Portal from '../components/Shared/Portal'
 import SyncingIndicator from '../components/Indicators/SyncingIndicator'
 import MessageDialog from '../components/Dialogs/MessageDialog'
+import ScrollToTop from '../components/Shared/ScrollToTop'
 import { useUserContext } from '../context/UserContext'
 import { usePortalContext } from '../context/portalContext'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
@@ -116,6 +117,7 @@ const ResetUserAccount = () => {
 
   return (
     <>
+      <ScrollToTop />
       <UserAccountContainer>
         <FWWLogo />
         <VerticalUserCard

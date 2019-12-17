@@ -88,4 +88,7 @@ const Play = styled(PlayButton)`
   ${above.mobile`
     width: 60px;
   `}
+  ${above.tablet`
+    width: 100px;
+  `}
 `

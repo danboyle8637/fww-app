@@ -24,6 +24,8 @@ const MainNav = () => {
       setShowBackButton(true)
     } else if (elementsOfPath[0] === 'account') {
       setShowBackButton(true)
+    } else if (elementsOfPath[0] === 'contact') {
+      setShowBackButton(true)
     } else {
       setShowBackButton(false)
     }

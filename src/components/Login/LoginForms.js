@@ -11,7 +11,8 @@ const LoginForms = ({
   setShowDashboard,
   setLoadingMessage,
   handleToggleSyncing,
-  setSyncingMessage
+  setSyncingMessage,
+  setShowLogin
 }) => {
   const [reverse, setReverse] = useState(false)
   const [activeForm, setActiveForm] = useState(0)
@@ -26,6 +27,7 @@ const LoginForms = ({
           setShowDashboard={setShowDashboard}
           setIsLoggingIn={setIsLoggingIn}
           setLoadingMessage={setLoadingMessage}
+          setShowLogin={setShowLogin}
         />
         <UsernamePasswordForm
           reverse={reverse}

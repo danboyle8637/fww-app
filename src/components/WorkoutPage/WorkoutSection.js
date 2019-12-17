@@ -95,6 +95,7 @@ const PlaceholderImage = styled.img`
   grid-row: 1 / -1;
   border-radius: 10px;
   width: 100%;
+  object-fit: cover;
   filter: blur(6px);
   transform: scale(1);
   z-index: 2;
@@ -109,5 +110,8 @@ const Play = styled(PlayButton)`
   z-index: 4;
   ${above.mobile`
     width: 80px;
+  `}
+  ${above.tablet`
+    width: 120px;
   `}
 `

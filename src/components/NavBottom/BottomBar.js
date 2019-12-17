@@ -4,14 +4,15 @@ import styled from 'styled-components'
 import MenuIcon from './MenuIcon'
 import BottomMobileMenuTransition from '../../Animations/Transitions/BottomMobileMenuBarTransition'
 import BottomLaptopMenuTransition from '../../Animations/Transitions/BottomLaptopMenuBarTransition'
+import BottomHomeIcon from '../../svgs/BottomHomeIcon'
+import BottomBlogIcon from '../../svgs/BottomBlogIcon'
+import BottomContactIcon from '../../svgs/BottomContactIcon'
+import BottomMoreIcon from '../../svgs/BottomMoreIcon'
+import BottomDashboardIcon from '../../svgs/BottomDashboardIcon'
+import BottomLogoutIcon from '../../svgs/BottomLogoutIcon'
 import { above } from '../../styles/Theme'
 
-const BottomBar = ({
-  menuOpen,
-  isLoggedIn,
-  handleNavigation,
-  handleOutNavigation
-}) => {
+const BottomBar = ({ menuOpen, isLoggedIn, handleNavigation }) => {
   const [isLaptopMenu, setIsLaptopMenu] = useState(false)
   const mediaQueryRef = useRef(null)
 
@@ -42,27 +43,75 @@ const BottomBar = ({
   }, [])
 
   const loggedOutIcons = [
-    { id: 1, icon: 'home', label: 'home' },
-    { id: 2, icon: 'blog', label: 'blog' },
-    { id: 3, icon: 'contact', label: 'contact' }
+    {
+      id: 1,
+      icon: 'home',
+      label: 'home',
+      component: <HomeIcon />,
+      isOut: true,
+      slug: 'https://fitwomensweekly.com'
+    },
+    {
+      id: 2,
+      icon: 'blog',
+      label: 'blog',
+      component: <BlogIcon />,
+      isOut: true,
+      slug: 'https://fitwomensweekly.com/blog'
+    },
+    {
+      id: 3,
+      icon: 'contact',
+      label: 'contact',
+      component: <ContactIcon />,
+      isOut: false,
+      slug: '/contact'
+    }
   ]
 
   const loggedInIcons = [
-    { id: 2, icon: 'dashboard', label: 'dashboard' },
-    { id: 1, icon: 'more', label: 'more' },
-    { id: 3, icon: 'logout', label: 'logout' }
+    {
+      id: 2,
+      icon: 'dashboard',
+      label: 'dashboard',
+      component: <DashboardIcon />,
+      isOut: false,
+      slug: '/dashboard'
+    },
+    {
+      id: 1,
+      icon: 'more',
+      label: 'more',
+      component: <MoreIcon />,
+      isOut: false,
+      slug: null
+    },
+    {
+      id: 3,
+      icon: 'logout',
+      label: 'logout',
+      component: <LogoutIcon />,
+      isOut: false,
+      slug: null
+    }
   ]
 
   const loggedOutNav = loggedOutIcons.map(menuIcon => {
     const id = menuIcon.id
     const icon = menuIcon.icon
     const label = menuIcon.label
+    const component = menuIcon.component
+    const isOut = menuIcon.isOut
+    const slug = menuIcon.slug
 
     return (
       <MenuIcon
         key={id}
         icon={icon}
         label={label}
+        component={component}
+        isOut={isOut}
+        slug={slug}
         handleNavigation={handleNavigation}
       />
     )
@@ -72,14 +121,17 @@ const BottomBar = ({
     const id = menuIcon.icon
     const icon = menuIcon.icon
     const label = menuIcon.label
+    const component = menuIcon.component
+    const slug = menuIcon.slug
 
     return (
       <MenuIcon
         key={id}
         icon={icon}
         label={label}
+        component={component}
+        slug={slug}
         handleNavigation={handleNavigation}
-        handleOutNavigation={handleOutNavigation}
       />
     )
   })
@@ -147,4 +199,28 @@ const LaptopBarContainer = styled.div`
   height: 600px;
   overflow: hidden;
   z-index: 9999;
+`
+
+const HomeIcon = styled(BottomHomeIcon)`
+  width: 50px;
+`
+
+const BlogIcon = styled(BottomBlogIcon)`
+  width: 30px;
+`
+
+const ContactIcon = styled(BottomContactIcon)`
+  width: 40px;
+`
+
+const MoreIcon = styled(BottomMoreIcon)`
+  width: 8px;
+`
+
+const DashboardIcon = styled(BottomDashboardIcon)`
+  width: 30px;
+`
+
+const LogoutIcon = styled(BottomLogoutIcon)`
+  width: 30px;
 `

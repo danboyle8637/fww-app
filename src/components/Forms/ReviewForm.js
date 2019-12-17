@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import BaseButton from '../Buttons/BaseButton'
@@ -17,13 +17,32 @@ import useFormControls from '../../hooks/useFormControls'
 import siteConfig from '../../utils/siteConfig'
 import { above } from '../../styles/Theme'
 
-const ReviewForm = ({ handleToggleSync, handleSetSyncMessage }) => {
+const ReviewForm = ({
+  handleToggleSync,
+  handleSetSyncMessage,
+  setShowDashboard
+}) => {
+  const [buttonDisabled, setButtonDisabled] = useState(true)
   const auth = useFireBase()
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
   const [updateInputValues, updateInputOptions] = useFormControls()
+
+  useEffect(() => {
+    const firstNameValid = formState.firstNameValue.valid
+    const emailValid = formState.emailValue.valid
+    const reviewValid = formState.reviewValue.valid
+
+    if (firstNameValid && emailValid && reviewValid) {
+      setButtonDisabled(false)
+    }
+  }, [
+    formState.emailValue.valid,
+    formState.firstNameValue.valid,
+    formState.reviewValue.valid
+  ])
 
   const handleReviewSubmit = event => {
     event.preventDefault()
@@ -44,7 +63,9 @@ const ReviewForm = ({ handleToggleSync, handleSetSyncMessage }) => {
     }
 
     const formData = new FormData()
-    formData.append('selfie', selfiePhoto)
+    if (selfiePhoto) {
+      formData.append('selfie', selfiePhoto)
+    }
     formData.append('reviewBody', JSON.stringify(reviewBody))
 
     const saveReviewUrl = `${siteConfig.api.baseUrl}/save-review`
@@ -68,6 +89,7 @@ const ReviewForm = ({ handleToggleSync, handleSetSyncMessage }) => {
               value: `💪 Thank you so much for leaving a review. If I have questions, I'll email you... if you left your email. Also pay attention to your email because you'll get special offers as a reviewer of the app. Thank you again. It means a lot!`
             })
             handleToggleSync()
+            setShowDashboard(true)
           })
           .catch(() => {
             handleSetSyncMessage('😢 Review not saved.')
@@ -84,7 +106,7 @@ const ReviewForm = ({ handleToggleSync, handleSetSyncMessage }) => {
 
   return (
     <StarRatingForm onSubmit={handleReviewSubmit}>
-      <FormLabel>Review:</FormLabel>
+      <FormLabel>How Many Stars?</FormLabel>
       <StarRating />
       <TextInput
         type="text"
@@ -144,7 +166,9 @@ const ReviewForm = ({ handleToggleSync, handleSetSyncMessage }) => {
       {formState.reviewSelfieImage.fileName ? (
         <ShowUploadedImage file={formState.reviewSelfieImage.file} />
       ) : null}
-      <BaseButton type="submit">Send Review</BaseButton>
+      <BaseButton type="submit" disabled={buttonDisabled}>
+        Send Review
+      </BaseButton>
     </StarRatingForm>
   )
 }
@@ -174,7 +198,7 @@ const FormLabel = styled.h4`
   margin: 0;
   padding: 0;
   font-size: 28px;
-  color: ${props => props.theme.mainBackgroundBorderColor};
+  color: ${props => props.theme.headlinePrimary};
   text-transform: uppercase;
   font-weight: 800;
   letter-spacing: 0.1rem;

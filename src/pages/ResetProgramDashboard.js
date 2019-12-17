@@ -6,6 +6,7 @@ import ResetProgramDashboardHeader from '../components/PageHeaders/ResetProgramD
 import WorkoutCard from '../components/Cards/WorkoutProgramCard'
 import DashboardStatsCard from '../components/Cards/DashboardStatsCard'
 import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
+import ScrollToTop from '../components/Shared/ScrollToTop'
 import { useWorkoutState } from '../context/WorkoutsContext'
 import { useProgramsContext } from '../context/ProgramsContext'
 import { usePortalContext } from '../context/portalContext'
@@ -273,6 +274,7 @@ const ResetProgramDashboard = ({ match, location }) => {
 
   return (
     <>
+      <ScrollToTop />
       <ProgramDashboardContainer>
         <ResetProgramDashboardHeader programId={match.params.programId} />
         <DashboardStatsCard programId={match.params.programId} />

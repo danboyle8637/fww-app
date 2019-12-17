@@ -31,7 +31,6 @@ const SocialLogin = () => {
           const url = `${siteConfig.api.baseUrl}/get-user`
 
           if (localStorage.getItem('fwwUser')) {
-            console.log('fwwUser exists in local storage')
             const data = localStorage.getItem('fwwUser')
             const user = JSON.parse(data)
 
@@ -46,7 +45,6 @@ const SocialLogin = () => {
 
             setShowDashboard(true)
           } else {
-            console.log('fwwUser does not exist in local storage')
             user.getIdToken(true).then(token => {
               fetch(url, {
                 method: 'GET',

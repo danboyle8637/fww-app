@@ -7,6 +7,7 @@ import VimeoPlayer from '../components/Shared/VimeoPlayer'
 import ReviewForm from '../components/Forms/ReviewForm'
 import SyncingIndicator from '../components/Indicators/SyncingIndicator'
 import MessageDialog from '../components/Dialogs/MessageDialog'
+import ScrollToTop from '../components/Shared/ScrollToTop'
 import Portal from '../components/Shared/Portal'
 import { useUserContext } from '../context/UserContext'
 import { above } from '../styles/Theme'
@@ -23,6 +24,7 @@ const Review = () => {
 
   return (
     <>
+      <ScrollToTop />
       <ReviewContainer>
         <FWWLogo />
         <HorizontalUserCard

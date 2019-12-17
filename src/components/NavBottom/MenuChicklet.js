@@ -77,22 +77,22 @@ const MenuChicklet = () => {
     })
   }
 
-  const handleOutNavigation = () => {
-    if (typeof window !== undefined) {
-      // TODO Make sure you set this url when the domain is set
-      console.log('Will navigate to Marketing Site')
-      // window.location.assign()
-    }
-  }
-
   return (
     <>
       {isLaptopMenu ? (
-        <LaptopContainer ref={menuChickletRef} onClick={handleMenuClick}>
+        <LaptopContainer
+          ref={menuChickletRef}
+          onClick={handleMenuClick}
+          menuOpen={portalState.menu.isOpen}
+        >
           <MenuIcon menuOpen={portalState.menu.isOpen} />
         </LaptopContainer>
       ) : (
-        <MobileContainer ref={menuChickletRef} onClick={handleMenuClick}>
+        <MobileContainer
+          ref={menuChickletRef}
+          onClick={handleMenuClick}
+          menuOpen={portalState.menu.isOpen}
+        >
           <MenuIcon menuOpen={portalState.menu.isOpen} />
         </MobileContainer>
       )}
@@ -101,7 +101,6 @@ const MenuChicklet = () => {
           menuOpen={portalState.menu.isOpen}
           isLoggedIn={userState.isLoggedIn}
           handleNavigation={handleNavigation}
-          handleOutNavigation={handleOutNavigation}
         />
       </Portal>
       <Portal>
@@ -124,7 +123,9 @@ const MobileContainer = styled.div`
   align-items: center;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
-  border: 3px solid ${props => props.theme.headlinePrimary};
+  border: 3px solid
+    ${props =>
+      props.menuOpen ? props.theme.primaryAccent : props.theme.headlinePrimary};
   border-radius: 50px;
   width: 60px;
   height: 60px;
@@ -145,7 +146,9 @@ const LaptopContainer = styled.div`
   align-items: center;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
-  border: 3px solid ${props => props.theme.headlinePrimary};
+  border: 3px solid
+    ${props =>
+      props.menuOpen ? props.theme.primaryAccent : props.theme.headlinePrimary};
   border-radius: 50px;
   width: 60px;
   height: 60px;

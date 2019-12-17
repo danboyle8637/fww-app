@@ -1,13 +1,17 @@
 import React, { useEffect, useRef } from 'react'
 import { TweenMax, Power2 } from 'gsap/TweenMax'
 
+import { usePortalContext } from '../context/portalContext'
+
 const BottomMoreIcon = ({ width, height, className, isOpen }) => {
+  // eslint-disable-next-line
+  const [portalState, dispatchPortalAction] = usePortalContext()
   const moreIconRef = useRef(null)
 
   useEffect(() => {
     const moreIcon = moreIconRef.current
 
-    if (isOpen) {
+    if (portalState.moreMenu.isOpen) {
       TweenMax.to(moreIcon, 0.4, {
         transformOrigin: '50% 50%',
         rotation: 90,
@@ -20,7 +24,7 @@ const BottomMoreIcon = ({ width, height, className, isOpen }) => {
         ease: Power2.easeOut
       })
     }
-  }, [isOpen])
+  }, [portalState.moreMenu.isOpen])
 
   return (
     <svg

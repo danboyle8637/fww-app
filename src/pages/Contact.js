@@ -5,6 +5,7 @@ import FWWLogo from '../components/Logos/FWWLogo'
 import ContactForm from '../components/Forms/ContactForm'
 import MessageDialog from '../components/Dialogs/MessageDialog'
 import SyncingIndicator from '../components/Indicators/SyncingIndicator'
+import ScrollToTop from '../components/Shared/ScrollToTop'
 import Portal from '../components/Shared/Portal'
 import { above } from '../styles/Theme'
 
@@ -16,6 +17,7 @@ const Contact = () => {
 
   return (
     <>
+      <ScrollToTop />
       <ContactContainer>
         <FWWLogo />
         <ContactForm

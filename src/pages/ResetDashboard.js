@@ -7,6 +7,7 @@ import ProgramCard from '../components/Cards/WorkoutProgramCard'
 import HorizontalBasicUserCard from '../components/UserCards/HorizontalBasicUserCard'
 import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
 import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
+import ScrollToTop from '../components/Shared/ScrollToTop'
 import { useUserContext } from '../context/UserContext'
 import { useProgramsContext } from '../context/ProgramsContext'
 import { useWorkoutState } from '../context/WorkoutsContext'
@@ -167,11 +168,7 @@ const ResetDashboard = ({ location }) => {
 
       if (activeProgram) {
         return (
-          <CardLink
-            key={key}
-            to={`${location.pathname}/${programId}`}
-            // style={{ textDecoration: 'none' }}
-          >
+          <CardLink key={key} to={`${location.pathname}/${programId}`}>
             <ProgramCard
               isProgram
               coverImage={coverImage}
@@ -218,6 +215,7 @@ const ResetDashboard = ({ location }) => {
         <FullPageKettlebellLoader loadingMessage={loadingMessage} />
       ) : (
         <DashboardContainer>
+          <ScrollToTop />
           <FWWLogo />
           <HorizontalBasicUserCard
             photoUrl={userState.photoUrl}
