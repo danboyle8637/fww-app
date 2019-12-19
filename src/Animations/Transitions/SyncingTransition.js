@@ -8,7 +8,7 @@ const SyncingTransition = ({ isSyncing, children }) => {
       node,
       0.4,
       {
-        x: '-100%',
+        x: '100%',
         autoAlpha: 0
       },
       {
@@ -21,7 +21,7 @@ const SyncingTransition = ({ isSyncing, children }) => {
 
   const isSyncingExit = node => {
     TweenMax.to(node, 0.4, {
-      x: '-100%',
+      x: '100%',
       autoAlpha: 0,
       ease: Power2.easeOut,
       delay: 0.8

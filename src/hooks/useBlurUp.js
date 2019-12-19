@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
-
-import blurUp from '../Animations/Tweens/blurUp'
+import { useState, useEffect, useRef } from 'react'
+import { TweenMax, Linear } from 'gsap/TweenMax'
+import TimelineMax from 'gsap/TimelineMax'
 
 const useBlurUp = () => {
   // smallImage is the placeholder image
@@ -10,10 +10,14 @@ const useBlurUp = () => {
   // parentContainer is just that so you can remove the small image after load
   const [parentContainer, setParentContainer] = useState(null)
   const [largeImageLoaded, setLargeImageLoaded] = useState(false)
-  const [killTimeline, setKillTimeline] = useState(false)
+  const timeline = useRef(new TimelineMax())
 
   useEffect(() => {
-    return () => setKillTimeline(true)
+    const tl = timeline.current
+
+    return () => {
+      tl.kill()
+    }
   }, [])
 
   useEffect(() => {
@@ -25,17 +29,30 @@ const useBlurUp = () => {
   }, [largeImage])
 
   useEffect(() => {
-    if (largeImageLoaded) {
-      blurUp(smallImage, largeImage, killTimeline)
-      setTimeout(() => {
-        parentContainer.removeChild(smallImage)
-      }, 500)
+    const tl = timeline.current
 
-      return () => {
-        clearTimeout()
-      }
+    if (largeImage) {
+      TweenMax.set(largeImage, { autoAlpha: 0 })
     }
-  }, [killTimeline, largeImage, largeImageLoaded, parentContainer, smallImage])
+
+    if (largeImageLoaded) {
+      tl.to(smallImage, 0.5, {
+        autoAlpha: 0,
+        ease: Linear.easeNone
+      }).to(
+        largeImage,
+        0.4,
+        {
+          autoAlpha: 1,
+          ease: Linear.easeNone,
+          onComplete: () => {
+            parentContainer.removeChild(smallImage)
+          }
+        },
+        '-=0.25'
+      )
+    }
+  }, [largeImage, largeImageLoaded, parentContainer, smallImage])
 
   return [setSmallImage, setLargeImage, setParentContainer]
 }

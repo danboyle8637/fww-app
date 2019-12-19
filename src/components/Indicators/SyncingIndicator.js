@@ -21,9 +21,9 @@ export default SyncingIndicator
 const SyncContainer = styled.div`
   position: fixed;
   bottom: 0;
-  left: 0;
+  right: 0;
   margin-bottom: 20px;
-  margin-left: 20px;
+  margin-right: 20px;
   padding: 8px 12px;
   display: grid;
   grid-template-columns: auto 1fr;

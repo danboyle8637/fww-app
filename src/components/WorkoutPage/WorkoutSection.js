@@ -66,7 +66,10 @@ const WorkoutSection = ({
         workoutBackgrounds={workoutBackgrounds}
         activeVideo={activeVideo}
       />
-      <Play handleToggleVideo={handleToggleVideo} />
+      <Play
+        gradientId="workoutVideoButton"
+        handleToggleVideo={handleToggleVideo}
+      />
       <Portal>
         <PopUpVideo
           title={'Workout'}
@@ -108,6 +111,7 @@ const Play = styled(PlayButton)`
   justify-self: center;
   width: 60px;
   z-index: 4;
+  cursor: pointer;
   ${above.mobile`
     width: 80px;
   `}

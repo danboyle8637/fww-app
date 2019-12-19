@@ -40,7 +40,10 @@ const WarmUpCoolDownSection = ({
           alt={warmupAltText}
         />
         <WorkoutLabelIndicator type={'warmup'} />
-        <Play handleToggleVideo={handleToggleWarmUp} />
+        <Play
+          gradientId="warmUpButton"
+          handleToggleVideo={handleToggleWarmUp}
+        />
       </WorkoutSectionGrid>
       <WorkoutSectionGrid>
         <BackgroundImage
@@ -49,7 +52,10 @@ const WarmUpCoolDownSection = ({
           alt={coolDownAltText}
         />
         <WorkoutLabelIndicator type={'cooldown'} />
-        <Play handleToggleVideo={handleToggleCoolDown} />
+        <Play
+          gradientId="coolDownButton"
+          handleToggleVideo={handleToggleCoolDown}
+        />
       </WorkoutSectionGrid>
       <Portal>
         <PopUpVideo title={title} />
@@ -85,6 +91,7 @@ const Play = styled(PlayButton)`
   justify-self: center;
   width: 30px;
   z-index: 1;
+  cursor: pointer;
   ${above.mobile`
     width: 60px;
   `}

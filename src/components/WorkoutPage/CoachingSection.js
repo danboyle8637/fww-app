@@ -49,7 +49,7 @@ const CoachingSection = ({
         }}
         style={linkStyle}
       >
-        <Play />
+        <Play gradientId="coachingPlayButton" />
       </Link>
     </WorkoutSectionGrid>
   )
