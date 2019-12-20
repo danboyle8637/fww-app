@@ -16,8 +16,10 @@ const WorkoutBackgroundImage = forwardRef(
       // This Effect just sets the additional backgrounds off to the left
       const workoutBackgroundsToSet = []
 
+      // Building a new array because you want to skip the first image
       if (imageArrayRef.current.length > 0) {
         for (let i = 0; i < imageArrayRef.current.length; i++) {
+          // Make sure you skip the first image
           if (i > 0) {
             workoutBackgroundsToSet.push(imageArrayRef.current[i])
           }
@@ -33,7 +35,6 @@ const WorkoutBackgroundImage = forwardRef(
       const max = imageArrayRef.current.length
 
       if (activeVideo < max && workoutBackgroundAction === 'next') {
-        console.log('Show next workout background')
         nextTl
           .to(imageArrayRef.current[activeVideo - 1], 0.5, {
             x: '-100%'
@@ -50,7 +51,6 @@ const WorkoutBackgroundImage = forwardRef(
       }
 
       if (activeVideo >= 0 && workoutBackgroundAction === 'prev') {
-        console.log('Show previous workout background')
         prevTl
           .to(imageArrayRef.current[activeVideo + 1], 0.5, {
             x: '100%'

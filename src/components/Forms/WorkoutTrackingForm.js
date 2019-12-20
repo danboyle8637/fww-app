@@ -13,6 +13,7 @@ import { useProgramsContext } from '../../context/ProgramsContext'
 import { useFormStore } from '../../context/FormContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import useFormControls from '../../hooks/useFormControls'
+import { updateWorkoutsCompleteInLocalStorage } from '../../utils/helpers'
 import siteConfig from '../../utils/siteConfig'
 
 const WorkoutTrackingForm = ({
@@ -52,7 +53,8 @@ const WorkoutTrackingForm = ({
 
     // Update percent complete in local state
     if (!programStats[workoutId].completed.complete1.isComplete) {
-      console.log('Should Increment Percent Complete')
+      updateWorkoutsCompleteInLocalStorage(programId, 'fwwPrograms')
+
       dispatchProgramAction({
         type: 'incrementPercentComplete',
         value: programId

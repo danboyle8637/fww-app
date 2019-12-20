@@ -5,6 +5,7 @@ import CompleteWorkoutIcon from '../../svgs/CompleteWorkoutIcon'
 import { useProgramsContext } from '../../context/ProgramsContext'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
+import { updateWorkoutsCompleteInLocalStorage } from '../../utils/helpers'
 import siteConfig from '../../utils/siteConfig'
 
 const CompleteWorkoutForm = ({
@@ -23,6 +24,9 @@ const CompleteWorkoutForm = ({
 
   const handleCompleteWorkoutClick = id => {
     if (id === 1) {
+      // * Update localStorage code
+      updateWorkoutsCompleteInLocalStorage(programId, 'fwwPrograms')
+
       dispatchStatsAction({
         type: 'setComplete1',
         value: {

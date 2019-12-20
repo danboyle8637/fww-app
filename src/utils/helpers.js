@@ -22,4 +22,29 @@ const createDate = timestamp => {
   return dateString
 }
 
-export { getRems, createDate }
+const updateWorkoutsCompleteInLocalStorage = (programId, key) => {
+  let programIndex
+
+  const localStorageProgramData = localStorage.getItem(key)
+  const programsData = JSON.parse(localStorageProgramData)
+
+  const programPercentComplete = programsData.percentComplete.find(
+    (program, index) => {
+      programIndex = index
+      return program.programId === programId
+    }
+  )
+
+  const workoutsComplete = programPercentComplete.workoutsCompleted
+
+  const updatedProgramPercentComplete = {
+    ...programPercentComplete,
+    workoutsCompleted: workoutsComplete + 1
+  }
+
+  programsData.percentComplete[programIndex] = updatedProgramPercentComplete
+
+  localStorage.setItem(key, JSON.stringify(programsData))
+}
+
+export { getRems, createDate, updateWorkoutsCompleteInLocalStorage }

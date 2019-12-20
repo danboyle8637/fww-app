@@ -9,7 +9,6 @@ const useBlurUp = () => {
   const [largeImage, setLargeImage] = useState(null)
   // parentContainer is just that so you can remove the small image after load
   const [parentContainer, setParentContainer] = useState(null)
-  const [largeImageLoaded, setLargeImageLoaded] = useState(false)
   const timeline = useRef(new TimelineMax())
 
   useEffect(() => {
@@ -21,38 +20,54 @@ const useBlurUp = () => {
   }, [])
 
   useEffect(() => {
-    if (largeImage) {
-      largeImage.onload = () => setLargeImageLoaded(true)
-    } else {
-      setLargeImageLoaded(false)
-    }
-  }, [largeImage])
-
-  useEffect(() => {
     const tl = timeline.current
 
-    if (largeImage) {
+    if (largeImage && largeImage.children.length === 0) {
       TweenMax.set(largeImage, { autoAlpha: 0 })
+
+      largeImage.onload = () => {
+        tl.to(smallImage, 0.5, {
+          autoAlpha: 0,
+          ease: Linear.easeNone
+        }).to(
+          largeImage,
+          0.4,
+          {
+            autoAlpha: 1,
+            ease: Linear.easeNone,
+            onComplete: () => {
+              parentContainer.removeChild(smallImage)
+            }
+          },
+          '-=0.25'
+        )
+      }
     }
 
-    if (largeImageLoaded) {
-      tl.to(smallImage, 0.5, {
-        autoAlpha: 0,
-        ease: Linear.easeNone
-      }).to(
-        largeImage,
-        0.4,
-        {
-          autoAlpha: 1,
-          ease: Linear.easeNone,
-          onComplete: () => {
-            parentContainer.removeChild(smallImage)
-          }
-        },
-        '-=0.25'
-      )
+    if (largeImage && largeImage.children.length > 0) {
+      const image = largeImage.children[0]
+
+      TweenMax.set(image, { autoAlpha: 0 })
+
+      image.onload = () => {
+        tl.to(smallImage, 0.5, {
+          autoAlpha: 0,
+          ease: Linear.easeNone
+        }).to(
+          image,
+          0.4,
+          {
+            autoAlpha: 1,
+            ease: Linear.easeNone,
+            onComplete: () => {
+              parentContainer.removeChild(smallImage)
+            }
+          },
+          '-=0.25'
+        )
+      }
     }
-  }, [largeImage, largeImageLoaded, parentContainer, smallImage])
+  }, [largeImage, parentContainer, smallImage])
 
   return [setSmallImage, setLargeImage, setParentContainer]
 }

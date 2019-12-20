@@ -85,8 +85,8 @@ const workoutStatsReducer = (state, action) => {
 
       if (!Object.keys(workoutStats.trackingStats).includes('first')) {
         const first = {
-          number: '--',
-          date: '--'
+          number: 'NO TRACK',
+          date: 'NO TRACK'
         }
 
         workoutStats.trackingStats.first = first
@@ -110,8 +110,8 @@ const workoutStatsReducer = (state, action) => {
 
         if (!Object.keys(workoutStats.trackingStats).includes('second')) {
           const second = {
-            number: '--',
-            date: '--'
+            number: 'NO TRACK',
+            date: 'NO TRACK'
           }
 
           workoutStats.trackingStats.second = second
@@ -141,8 +141,8 @@ const workoutStatsReducer = (state, action) => {
 
         if (!Object.keys(workoutStats.trackingStats).includes('third')) {
           const third = {
-            number: '--',
-            date: '--'
+            number: 'NO TRACK',
+            date: 'NO TRACK'
           }
 
           workoutStats.trackingStats.third = third
