@@ -51,7 +51,7 @@ const CoachingSection = ({
         />
       </BlurUpImageGrid>
       <WorkoutLabelIndicator type={'coaching'} />
-      <Link
+      <PlayLink
         to={{
           pathname: `${coachingUrl}/coaching`,
           state: { coachingVideo: coachingVideo }
@@ -59,7 +59,7 @@ const CoachingSection = ({
         style={linkStyle}
       >
         <Play gradientId="coachingPlayButton" />
-      </Link>
+      </PlayLink>
     </WorkoutSectionGrid>
   )
 }
@@ -92,11 +92,14 @@ const Play = styled(PlayButton)`
   align-self: center;
   justify-self: center;
   width: 60px;
-  z-index: 5;
   ${above.mobile`
     width: 80px;
   `}
   ${above.tablet`
     width: 120px;
   `}
+`
+
+const PlayLink = styled(Link)`
+  z-index: 4;
 `
