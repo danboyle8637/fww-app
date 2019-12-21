@@ -14,7 +14,7 @@ const BodyBurnResetHeader = ({ coverImage, tinyCoverImage, signUpCard }) => {
   const imageRef = useRef(null)
 
   const [setNode, runAction] = useIntersectionObserver({
-    rootMargin: '0px 0px 0px -100px',
+    rootMargin: '0px 0px -100px 0px',
     shouldUnobserve: true
   })
 
