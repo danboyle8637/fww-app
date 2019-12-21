@@ -18,7 +18,7 @@ const CoachingSection = ({
   const imageRef = useRef(null)
 
   const [setNode, runAction] = useIntersectionObserver({
-    rootMargin: '0px 0px -100px 0px',
+    rootMargin: '0px 0px 10px 0px',
     shouldUnobserve: true
   })
 
@@ -92,7 +92,7 @@ const Play = styled(PlayButton)`
   align-self: center;
   justify-self: center;
   width: 60px;
-  z-index: 1;
+  z-index: 5;
   ${above.mobile`
     width: 80px;
   `}

@@ -7,7 +7,7 @@ const WorkoutCardHeader = ({ background, tinyImage, altText, title }) => {
   const imageRef = useRef(null)
 
   const [setNode, runAction] = useIntersectionObserver({
-    rootMargin: '0px 0px -100px 0px',
+    rootMargin: '0px 0px 10px 0px',
     shouldUnobserve: true
   })
 
