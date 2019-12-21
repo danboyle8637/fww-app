@@ -1,22 +1,31 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
-import useBlurUp from '../../hooks/useBlurUp'
+import useIntersectionObserver from '../../hooks/useIntersectionObserver'
 
 const WorkoutCardHeader = ({ background, tinyImage, altText, title }) => {
-  const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
+  const imageRef = useRef(null)
+
+  const [setNode, runAction] = useIntersectionObserver({
+    rootMargin: '0px 0px 0px -100px',
+    shouldUnobserve: true
+  })
+
+  useEffect(() => {
+    const image = imageRef.current
+
+    if (runAction) {
+      image.src = image.dataset.src
+      image.style.filter = 'blur(0px)'
+    }
+  }, [runAction])
 
   return (
-    <ImageContainer ref={setParentContainer}>
+    <ImageContainer ref={setNode}>
       <WorkoutImage
-        ref={setLargeImage}
-        src={background}
-        alt={altText}
-        title={title}
-      />
-      <PlaceholderImage
-        ref={setSmallImage}
+        ref={imageRef}
         src={tinyImage}
+        data-src={background}
         alt={altText}
         title={title}
       />
@@ -42,15 +51,6 @@ const WorkoutImage = styled.img`
   height: auto;
   object-fit: cover;
   z-index: 1;
-`
-
-const PlaceholderImage = styled.img`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
-  border-radius: 10px 10px 0 0;
-  width: 100%;
-  object-fit: cover;
   filter: blur(6px);
-  transform: scale(1);
-  z-index: 2;
+  transition: filter 1000ms ease-in-out;
 `

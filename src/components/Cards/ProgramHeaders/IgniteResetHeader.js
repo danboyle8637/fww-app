@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
 import {
@@ -8,23 +8,32 @@ import {
 import IgniteResetProgramCoverTiny from '../../../images/ignite-reset-program-cover-tiny.jpg'
 import IgniteResetProgramCover from '../../../images/ignite-reset-program-cover.jpg'
 import IgniteResetLogo from '../../../svgs/IgniteResetLogo'
-import useBlurUp from '../../../hooks/useBlurUp'
+import useIntersectionObserver from '../../../hooks/useIntersectionObserver'
 
 const IgniteResetHeader = ({ coverImage, tinyCoverImage, signUpCard }) => {
-  const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
+  const imageRef = useRef(null)
+
+  const [setNode, runAction] = useIntersectionObserver({
+    rootMargin: '0px 0px 0px -100px',
+    shouldUnobserve: true
+  })
+
+  useEffect(() => {
+    const image = imageRef.current
+
+    if (runAction) {
+      image.src = image.dataset.src
+      image.style.filter = 'blur(0px)'
+    }
+  }, [runAction])
 
   return (
-    <ProgramHeaderGrid>
-      <ProgramBackgroundWrapper ref={setParentContainer}>
+    <ProgramHeaderGrid ref={setNode}>
+      <ProgramBackgroundWrapper>
         <ProgramBackgroundImage
-          ref={setLargeImage}
-          src={signUpCard ? IgniteResetProgramCover : coverImage}
-          alt="7 Day Ignite Reset Program Cover"
-          title="7 Day Ignite Reset Program"
-        />
-        <PlaceholderImage
-          ref={setSmallImage}
+          ref={imageRef}
           src={signUpCard ? IgniteResetProgramCoverTiny : tinyCoverImage}
+          data-src={signUpCard ? IgniteResetProgramCover : coverImage}
           alt="7 Day Ignite Reset Program Cover"
           title="7 Day Ignite Reset Program"
         />
@@ -41,16 +50,8 @@ const ProgramBackgroundImage = styled.img`
   grid-row: 1 / -1;
   border-radius: 10px 10px 0 0;
   width: 100%;
-`
-
-const PlaceholderImage = styled.img`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
-  border-radius: 10px 10px 0 0;
-  width: 100%;
   filter: blur(6px);
-  transform: scale(1);
-  z-index: 2;
+  transition: filter 1000ms ease-in-out;
 `
 
 const Logo = styled(IgniteResetLogo)`
@@ -60,5 +61,5 @@ const Logo = styled(IgniteResetLogo)`
   justify-self: start;
   align-self: center;
   width: 56%;
-  z-index: 1;
+  z-index: 2;
 `

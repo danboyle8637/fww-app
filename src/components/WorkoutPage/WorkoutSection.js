@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { WorkoutSectionGrid } from '../../styles/Containers'
@@ -9,7 +9,7 @@ import WorkoutLabelIndicator from '../Indicators/WorkoutLabelIndicator'
 import Portal from '../Shared/Portal'
 import PopUpVideo from '../WorkoutPage/PopUpVideo'
 import { usePortalContext } from '../../context/portalContext'
-import useBlurUp from '../../hooks/useBlurUp'
+import useIntersectionObserver from '../../hooks/useIntersectionObserver'
 import { above } from '../../styles/Theme'
 
 const WorkoutSection = ({
@@ -20,10 +20,21 @@ const WorkoutSection = ({
 }) => {
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
-  const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
 
+  const [blurUp, setBlurUp] = useState(false)
   const [activeVideo, setActiveVideo] = useState(0)
   const [workoutBackgroundAction, setWorkoutBackgroundAction] = useState('')
+
+  const [setNode, runAction] = useIntersectionObserver({
+    rootMargin: '0px 0px 0px -100px',
+    shouldUnobserve: true
+  })
+
+  useEffect(() => {
+    if (runAction) {
+      setBlurUp(true)
+    }
+  }, [runAction])
 
   const handleNextVideo = () => {
     setWorkoutBackgroundAction('next')
@@ -44,16 +55,16 @@ const WorkoutSection = ({
   }
 
   return (
-    <WorkoutSectionGrid>
-      <BlurUpImageGrid ref={setParentContainer}>
+    <WorkoutSectionGrid ref={setNode}>
+      <BlurUpImageGrid>
         <WorkoutBackgroundImage
-          ref={setLargeImage}
           activeVideo={activeVideo}
           workoutBackgroundAction={workoutBackgroundAction}
           workoutBackgrounds={workoutBackgrounds}
+          workoutTinyBackground={workoutTinyBackground}
+          blurUp={blurUp}
           title={title}
         />
-        <PlaceholderImage ref={setSmallImage} src={workoutTinyBackground} />
       </BlurUpImageGrid>
       <WorkoutSliderButtons
         handleNextVideo={handleNextVideo}
@@ -91,17 +102,6 @@ const BlurUpImageGrid = styled.div`
   grid-template-rows: 1fr;
   width: 100%;
   overflow: hidden;
-`
-
-const PlaceholderImage = styled.img`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
-  border-radius: 10px;
-  width: 100%;
-  object-fit: cover;
-  filter: blur(6px);
-  transform: scale(1);
-  z-index: 2;
 `
 
 const Play = styled(PlayButton)`

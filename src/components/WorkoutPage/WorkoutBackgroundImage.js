@@ -1,16 +1,30 @@
-import React, { useEffect, useRef, forwardRef } from 'react'
+import React, { Fragment, useEffect, useRef, forwardRef } from 'react'
 import styled from 'styled-components'
 import { TweenMax } from 'gsap/TweenMax'
 import TimelineMax from 'gsap/TimelineMax'
 
 const WorkoutBackgroundImage = forwardRef(
   (
-    { workoutBackgrounds, title, activeVideo, workoutBackgroundAction },
+    {
+      workoutBackgrounds,
+      title,
+      activeVideo,
+      workoutBackgroundAction,
+      workoutTinyBackground,
+      blurUp
+    },
     ref
   ) => {
     const imageArrayRef = useRef([])
     const nextTlRef = useRef(new TimelineMax({ paused: true }))
     const prevTlRef = useRef(new TimelineMax({ paused: true }))
+
+    useEffect(() => {
+      if (blurUp) {
+        imageArrayRef.current[0].src = imageArrayRef.current[0].dataset.src
+        imageArrayRef.current[0].style.filter = 'blur(0px)'
+      }
+    }, [blurUp, workoutTinyBackground])
 
     useEffect(() => {
       // This Effect just sets the additional backgrounds off to the left
@@ -69,13 +83,25 @@ const WorkoutBackgroundImage = forwardRef(
 
     const backgrounds = workoutBackgrounds.map((image, index) => {
       return (
-        <BackgroundImage
-          ref={ref => (imageArrayRef.current[index] = ref)}
-          key={index}
-          src={image}
-          title={`${title} workout background`}
-          alt={`Let's do the ${title} together and get the ultimate burn, press the play button.`}
-        />
+        <Fragment key={index}>
+          {index === 0 ? (
+            <BackgroundImage
+              ref={ref => (imageArrayRef.current[index] = ref)}
+              src={workoutTinyBackground}
+              data-src={image}
+              title={`${title} workout background`}
+              alt={`Let's do the ${title} together and get the ultimate burn, press the play button.`}
+              firstImage={index}
+            />
+          ) : (
+            <BackgroundImage
+              ref={ref => (imageArrayRef.current[index] = ref)}
+              src={image}
+              title={`${title} workout background`}
+              alt={`Let's do the ${title} together and get the ultimate burn, press the play button.`}
+            />
+          )}
+        </Fragment>
       )
     })
 
@@ -100,4 +126,6 @@ const BackgroundImage = styled.img`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
   width: 100%;
+  filter: ${props => (props.firstImage === 0 ? 'blur(6px)' : ' blur(0px)')};
+  transition: filter 1000ms ease-in-out;
 `

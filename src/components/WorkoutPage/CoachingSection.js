@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 import { WorkoutSectionGrid } from '../../styles/Containers'
 import PlayButton from '../../svgs/PlayButton'
 import WorkoutLabelIndicator from '../Indicators/WorkoutLabelIndicator'
-import useBlurUp from '../../hooks/useBlurUp'
+import useIntersectionObserver from '../../hooks/useIntersectionObserver'
 import { above } from '../../styles/Theme'
 
 const CoachingSection = ({
@@ -15,7 +15,21 @@ const CoachingSection = ({
   coachingUrl,
   coachingVideo
 }) => {
-  const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
+  const imageRef = useRef(null)
+
+  const [setNode, runAction] = useIntersectionObserver({
+    rootMargin: '0px 0px 0px -100px',
+    shouldUnobserve: true
+  })
+
+  useEffect(() => {
+    const image = imageRef.current
+
+    if (runAction) {
+      image.src = image.dataset.src
+      image.style.filter = 'blur(0px)'
+    }
+  }, [runAction])
 
   const linkStyle = {
     gridColumn: '1 / -1',
@@ -27,16 +41,11 @@ const CoachingSection = ({
 
   return (
     <WorkoutSectionGrid>
-      <BlurUpImageGrid ref={setParentContainer}>
+      <BlurUpImageGrid ref={setNode}>
         <CoachingImage
-          ref={setLargeImage}
-          src={coachingBackground}
-          title={`${title} coaching video`}
-          alt={`Learn how the ${title} is going to work.`}
-        />
-        <PlaceholderImage
-          ref={setSmallImage}
+          ref={imageRef}
           src={coachingTinyBackground}
+          data-src={coachingBackground}
           title={`${title} coaching video`}
           alt={`Learn how the ${title} is going to work.`}
         />
@@ -73,16 +82,8 @@ const CoachingImage = styled.img`
   border-radius: 10px;
   width: 100%;
   object-fit: cover;
-`
-const PlaceholderImage = styled.img`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
-  border-radius: 10px;
-  width: 100%;
-  object-fit: cover;
   filter: blur(6px);
-  transform: scale(1);
-  z-index: 2;
+  transition: filter 1000ms ease-in-out;
 `
 
 const Play = styled(PlayButton)`

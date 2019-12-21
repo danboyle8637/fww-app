@@ -17,6 +17,7 @@ const ProgramBackgroundWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
+  border-radius: 10px 10px 0 0;
   overflow: hidden;
 `
 

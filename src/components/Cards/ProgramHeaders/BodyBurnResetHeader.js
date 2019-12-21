@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
 import {
@@ -8,22 +8,31 @@ import {
 import BodyBurnResetProgramCoverTiny from '../../../images/bbc-reset-program-cover-tiny.jpg'
 import BodyBurnResetProgramCover from '../../../images/bbc-reset-program-cover.jpg'
 import BodyBurnResetLogo from '../../../svgs/BodyBurnResetLogo'
-import useBlurUp from '../../../hooks/useBlurUp'
+import useIntersectionObserver from '../../../hooks/useIntersectionObserver'
 
 const BodyBurnResetHeader = ({ coverImage, tinyCoverImage, signUpCard }) => {
-  const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
+  const imageRef = useRef(null)
+
+  const [setNode, runAction] = useIntersectionObserver({
+    rootMargin: '0px 0px 0px -100px',
+    shouldUnobserve: true
+  })
+
+  useEffect(() => {
+    const image = imageRef.current
+
+    if (runAction) {
+      image.src = image.dataset.src
+      image.style.filter = 'blur(0px)'
+    }
+  }, [runAction])
 
   return (
-    <ProgramHeaderGrid>
-      <ProgramBackgroundWrapper ref={setParentContainer}>
+    <ProgramHeaderGrid ref={setNode}>
+      <ProgramBackgroundWrapper>
         <ProgramBackgroundImage
-          ref={setLargeImage}
-          src={signUpCard ? BodyBurnResetProgramCover : coverImage}
-          alt="7 Day Body Burn Reset Program Cover"
-          title="7 Day Body Burn Reset Program"
-        />
-        <PlaceholderImage
-          ref={setSmallImage}
+          ref={imageRef}
+          data-src={signUpCard ? BodyBurnResetProgramCover : coverImage}
           src={signUpCard ? BodyBurnResetProgramCoverTiny : tinyCoverImage}
           alt="7 Day Body Burn Reset Program Cover"
           title="7 Day Body Burn Reset Program"
@@ -41,16 +50,8 @@ const ProgramBackgroundImage = styled.img`
   grid-row: 1 / -1;
   border-radius: 10px 10px 0 0;
   width: 100%;
-`
-
-const PlaceholderImage = styled.img`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
-  border-radius: 10px 10px 0 0;
-  width: 100%;
   filter: blur(6px);
-  transform: scale(1);
-  z-index: 2;
+  transition: filter 1000ms ease-in-out;
 `
 
 const Logo = styled(BodyBurnResetLogo)`
@@ -60,5 +61,5 @@ const Logo = styled(BodyBurnResetLogo)`
   justify-self: start;
   align-self: center;
   width: 56%;
-  z-index: 1;
+  z-index: 2;
 `

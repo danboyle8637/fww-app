@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
 import {
@@ -8,23 +8,32 @@ import {
 import StrongResetProgramCoverTiny from '../../../images/strong-reset-program-cover-tiny.jpg'
 import StrongResetProgramCover from '../../../images/strong-reset-program-cover.jpg'
 import StrongResetLogo from '../../../svgs/StrongResetLogo'
-import useBlurUp from '../../../hooks/useBlurUp'
+import useIntersectionObserver from '../../../hooks/useIntersectionObserver'
 
 const StrongResetHeader = ({ coverImage, tinyCoverImage, signUpCard }) => {
-  const [setSmallImage, setLargeImage, setParentContainer] = useBlurUp()
+  const imageRef = useRef(null)
+
+  const [setNode, runAction] = useIntersectionObserver({
+    rootMargin: '0px 0px 0px -100px',
+    shouldUnobserve: true
+  })
+
+  useEffect(() => {
+    const image = imageRef.current
+
+    if (runAction) {
+      image.src = image.dataset.src
+      image.style.filter = 'blur(0px)'
+    }
+  }, [runAction])
 
   return (
-    <ProgramHeaderGrid>
-      <ProgramBackgroundWrapper ref={setParentContainer}>
+    <ProgramHeaderGrid ref={setNode}>
+      <ProgramBackgroundWrapper>
         <ProgramBackgroundImage
-          ref={setLargeImage}
-          src={signUpCard ? StrongResetProgramCover : coverImage}
-          alt="7 Day Strong Reset Program Cover"
-          title="7 Day Strong Reset Program"
-        />
-        <PlaceholderImage
-          ref={setSmallImage}
+          ref={imageRef}
           src={signUpCard ? StrongResetProgramCoverTiny : tinyCoverImage}
+          data-src={signUpCard ? StrongResetProgramCover : coverImage}
           alt="7 Day Strong Reset Program Cover"
           title="7 Day Strong Reset Program"
         />
@@ -41,16 +50,8 @@ const ProgramBackgroundImage = styled.img`
   grid-row: 1 / -1;
   border-radius: 10px 10px 0 0;
   width: 100%;
-`
-
-const PlaceholderImage = styled.img`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
-  border-radius: 10px 10px 0 0;
-  width: 100%;
   filter: blur(6px);
-  transform: scale(1);
-  z-index: 2;
+  transition: filter 1000ms ease-in-out;
 `
 
 const Logo = styled(StrongResetLogo)`
@@ -60,5 +61,5 @@ const Logo = styled(StrongResetLogo)`
   justify-self: start;
   align-self: center;
   width: 56%;
-  z-index: 1;
+  z-index: 2;
 `
