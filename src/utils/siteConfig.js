@@ -1,7 +1,6 @@
 const helpers = require('./helpers')
 const environment = process.env.NODE_ENV
 const liveProductionUrl = `https://resetapi.fitwomensweekly.com`
-const liveDevelopmentUrl = `https://fww-reset-api-development.firebaseapp.com/`
 const localDevelopmentUrl = `http://localhost:5000`
 
 module.exports = {
@@ -14,7 +13,7 @@ module.exports = {
   },
   api: {
     baseUrl: `${
-      environment === 'development' ? localDevelopmentUrl : liveDevelopmentUrl
+      environment === 'development' ? localDevelopmentUrl : liveProductionUrl
     }`
   }
 }
