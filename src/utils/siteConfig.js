@@ -1,7 +1,7 @@
 const helpers = require('./helpers')
 const environment = process.env.NODE_ENV
-const liveProductionUrl = `https://resetapi.fitwomensweekly.com`
-const localDevelopmentUrl = `http://localhost:5000`
+const liveProductionUrl = process.env.REACT_APP_PROD_API_URL
+const localDevelopmentUrl = process.env.REACT_APP_PROD_DEV_URL
 
 module.exports = {
   breakPoints: {
