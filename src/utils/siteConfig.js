@@ -1,6 +1,8 @@
 const helpers = require('./helpers')
 const environment = process.env.NODE_ENV
-const liveProductionUrl = process.env.REACT_APP_PROD_API_URL
+const deployEnvironment = process.env.REACT_APP_STAGE
+const liveProdApiUrl = process.env.REACT_APP_PROD_API_URL
+const liveDevApiUrl = process.env.REACT_APP_DEV_API_URL
 const localDevelopmentUrl = process.env.REACT_APP_PROD_DEV_URL
 
 module.exports = {
@@ -13,7 +15,11 @@ module.exports = {
   },
   api: {
     baseUrl: `${
-      environment === 'development' ? localDevelopmentUrl : liveProductionUrl
+      environment === 'development'
+        ? localDevelopmentUrl
+        : deployEnvironment === 'development'
+        ? liveDevApiUrl
+        : liveProdApiUrl
     }`
   }
 }
