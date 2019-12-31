@@ -14,11 +14,12 @@
     "styled-components": "^4.4.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "REACT_APP_STAGE=development react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "firebase deploy --only hosting:reset-fit-womens-weekly"
+    "deploy:dev": "REACT_APP_STAGE=development firebase deploy --only hosting:fww-reset-app-development",
+    "deploy:prod": "REACT_APP_STAGE=production firebase deploy --only hosting:reset-fit-womens-weekly"
   },
   "eslintConfig": {
     "extends": "react-app"
