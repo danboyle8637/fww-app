@@ -6,7 +6,7 @@ import ChooseProgramHeader from './ProgramHeaders/ChooseProgramHeader'
 import WorkoutProgramDescription from './WorkoutProgramDescription'
 import WorkoutCardFooter from './WorkoutCardFooter'
 import ProgramCardFooter from './ProgramCardFooter'
-import AddProgramCardFooter from './AddProgramCardFooter'
+import PurchaseProgramFooter from './PurchaseProgramFooter'
 import { above } from '../../styles/Theme'
 
 const WorkoutProgramCard = ({
@@ -21,7 +21,11 @@ const WorkoutProgramCard = ({
   description,
   activeProgram,
   setAddingProgramToAccount,
-  setLoadingMessage
+  setLoadingMessage,
+  fitnessLevel,
+  duration,
+  totalWorkouts,
+  price
 }) => {
   return (
     <CardContainer>
@@ -52,10 +56,11 @@ const WorkoutProgramCard = ({
         activeProgram ? (
           <ProgramCardFooter programId={programId} />
         ) : (
-          <AddProgramCardFooter
-            programId={programId}
-            setAddingProgramToAccount={setAddingProgramToAccount}
-            setLoadingMessage={setLoadingMessage}
+          <PurchaseProgramFooter
+            fitnessLevel={fitnessLevel}
+            duration={duration}
+            numberOfWorkouts={totalWorkouts}
+            price={price}
           />
         )
       ) : null}

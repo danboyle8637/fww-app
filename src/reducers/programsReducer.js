@@ -1,5 +1,6 @@
 const programsState = {
-  programs: [],
+  purchasedPrograms: [],
+  notPurchasedPrograms: [],
   percentComplete: []
 }
 
@@ -8,7 +9,8 @@ const programsReducer = (state, action) => {
     case 'setProgramsState': {
       return {
         ...state,
-        programs: action.value
+        purchasedPrograms: action.value.purchasedPrograms,
+        notPurchasedPrograms: action.value.notPurchasedPrograms
       }
     }
     case 'setPercentComplete': {

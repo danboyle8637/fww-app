@@ -1,5 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
+import { Redirect } from 'react-router-dom'
 
 import Google from '../../svgs/GoogleButtonIcon'
 import Facebook from '../../svgs/FacebookButtonIcon'
@@ -21,8 +22,6 @@ const ChooseSignUpMethodCard = ({
   setReverse,
   setToDashboard,
   setIsLoading,
-  setShowSocialSignUp,
-  setSocialProvider,
   setToErrorPage,
   setShowLogin
 }) => {
@@ -35,9 +34,8 @@ const ChooseSignUpMethodCard = ({
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
 
-  // * I moved these to the root signup component. If everythign works delete. If not... reuse in this component.
-  //const [showSocialSignUp, setShowSocialSignUp] = useState(false)
-  //const [socialProvider, setSocialProvider] = useState('')
+  const [showSocialSignUp, setShowSocialSignUp] = useState(false)
+  const [socialProvider, setSocialProvider] = useState('')
 
   const url = `${siteConfig.api.baseUrl}/sign-up-social-account`
   const convertKitUrl = `${siteConfig.api.baseUrl}/add-member-to-convertkit`
@@ -398,22 +396,32 @@ const ChooseSignUpMethodCard = ({
   }
 
   return (
-    <CardContainer
-      type="button"
-      onClick={
-        loginType === 'google'
-          ? handleGoogleSignUp
-          : loginType === 'facebook'
-          ? handleFacebookSignUp
-          : handleMoveToStep4
-      }
-    >
-      {icon === 'google' ? <GoogleIcon /> : null}
-      {icon === 'facebook' ? <FacebookIcon /> : null}
-      {icon === 'emailpassword' ? <EmailPasswordIcon /> : null}
-      {buttonText}
-      <Arrow />
-    </CardContainer>
+    <>
+      <CardContainer
+        type="button"
+        onClick={
+          loginType === 'google'
+            ? handleGoogleSignUp
+            : loginType === 'facebook'
+            ? handleFacebookSignUp
+            : handleMoveToStep4
+        }
+      >
+        {icon === 'google' ? <GoogleIcon /> : null}
+        {icon === 'facebook' ? <FacebookIcon /> : null}
+        {icon === 'emailpassword' ? <EmailPasswordIcon /> : null}
+        {buttonText}
+        <Arrow />
+      </CardContainer>
+      {showSocialSignUp ? (
+        <Redirect
+          to={{
+            pathname: '/social-sign-up',
+            state: { provider: socialProvider }
+          }}
+        />
+      ) : null}
+    </>
   )
 }
 

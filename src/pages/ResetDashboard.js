@@ -5,12 +5,13 @@ import { Link } from 'react-router-dom'
 import FWWLogo from '../components/Logos/FWWLogo'
 import ProgramCard from '../components/Cards/WorkoutProgramCard'
 import HorizontalBasicUserCard from '../components/UserCards/HorizontalBasicUserCard'
+import { WorkoutPageHeadline } from '../styles/Typography'
 import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
 import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
 import ScrollToTop from '../components/Shared/ScrollToTop'
+import FierceSection from '../components/Fierce/FierceSection'
 import { useUserContext } from '../context/UserContext'
 import { useProgramsContext } from '../context/ProgramsContext'
-import { useWorkoutState } from '../context/WorkoutsContext'
 import { usePortalContext } from '../context/portalContext'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
 import siteConfig from '../utils/siteConfig'
@@ -21,9 +22,8 @@ const ResetDashboard = ({ location }) => {
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
   const [programsState, dispatchProgramsAction] = useProgramsContext()
-  // eslint-disable-next-line
-  const [workoutsState, dispatchWorkoutsAction] = useWorkoutState()
   const [isLoadingPrograms, setIsLoadingPrograms] = useState(false)
+  // ! You will need these for when a program is being added to account.
   const [addingProgramToAccount, setAddingProgramToAccount] = useState(false)
   const [loadingMessage, setLoadingMessage] = useState('')
   // eslint-disable-next-line
@@ -31,22 +31,11 @@ const ResetDashboard = ({ location }) => {
 
   useEffect(() => {
     if (
-      programsState.programs.length === 0 &&
+      programsState.purchasedPrograms.length === 0 &&
+      programsState.notPurchasedPrograms.length === 0 &&
       programsState.percentComplete.length === 0
     ) {
       setIsLoadingPrograms(true)
-
-      const getPrograms = {
-        programIdArray: userState.programs
-      }
-
-      const getPercentComplete = {
-        programs: userState.programs
-      }
-      const baseUrl = siteConfig.api.baseUrl
-
-      const programsPath = '/get-programs'
-      const percentCompletePath = '/get-percent-complete'
 
       // ! Checking local storage for programs
       if (localStorage.getItem('fwwPrograms')) {
@@ -55,7 +44,10 @@ const ResetDashboard = ({ location }) => {
 
         dispatchProgramsAction({
           type: 'setProgramsState',
-          value: programData.programs
+          value: {
+            purchasedPrograms: programData.purchasedPrograms,
+            notPurchasedPrograms: programData.notPurchasedPrograms
+          }
         })
 
         dispatchProgramsAction({
@@ -65,6 +57,18 @@ const ResetDashboard = ({ location }) => {
 
         setIsLoadingPrograms(false)
       } else {
+        const getPrograms = {
+          programIdArray: userState.programs
+        }
+
+        const getPercentComplete = {
+          programs: userState.programs
+        }
+        const baseUrl = siteConfig.api.baseUrl
+
+        const programsPath = '/get-programs'
+        const percentCompletePath = '/get-percent-complete'
+
         auth
           .getCurrentUser()
           .then(user => {
@@ -100,7 +104,10 @@ const ResetDashboard = ({ location }) => {
 
                     dispatchProgramsAction({
                       type: 'setProgramsState',
-                      value: programs.programs
+                      value: {
+                        purchasedPrograms: programs.purchasedPrograms,
+                        notPurchasedPrograms: programs.notPurchasedPrograms
+                      }
                     })
 
                     dispatchProgramsAction({
@@ -110,7 +117,8 @@ const ResetDashboard = ({ location }) => {
 
                     // ! Set program data to local storage
                     const fwwPrograms = {
-                      programs: programs.programs,
+                      purchasedPrograms: programs.purchasedPrograms,
+                      notPurchasedPrograms: programs.notPurchasedPrograms,
                       percentComplete: percentComplete.percentComplete
                     }
 
@@ -148,39 +156,55 @@ const ResetDashboard = ({ location }) => {
     auth,
     dispatchPortalAction,
     dispatchProgramsAction,
+    programsState.notPurchasedPrograms.length,
     programsState.percentComplete,
     programsState.programs,
+    programsState.purchasedPrograms.length,
     userState.programs,
     userState.userId
   ])
 
-  const renderPrograms = () => {
-    const programs = programsState.programs.map(program => {
+  const renderPurchasedPrograms = () => {
+    const purchasedPrograms = programsState.purchasedPrograms.map(program => {
       const key = program.order
       const coverImage = program.coverImage
       const tinyCoverImage = program.tinyCoverImage
       const description = program.description
       const title = program.name
       const programId = program.programId
-      const userPrograms = userState.programs
 
-      const activeProgram = userPrograms.includes(programId)
+      return (
+        <CardLink key={key} to={`${location.pathname}/${programId}`}>
+          <ProgramCard
+            isProgram
+            coverImage={coverImage}
+            tinyCoverImage={tinyCoverImage}
+            programId={programId}
+            title={title}
+            description={description}
+            activeProgram={true}
+          />
+        </CardLink>
+      )
+    })
 
-      if (activeProgram) {
-        return (
-          <CardLink key={key} to={`${location.pathname}/${programId}`}>
-            <ProgramCard
-              isProgram
-              coverImage={coverImage}
-              tinyCoverImage={tinyCoverImage}
-              programId={programId}
-              title={title}
-              description={description}
-              activeProgram={activeProgram}
-            />
-          </CardLink>
-        )
-      } else {
+    return purchasedPrograms
+  }
+
+  const renderNotPurchasedPrograms = () => {
+    const notPurchasedPrograms = programsState.notPurchasedPrograms.map(
+      program => {
+        const key = program.order
+        const coverImage = program.coverImage
+        const tinyCoverImage = program.tinyCoverImage
+        const description = program.description
+        const title = program.name
+        const programId = program.programId
+        const fitnessLevel = program.fitnessLevel
+        const duration = program.duration
+        const totalWorkouts = program.totalWorkouts
+        const price = program.price
+
         return (
           <ProgramCard
             key={key}
@@ -190,15 +214,23 @@ const ResetDashboard = ({ location }) => {
             programId={programId}
             title={title}
             description={description}
-            activeProgram={activeProgram}
-            setAddingProgramToAccount={setAddingProgramToAccount}
-            setLoadingMessage={setLoadingMessage}
+            activeProgram={false}
+            fitnessLevel={fitnessLevel}
+            duration={duration}
+            totalWorkouts={totalWorkouts}
+            price={price}
           />
         )
       }
-    })
+    )
 
-    return programs
+    return notPurchasedPrograms
+  }
+
+  const yourProgramsCardLoader = () => {
+    return userState.programs.map(() => {
+      return <WorkoutCardLoader loadingMessage={'Loading programs...'} />
+    })
   }
 
   const programCardLoader = (
@@ -221,8 +253,21 @@ const ResetDashboard = ({ location }) => {
             photoUrl={userState.photoUrl}
             firstName={userState.firstName}
           />
+          <ExtendWorkoutPageHeadline>Your Programs:</ExtendWorkoutPageHeadline>
           <ProgramCardsWrapper>
-            {isLoadingPrograms ? <>{programCardLoader}</> : renderPrograms()}
+            {isLoadingPrograms ? (
+              <>{yourProgramsCardLoader()}</>
+            ) : (
+              renderPurchasedPrograms()
+            )}
+          </ProgramCardsWrapper>
+          <FierceSection />
+          <ProgramCardsWrapper>
+            {isLoadingPrograms ? (
+              <>{programCardLoader}</>
+            ) : (
+              renderNotPurchasedPrograms()
+            )}
           </ProgramCardsWrapper>
         </DashboardContainer>
       )}
@@ -244,7 +289,7 @@ const ProgramCardsWrapper = styled.div`
   padding: 0 16px;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, auto);
+  grid-template-rows: auto;
   gap: 40px;
   justify-items: center;
   width: 100%;
@@ -266,4 +311,10 @@ const CardLink = styled(Link)`
     outline: none;
     box-shadow: 0 0 0 2px #000, 0 0 0 5px ${props => props.theme.primaryAccent};
   }
+`
+
+const ExtendWorkoutPageHeadline = styled(WorkoutPageHeadline)`
+  margin: 40px 0 0 0;
+  padding: 0 16px;
+  align-self: flex-start;
 `

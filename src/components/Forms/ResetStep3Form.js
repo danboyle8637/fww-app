@@ -14,8 +14,6 @@ const ResetStep3Form = ({
   setReverse,
   setToDashboard,
   setIsLoading,
-  setShowSocialSignUp,
-  setSocialProvider,
   setToErrorPage,
   setShowLogin
 }) => {
@@ -51,8 +49,6 @@ const ResetStep3Form = ({
         setReverse={setReverse}
         setToDashboard={setToDashboard}
         setIsLoading={setIsLoading}
-        setShowSocialSignUp={setShowSocialSignUp}
-        setSocialProvider={setSocialProvider}
         setToErrorPage={setToErrorPage}
         setShowLogin={setShowLogin}
       />

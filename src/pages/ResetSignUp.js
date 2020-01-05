@@ -27,10 +27,6 @@ const ResetSignUp = () => {
   // This is for email and password login.
   const [showSecurityLogin, setShowSecurityLogin] = useState(false)
 
-  // These are for Google and Facebook signup.
-  const [showSocialSignUp, setShowSocialSignUp] = useState(false)
-  const [socialProvider, setSocialProvider] = useState('')
-
   const title = 'Create your Reset program account'
   const alt =
     'Kindal holding a kettlebell in rack position facing away from you'
@@ -44,6 +40,7 @@ const ResetSignUp = () => {
     alt
   )
 
+  // TODO You need to get rid of the main sign up form... it's blocking the others.
   return (
     <>
       {isLoading ? (
@@ -74,8 +71,6 @@ const ResetSignUp = () => {
                 setActiveQuestion={setActiveQuestion}
                 setIsLoading={setIsLoading}
                 setToDashboard={setToDashboard}
-                setShowSocialSignUp={setShowSocialSignUp}
-                setSocialProvider={setSocialProvider}
                 setToErrorPage={setToErrorPage}
                 setShowLogin={setShowLogin}
               />
@@ -99,14 +94,6 @@ const ResetSignUp = () => {
       {showSecurityLogin ? <Redirect to="/security-login" /> : null}
       {toErrorPage ? <Redirect to="/error" /> : null}
       {showLogin ? <Redirect to="/login" /> : null}
-      {showSocialSignUp ? (
-        <Redirect
-          to={{
-            pathname: '/social-sign-up',
-            state: { provider: socialProvider }
-          }}
-        />
-      ) : null}
     </>
   )
 }
