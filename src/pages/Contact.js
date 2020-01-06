@@ -13,6 +13,8 @@ const Contact = () => {
   const [isSyncing, setIsSyncing] = useState(false)
   const [syncingMessage, setSyncingMessage] = useState('')
 
+  console.log('CONTACT PAGE CONTACT PAGE CONTACT PAGE')
+
   const toggleSyncing = () => setIsSyncing(prevValue => !prevValue)
 
   return (

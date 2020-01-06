@@ -40,7 +40,6 @@ const ResetSignUp = () => {
     alt
   )
 
-  // TODO You need to get rid of the main sign up form... it's blocking the others.
   return (
     <>
       {isLoading ? (

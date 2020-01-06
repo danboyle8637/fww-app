@@ -35,6 +35,27 @@ const MainNav = () => {
     history.goBack()
   }
 
+  const showAllowedPaths = () => {
+    if (
+      !userState.isLoggedIn &&
+      location.pathname !== '/7-day-reset-step1' &&
+      location.pathname !== '/contact' &&
+      location.pathname !== '/security-login' &&
+      location.pathname !== '/social-login' &&
+      location.pathname !== '/social-sign-up' &&
+      location.pathname !== '/emergency-sign-up' &&
+      location.pathname !== '/emergency-social-sign-up' &&
+      location.pathname !== '/error' &&
+      location.pathname !== '/social-link' &&
+      location.pathname !== '/playground'
+    ) {
+      return <Redirect to="/login" />
+    } else {
+      return null
+    }
+  }
+
+  // * Here is where I am controlling the redirect back to login.
   return (
     <>
       <MainNavBar>
@@ -44,9 +65,7 @@ const MainNav = () => {
           </NavArrowBackground>
         </BackButtonTransition>
       </MainNavBar>
-      {!userState.isLoggedIn && location.pathname !== '/7-day-reset-step1' ? (
-        <Redirect to="/login" />
-      ) : null}
+      {showAllowedPaths()}
     </>
   )
 }
@@ -87,3 +106,7 @@ const NavArrow = styled(NavigationArrow)`
   width: 16px;
   transform: translateX(-2px) rotate(180deg);
 `
+
+// {!userState.isLoggedIn && location.pathname !== '/7-day-reset-step1' ? (
+//   <Redirect to="/login" />
+// ) : null}

@@ -206,20 +206,21 @@ const ResetDashboard = ({ location }) => {
         const price = program.price
 
         return (
-          <ProgramCard
-            key={key}
-            isProgram
-            coverImage={coverImage}
-            tinyCoverImage={tinyCoverImage}
-            programId={programId}
-            title={title}
-            description={description}
-            activeProgram={false}
-            fitnessLevel={fitnessLevel}
-            duration={duration}
-            totalWorkouts={totalWorkouts}
-            price={price}
-          />
+          <CardLink key={key} to={`${location.pathname}/purchase/${programId}`}>
+            <ProgramCard
+              isProgram
+              coverImage={coverImage}
+              tinyCoverImage={tinyCoverImage}
+              programId={programId}
+              title={title}
+              description={description}
+              activeProgram={false}
+              fitnessLevel={fitnessLevel}
+              duration={duration}
+              totalWorkouts={totalWorkouts}
+              price={price}
+            />
+          </CardLink>
         )
       }
     )

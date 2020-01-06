@@ -12,6 +12,7 @@ import SignUp from './pages/SignUp'
 import ResetSignUp from './pages/ResetSignUp'
 import Review from './pages/Review'
 import Contact from './pages/Contact'
+import ResetProductPage from './pages/ResetProductPage'
 import ResetProgramDashboard from './pages/ResetProgramDashboard'
 import ResetWorkout from './pages/ResetWorkout'
 import ResetWorkoutCoaching from './pages/ResetWorkoutCoaching'
@@ -51,11 +52,18 @@ const App = () => {
             <Route path="/error" component={ErrorPage} />
             <Route path="/social-link" component={SocialLink} />
             <Route path="/playground" component={SignUp} />
-            <Route path="/7-day-reset-step1" component={ResetSignUp} />
             <Route path="/contact" component={Contact} />
+            <Route path="/7-day-reset-step1" component={ResetSignUp} />
+
             <PrivateRoute exact path="/dashboard" component={ResetDashboard} />
-            <PrivateRoute path="/review" component={Review} />
+            <PrivateRoute exact path="/review" component={Review} />
             <PrivateRoute
+              exact
+              path="/dashboard/purchase/:programId"
+              component={ResetProductPage}
+            />
+            <PrivateRoute
+              exact
               path="/account/:username"
               component={ResetUserAccount}
             />
