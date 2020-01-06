@@ -55,7 +55,8 @@ const MainNav = () => {
     }
   }
 
-  // * Here is where I am controlling the redirect back to login.
+  // * Here is where I am controlling the redirect back to login on routes that don't exist...
+  // * OR on routes where I don't want somebody directly going to without clicking a link.
   return (
     <>
       <MainNavBar>
