@@ -102,6 +102,8 @@ const ResetDashboard = ({ location }) => {
                     const programs = dataArray[0]
                     const percentComplete = dataArray[1]
 
+                    console.log(programs)
+
                     dispatchProgramsAction({
                       type: 'setProgramsState',
                       value: {
@@ -229,8 +231,10 @@ const ResetDashboard = ({ location }) => {
   }
 
   const yourProgramsCardLoader = () => {
-    return userState.programs.map(() => {
-      return <WorkoutCardLoader loadingMessage={'Loading programs...'} />
+    return userState.programs.map((card, index) => {
+      return (
+        <WorkoutCardLoader key={index} loadingMessage={'Loading programs...'} />
+      )
     })
   }
 

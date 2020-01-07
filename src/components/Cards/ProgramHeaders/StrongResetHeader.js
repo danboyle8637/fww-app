@@ -10,7 +10,12 @@ import StrongResetProgramCover from '../../../images/strong-reset-program-cover.
 import StrongResetLogo from '../../../svgs/StrongResetLogo'
 import useIntersectionObserver from '../../../hooks/useIntersectionObserver'
 
-const StrongResetHeader = ({ coverImage, tinyCoverImage, signUpCard }) => {
+const StrongResetHeader = ({
+  coverImage,
+  tinyCoverImage,
+  signUpCard,
+  salesPage = false
+}) => {
   const imageRef = useRef(null)
 
   const [setNode, runAction] = useIntersectionObserver({
@@ -36,6 +41,7 @@ const StrongResetHeader = ({ coverImage, tinyCoverImage, signUpCard }) => {
           data-src={signUpCard ? StrongResetProgramCover : coverImage}
           alt="7 Day Strong Reset Program Cover"
           title="7 Day Strong Reset Program"
+          salesPage={salesPage}
         />
       </ProgramBackgroundWrapper>
       <Logo />
@@ -48,7 +54,7 @@ export default StrongResetHeader
 const ProgramBackgroundImage = styled.img`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
-  border-radius: 10px 10px 0 0;
+  border-radius: ${props => (props.salesPage ? '10px' : '10px 10px 0 0')};
   width: 100%;
   filter: blur(6px);
   transition: filter 1000ms ease-in-out;

@@ -8,7 +8,11 @@ import {
 import FierceBodyBurnLogo from '../../../svgs/FierceBodyBurnLogo'
 import useIntersectionObserver from '../../../hooks/useIntersectionObserver'
 
-const FierceBodyBurnHeader = ({ coverImage, tinyCoverImage }) => {
+const FierceBodyBurnHeader = ({
+  coverImage,
+  tinyCoverImage,
+  salesPage = false
+}) => {
   const imageRef = useRef(null)
 
   const [setNode, runAction] = useIntersectionObserver({
@@ -34,6 +38,7 @@ const FierceBodyBurnHeader = ({ coverImage, tinyCoverImage }) => {
           src={tinyCoverImage}
           alt="Fierce Body Burn Program Cover"
           title="Fierce Body Burn Program"
+          salesPage={salesPage}
         />
       </ProgramBackgroundWrapper>
       <Logo />
@@ -46,7 +51,7 @@ export default FierceBodyBurnHeader
 const ProgramBackgroundImage = styled.img`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
-  border-radius: 10px 10px 0 0;
+  border-radius: ${props => (props.salesPage ? '10px' : '10px 10px 0 0')};
   width: 100%;
   filter: blur(6px);
   transition: filter 1000ms ease-in-out;

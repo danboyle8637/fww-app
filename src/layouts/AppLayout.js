@@ -34,6 +34,7 @@ const AppWrapper = styled.section`
   padding: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
   background: ${props => props.theme.mainBackgroundColor};
   width: 100%;
   overflow: hidden;

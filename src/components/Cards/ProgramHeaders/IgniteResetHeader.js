@@ -10,7 +10,12 @@ import IgniteResetProgramCover from '../../../images/ignite-reset-program-cover.
 import IgniteResetLogo from '../../../svgs/IgniteResetLogo'
 import useIntersectionObserver from '../../../hooks/useIntersectionObserver'
 
-const IgniteResetHeader = ({ coverImage, tinyCoverImage, signUpCard }) => {
+const IgniteResetHeader = ({
+  coverImage,
+  tinyCoverImage,
+  signUpCard,
+  salesPage = false
+}) => {
   const imageRef = useRef(null)
 
   const [setNode, runAction] = useIntersectionObserver({
@@ -36,6 +41,7 @@ const IgniteResetHeader = ({ coverImage, tinyCoverImage, signUpCard }) => {
           data-src={signUpCard ? IgniteResetProgramCover : coverImage}
           alt="7 Day Ignite Reset Program Cover"
           title="7 Day Ignite Reset Program"
+          salesPage={salesPage}
         />
       </ProgramBackgroundWrapper>
       <Logo />
@@ -48,7 +54,7 @@ export default IgniteResetHeader
 const ProgramBackgroundImage = styled.img`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
-  border-radius: 10px 10px 0 0;
+  border-radius: ${props => (props.salesPage ? '10px' : '10px 10px 0 0')};
   width: 100%;
   filter: blur(6px);
   transition: filter 1000ms ease-in-out;

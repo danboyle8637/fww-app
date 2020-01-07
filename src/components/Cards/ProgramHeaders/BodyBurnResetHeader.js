@@ -10,7 +10,12 @@ import BodyBurnResetProgramCover from '../../../images/bbc-reset-program-cover.j
 import BodyBurnResetLogo from '../../../svgs/BodyBurnResetLogo'
 import useIntersectionObserver from '../../../hooks/useIntersectionObserver'
 
-const BodyBurnResetHeader = ({ coverImage, tinyCoverImage, signUpCard }) => {
+const BodyBurnResetHeader = ({
+  coverImage,
+  tinyCoverImage,
+  signUpCard,
+  salesPage = false
+}) => {
   const imageRef = useRef(null)
 
   const [setNode, runAction] = useIntersectionObserver({
@@ -36,6 +41,7 @@ const BodyBurnResetHeader = ({ coverImage, tinyCoverImage, signUpCard }) => {
           src={signUpCard ? BodyBurnResetProgramCoverTiny : tinyCoverImage}
           alt="7 Day Body Burn Reset Program Cover"
           title="7 Day Body Burn Reset Program"
+          salesPage={salesPage}
         />
       </ProgramBackgroundWrapper>
       <Logo />
@@ -48,7 +54,7 @@ export default BodyBurnResetHeader
 const ProgramBackgroundImage = styled.img`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
-  border-radius: 10px 10px 0 0;
+  border-radius: ${props => (props.salesPage ? '10px' : '10px 10px 0 0')};
   width: 100%;
   filter: blur(6px);
   transition: filter 1000ms ease-in-out;

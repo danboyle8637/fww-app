@@ -3,7 +3,7 @@ import { TweenMax, Power2 } from 'gsap/TweenMax'
 
 import { usePortalContext } from '../context/portalContext'
 
-const BottomMoreIcon = ({ width, height, className, isOpen }) => {
+const BottomMoreIcon = ({ width, height, className, handleClick = null }) => {
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
   const moreIconRef = useRef(null)
@@ -28,6 +28,7 @@ const BottomMoreIcon = ({ width, height, className, isOpen }) => {
 
   return (
     <svg
+      onClick={handleClick}
       ref={moreIconRef}
       id="more-dots-icon"
       data-name="more-dots-icon"
