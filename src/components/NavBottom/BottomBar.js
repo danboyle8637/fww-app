@@ -25,20 +25,23 @@ const BottomBar = ({ menuOpen, isLoggedIn, handleNavigation }) => {
       } else {
         setIsLaptopMenu(false)
       }
-
-      const test = event => {
-        if (event.matches) {
-          setIsLaptopMenu(true)
-        } else {
-          setIsLaptopMenu(false)
-        }
-      }
-
-      mediaQueryRef.current.addListener(test)
     }
 
+    const test = event => {
+      if (event.matches) {
+        setIsLaptopMenu(true)
+      } else {
+        setIsLaptopMenu(false)
+      }
+    }
+
+    mediaQueryRef.current.addListener(test)
+
     return () => {
-      mediaQueryRef.current.removeListener(test)
+      console.log(test)
+      if (test) {
+        mediaQueryRef.current.removeListener(test)
+      }
     }
   }, [])
 

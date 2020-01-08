@@ -23,6 +23,8 @@ const ResetSignUp = () => {
   const [toDashboard, setToDashboard] = useState(false)
   const [toErrorPage, setToErrorPage] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
+  const [showSocialSignUp, setShowSocialSignUp] = useState(false)
+  const [socialProvider, setSocialProvider] = useState('')
 
   // This is for email and password login.
   const [showSecurityLogin, setShowSecurityLogin] = useState(false)
@@ -72,6 +74,8 @@ const ResetSignUp = () => {
                 setToDashboard={setToDashboard}
                 setToErrorPage={setToErrorPage}
                 setShowLogin={setShowLogin}
+                setShowSocialSignUp={setShowSocialSignUp}
+                setSocialProvider={setSocialProvider}
               />
               <ResetStep4Form
                 activeQuestion={activeQuestion}
@@ -93,6 +97,14 @@ const ResetSignUp = () => {
       {showSecurityLogin ? <Redirect to="/security-login" /> : null}
       {toErrorPage ? <Redirect to="/error" /> : null}
       {showLogin ? <Redirect to="/login" /> : null}
+      {showSocialSignUp ? (
+        <Redirect
+          to={{
+            pathname: '/social-sign-up',
+            state: { provider: socialProvider }
+          }}
+        />
+      ) : null}
     </>
   )
 }

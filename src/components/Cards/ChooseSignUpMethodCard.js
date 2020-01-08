@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { Redirect } from 'react-router-dom'
 
 import Google from '../../svgs/GoogleButtonIcon'
 import Facebook from '../../svgs/FacebookButtonIcon'
@@ -23,7 +22,9 @@ const ChooseSignUpMethodCard = ({
   setToDashboard,
   setIsLoading,
   setToErrorPage,
-  setShowLogin
+  setShowLogin,
+  setShowSocialSignUp,
+  setSocialProvider
 }) => {
   const auth = useFireBase()
   const device = useContext(ScreenWidthContext)
@@ -34,15 +35,10 @@ const ChooseSignUpMethodCard = ({
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
 
-  const [showSocialSignUp, setShowSocialSignUp] = useState(false)
-  const [socialProvider, setSocialProvider] = useState('')
-
   const url = `${siteConfig.api.baseUrl}/sign-up-social-account`
   const convertKitUrl = `${siteConfig.api.baseUrl}/add-member-to-convertkit`
 
   const handleGoogleSignUp = () => {
-    setIsLoading(true)
-
     const firstName = formState.firstNameValue.value
     const biggestObstacle = formState.biggestObstacleValue.value
     const programId = formState.resetWorkoutValue.value
@@ -62,6 +58,7 @@ const ChooseSignUpMethodCard = ({
       setSocialProvider('google')
       setShowSocialSignUp(true)
     } else {
+      setIsLoading(true)
       auth
         .signInWithGoogleProviderPopUp()
         .then(result => {
@@ -413,14 +410,6 @@ const ChooseSignUpMethodCard = ({
         {buttonText}
         <Arrow />
       </CardContainer>
-      {showSocialSignUp ? (
-        <Redirect
-          to={{
-            pathname: '/social-sign-up',
-            state: { provider: socialProvider }
-          }}
-        />
-      ) : null}
     </>
   )
 }

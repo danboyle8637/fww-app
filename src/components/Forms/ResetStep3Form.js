@@ -15,7 +15,9 @@ const ResetStep3Form = ({
   setToDashboard,
   setIsLoading,
   setToErrorPage,
-  setShowLogin
+  setShowLogin,
+  setShowSocialSignUp,
+  setSocialProvider
 }) => {
   const options = [
     { id: 1, icon: 'google', text: 'Google Account', loginType: 'google' },
@@ -51,6 +53,8 @@ const ResetStep3Form = ({
         setIsLoading={setIsLoading}
         setToErrorPage={setToErrorPage}
         setShowLogin={setShowLogin}
+        setShowSocialSignUp={setShowSocialSignUp}
+        setSocialProvider={setSocialProvider}
       />
     )
   })
