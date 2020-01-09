@@ -106,4 +106,5 @@ const Dots = styled(MoreDots)`
   right: 0;
   width: 8px;
   transform: translate(-10px, 10px);
+  cursor: pointer;
 `

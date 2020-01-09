@@ -22,7 +22,7 @@ const Layout = styled.main`
     padding: 22px;
     margin-top: 80px;
     margin-bottom: 120px;
-    border-radius: 12px;
+    border-radius: 20px;
   `}
   ${above.ultraWide`
     margin-bottom: 200px;

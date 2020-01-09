@@ -38,7 +38,6 @@ const BottomBar = ({ menuOpen, isLoggedIn, handleNavigation }) => {
     mediaQueryRef.current.addListener(test)
 
     return () => {
-      console.log(test)
       if (test) {
         mediaQueryRef.current.removeListener(test)
       }

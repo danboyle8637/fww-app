@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { above } from '../../styles/Theme'
+
 const WhatYouGetSection = ({ benefits }) => {
   const benefitList = benefits.map(benefit => {
     const { id, text } = benefit
@@ -9,6 +11,7 @@ const WhatYouGetSection = ({ benefits }) => {
 
   return (
     <BenefitsContainer>
+      <BenefitsHeadline>Program Includes:</BenefitsHeadline>
       <BenefitList>{benefitList}</BenefitList>
     </BenefitsContainer>
   )
@@ -20,7 +23,16 @@ const BenefitsContainer = styled.div`
   padding: 0 24px;
 `
 
+const BenefitsHeadline = styled.h3`
+  font-size: 22px;
+  color: ${props => props.theme.headlinePrimary};
+  ${above.mobile`
+    font-size: 34px;
+  `}
+`
+
 const BenefitList = styled.ul`
+  margin: 20px 0 0 0;
   list-style: none;
 `
 
@@ -42,6 +54,6 @@ const BenefitItem = styled.li`
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    transform: translate(-150%, 30%);
+    transform: translate(-150%, 36%);
   }
 `
