@@ -10,7 +10,12 @@ import { useFireBase } from '../Firebase/FirebaseContext'
 import siteConfig from '../../utils/siteConfig'
 import './stripe-styles.css'
 
-const CheckoutForm = ({ price, stripe }) => {
+const CheckoutForm = ({
+  price,
+  setIsCreatingCharge,
+  setToThankYouPage,
+  stripe
+}) => {
   const auth = useFireBase()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
@@ -34,9 +39,6 @@ const CheckoutForm = ({ price, stripe }) => {
         color: '#B44CFF'
       }
     },
-    empty: {
-      padding: '14px'
-    },
     complete: {
       backgroundColor: '#282830'
     },
@@ -47,6 +49,8 @@ const CheckoutForm = ({ price, stripe }) => {
   }
 
   const handleCompleteCheckout = () => {
+    setIsCreatingCharge(true)
+
     const url = `${siteConfig.api.baseUrl}/charge`
     const firstName = userState.firstName
     const programId = urlParams.programId

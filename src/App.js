@@ -24,6 +24,7 @@ import EmergencySignUp from './pages/EmergencySignUp'
 import EmergencySocialSignUp from './pages/EmergencySocialSignUp'
 import ErrorPage from './pages/ErrorPage'
 import SocialLink from './pages/SocialLink'
+import ResetPurchaseThankYou from './pages/ResetPurchaseThankYou'
 import PrivateRoute from './components/Shared/PrivateRoute'
 import Portal from './components/Shared/Portal'
 import ErrorIndicator from './components/Indicators/ErrorIndicator'
@@ -54,6 +55,7 @@ const App = () => {
             <Route path="/playground" component={SignUp} />
             <Route path="/contact" component={Contact} />
             <Route path="/7-day-reset-step1" component={ResetSignUp} />
+            <Route path="/thank-you" component={ResetPurchaseThankYou} />
 
             <PrivateRoute exact path="/dashboard" component={ResetDashboard} />
             <PrivateRoute exact path="/review" component={Review} />

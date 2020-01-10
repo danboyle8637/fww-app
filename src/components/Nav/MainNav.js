@@ -47,7 +47,8 @@ const MainNav = () => {
       location.pathname !== '/emergency-social-sign-up' &&
       location.pathname !== '/error' &&
       location.pathname !== '/social-link' &&
-      location.pathname !== '/playground'
+      location.pathname !== '/playground' &&
+      location.pathname !== '/thank-you'
     ) {
       return <Redirect to="/login" />
     } else {

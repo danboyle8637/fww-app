@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { StripeProvider, Elements } from 'react-stripe-elements'
-import { useParams } from 'react-router-dom'
+import { useParams, Redirect } from 'react-router-dom'
+import { TweenMax } from 'gsap/TweenMax'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 
 import SalesVideoSection from '../components/SalesPage/SalesVideoSection'
 import WhatYouGetSection from '../components/SalesPage/WhatYouGetSection'
@@ -12,6 +14,7 @@ import FWWLogo from '../svgs/FWWLogo'
 import MessageDialog from '../components/Dialogs/MessageDialog'
 import Portal from '../components/Shared/Portal'
 import CheckoutForm from '../components/SalesPage/CheckoutForm'
+import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
 import { useProgramsContext } from '../context/ProgramsContext'
 import { above } from '../styles/Theme'
 
@@ -20,9 +23,22 @@ const ResetProductPage = () => {
   const [programsState, dispatchProgramsAction] = useProgramsContext()
   const [ipadProOrAbove, setIpadProOrAbove] = useState(false)
   const [stripe, setStripe] = useState(null)
+  const [isCreatingCharge, setIsCreatingCharge] = useState(false)
+  const [toThankYouPage, setToThankYouPage] = useState(false)
   const mediaQueryRef = useRef(null)
 
   const params = useParams()
+
+  // eslint-disable-next-line
+  const scroll = ScrollToPlugin
+
+  // * Steps for loading... and letting the user know what's going on.
+  // Step 1 - Go into full page kettlebell laoding component.
+
+  // Step 2 - Once functions completes purchase... Redirect to success page.
+  // TODO need a success page
+
+  // Step 3 - User clicks to go back to dashboard and program will be active and in the top of the view
 
   const program = programsState.notPurchasedPrograms.find(
     program => program.programId === params.programId
@@ -73,12 +89,17 @@ const ResetProductPage = () => {
   }, [])
 
   const handlePurchaseClick = () => {
-    console.log('Hit API and create the charge!')
+    if (typeof window !== undefined) {
+      TweenMax.to(window, 1, { scrollTo: `#payment-form` })
+    }
   }
 
   return (
     <StripeProvider stripe={stripe}>
       <>
+        {isCreatingCharge ? (
+          <FullPageKettlebellLoader loadingMessage="Creating charge and adding program to your account!" />
+        ) : null}
         <ScrollToTop />
         <SalesPageContainer>
           <SalesVideoSection
@@ -93,18 +114,20 @@ const ResetProductPage = () => {
           <BenefitWrapper>
             <WhatYouGetSection benefits={benefits} price={price} />
             <PricingCard price={price} />
-            {!ipadProOrAbove ? (
-              <Logo />
-            ) : (
-              <Elements>
-                <CheckoutForm price={price} />
-              </Elements>
-            )}
+            <div id="payment-form" />
+            <Elements>
+              <CheckoutForm
+                price={price}
+                setIsCreatingCharge={setIsCreatingCharge}
+                setToThankYouPage={setToThankYouPage}
+              />
+            </Elements>
+            {!ipadProOrAbove ? <Logo /> : null}
           </BenefitWrapper>
         </SalesPageContainer>
         {!ipadProOrAbove ? (
           <MobileButtonWrapper>
-            <BaseButton handleClick={handlePurchaseClick}>
+            <BaseButton purple={true} handleClick={handlePurchaseClick}>
               Purchase for ${price}
             </BaseButton>
           </MobileButtonWrapper>
