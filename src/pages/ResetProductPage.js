@@ -32,14 +32,9 @@ const ResetProductPage = () => {
   // eslint-disable-next-line
   const scroll = ScrollToPlugin
 
-  // * Steps for loading... and letting the user know what's going on.
-  // Step 1 - Go into full page kettlebell laoding component.
-
-  // Step 2 - Once functions completes purchase... Redirect to success page.
-  // TODO need a success page
-
-  // Step 3 - User clicks to go back to dashboard and program will be active and in the top of the view
-
+  // TODO When you purchase a progam, state gets updated...
+  // TODO ... and suddenly this program does not exist in notPurchasedPrograms
+  // TODO ... so you need to figure out how to render the page... maybe dummy data
   const program = programsState.notPurchasedPrograms.find(
     program => program.programId === params.programId
   )
@@ -95,50 +90,53 @@ const ResetProductPage = () => {
   }
 
   return (
-    <StripeProvider stripe={stripe}>
-      <>
-        {isCreatingCharge ? (
-          <FullPageKettlebellLoader loadingMessage="Creating charge and adding program to your account!" />
-        ) : null}
-        <ScrollToTop />
-        <SalesPageContainer>
-          <SalesVideoSection
-            programId={programId}
-            tinyCoverImage={tinyCoverImage}
-            coverImage={coverImage}
-            fitnessLevel={fitnessLevel}
-            numberOfWorkouts={numbreOfWorkouts}
-            duration={duration}
-            salesVideo={salesVideo}
-          />
-          <BenefitWrapper>
-            <WhatYouGetSection benefits={benefits} price={price} />
-            <PricingCard price={price} />
-            <div id="payment-form" />
-            <Elements>
-              <CheckoutForm
-                price={price}
-                setIsCreatingCharge={setIsCreatingCharge}
-                setToThankYouPage={setToThankYouPage}
-              />
-            </Elements>
-            {!ipadProOrAbove ? <Logo /> : null}
-          </BenefitWrapper>
-        </SalesPageContainer>
-        {!ipadProOrAbove ? (
-          <MobileButtonWrapper>
-            <BaseButton purple={true} handleClick={handlePurchaseClick}>
-              Purchase for ${price}
-            </BaseButton>
-          </MobileButtonWrapper>
-        ) : (
-          <Logo />
-        )}
-        <Portal>
-          <MessageDialog />
-        </Portal>
-      </>
-    </StripeProvider>
+    <>
+      {isCreatingCharge ? (
+        <FullPageKettlebellLoader loadingMessage="Creating charge and adding program to your account!" />
+      ) : null}
+      {toThankYouPage ? <Redirect to="/thank-you" /> : null}
+      <StripeProvider stripe={stripe}>
+        <>
+          <ScrollToTop />
+          <SalesPageContainer>
+            <SalesVideoSection
+              programId={programId}
+              tinyCoverImage={tinyCoverImage}
+              coverImage={coverImage}
+              fitnessLevel={fitnessLevel}
+              numberOfWorkouts={numbreOfWorkouts}
+              duration={duration}
+              salesVideo={salesVideo}
+            />
+            <BenefitWrapper>
+              <WhatYouGetSection benefits={benefits} price={price} />
+              <PricingCard price={price} />
+              <div id="payment-form" />
+              <Elements>
+                <CheckoutForm
+                  price={price}
+                  setIsCreatingCharge={setIsCreatingCharge}
+                  setToThankYouPage={setToThankYouPage}
+                />
+              </Elements>
+              {!ipadProOrAbove ? <Logo /> : null}
+            </BenefitWrapper>
+          </SalesPageContainer>
+          {!ipadProOrAbove ? (
+            <MobileButtonWrapper>
+              <BaseButton purple={true} handleClick={handlePurchaseClick}>
+                Purchase for ${price}
+              </BaseButton>
+            </MobileButtonWrapper>
+          ) : (
+            <Logo />
+          )}
+          <Portal>
+            <MessageDialog />
+          </Portal>
+        </>
+      </StripeProvider>
+    </>
   )
 }
 

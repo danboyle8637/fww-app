@@ -102,8 +102,6 @@ const ResetDashboard = ({ location }) => {
                     const programs = dataArray[0]
                     const percentComplete = dataArray[1]
 
-                    console.log(programs)
-
                     dispatchProgramsAction({
                       type: 'setProgramsState',
                       value: {

@@ -129,7 +129,7 @@ const MobileContainer = styled.div`
   border-radius: 50px;
   width: 60px;
   height: 60px;
-  z-index: 9999;
+  z-index: 9000;
   ${above.tablet`
     left: 50%;
     transform: translate(-50%, 0);
@@ -152,7 +152,7 @@ const LaptopContainer = styled.div`
   border-radius: 50px;
   width: 60px;
   height: 60px;
-  z-index: 9999;
+  z-index: 9000;
 `
 
 const MenuIcon = styled(MainMenuIcon)`

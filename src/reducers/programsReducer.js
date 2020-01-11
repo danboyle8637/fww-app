@@ -19,6 +19,16 @@ const programsReducer = (state, action) => {
         percentComplete: action.value
       }
     }
+    case 'updatePercentComplete': {
+      let percentCompleteCopy = [...state.percentCompete]
+
+      percentCompleteCopy = [...percentCompleteCopy, action.value]
+
+      return {
+        ...state,
+        percentCompete: percentCompleteCopy
+      }
+    }
     case 'incrementPercentComplete': {
       const programId = action.value
 

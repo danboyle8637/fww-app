@@ -6,6 +6,7 @@ import { CardElement, injectStripe } from 'react-stripe-elements'
 import PoweredByStripe from '../../svgs/PoweredByStripe'
 import BaseButton from '../Buttons/BaseButton'
 import { useUserContext } from '../../context/UserContext'
+import { useProgramsContext } from '../../context/ProgramsContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import siteConfig from '../../utils/siteConfig'
 import './stripe-styles.css'
@@ -19,6 +20,8 @@ const CheckoutForm = ({
   const auth = useFireBase()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  // eslint-disable-next-line
+  const [programsState, dispatchProgramsAction] = useProgramsContext()
   const urlParams = useParams()
 
   const stripeStyle = {
@@ -51,52 +54,105 @@ const CheckoutForm = ({
   const handleCompleteCheckout = () => {
     setIsCreatingCharge(true)
 
-    const url = `${siteConfig.api.baseUrl}/charge`
+    const chargeUrl = `${siteConfig.api.baseUrl}/charge`
+    const addProgramUrl = `${siteConfig.api.baseUrl}/add-program`
     const firstName = userState.firstName
     const programId = urlParams.programId
     const amount = price
 
-    auth
-      .getCurrentUser()
-      .then(user => {
-        user
-          .getIdToken(true)
-          .then(token => {
-            stripe
-              .createToken({ name: firstName })
-              .then(stripeToken => {
-                const stripeTokenId = stripeToken.token.id
+    auth.getCurrentUser().then(user => {
+      user
+        .getIdToken(true)
+        .then(token => {
+          stripe
+            .createToken({ name: firstName })
+            .then(stripeToken => {
+              const stripeTokenId = stripeToken.token.id
 
-                const chargeData = {
-                  firstName: firstName,
-                  programId: programId,
-                  amount: amount,
-                  token: stripeTokenId
-                }
+              const chargeData = {
+                firstName: firstName,
+                programId: programId,
+                amount: amount,
+                token: stripeTokenId
+              }
 
-                fetch(url, {
-                  method: 'POST',
-                  body: JSON.stringify(chargeData)
+              const addProgramData = {
+                programId: programId
+              }
+
+              const chargePromise = fetch(chargeUrl, {
+                method: 'POST',
+                headers: {
+                  Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(chargeData)
+              })
+
+              const addProgramPromise = fetch(addProgramUrl, {
+                method: 'POST',
+                headers: {
+                  Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(addProgramData)
+              })
+
+              Promise.all([chargePromise, addProgramPromise])
+                .then(dataPromises => {
+                  const responsePromises = dataPromises.map(promise =>
+                    promise.json()
+                  )
+                  return Promise.all(responsePromises)
                 })
-                  .then(response => response.json())
-                  .then(chargeData => {
-                    console.log(chargeData)
+                .then(dataArray => {
+                  const chargeData = dataArray[0]
+                  const addProgramData = dataArray[1]
+
+                  console.log(chargeData)
+                  console.log(addProgramData)
+
+                  dispatchProgramsAction({
+                    type: 'setProgramsState',
+                    value: {
+                      purchasedPrograms: addProgramData.purchasedPrograms,
+                      notPurchasedPrograms: addProgramData.notPurchasedPrograms
+                    }
                   })
-                  .catch(error => {
-                    console.log(error)
+
+                  dispatchProgramsAction({
+                    type: 'updatePercentComplete',
+                    value: addProgramData.addToPercentComplete
                   })
-              })
-              .catch(error => {
-                console.log(error)
-              })
-          })
-          .catch(() => {
-            console.log('Could not generate token.')
-          })
-      })
-      .catch(() => {
-        console.log('Could not get signed in user')
-      })
+
+                  const fwwPrograms = {
+                    purchasedPrograms: addProgramData.purchasedPrograms,
+                    notPurchasedPrograms: addProgramData.notPurchasedPrograms,
+                    percentComplete: addProgramData.addToPercentComplete
+                  }
+
+                  localStorage.setItem(
+                    'fwwPrograms',
+                    JSON.stringify(fwwPrograms)
+                  )
+
+                  setIsCreatingCharge(false)
+                  setToThankYouPage(true)
+                })
+                .catch(error => {
+                  console.log({
+                    message:
+                      'Promise.all failed or one of the endpoints failed.',
+                    error: error
+                  })
+                })
+            })
+            .catch(() => {
+              console.log('Could not generate Stripe token.')
+            })
+        })
+        .catch(() => {
+          console.log('Could not get signed in user')
+        })
+    })
   }
 
   return (

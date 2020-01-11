@@ -26,7 +26,7 @@ const LoaderContainer = styled.div`
   justify-content: center;
   align-items: center;
   background: ${props => props.theme.mainBackgroundBorderColor};
-  z-index: 8;
+  z-index: 9999;
 `
 
 const ContentWrapper = styled.div`
