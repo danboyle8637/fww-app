@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Redirect } from 'react-router-dom'
 
@@ -10,10 +10,33 @@ import useRenderBackgroundImage from '../hooks/useRenderBackgroundImage'
 import ThankYouHeader from '../components/PageHeaders/ThankYouHeader'
 import KindalSig from '../svgs/KindalSig'
 import BaseButton from '../components/Buttons/BaseButton'
+import { useProgramsContext } from '../context/ProgramsContext'
 import { above } from '../styles/Theme'
 
 const ResetPurchaseThankYou = () => {
   const [toDashboard, setToDashboard] = useState(false)
+  // eslint-disable-next-line
+  const [programsState, dispatchProgramsAction] = useProgramsContext()
+
+  useEffect(() => {
+    dispatchProgramsAction({
+      type: 'updateShoppingCartProgram',
+      value: {}
+    })
+
+    const fwwPrograms = {
+      purchasedPrograms: programsState.purchasedPrograms,
+      notPurchasedPrograms: programsState.notPurchasedPrograms,
+      percentComplete: programsState.percentComplete
+    }
+
+    localStorage.setItem('fwwPrograms', JSON.stringify(fwwPrograms))
+  }, [
+    dispatchProgramsAction,
+    programsState.notPurchasedPrograms,
+    programsState.percentComplete,
+    programsState.purchasedPrograms
+  ])
 
   const title = 'Kindal giving you a high five for joining FWW'
   const alt = 'Kindal giving you a high five for joining FWW'

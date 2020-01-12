@@ -20,7 +20,6 @@ const CheckoutForm = ({
   const auth = useFireBase()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
-  // eslint-disable-next-line
   const [programsState, dispatchProgramsAction] = useProgramsContext()
   const urlParams = useParams()
 
@@ -104,11 +103,7 @@ const CheckoutForm = ({
                   return Promise.all(responsePromises)
                 })
                 .then(dataArray => {
-                  const chargeData = dataArray[0]
                   const addProgramData = dataArray[1]
-
-                  console.log(chargeData)
-                  console.log(addProgramData)
 
                   dispatchProgramsAction({
                     type: 'setProgramsState',
@@ -122,17 +117,6 @@ const CheckoutForm = ({
                     type: 'updatePercentComplete',
                     value: addProgramData.addToPercentComplete
                   })
-
-                  const fwwPrograms = {
-                    purchasedPrograms: addProgramData.purchasedPrograms,
-                    notPurchasedPrograms: addProgramData.notPurchasedPrograms,
-                    percentComplete: addProgramData.addToPercentComplete
-                  }
-
-                  localStorage.setItem(
-                    'fwwPrograms',
-                    JSON.stringify(fwwPrograms)
-                  )
 
                   setIsCreatingCharge(false)
                   setToThankYouPage(true)
@@ -158,7 +142,7 @@ const CheckoutForm = ({
   return (
     <CheckoutContainer>
       <StyledCardElement style={stripeStyle} />
-      <BaseButton handleClick={handleCompleteCheckout}>
+      <BaseButton handleClick={() => handleCompleteCheckout(stripe)}>
         Purchase for ${price}
       </BaseButton>
       <StripeLink

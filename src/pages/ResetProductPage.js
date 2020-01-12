@@ -25,6 +25,7 @@ const ResetProductPage = () => {
   const [stripe, setStripe] = useState(null)
   const [isCreatingCharge, setIsCreatingCharge] = useState(false)
   const [toThankYouPage, setToThankYouPage] = useState(false)
+  const [isShoppingCartUpdated, setIsShoppingCartUpdated] = useState(false)
   const mediaQueryRef = useRef(null)
 
   const params = useParams()
@@ -32,22 +33,46 @@ const ResetProductPage = () => {
   // eslint-disable-next-line
   const scroll = ScrollToPlugin
 
-  // TODO When you purchase a progam, state gets updated...
-  // TODO ... and suddenly this program does not exist in notPurchasedPrograms
-  // TODO ... so you need to figure out how to render the page... maybe dummy data
-  const program = programsState.notPurchasedPrograms.find(
-    program => program.programId === params.programId
-  )
+  useEffect(() => {
+    const program = programsState.notPurchasedPrograms.find(
+      program => program.programId === params.programId
+    )
 
-  const programId = program.programId
-  const tinyCoverImage = program.tinyCoverImage
-  const coverImage = program.coverImage
-  const fitnessLevel = program.fitnessLevel
-  const numbreOfWorkouts = program.totalWorkouts
-  const duration = program.duration
-  const salesVideo = program.salesVideo
-  const price = program.price
-  const benefits = program.benefits
+    if (program) {
+      const programId = program.programId
+      const tinyCoverImage = program.tinyCoverImage
+      const coverImage = program.coverImage
+      const fitnessLevel = program.fitnessLevel
+      const numberOfWorkouts = program.totalWorkouts
+      const duration = program.duration
+      const salesVideo = program.salesVideo
+      const price = program.price
+      const benefits = program.benefits
+
+      const shoppingCart = {
+        programId,
+        tinyCoverImage,
+        coverImage,
+        fitnessLevel,
+        numberOfWorkouts,
+        duration,
+        salesVideo,
+        price,
+        benefits
+      }
+
+      dispatchProgramsAction({
+        type: 'updateShoppingCartProgram',
+        value: shoppingCart
+      })
+
+      setIsShoppingCartUpdated(true)
+    }
+  }, [
+    dispatchProgramsAction,
+    params.programId,
+    programsState.notPurchasedPrograms
+  ])
 
   useEffect(() => {
     mediaQueryRef.current = window.matchMedia(`(min-width: 960px)`)
@@ -83,7 +108,7 @@ const ResetProductPage = () => {
     }
   }, [])
 
-  const handlePurchaseClick = () => {
+  const handleFixedPurchaseButtonClick = () => {
     if (typeof window !== undefined) {
       TweenMax.to(window, 1, { scrollTo: `#payment-form` })
     }
@@ -94,48 +119,63 @@ const ResetProductPage = () => {
       {isCreatingCharge ? (
         <FullPageKettlebellLoader loadingMessage="Creating charge and adding program to your account!" />
       ) : null}
-      {toThankYouPage ? <Redirect to="/thank-you" /> : null}
-      <StripeProvider stripe={stripe}>
-        <>
-          <ScrollToTop />
-          <SalesPageContainer>
-            <SalesVideoSection
-              programId={programId}
-              tinyCoverImage={tinyCoverImage}
-              coverImage={coverImage}
-              fitnessLevel={fitnessLevel}
-              numberOfWorkouts={numbreOfWorkouts}
-              duration={duration}
-              salesVideo={salesVideo}
-            />
-            <BenefitWrapper>
-              <WhatYouGetSection benefits={benefits} price={price} />
-              <PricingCard price={price} />
-              <div id="payment-form" />
-              <Elements>
-                <CheckoutForm
-                  price={price}
-                  setIsCreatingCharge={setIsCreatingCharge}
-                  setToThankYouPage={setToThankYouPage}
+      {isShoppingCartUpdated ? (
+        <StripeProvider stripe={stripe}>
+          <>
+            <ScrollToTop />
+            <SalesPageContainer>
+              <SalesVideoSection
+                programId={programsState.shoppingCartProgram.programId}
+                tinyCoverImage={
+                  programsState.shoppingCartProgram.tinyCoverImage
+                }
+                coverImage={programsState.shoppingCartProgram.coverImage}
+                fitnessLevel={programsState.shoppingCartProgram.fitnessLevel}
+                numberOfWorkouts={
+                  programsState.shoppingCartProgram.numberOfWorkouts
+                }
+                duration={programsState.shoppingCartProgram.duration}
+                salesVideo={programsState.shoppingCartProgram.salesVideo}
+              />
+              <BenefitWrapper>
+                <WhatYouGetSection
+                  benefits={programsState.shoppingCartProgram.benefits}
+                  price={programsState.shoppingCartProgram.price}
                 />
-              </Elements>
-              {!ipadProOrAbove ? <Logo /> : null}
-            </BenefitWrapper>
-          </SalesPageContainer>
-          {!ipadProOrAbove ? (
-            <MobileButtonWrapper>
-              <BaseButton purple={true} handleClick={handlePurchaseClick}>
-                Purchase for ${price}
-              </BaseButton>
-            </MobileButtonWrapper>
-          ) : (
-            <Logo />
-          )}
-          <Portal>
-            <MessageDialog />
-          </Portal>
-        </>
-      </StripeProvider>
+                <PricingCard price={programsState.shoppingCartProgram.price} />
+                <div id="payment-form" />
+                <Elements>
+                  <CheckoutForm
+                    price={programsState.shoppingCartProgram.price}
+                    setIsCreatingCharge={setIsCreatingCharge}
+                    setToThankYouPage={setToThankYouPage}
+                  />
+                </Elements>
+                {!ipadProOrAbove ? <Logo /> : null}
+              </BenefitWrapper>
+            </SalesPageContainer>
+            {!ipadProOrAbove ? (
+              <MobileButtonWrapper>
+                <BaseButton
+                  purple={true}
+                  handleClick={handleFixedPurchaseButtonClick}
+                >
+                  Purchase for ${programsState.shoppingCartProgram.price}
+                </BaseButton>
+              </MobileButtonWrapper>
+            ) : (
+              <Logo />
+            )}
+            <Portal>
+              <MessageDialog />
+            </Portal>
+          </>
+        </StripeProvider>
+      ) : (
+        <FullPageKettlebellLoader loadingMessage="Getting program details..." />
+      )}
+
+      {toThankYouPage ? <Redirect to="/thank-you" /> : null}
     </>
   )
 }

@@ -1,7 +1,8 @@
 const programsState = {
   purchasedPrograms: [],
   notPurchasedPrograms: [],
-  percentComplete: []
+  percentComplete: [],
+  shoppingCartProgram: {}
 }
 
 const programsReducer = (state, action) => {
@@ -20,13 +21,21 @@ const programsReducer = (state, action) => {
       }
     }
     case 'updatePercentComplete': {
-      let percentCompleteCopy = [...state.percentCompete]
+      let percentCompleteCopy = [...state.percentComplete]
 
       percentCompleteCopy = [...percentCompleteCopy, action.value]
 
+      console.log(percentCompleteCopy)
+
       return {
         ...state,
-        percentCompete: percentCompleteCopy
+        percentComplete: percentCompleteCopy
+      }
+    }
+    case 'updateShoppingCartProgram': {
+      return {
+        ...state,
+        shoppingCartProgram: { ...action.value }
       }
     }
     case 'incrementPercentComplete': {
