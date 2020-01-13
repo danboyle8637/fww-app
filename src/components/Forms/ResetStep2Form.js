@@ -54,8 +54,8 @@ const ResetStep2Form = ({
         <ContentWrapper>
           <Header1>Step 2:</Header1>
           <BodyText>
-            Choose your Reset Program based on your fitness level. Just click
-            the program to select it.
+            Choose your Reset Program based on your fitness level. Click the
+            program to select it. There's button at the bottom to continue...
           </BodyText>
         </ContentWrapper>
         <ProgramsForm onSubmit={handleButtonPress}>

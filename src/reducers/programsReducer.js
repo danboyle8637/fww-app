@@ -25,8 +25,6 @@ const programsReducer = (state, action) => {
 
       percentCompleteCopy = [...percentCompleteCopy, action.value]
 
-      console.log(percentCompleteCopy)
-
       return {
         ...state,
         percentComplete: percentCompleteCopy

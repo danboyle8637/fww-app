@@ -35,6 +35,7 @@ const ResetStep4Form = ({
   const [portalState, dispatchPortalAction] = usePortalContext()
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [formButtonActive, setFormButtonActive] = useState(false)
 
   useEffect(() => {
     const password = String(formState.passwordValue.value)
@@ -44,6 +45,12 @@ const ResetStep4Form = ({
 
     if (!passwordsMatch) {
       setPasswordErrorMessage(`Passwords don't match`)
+    }
+
+    if (passwordsMatch && password.length > 3 && confirmPassword.length > 3) {
+      setFormButtonActive(true)
+    } else {
+      setFormButtonActive(false)
     }
   }, [formState.confirmPasswordValue.value, formState.passwordValue.value])
 
@@ -240,7 +247,7 @@ const ResetStep4Form = ({
               labelName="Password"
               labelFor="loginPassword"
               labelInstructions="Create a password"
-              labelError={passwordErrorMessage}
+              labelError={passwordErrorMessage || 'Create a password'}
               value={formState.passwordValue.value}
               valid={formState.passwordValue.valid}
               initial={formState.passwordOptions.initial}
@@ -256,7 +263,7 @@ const ResetStep4Form = ({
               labelName="Confirm Password"
               labelFor="loginConfirmPassword"
               labelInstructions="Confirm password"
-              labelError={passwordErrorMessage}
+              labelError={passwordErrorMessage || 'Confirm your password'}
               value={formState.confirmPasswordValue.value}
               valid={formState.confirmPasswordValue.valid}
               initial={formState.confirmPasswordOptions.initial}
@@ -268,7 +275,9 @@ const ResetStep4Form = ({
               onFocus={updateInputOptions}
               onBlur={updateInputOptions}
             />
-            <BaseButton type="submit">Create My Program</BaseButton>
+            <BaseButton type="submit" disabled={!formButtonActive}>
+              {formButtonActive ? 'Create My Program' : 'Create a Password'}
+            </BaseButton>
           </SignUpForm>
         </Step3Container>
       </LoginFormTransition>

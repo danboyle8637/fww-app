@@ -1,24 +1,35 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { useFireBase } from '../Firebase/FirebaseContext'
 import { above } from '../../styles/Theme'
 
-const DeleteAccountCard = ({ handleDeleteAccount }) => {
+const ResetLocalStorageCard = () => {
+  const auth = useFireBase()
+
+  const handleResetButtonClick = () => {
+    localStorage.clear()
+    auth.logUserOut()
+  }
+
   return (
-    <DeleteContainer>
-      <DeleteHeadline>Delete Account:</DeleteHeadline>
-      <DeleteText>
-        You can delete your account. This is permanent and can't be undone.
-        You'll lose your data. If you have any questions, contact me.
-      </DeleteText>
-      <DeleteButton onClick={handleDeleteAccount}>Delete Account</DeleteButton>
-    </DeleteContainer>
+    <ResetContainer>
+      <ResetHeadline>Reset Local App Data:</ResetHeadline>
+      <ResetText>
+        If you notice data in the app is inaccurate, you should reset your local
+        app data. This will clean your local data... log you out... and you just
+        need to re-login.
+      </ResetText>
+      <ResetButton onClick={handleResetButtonClick}>
+        Reset Local Data
+      </ResetButton>
+    </ResetContainer>
   )
 }
 
-export default DeleteAccountCard
+export default ResetLocalStorageCard
 
-const DeleteContainer = styled.div`
+const ResetContainer = styled.div`
   margin: 120px 0 0 0;
   padding: 12px;
   align-self: center;
@@ -31,26 +42,26 @@ const DeleteContainer = styled.div`
   max-width: 600px;
 `
 
-const DeleteHeadline = styled.h3`
+const ResetHeadline = styled.h3`
   font-size: 22px;
   text-transform: uppercase;
   font-weight: 800;
-  color: ${props => props.theme.formErrorBackground};
+  color: ${props => props.theme.strongBodyText};
   letter-spacing: 0.2rem;
 `
 
-const DeleteText = styled.p`
+const ResetText = styled.p`
   margin: 12px 0 20px 0;
   font-size: 15px;
   color: ${props => props.theme.bodyText};
 `
 
-const DeleteButton = styled.button`
+const ResetButton = styled.button`
   padding: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${props => props.theme.formErrorBackground};
+  background: ${props => props.theme.strongBodyText};
   border: none;
   font-size: 18px;
   font-weight: 800;

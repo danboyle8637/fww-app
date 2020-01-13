@@ -7,7 +7,6 @@ import ProgramCard from '../components/Cards/WorkoutProgramCard'
 import HorizontalBasicUserCard from '../components/UserCards/HorizontalBasicUserCard'
 import { WorkoutPageHeadline } from '../styles/Typography'
 import WorkoutCardLoader from '../components/Loaders/WorkoutCardLoader'
-import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
 import ScrollToTop from '../components/Shared/ScrollToTop'
 import FierceSection from '../components/Fierce/FierceSection'
 import { useUserContext } from '../context/UserContext'
@@ -23,9 +22,6 @@ const ResetDashboard = ({ location }) => {
   const [userState, dispatchUserAction] = useUserContext()
   const [programsState, dispatchProgramsAction] = useProgramsContext()
   const [isLoadingPrograms, setIsLoadingPrograms] = useState(false)
-  // ! You will need these for when a program is being added to account.
-  const [addingProgramToAccount, setAddingProgramToAccount] = useState(false)
-  const [loadingMessage, setLoadingMessage] = useState('')
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
 
@@ -246,34 +242,30 @@ const ResetDashboard = ({ location }) => {
 
   return (
     <>
-      {addingProgramToAccount ? (
-        <FullPageKettlebellLoader loadingMessage={loadingMessage} />
-      ) : (
-        <DashboardContainer>
-          <ScrollToTop />
-          <FWWLogo />
-          <HorizontalBasicUserCard
-            photoUrl={userState.photoUrl}
-            firstName={userState.firstName}
-          />
-          <ExtendWorkoutPageHeadline>Your Programs:</ExtendWorkoutPageHeadline>
-          <ProgramCardsWrapper>
-            {isLoadingPrograms ? (
-              <>{yourProgramsCardLoader()}</>
-            ) : (
-              renderPurchasedPrograms()
-            )}
-          </ProgramCardsWrapper>
-          <FierceSection />
-          <ProgramCardsWrapper>
-            {isLoadingPrograms ? (
-              <>{programCardLoader}</>
-            ) : (
-              renderNotPurchasedPrograms()
-            )}
-          </ProgramCardsWrapper>
-        </DashboardContainer>
-      )}
+      <DashboardContainer>
+        <ScrollToTop />
+        <FWWLogo />
+        <HorizontalBasicUserCard
+          photoUrl={userState.photoUrl}
+          firstName={userState.firstName}
+        />
+        <ExtendWorkoutPageHeadline>Your Programs:</ExtendWorkoutPageHeadline>
+        <ProgramCardsWrapper>
+          {isLoadingPrograms ? (
+            <>{yourProgramsCardLoader()}</>
+          ) : (
+            renderPurchasedPrograms()
+          )}
+        </ProgramCardsWrapper>
+        <FierceSection />
+        <ProgramCardsWrapper>
+          {isLoadingPrograms ? (
+            <>{programCardLoader}</>
+          ) : (
+            renderNotPurchasedPrograms()
+          )}
+        </ProgramCardsWrapper>
+      </DashboardContainer>
     </>
   )
 }

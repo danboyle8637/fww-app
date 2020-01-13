@@ -41,6 +41,7 @@ const ContactContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   ${above.tablet`
     margin: 120px 0 120px 0;
   `}

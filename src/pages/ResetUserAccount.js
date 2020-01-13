@@ -11,6 +11,7 @@ import AccountUpdateProfilePicForm from '../components/Forms/AccountUpdateProfil
 import AccountUpdateEmailForm from '../components/Forms/AccountUpdateEmailForm'
 import AccountUpdatePasswordForm from '../components/Forms/AccountUpdatePasswordForm'
 import DeleteAccountCard from '../components/AccountPage/DeleteAccountCard'
+import ResetLocalStorageCard from '../components/AccountPage/ResetLocalStorageCard'
 import Portal from '../components/Shared/Portal'
 import SyncingIndicator from '../components/Indicators/SyncingIndicator'
 import MessageDialog from '../components/Dialogs/MessageDialog'
@@ -166,6 +167,7 @@ const ResetUserAccount = () => {
             handleSetSyncMessage={handleSetSyncMessage}
           />
           <DeleteAccountCard handleDeleteAccount={handleDeleteAccount} />
+          <ResetLocalStorageCard />
         </SectionWrapper>
       </UserAccountContainer>
       <Portal>

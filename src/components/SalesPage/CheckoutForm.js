@@ -20,6 +20,7 @@ const CheckoutForm = ({
   const auth = useFireBase()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  // eslint-disable-next-line
   const [programsState, dispatchProgramsAction] = useProgramsContext()
   const urlParams = useParams()
 
