@@ -27,7 +27,11 @@ const validate = (value, rules, value2 = null) => {
         break
 
       case 'isNumber': {
-        isValid = isValid && numberValidator(cleanValue)
+        if (isValid && value === true) {
+          isValid = numberValidator(cleanValue)
+        } else {
+          isValid = true
+        }
         break
       }
 

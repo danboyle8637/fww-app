@@ -20,6 +20,7 @@ const WorkoutCardHeader = ({ background, tinyImage, altText, title }) => {
     }
   }, [runAction])
 
+  // TODO Add the aspect ratio trick so before the images load... the box is correct size.
   return (
     <ImageContainer ref={setNode}>
       <WorkoutImage

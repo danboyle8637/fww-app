@@ -21,9 +21,9 @@ const emailValidationRules = {
 }
 
 const workoutGoalValidationRules = {
-  maxLength: 6,
+  maxLength: 8,
   isRequired: true,
-  isNumber: true
+  isNumber: false
 }
 
 const firstNameValidationRules = {

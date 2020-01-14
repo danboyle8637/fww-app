@@ -20,8 +20,6 @@ const WorkoutProgramCard = ({
   title = 'Workout Title',
   description,
   activeProgram,
-  setAddingProgramToAccount,
-  setLoadingMessage,
   fitnessLevel,
   duration,
   totalWorkouts,
@@ -33,8 +31,8 @@ const WorkoutProgramCard = ({
         <WorkoutCardHeader
           background={coverImage}
           tinyImage={tinyImage}
-          altText="Text"
-          title="Title"
+          altText={title}
+          title={title}
         />
       ) : null}
       {isProgram ? (
