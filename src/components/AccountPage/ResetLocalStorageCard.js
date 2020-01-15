@@ -16,9 +16,9 @@ const ResetLocalStorageCard = () => {
     <ResetContainer>
       <ResetHeadline>Reset Local App Data:</ResetHeadline>
       <ResetText>
-        If you notice data in the app is inaccurate, you should reset your local
-        app data. This will clean your local data... log you out... and you just
-        need to re-login.
+        If you notice data in your app is inaccurate, you should reset your
+        local app data. This will clean your local data... log you out... and
+        you just need to re-login.
       </ResetText>
       <ResetButton onClick={handleResetButtonClick}>
         Reset Local Data
