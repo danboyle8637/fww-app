@@ -1,5 +1,7 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { TweenMax, Power2 } from 'gsap/TweenMax'
+
+import { useFetchingContext } from '../context/FetchingContext'
 
 const NavigationArrow = ({
   width,
@@ -11,6 +13,10 @@ const NavigationArrow = ({
   handleCloseMoreMenu
 }) => {
   const navArrowRef = useRef(null)
+  const [fetching, setFetching] = useState(false)
+
+  // eslint-disable-next-line
+  const [fetchingState, dispatchFetchingAction] = useFetchingContext()
 
   useEffect(() => {
     const navArrow = navArrowRef.current
@@ -37,6 +43,14 @@ const NavigationArrow = ({
     }
   }, [isOpen, label])
 
+  useEffect(() => {
+    if (fetchingState.isFetching) {
+      setFetching(true)
+    } else {
+      setFetching(false)
+    }
+  }, [fetchingState.isFetching])
+
   return (
     <svg
       onClick={label === 'moreMenu' ? handleCloseMoreMenu : null}
@@ -59,8 +73,8 @@ const NavigationArrow = ({
           gradientTransform="rotate(90 125.37 116.37)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stopColor="#8b53f6" />
-          <stop offset=".72" stopColor="#5afdf2" />
+          <stop offset="0" stopColor={fetching ? '#E14075' : '#8b53f6'} />
+          <stop offset=".72" stopColor={fetching ? '#ff7fa9' : '#5afdf2'} />
         </linearGradient>
       </defs>
       <path

@@ -11,6 +11,7 @@ import { createDate } from '../../utils/helpers'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 import { useProgramsContext } from '../../context/ProgramsContext'
 import { useFormStore } from '../../context/FormContext'
+import { useFetchingContext } from '../../context/FetchingContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import useFormControls from '../../hooks/useFormControls'
 import { updateWorkoutsCompleteInLocalStorage } from '../../utils/helpers'
@@ -26,12 +27,13 @@ const WorkoutTrackingForm = ({
 }) => {
   const auth = useFireBase()
   const [wiggle, setWiggle] = useState(false)
-  // eslint-disable-next-line
   const [statsState, dispatchWorkoutStatsAction] = useWorkoutStatsContext()
   // eslint-disable-next-line
   const [formState, dispatchFormAction] = useFormStore()
   // eslint-disable-next-line
   const [programState, dispatchProgramAction] = useProgramsContext()
+  // eslint-disable-next-line
+  const [fetchingState, dispatchFetchingAction] = useFetchingContext()
   const [updateInputValues, updateInputOptions] = useFormControls()
 
   useEffect(() => {
@@ -73,6 +75,7 @@ const WorkoutTrackingForm = ({
     })
 
     handleToggleSync()
+    dispatchFetchingAction({ type: 'toggleFetching' })
 
     const trackingBody = {
       programId: programId,
@@ -99,11 +102,13 @@ const WorkoutTrackingForm = ({
             dispatchFormAction({ type: 'resetWorkoutGoalForm' })
             handleSetSyncMessage(data.message)
             handleToggleSync()
+            dispatchFetchingAction({ type: 'toggleFetching' })
           })
           .catch(error => {
             dispatchFormAction({ type: 'resetWorkoutGoalForm' })
             handleSetSyncMessage(error.message)
             handleToggleSync()
+            dispatchFetchingAction({ type: 'toggleFetching' })
           })
       })
     })

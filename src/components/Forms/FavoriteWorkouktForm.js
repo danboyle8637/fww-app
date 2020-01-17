@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import FavoriteWorkoutIcon from '../../svgs/FavoriteWorkoutIcon'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
+import { useFetchingContext } from '../../context/FetchingContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import siteConfig from '../../utils/siteConfig'
 
@@ -14,6 +15,8 @@ const FavoriteWorkoutForm = ({
 }) => {
   const auth = useFireBase()
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
+  // eslint-disable-next-line
+  const [fetchingState, dispatchFetchingAction] = useFetchingContext()
 
   const programStats = workoutStatsState[programId]
   const isFavorite = programStats[workoutId].isFavorite
@@ -28,6 +31,7 @@ const FavoriteWorkoutForm = ({
     })
 
     handleToggleSync()
+    dispatchFetchingAction({ type: 'toggleFetching' })
     handleToggleFavoriteInDatebase()
   }
 
@@ -54,10 +58,12 @@ const FavoriteWorkoutForm = ({
           .then(data => {
             handleSetSyncMessage(data.message)
             handleToggleSync()
+            dispatchFetchingAction({ type: 'toggleFetching' })
           })
           .catch(errorObj => {
             handleSetSyncMessage(errorObj.message)
             handleToggleSync()
+            dispatchFetchingAction({ type: 'toggleFetching' })
           })
       })
     })

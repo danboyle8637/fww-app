@@ -175,7 +175,14 @@ const ResetProductPage = () => {
         <FullPageKettlebellLoader loadingMessage="Getting program details..." />
       )}
 
-      {toThankYouPage ? <Redirect to="/thank-you" /> : null}
+      {toThankYouPage ? (
+        <Redirect
+          to={{
+            pathname: '/thank-you',
+            state: { programId: params.programId }
+          }}
+        />
+      ) : null}
     </>
   )
 }

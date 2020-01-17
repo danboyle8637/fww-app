@@ -1,29 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { Redirect } from 'react-router-dom'
 
 import { useFireBase } from '../Firebase/FirebaseContext'
 import { above } from '../../styles/Theme'
 
 const ResetLocalStorageCard = () => {
   const auth = useFireBase()
+  const [toLogin, setToLogin] = useState(false)
 
   const handleResetButtonClick = () => {
     localStorage.clear()
     auth.logUserOut()
+    setToLogin(true)
   }
 
   return (
-    <ResetContainer>
-      <ResetHeadline>Reset Local App Data:</ResetHeadline>
-      <ResetText>
-        If you notice data in your app is inaccurate, you should reset your
-        local app data. This will clean your local data... log you out... and
-        you just need to re-login.
-      </ResetText>
-      <ResetButton onClick={handleResetButtonClick}>
-        Reset Local Data
-      </ResetButton>
-    </ResetContainer>
+    <>
+      <ResetContainer>
+        <ResetHeadline>Reset Local App Data:</ResetHeadline>
+        <ResetText>
+          If you notice data in your app is inaccurate, you should reset your
+          local app data. This will clean your local data... log you out... and
+          you just need to re-login.
+        </ResetText>
+        <ResetButton onClick={handleResetButtonClick}>
+          Reset Local Data
+        </ResetButton>
+      </ResetContainer>
+      {toLogin ? <Redirect to="/" /> : null}
+    </>
   )
 }
 

@@ -8,6 +8,7 @@ import BackChip from '../Chips/BackChip'
 import useFormControls from '../../hooks/useFormControls'
 import { useUserContext } from '../../context/UserContext'
 import { useFormStore } from '../../context/FormContext'
+import { useFetchingContext } from '../../context/FetchingContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import siteConfig from '../../utils/siteConfig'
 
@@ -25,10 +26,13 @@ const AccountUpdateProfilePicForm = ({
   const [updateInputValues, updateInputOptions] = useFormControls()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  // eslint-disable-next-line
+  const [fetchingState, dispatchFetchingAction] = useFetchingContext()
 
   const handleUploadPhoto = event => {
     event.preventDefault()
     handleToggleSync()
+    dispatchFetchingAction({ type: 'toggleFetching' })
     setIsProfilePic(true)
     handleSetSyncMessage('Updating your image...')
 
@@ -69,10 +73,12 @@ const AccountUpdateProfilePicForm = ({
             dispatchFormAction({ type: 'emptyProfileImage' })
 
             handleToggleSync()
+            dispatchFetchingAction({ type: 'toggleFetching' })
             setIsProfilePic(false)
           })
           .catch(error => {
             handleSetSyncMessage(`😢 ${error.errors}`)
+            dispatchFetchingAction({ type: 'toggleFetching' })
           })
       })
     })

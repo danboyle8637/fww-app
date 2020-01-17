@@ -12,6 +12,7 @@ import FileUpload from '../Forms/Inputs/FileUpload'
 import ShowUploadedImage from '../Shared/ShowUploadedImage'
 import { useFormStore } from '../../context/FormContext'
 import { usePortalContext } from '../../context/portalContext'
+import { useFetchingContext } from '../../context/FetchingContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import useFormControls from '../../hooks/useFormControls'
 import siteConfig from '../../utils/siteConfig'
@@ -29,6 +30,8 @@ const ReviewForm = ({
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
   const [updateInputValues, updateInputOptions] = useFormControls()
+  // eslint-disable-next-line
+  const [fetchingState, dispatchFetchingAction] = useFetchingContext()
 
   useEffect(() => {
     const firstNameValid = formState.firstNameValue.valid
@@ -47,6 +50,7 @@ const ReviewForm = ({
   const handleReviewSubmit = event => {
     event.preventDefault()
     handleToggleSync()
+    dispatchFetchingAction({ type: 'toggleFetching' })
     handleSetSyncMessage('Saving your review...')
 
     const starRating = formState.starRatingValue.value
@@ -89,6 +93,7 @@ const ReviewForm = ({
               value: `💪 Thank you so much for leaving a review. If I have questions, I'll email you... if you left your email. Also pay attention to your email because you'll get special offers as a reviewer of the app. Thank you again. It means a lot!`
             })
             handleToggleSync()
+            dispatchFetchingAction({ type: 'toggleFetching' })
             setShowDashboard(true)
           })
           .catch(() => {
@@ -99,6 +104,7 @@ const ReviewForm = ({
               value: `😢 Noooo... it looks like some network issues casused your review to not save. I didn't clear your answers so do you mind submitting your form again? Thanks and if you keep getting an error... let me know!`
             })
             handleToggleSync()
+            dispatchFetchingAction({ type: 'toggleFetching' })
           })
       })
     })

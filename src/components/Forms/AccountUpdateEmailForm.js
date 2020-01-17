@@ -9,6 +9,7 @@ import useFormControls from '../../hooks/useFormControls'
 import { useFormStore } from '../../context/FormContext'
 import { usePortalContext } from '../../context/portalContext'
 import { useUserContext } from '../../context/UserContext'
+import { useFetchingContext } from '../../context/FetchingContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import siteConfig from '../../utils/siteConfig'
 
@@ -29,6 +30,8 @@ const AccountUpdateEmailForm = ({
   const [portalState, dispatchPortalAction] = usePortalContext()
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  // eslint-disable-next-line
+  const [fetchingState, dispatchFetchingAction] = useFetchingContext()
 
   const handleSaveEmailClick = event => {
     event.preventDefault()
@@ -44,6 +47,7 @@ const AccountUpdateEmailForm = ({
     if (emailCorrect) {
       setEmailCorrect(false)
       handleToggleSync()
+      dispatchFetchingAction({ type: 'toggleFetching' })
 
       const updateEmailReq = {
         newEmail: formState.emailValue.value
@@ -65,6 +69,7 @@ const AccountUpdateEmailForm = ({
               dispatchFormAction({ type: 'resetChangeEmailForm' })
               handleSetSyncMessage(data.message)
               handleToggleSync()
+              dispatchFetchingAction({ type: 'toggleFetching' })
               auth.logUserOut()
               dispatchUserAction({ type: 'setLoggedOutUser' })
               dispatchPortalAction({
@@ -78,12 +83,14 @@ const AccountUpdateEmailForm = ({
               dispatchFormAction({ type: 'resetChangeEmailForm' })
               handleSetSyncMessage(error.message)
               handleToggleSync()
+              dispatchFetchingAction({ type: 'toggleFetching' })
             })
         })
       })
     }
   }, [
     auth,
+    dispatchFetchingAction,
     dispatchFormAction,
     dispatchPortalAction,
     dispatchUserAction,

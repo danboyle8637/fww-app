@@ -5,12 +5,15 @@ import { Redirect, useLocation, useHistory } from 'react-router-dom'
 import NavigationArrow from '../../svgs/NavigationArrow'
 import BackButtonTransition from '../../Animations/Transitions/BackButtonTransition'
 import { useUserContext } from '../../context/UserContext'
+import { useFetchingContext } from '../../context/FetchingContext'
 import { above } from '../../styles/Theme'
 
 const MainNav = () => {
   const [showBackButton, setShowBackButton] = useState(false)
   // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
+  // eslint-disable-next-line
+  const [fetchingState, dispatchFetchingAction] = useFetchingContext()
   const location = useLocation()
   const history = useHistory()
 
@@ -32,7 +35,11 @@ const MainNav = () => {
   }, [location])
 
   const handleGoBack = () => {
-    history.goBack()
+    if (fetchingState.isFetching) {
+      return
+    } else {
+      history.goBack()
+    }
   }
 
   const showAllowedPaths = () => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Redirect } from 'react-router-dom'
+import { useLocation, Redirect } from 'react-router-dom'
 
 import successMobileBg from '../images/successful-purchase-600x1300.jpg'
 import successTabletBg from '../images/successful-purchase-834x1112.jpg'
@@ -11,12 +11,17 @@ import ThankYouHeader from '../components/PageHeaders/ThankYouHeader'
 import KindalSig from '../svgs/KindalSig'
 import BaseButton from '../components/Buttons/BaseButton'
 import { useProgramsContext } from '../context/ProgramsContext'
+import { useUserContext } from '../context/UserContext'
 import { above } from '../styles/Theme'
 
 const ResetPurchaseThankYou = () => {
   const [toDashboard, setToDashboard] = useState(false)
-  // eslint-disable-next-line
+  const [programName, setProgramName] = useState('')
   const [programsState, dispatchProgramsAction] = useProgramsContext()
+  // eslint-disable-next-line
+  const [userState, dispatchUserAction] = useUserContext()
+
+  const location = useLocation()
 
   useEffect(() => {
     dispatchProgramsAction({
@@ -30,11 +35,20 @@ const ResetPurchaseThankYou = () => {
       percentComplete: programsState.percentComplete
     }
 
+    const programId = location.state.programId
+    const program = programsState.purchasedPrograms.find(program => {
+      return program.programId === programId
+    })
+
+    setProgramName(program.name)
+
     localStorage.setItem('fwwPrograms', JSON.stringify(fwwPrograms))
   }, [
     dispatchProgramsAction,
+    location.state.programId,
     programsState.notPurchasedPrograms,
     programsState.percentComplete,
+    programsState.purchasedProgram,
     programsState.purchasedPrograms
   ])
 
@@ -56,7 +70,10 @@ const ResetPurchaseThankYou = () => {
       <ThankYouContainer>
         {background}
         <ContentWrapper>
-          <ThankYouHeader firstName="Jen" program="Fierce: Body Burn" />
+          <ThankYouHeader
+            firstName={userState.firstName}
+            program={programName}
+          />
           <BaseButton handleClick={handleButtonClick}>
             Back To My Dashboard
           </BaseButton>

@@ -20,29 +20,36 @@ import { UserStore } from './context/UserContext'
 import { userState, userReducer } from './reducers/userReducer'
 import { ProgramsStore } from './context/ProgramsContext'
 import { programsState, programsReducer } from './reducers/programsReducer'
+import { FetchingStore } from './context/FetchingContext'
+import { fetchState, fetchReducer } from './reducers/fetchReducer'
 import App from './App'
 
 ReactDOM.render(
   <ThemeProvider theme={darkTheme}>
     <FirebaseConnect initializeFirebase={new Firebase()}>
-      <UserStore initialState={userState} reducer={userReducer}>
-        <ProgramsStore initialState={programsState} reducer={programsReducer}>
-          <WorkoutsStore initialState={workoutsState} reducer={workoutsReducer}>
-            <WorkoutStatsStore
-              initialState={workoutStatsState}
-              reducer={workoutStatsReducer}
+      <FetchingStore initialState={fetchState} reducer={fetchReducer}>
+        <UserStore initialState={userState} reducer={userReducer}>
+          <ProgramsStore initialState={programsState} reducer={programsReducer}>
+            <WorkoutsStore
+              initialState={workoutsState}
+              reducer={workoutsReducer}
             >
-              <PortalStore initialState={portalState} reducer={portalReducer}>
-                <ScreenWidthStore>
-                  <FormStore initialState={formState} reducer={formReducer}>
-                    <App />
-                  </FormStore>
-                </ScreenWidthStore>
-              </PortalStore>
-            </WorkoutStatsStore>
-          </WorkoutsStore>
-        </ProgramsStore>
-      </UserStore>
+              <WorkoutStatsStore
+                initialState={workoutStatsState}
+                reducer={workoutStatsReducer}
+              >
+                <PortalStore initialState={portalState} reducer={portalReducer}>
+                  <ScreenWidthStore>
+                    <FormStore initialState={formState} reducer={formReducer}>
+                      <App />
+                    </FormStore>
+                  </ScreenWidthStore>
+                </PortalStore>
+              </WorkoutStatsStore>
+            </WorkoutsStore>
+          </ProgramsStore>
+        </UserStore>
+      </FetchingStore>
     </FirebaseConnect>
   </ThemeProvider>,
   document.getElementById('root')

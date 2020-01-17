@@ -9,6 +9,7 @@ import PasswordShowHideIndicator from '../Indicators/PasswordShowHideIndicator'
 import useFormControls from '../../hooks/useFormControls'
 import { useFormStore } from '../../context/FormContext'
 import { usePortalContext } from '../../context/portalContext'
+import { useFetchingContext } from '../../context/FetchingContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import siteConfig from '../../utils/siteConfig'
 
@@ -26,12 +27,15 @@ const AccountUpdatePasswordForm = ({
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
   const [updateInputValues, updateInputOptions] = useFormControls()
+  // eslint-disable-next-line
+  const [fetchingState, dispatchFetchingAction] = useFetchingContext()
   const [showPassword, setShowPassword] = useState(false)
 
   const handleSaveNewPassword = event => {
     event.preventDefault()
 
     handleToggleSync()
+    dispatchFetchingAction({ type: 'toggleFetching' })
     setShowPassword(false)
 
     const newPassword = formState.passwordValue.value
@@ -59,6 +63,7 @@ const AccountUpdatePasswordForm = ({
               dispatchFormAction({ type: 'resetChangePasswordForm' })
               handleSetSyncMessage(data.message)
               handleToggleSync()
+              dispatchFetchingAction({ type: 'toggleFetching' })
               auth.logUserOut()
               dispatchPortalAction({
                 type: 'toggleErrorMessage',
@@ -70,6 +75,7 @@ const AccountUpdatePasswordForm = ({
               dispatchFormAction({ type: 'resetChangePasswordForm' })
               handleSetSyncMessage(error.message)
               handleToggleSync()
+              dispatchFetchingAction({ type: 'toggleFetching' })
             })
         })
       })

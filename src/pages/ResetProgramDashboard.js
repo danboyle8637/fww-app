@@ -11,6 +11,7 @@ import { useWorkoutState } from '../context/WorkoutsContext'
 import { useProgramsContext } from '../context/ProgramsContext'
 import { usePortalContext } from '../context/portalContext'
 import { useWorkoutStatsContext } from '../context/WorkoutStatsContext'
+import { useFetchingContext } from '../context/FetchingContext'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
 import { above } from '../styles/Theme'
 import siteConfig from '../utils/siteConfig'
@@ -27,6 +28,8 @@ const ResetProgramDashboard = ({ match, location }) => {
   const [portalState, dispatchPortalAction] = usePortalContext()
   // eslint-disable-next-line
   const [programState, dispatchProgramAction] = useProgramsContext()
+  // eslint-disable-next-line
+  const [fetchingState, dispatchFetchingAction] = useFetchingContext()
 
   useEffect(() => {
     const abortController = abortFetchController.current
@@ -41,6 +44,7 @@ const ResetProgramDashboard = ({ match, location }) => {
       const setupTrackingPath = '/setup-workout-tracking'
 
       // Using reduce to construct my request object off a huge workout array
+      // TODO Try to build this with a for loop
       const workoutTrackingArray = workoutsArray.reduce(
         (accumulator, currentValue) => {
           const workoutName = currentValue.title
@@ -84,6 +88,7 @@ const ResetProgramDashboard = ({ match, location }) => {
                   }
                 })
                 setIsLoadingWorkouts(false)
+                dispatchFetchingAction({ type: 'toggleFetching' })
               })
               .catch(error => {
                 if (error.name === 'AbortError') {
@@ -112,6 +117,7 @@ const ResetProgramDashboard = ({ match, location }) => {
       Object.keys(workoutStatsState).includes(programId) === false
     ) {
       setIsLoadingWorkouts(true)
+      dispatchFetchingAction({ type: 'toggleFetching' })
 
       const programData = {
         programId: programId
@@ -192,6 +198,7 @@ const ResetProgramDashboard = ({ match, location }) => {
     }
   }, [
     auth,
+    dispatchFetchingAction,
     dispatchPortalAction,
     dispatchStatsAction,
     dispatchWorkoutsAction,

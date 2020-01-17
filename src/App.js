@@ -55,7 +55,7 @@ const App = () => {
             <Route path="/playground" component={SignUp} />
             <Route path="/contact" component={Contact} />
             <Route path="/7-day-reset-step1" component={ResetSignUp} />
-            <Route path="/thank-you" component={ResetPurchaseThankYou} />
+            <PrivateRoute path="/thank-you" component={ResetPurchaseThankYou} />
 
             <PrivateRoute exact path="/dashboard" component={ResetDashboard} />
             <PrivateRoute exact path="/review" component={Review} />

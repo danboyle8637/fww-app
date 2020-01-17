@@ -8,6 +8,7 @@ import TextArea from '../Forms/Inputs/TextArea'
 import { useFormStore } from '../../context/FormContext'
 import { useUserContext } from '../../context/UserContext'
 import { usePortalContext } from '../../context/portalContext'
+import { useFetchingContext } from '../../context/FetchingContext'
 import useFormControls from '../../hooks/useFormControls'
 import siteConfig from '../../utils/siteConfig'
 import { above } from '../../styles/Theme'
@@ -20,10 +21,13 @@ const ContactForm = ({ isSyncing, toggleSyncing, setSyncingMessage }) => {
   const [updateInputValues, updateInputOptions] = useFormControls()
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
+  // eslint-disable-next-line
+  const [fetchingState, dispatchFetchingAction] = useFetchingContext()
 
   const handleContactFormSubmit = event => {
     event.preventDefault()
     toggleSyncing()
+    dispatchFetchingAction({ type: 'toggleFetching' })
     setSyncingMessage('✉️ Sending info...')
 
     const contactReason = formState.contactReasonValue.value
@@ -53,6 +57,7 @@ const ContactForm = ({ isSyncing, toggleSyncing, setSyncingMessage }) => {
         })
         setSyncingMessage(data.message)
         toggleSyncing()
+        dispatchFetchingAction({ type: 'toggleFetching' })
       })
       .catch(error => {
         dispatchFormAction({ type: 'resetContactForm' })
@@ -63,6 +68,7 @@ const ContactForm = ({ isSyncing, toggleSyncing, setSyncingMessage }) => {
         })
         setSyncingMessage(error.message)
         toggleSyncing()
+        dispatchFetchingAction({ type: 'toggleFetching' })
       })
   }
 

@@ -108,6 +108,7 @@ const CircuitDescription = styled.h4`
 `
 
 const Icon = styled(CircuitIcon)`
+  align-self: start;
   width: 30px;
 `
 

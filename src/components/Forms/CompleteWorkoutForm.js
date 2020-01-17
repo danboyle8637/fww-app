@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import CompleteWorkoutIcon from '../../svgs/CompleteWorkoutIcon'
 import { useProgramsContext } from '../../context/ProgramsContext'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
+import { useFetchingContext } from '../../context/FetchingContext'
 import { useFireBase } from '../Firebase/FirebaseContext'
 import { updateWorkoutsCompleteInLocalStorage } from '../../utils/helpers'
 import siteConfig from '../../utils/siteConfig'
@@ -18,6 +19,8 @@ const CompleteWorkoutForm = ({
   const [workoutStatsState, dispatchStatsAction] = useWorkoutStatsContext()
   // eslint-disable-next-line
   const [programState, dispatchProgramAction] = useProgramsContext()
+  // eslint-disable-next-line
+  const [fetchingState, dispatchFetchingAction] = useFetchingContext()
 
   const programStats = workoutStatsState[programId]
   const completed = programStats[workoutId].completed
@@ -41,6 +44,7 @@ const CompleteWorkoutForm = ({
       })
 
       handleToggleSync()
+      dispatchFetchingAction({ type: 'toggleFetching' })
       handleSetCompleteInDatabase(1)
     } else if (id === 2) {
       dispatchStatsAction({
@@ -52,6 +56,7 @@ const CompleteWorkoutForm = ({
       })
 
       handleToggleSync()
+      dispatchFetchingAction({ type: 'toggleFetching' })
       handleSetCompleteInDatabase(2)
     } else if (id === 3) {
       dispatchStatsAction({
@@ -63,6 +68,7 @@ const CompleteWorkoutForm = ({
       })
 
       handleToggleSync()
+      dispatchFetchingAction({ type: 'toggleFetching' })
       handleSetCompleteInDatabase(3)
     } else {
       return
@@ -93,10 +99,12 @@ const CompleteWorkoutForm = ({
           .then(data => {
             handleSetSyncMessage(data.message)
             handleToggleSync()
+            dispatchFetchingAction({ type: 'toggleFetching' })
           })
           .catch(errorObj => {
             handleSetSyncMessage(errorObj.message)
             handleToggleSync()
+            dispatchFetchingAction({ type: 'toggleFetching' })
           })
       })
     })

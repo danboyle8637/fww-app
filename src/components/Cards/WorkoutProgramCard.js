@@ -71,12 +71,13 @@ export default WorkoutProgramCard
 const CardContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto;
+  grid-template-rows: auto 1fr auto;
   gap: 2px;
   background: ${props => props.theme.mainBackgroundBorderColor};
   border-radius: 10px 10px 40px 10px;
   width: 100%;
   max-width: 390px;
+  height: 100%;
   box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.3);
   transition: box-shadow 300ms ease-in-out;
   ${above.ipadPro`
