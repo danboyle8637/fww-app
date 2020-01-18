@@ -68,7 +68,9 @@ const MainNav = () => {
   return (
     <>
       <MainNavBar>
-        <BackButtonTransition showBackButton={showBackButton}>
+        <BackButtonTransition
+          showBackButton={showBackButton && !fetchingState.isFetching}
+        >
           <NavArrowBackground onClick={handleGoBack}>
             <NavArrow gradientId="topNavBar" />
           </NavArrowBackground>

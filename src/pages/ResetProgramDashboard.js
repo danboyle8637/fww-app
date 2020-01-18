@@ -306,6 +306,7 @@ const ProgramDashboardContainer = styled.div`
   grid-template-rows: auto;
   gap: 60px;
   justify-items: center;
+  width: 100%;
 `
 
 const WorkoutCardWrapper = styled.div`

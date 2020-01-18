@@ -3,9 +3,12 @@ import styled from 'styled-components'
 
 import HeaderRow from './HeaderRow'
 import TrackingRow from './TrackingRow'
+import { useProgramsContext } from '../../context/ProgramsContext'
 import { useWorkoutStatsContext } from '../../context/WorkoutStatsContext'
 
 const TrackingChart = ({ trackingGoal, programId, workoutId }) => {
+  // eslint-disable-next-line
+  const [programsState, dispatchProgramsAction] = useProgramsContext()
   // eslint-disable-next-line
   const [statsState, dispathStatsAction] = useWorkoutStatsContext()
   const [trackingArrayLength, setTrackingArrayLength] = useState([])
@@ -14,8 +17,8 @@ const TrackingChart = ({ trackingGoal, programId, workoutId }) => {
   const data = Object.keys(programStats[workoutId].trackingStats)
 
   useEffect(() => {
-    const legnth = data.length
-    setTrackingArrayLength(legnth)
+    const length = data.length
+    setTrackingArrayLength(length)
   }, [data])
 
   return (

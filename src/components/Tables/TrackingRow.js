@@ -31,11 +31,7 @@ const TrackingRow = ({ id, goal, date, numbers }) => {
         {numbers || '--'}
       </TableCell>
       <Portal>
-        <InfoDialog
-          id={id}
-          boxes={portalState.dialogBox.boxes}
-          text="How many pushups can you do straight during the last round?"
-        />
+        <InfoDialog id={id} boxes={portalState.dialogBox.boxes} text={goal} />
       </Portal>
     </RowContainer>
   )

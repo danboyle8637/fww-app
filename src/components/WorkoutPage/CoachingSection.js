@@ -66,19 +66,40 @@ const CoachingSection = ({
 
 export default CoachingSection
 
+// const BlurUpImageGrid = styled.div`
+//   grid-column: 1 / -1;
+//   grid-row: 1 / -1;
+//   display: grid;
+//   grid-template-columns: 1fr;
+//   grid-template-rows: 1fr;
+//   width: 100%;
+//   overflow: hidden;
+// `
+
+// const CoachingImage = styled.img`
+//   grid-column: 1 / -1;
+//   grid-row: 1 / -1;
+//   border-radius: 10px;
+//   width: 100%;
+//   object-fit: cover;
+//   filter: blur(6px);
+//   transition: filter 1000ms ease-in-out;
+// `
+
 const BlurUpImageGrid = styled.div`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
+  position: relative;
+  padding-top: calc(352 / 1200 * 100%);
   width: 100%;
   overflow: hidden;
 `
 
 const CoachingImage = styled.img`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   border-radius: 10px;
   width: 100%;
   object-fit: cover;

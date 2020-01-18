@@ -18,7 +18,7 @@ const workoutStatsReducer = (state, action) => {
     case 'setTrackingNumber': {
       const programId = action.value.programId
       const workoutId = action.value.workoutId
-      const number = Number(action.value.number)
+      const number = action.value.number
       const date = action.value.date
 
       const copyOfState = { ...state }

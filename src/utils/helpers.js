@@ -10,12 +10,7 @@ const createDate = timestamp => {
   const month = timestamp.getMonth() + 1
   const fullYear = timestamp.getFullYear()
 
-  const twoDigitYear = Number(
-    fullYear
-      .toString()
-      .split(0)
-      .pop()
-  )
+  const twoDigitYear = Number(fullYear.toString().slice(0, -2))
 
   const dateString = `${month}/${day}/${twoDigitYear}`
 

@@ -111,20 +111,40 @@ const WorkoutBackgroundImage = forwardRef(
 
 export default WorkoutBackgroundImage
 
+// const BackgroundContainer = styled.div`
+//   grid-column: 1 / -1;
+//   grid-row: 1 / -1;
+//   display: grid;
+//   grid-template-columns: 1fr;
+//   grid-template-rows: 1fr;
+//   border-radius: 10px;
+//   width: 100%;
+//   z-index: 3;
+// `
+
+// const BackgroundImage = styled.img`
+//   grid-column: 1 / -1;
+//   grid-row: 1 / -1;
+//   width: 100%;
+//   filter: ${props => (props.firstImage === 0 ? 'blur(6px)' : ' blur(0px)')};
+//   transition: filter 1000ms ease-in-out;
+// `
+
 const BackgroundContainer = styled.div`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
+  position: relative;
+  padding-top: calc(480 / 1200 * 100%);
   border-radius: 10px;
   width: 100%;
   z-index: 3;
 `
 
 const BackgroundImage = styled.img`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   filter: ${props => (props.firstImage === 0 ? 'blur(6px)' : ' blur(0px)')};
   transition: filter 1000ms ease-in-out;
