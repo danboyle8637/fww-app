@@ -33,6 +33,17 @@ const Login = () => {
   const auth = useFireBase()
 
   useEffect(() => {
+    // * Because I changed my data structure this ensure old members won't be left with error
+    const currentProgramsLocalStorage = localStorage.getItem('fwwPrograms')
+    const programs = JSON.parse(currentProgramsLocalStorage)
+    const keys = Object.keys(programs)
+
+    if (keys.includes('purchasedPrograms')) {
+      return
+    } else {
+      localStorage.clear()
+    }
+
     auth
       .getCurrentUser()
       .then(user => {
