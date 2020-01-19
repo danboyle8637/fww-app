@@ -38,9 +38,7 @@ const Login = () => {
     const programs = JSON.parse(currentProgramsLocalStorage)
     const keys = Object.keys(programs)
 
-    if (keys.includes('purchasedPrograms')) {
-      return
-    } else {
+    if (!keys.includes('purchasedPrograms')) {
       localStorage.clear()
     }
 
