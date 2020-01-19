@@ -35,11 +35,14 @@ const Login = () => {
   useEffect(() => {
     // * Because I changed my data structure this ensure old members won't be left with error
     const currentProgramsLocalStorage = localStorage.getItem('fwwPrograms')
-    const programs = JSON.parse(currentProgramsLocalStorage)
-    const keys = Object.keys(programs)
 
-    if (!keys.includes('purchasedPrograms')) {
-      localStorage.clear()
+    if (currentProgramsLocalStorage !== null) {
+      const programs = JSON.parse(currentProgramsLocalStorage)
+      const keys = Object.keys(programs)
+
+      if (!keys.includes('purchasedPrograms')) {
+        localStorage.clear()
+      }
     }
 
     auth
