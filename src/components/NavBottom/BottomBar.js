@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import MenuIcon from './MenuIcon'
@@ -10,39 +10,11 @@ import BottomContactIcon from '../../svgs/BottomContactIcon'
 import BottomMoreIcon from '../../svgs/BottomMoreIcon'
 import BottomDashboardIcon from '../../svgs/BottomDashboardIcon'
 import BottomLogoutIcon from '../../svgs/BottomLogoutIcon'
+import useMatchMedia from '../../hooks/useMatchMedia'
 import { above } from '../../styles/Theme'
 
 const BottomBar = ({ menuOpen, isLoggedIn, handleNavigation }) => {
-  const [isLaptopMenu, setIsLaptopMenu] = useState(false)
-  const mediaQueryRef = useRef(null)
-
-  useEffect(() => {
-    if (typeof window !== undefined) {
-      mediaQueryRef.current = window.matchMedia('(min-width: 1100px)')
-
-      if (mediaQueryRef.current.matches) {
-        setIsLaptopMenu(true)
-      } else {
-        setIsLaptopMenu(false)
-      }
-    }
-
-    const test = event => {
-      if (event.matches) {
-        setIsLaptopMenu(true)
-      } else {
-        setIsLaptopMenu(false)
-      }
-    }
-
-    mediaQueryRef.current.addListener(test)
-
-    return () => {
-      if (test) {
-        mediaQueryRef.current.removeListener(test)
-      }
-    }
-  }, [])
+  const showLaptopMenu = useMatchMedia({ width: 1100 })
 
   const loggedOutIcons = [
     {
@@ -140,7 +112,7 @@ const BottomBar = ({ menuOpen, isLoggedIn, handleNavigation }) => {
 
   return (
     <>
-      {isLaptopMenu ? (
+      {showLaptopMenu ? (
         <BottomLaptopMenuTransition menuOpen={menuOpen}>
           <LaptopBarContainer>
             {isLoggedIn ? loggedInNav : loggedOutNav}

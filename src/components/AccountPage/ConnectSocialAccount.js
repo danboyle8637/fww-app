@@ -95,16 +95,14 @@ const ConnectSocialAccount = ({
             isLinkedUp={isFacebookThere}
             handleClick={handleConnectFacebook}
           >
-            {isFacebookThere
-              ? 'Account Is Linked Up'
-              : 'Connect Facebook Account'}
+            {isFacebookThere ? 'Account Is Linked Up' : 'Connect Facebook'}
           </GoogleFacebookButton>
           <GoogleFacebookButton
             provider="google"
             isLinkedUp={isGoogleThere}
             handleClick={handleConnectGoogle}
           >
-            {isGoogleThere ? 'Account Is Linked Up' : 'Connect Google Account'}
+            {isGoogleThere ? 'Account Is Linked Up' : 'Connect Google'}
           </GoogleFacebookButton>
         </ButtonWrapper>
       </SocialContainer>

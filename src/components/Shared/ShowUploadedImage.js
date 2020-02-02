@@ -13,6 +13,7 @@ const PreviewImage = styled.img`
   justify-self: center;
   border: 8px solid ${props => props.theme.mainBackgroundBorderColor};
   border-radius: 50%;
+  object-fit: cover;
   width: 140px;
   height: 140px;
 `

@@ -36,7 +36,6 @@ const ResetLocalStorageCard = () => {
 export default ResetLocalStorageCard
 
 const ResetContainer = styled.div`
-  margin: 120px 0 0 0;
   padding: 12px;
   align-self: center;
   display: grid;
@@ -46,6 +45,12 @@ const ResetContainer = styled.div`
   border-radius: 10px;
   width: 100%;
   max-width: 600px;
+  ${above.mobile`
+    margin: 80px 0 0 0;
+  `}
+  ${above.tablet`
+    margin: 120px 0 0 0;
+  `}
 `
 
 const ResetHeadline = styled.h3`

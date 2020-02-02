@@ -96,7 +96,11 @@ const AccountUpdateProfilePicForm = ({
           valid={formState.updateProfileImage.valid}
           updateInputValues={updateInputValues}
         />
-        <BaseButton type="submit">Save Photo</BaseButton>
+        <BaseButton type="submit">
+          {formState.updateProfileImage.file
+            ? 'Click to Save Image'
+            : 'Upload an Image'}
+        </BaseButton>
       </ProfilePicForm>
     </UpdateAccountFormTransition>
   )

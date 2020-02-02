@@ -34,8 +34,9 @@ const VimeoPlayer = ({ videoId }) => {
       <VideoWrapper ref={videoContainerRef} />
       {videoLoaded ? null : (
         <>
-          <Loader />
-          <VideoLoadingScreen />
+          <VideoLoadingScreen>
+            <Loader />
+          </VideoLoadingScreen>
         </>
       )}
     </VideoContainer>
@@ -45,6 +46,8 @@ const VimeoPlayer = ({ videoId }) => {
 export default VimeoPlayer
 
 const VideoContainer = styled.div`
+  position: relative;
+  padding-top: calc(9 / 16 * 100%);
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
@@ -55,16 +58,22 @@ const VideoContainer = styled.div`
 `
 
 const VideoWrapper = styled.div`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   z-index: 1;
 `
 
 const VideoLoadingScreen = styled.div`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
-  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: ${props => props.theme.mainBackgroundBorderColor};
   width: 100%;
   height: 100%;
@@ -72,8 +81,6 @@ const VideoLoadingScreen = styled.div`
 `
 
 const Loader = styled(LoadingKettlebell)`
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
   width: 60px;
   z-index: 3;
 `

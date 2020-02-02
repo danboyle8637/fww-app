@@ -37,6 +37,14 @@ const WorkoutTrackingForm = ({
   const [updateInputValues, updateInputOptions] = useFormControls()
 
   useEffect(() => {
+    return () => {
+      dispatchFormAction({
+        type: 'resetWorkoutGoalForm'
+      })
+    }
+  }, [dispatchFormAction])
+
+  useEffect(() => {
     if (
       formState.workoutGoalValue.valid &&
       !formState.workoutGoalOptions.touched
