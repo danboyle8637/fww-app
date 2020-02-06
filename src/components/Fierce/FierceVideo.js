@@ -13,7 +13,7 @@ const FierceVideo = () => {
       <ExtendWorkoutPageHeadline>
         Help Us Build The Full App!
       </ExtendWorkoutPageHeadline>
-      <VimeoPlayer videoId={380955119} />
+      <VimeoPlayer videoId={389302765} />
       <ExtendWorkoutPageDescription>
         This will be a short summary of the offer and how to purchase one of the
         additional programs.
