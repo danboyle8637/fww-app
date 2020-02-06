@@ -75,7 +75,7 @@ const SecurityLoginForm = ({ setIsLoggingIn, setShowDashboard }) => {
       />
       <LoginForm onSubmit={handleSecurityLogin}>
         <TextInput
-          type="text"
+          type="email"
           name="emailAddress"
           labelName="Email"
           labelFor="emailAddress"

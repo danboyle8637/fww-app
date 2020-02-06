@@ -25,7 +25,7 @@ const userReducer = (state, action) => {
         photoUrl: action.value
       }
     }
-    case 'setUpdatedPrograms': {
+    case 'updateUserPrograms': {
       return {
         ...state,
         programs: [...state.programs, action.value]

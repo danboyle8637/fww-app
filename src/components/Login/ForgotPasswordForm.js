@@ -68,7 +68,7 @@ const ForgetPasswordForm = ({
         <BackChip handleClick={handleBackButton}>Back</BackChip>
         <ResetPasswordForm onSubmit={handleResetPassword}>
           <TextInput
-            type="text"
+            type="email"
             name="emailAddress"
             labelName="Email"
             labelFor="emailAddress"

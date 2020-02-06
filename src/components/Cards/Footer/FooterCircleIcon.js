@@ -9,7 +9,7 @@ export default FooterCircleIcon
 
 const CompleteDot = styled.div`
   background: ${props =>
-    props.active && !props.fitnessLevel
+    props.active && props.fitnessLevel === false
       ? props.theme.strongBodyText
       : props.active && props.fitnessLevel
       ? '#ff22a5'

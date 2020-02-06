@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
+import { TweenMax } from 'gsap/TweenMax'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 
 import { Header1, BodyText } from '../../styles/Typography'
 import BaseButton from '../Buttons/BaseButton'
@@ -24,6 +26,15 @@ const ResetStep2Form = ({
   const [updateInputValues, updateInputOptions] = useFormControls()
   const device = useContext(ScreenWidthContext)
 
+  // eslint-disable-next-line
+  const scroll = ScrollToPlugin
+
+  useEffect(() => {
+    if (formButtonActive) {
+      handleScrollToButton()
+    }
+  }, [formButtonActive])
+
   useEffect(() => {
     if (formState.resetWorkoutValue.valid) {
       setFormButtonActive(true)
@@ -41,6 +52,12 @@ const ResetStep2Form = ({
     event.preventDefault()
     setReverse(false)
     setActiveQuestion(prevValue => prevValue + 1)
+  }
+
+  const handleScrollToButton = () => {
+    if (typeof window !== undefined) {
+      TweenMax.to(window, 1, { scrollTo: `#go-to-step-3` })
+    }
   }
 
   return (
@@ -74,6 +91,7 @@ const ResetStep2Form = ({
             <div />
           ) : null}
           <ButtonWrapper>
+            <div id="go-to-step-3" />
             <BaseButton type="submit" disabled={!formButtonActive}>
               {formButtonActive
                 ? 'Step 3: Setup Login Method'

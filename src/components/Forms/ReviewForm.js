@@ -132,7 +132,7 @@ const ReviewForm = ({
       />
       <ReviewWhyEmail />
       <TextInput
-        type="text"
+        type="email"
         name="emailAddress"
         labelName="email:"
         labelFor="emailAddress"

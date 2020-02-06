@@ -206,7 +206,7 @@ const LoginUsernamePassword = ({
         />
         <LoginForm onSubmit={handleLoginSubmit}>
           <TextInput
-            type="text"
+            type="email"
             name="emailAddress"
             labelName="Email"
             labelFor="emailAddress"

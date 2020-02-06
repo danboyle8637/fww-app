@@ -16,6 +16,7 @@ const SocialSignUp = () => {
   const [showDashboard, setShowDashboard] = useState(false)
   const [showErrorPage, setShowErrorPage] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
+  const [userCreated, setUserCreated] = useState(false)
 
   const data = useLocation()
 
@@ -29,12 +30,15 @@ const SocialSignUp = () => {
     const totalWorkouts = userSignUpData ? userSignUpData.totalWorkouts : 0
     const biggestObstacle = userSignUpData ? userSignUpData.biggestObstacle : ''
 
-    // TODO Test the social signup one more time to see if you get the state update error
-    if (!showDashboard && !showErrorPage && !showLogin) {
+    // showDashboard === false && showErrorPage === false && showLogin === false
+    // TODO You need to figure out how to run this better with Google and Facebook
+    if (userCreated === false) {
       auth
         .getRedirectResult()
         .then(result => {
+          console.log('ONE: ', result)
           const user = result.user
+          debugger
           if (user) {
             const userId = user.uid
             const firstName = user.displayName
@@ -109,10 +113,15 @@ const SocialSignUp = () => {
                 setShowErrorPage(true)
               })
           } else {
-            if (data.state.provider === 'google') {
+            if (data && data.state.provider === 'google') {
               auth.signInWithGoogleProviderRedirect()
-            } else if (data.state.provider === 'facebook') {
+              console.log('TWO')
+              setUserCreated(true)
+              return
+            } else if (data && data.state.provider === 'facebook') {
+              debugger
               auth.signInWithFacebookProviderRedirect()
+              return
             } else {
               return
             }
@@ -157,11 +166,12 @@ const SocialSignUp = () => {
             setShowLogin(true)
           } else if (error.code === 'auth/operation-not-allowed') {
             dispatchPortalAction({
+              // TODO This is the error throwing with Facebook Login. Check docs and fix it!
               type: 'toggleEmergencyErrorMessage',
               value: {
                 redirectSlug: '/contact',
                 buttonText: 'Go to Contact Page',
-                message: `This error message should not be showing. If it is... some strange error happened. Please contact us and let me know you saw the error message that should not being showing. Thanks!`
+                message: `This error message should not be showing. If it is... some strange error happened. Please contact us and let me know you saw the error message that should not being showing. Thanks! ${error.code}`
               }
             })
             setShowLogin(true)
@@ -180,15 +190,25 @@ const SocialSignUp = () => {
             })
             setShowLogin(true)
           } else {
-            dispatchPortalAction({
-              type: 'toggleErrorMessage',
-              value: `Yikes... something happened and we are not sure what exactly. But don't worry nothing serious. Just refresh the page and try again.`
-            })
-            setShowLogin(true)
+            console.log('THREE')
+            // dispatchPortalAction({
+            //   type: 'toggleErrorMessage',
+            //   value: `You are reading this because the code is continuing to run and this shows up.`
+            // })
+            // setShowLogin(true)
           }
         })
     }
-  })
+  }, [
+    auth,
+    data,
+    dispatchPortalAction,
+    dispatchUserAction,
+    showDashboard,
+    showErrorPage,
+    showLogin,
+    userCreated
+  ])
 
   return (
     <>

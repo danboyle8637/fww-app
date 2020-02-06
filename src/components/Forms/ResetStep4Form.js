@@ -222,7 +222,7 @@ const ResetStep4Form = ({
           </ContentWrapper>
           <SignUpForm onSubmit={handleSignUpForm}>
             <TextInput
-              type="text"
+              type="email"
               name="emailAddress"
               labelName="Email"
               labelFor="emailAddress"

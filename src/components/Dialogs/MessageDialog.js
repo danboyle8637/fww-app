@@ -69,8 +69,8 @@ const DialogContainer = styled.div`
     right: 30%;
   `}
   ${above.laptop`
-    left: 40%;
-    right: 40%;
+    left: 34%;
+    right: 34%;
   `}
 `
 

@@ -105,7 +105,7 @@ const ContactForm = ({ isSyncing, toggleSyncing, setSyncingMessage }) => {
           onBlur={updateInputOptions}
         />
         <TextInput
-          type="text"
+          type="email"
           name="emailAddress"
           labelName="email:"
           labelFor="emailAddress"

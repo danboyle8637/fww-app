@@ -18,7 +18,6 @@ const CheckoutForm = ({
   stripe
 }) => {
   const auth = useFireBase()
-  // eslint-disable-next-line
   const [userState, dispatchUserAction] = useUserContext()
   // eslint-disable-next-line
   const [programsState, dispatchProgramsAction] = useProgramsContext()
@@ -118,6 +117,22 @@ const CheckoutForm = ({
                     type: 'updatePercentComplete',
                     value: addProgramData.addToPercentComplete
                   })
+
+                  dispatchUserAction({
+                    type: 'updateUserPrograms',
+                    value: programId
+                  })
+
+                  const fwwUserString = localStorage.getItem('fwwUser')
+                  const fwwUser = JSON.parse(fwwUserString)
+                  const programs = fwwUser.programs
+                  const updatedPrograms = [...programs, programId]
+                  const updatedUser = {
+                    ...fwwUser,
+                    programs: updatedPrograms
+                  }
+
+                  localStorage.setItem('fwwUser', JSON.stringify(updatedUser))
 
                   setIsCreatingCharge(false)
                   setToThankYouPage(true)
