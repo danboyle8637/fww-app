@@ -44,7 +44,6 @@ const ResetProgramDashboard = ({ match, location }) => {
       const setupTrackingPath = '/setup-workout-tracking'
 
       // Using reduce to construct my request object off a huge workout array
-      // TODO Try to build this with a for loop
       const workoutTrackingArray = workoutsArray.reduce(
         (accumulator, currentValue) => {
           const workoutName = currentValue.title

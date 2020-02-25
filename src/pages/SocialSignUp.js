@@ -190,7 +190,6 @@ const SocialSignUp = () => {
             })
             setShowLogin(true)
           } else {
-            console.log('THREE')
             // dispatchPortalAction({
             //   type: 'toggleErrorMessage',
             //   value: `You are reading this because the code is continuing to run and this shows up.`

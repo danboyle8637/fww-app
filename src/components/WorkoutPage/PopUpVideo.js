@@ -60,6 +60,10 @@ const PopUpVideo = ({ title, workoutVideos, activeVideo, programId }) => {
       if (programId === '7DayStrongReset') {
         setVideoId(370763080)
       }
+
+      if (programId === 'FierceBodyBurn' || programId === 'FierceStrong') {
+        setVideoId(393313816)
+      }
     }
   }, [activeVideo, programId, title, workoutVideos])
 

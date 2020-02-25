@@ -11,7 +11,6 @@ const DashboardTrainingPlanCard = ({ programId }) => {
   const [portalState, dispatchPortalAction] = usePortalContext()
 
   const handleToggleVideo = () => {
-    console.log('Show portal and coaching video.')
     dispatchPortalAction({ type: 'toggleTrainingPlanVideo' })
   }
 
