@@ -28,8 +28,7 @@ const ResetWorkout = () => {
     workoutBackgrounds,
     coachingVideo,
     workoutVideos,
-    trackingGoal,
-    trackingSheetUrl
+    trackingGoal
   } = location.state.workout
 
   const { programId, workoutId } = location.state.stats
@@ -78,7 +77,10 @@ const ResetWorkout = () => {
           handleToggleSync={handleToggleSync}
           handleSetSyncMessage={handleSetSyncMessage}
         />
-        <DownloadTrackingSheet trackingSheet={trackingSheetUrl} />
+        <DownloadTrackingSheet
+          handleToggleSync={handleToggleSync}
+          handleSetSyncMessage={handleSetSyncMessage}
+        />
       </Row2Wrapper>
       <Portal>
         <SyncingIndicator isSyncing={isSyncing} syncMessage={syncMessage} />

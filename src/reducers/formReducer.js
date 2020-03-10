@@ -210,6 +210,10 @@ const formState = {
     initial: true,
     touched: false,
     showInstructions: false
+  },
+  downloadTrackingSheet: {
+    vote: '',
+    didVote: false
   }
 }
 
@@ -702,6 +706,15 @@ const formReducer = (state, action) => {
           initial: true,
           touched: false,
           showInstructions: false
+        }
+      }
+    }
+    case 'setDownloadTrackingSheet': {
+      return {
+        ...state,
+        downloadTrackingSheet: {
+          isYes: !state.downloadTrackingSheet.isYes,
+          vote: action.value
         }
       }
     }

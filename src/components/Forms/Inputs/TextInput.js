@@ -19,11 +19,6 @@ const TextInput = props => {
     setIsTouched(props.touched)
   }, [props.initial, props.touched, props.error, props.valid])
 
-  // const isNormal = props.initial && !props.touched && !props.error
-  // const isError = !props.initial && !props.valid
-  // const isValid = !props.touched && props.valid
-  // const isTouched = props.touched
-
   return (
     <InputContainer touched={props.touched} error={isError} valid={isValid}>
       <FormInstructionsTransition isTouched={isTouched}>

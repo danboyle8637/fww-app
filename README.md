@@ -1,68 +1,39 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">
+  <img width="150" src="https://www.dropbox.com/s/w6b4fzuxw7i71b5/fww-readme-logo.jpg">
+</p>
 
-## Available Scripts
+# Fit Women's Weekly Reset App
 
-In the project directory, you can run:
+The Fit Women's Reset app is a collection of four short fitness programs.
 
-### `npm start`
+Each program is designed to:
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Let women experience our intense style of workout design called MicroHITS
+- Allow women to experiment with different workout lengths to fit their day
+- Get women excited so they want to join our full app (which is not out just yet)
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+This app is built in React with Google's Firebase as the backend.
 
-### `npm test`
+### The React App
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+I used Create React App as my starting point.
 
-### `npm run build`
+The app is currently written in Javascript but over the next year, it will be converted to Typescript.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The React app uses React's useContext and useReducer for global state management. This proved to work really well.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+### The Backend
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Firebase is great to work with.
 
-### `npm run eject`
+The app uses Google's Firestore NoSQL database for persistence. But I use as much caching on the client to limit the number of times I have to talk to the database.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To keep the bundle size of the app small, I created an API using a Google Cloud Function. This means I don't use the entire Firebase SDK in the client... only the authorization part.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Technologies Used
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- React
+- Greensock
+- Firebase
+- Google Cloud Functions
+- Google Firebase Hosting
