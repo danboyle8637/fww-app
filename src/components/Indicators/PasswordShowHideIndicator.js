@@ -30,6 +30,7 @@ const ShowHideContainer = styled.div`
   grid-template-columns: auto 1fr;
   gap: 8px;
   align-items: center;
+  cursor: pointer;
 `
 
 const EyeOpenIcon = styled(PasswordEyeOpenIcon)`

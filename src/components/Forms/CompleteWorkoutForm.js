@@ -159,4 +159,5 @@ const ButtonWrapper = styled.div`
 
 const CompleteWorkout = styled(CompleteWorkoutIcon)`
   width: 40px;
+  cursor: pointer;
 `

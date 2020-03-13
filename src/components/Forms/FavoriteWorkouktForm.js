@@ -107,4 +107,5 @@ const Label = styled.p`
 
 const FavoriteWorkout = styled(FavoriteWorkoutIcon)`
   width: 40px;
+  cursor: pointer;
 `
