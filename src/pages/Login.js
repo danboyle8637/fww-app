@@ -95,14 +95,25 @@ const Login = () => {
         {background}
         <ContentWrapper>
           <LoginSignUpHeader />
-          <LoginForms
+          <UpdateMessageContainer>
+            <UpdateParagraph>
+              Sorry we are making a big update to the Reset app.
+            </UpdateParagraph>
+            <UpdateParagraph>
+              Adding some new programs and options for you. It will be finished
+              by the end of the weekend.
+            </UpdateParagraph>
+            <UpdateParagraph>Thank you for being a member!</UpdateParagraph>
+          </UpdateMessageContainer>
+
+          {/* <LoginForms
             setIsLoggingIn={setIsLoggingIn}
             setShowDashboard={setShowDashboard}
             setLoadingMessage={setLoadingMessage}
             handleToggleSyncing={handleToggleSyncing}
             setSyncingMessage={setSyncingMessage}
             setShowLogin={setShowLogin}
-          />
+          /> */}
         </ContentWrapper>
       </LoginContainer>
       {isLoggingIn ? (
@@ -118,6 +129,20 @@ const Login = () => {
 }
 
 export default Login
+
+const UpdateMessageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+`
+
+const UpdateParagraph = styled.p`
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0px;
+  }
+`
 
 const LoginContainer = styled.div`
   position: relative;
