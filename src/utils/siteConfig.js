@@ -17,7 +17,7 @@ module.exports = {
     baseUrl: `${
       environment === 'development'
         ? localDevelopmentUrl
-        : deployEnvironment === 'staging' && environment === 'production'
+        : deployEnvironment === 'staging'
         ? liveDevApiUrl
         : liveProdApiUrl
     }`

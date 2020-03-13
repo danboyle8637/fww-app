@@ -100,10 +100,10 @@ const ResetProductPage = () => {
 
   useEffect(() => {
     if (typeof window.Stripe !== undefined) {
-      setStripe(window.Stripe(process.env.REACT_APP_STRIPE_TEST_KEY))
+      setStripe(window.Stripe(process.env.REACT_APP_STRIPE_LIVE_KEY))
     } else {
       document.querySelector('#stripe-js').addEventListener('load', () => {
-        setStripe(window.Stripe(process.env.REACT_APP_STRIPE_TEST_KEY))
+        setStripe(window.Stripe(process.env.REACT_APP_STRIPE_LIVE_KEY))
       })
     }
   }, [])
