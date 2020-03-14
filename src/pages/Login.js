@@ -36,8 +36,10 @@ const Login = () => {
   const auth = useFireBase()
 
   useEffect(() => {
+    auth.logUserOut()
     console.log(programsState)
-  }, [programsState])
+    console.log(programsState.notPurchasedProgram.length)
+  }, [auth, programsState])
 
   useEffect(() => {
     // * Because I changed my data structure this ensure old members won't be left with error
@@ -55,7 +57,6 @@ const Login = () => {
     auth
       .getCurrentUser()
       .then(user => {
-        console.log(user)
         auth.isAuthenticated = true
         setIsLoggingIn(true)
         fetchAndGetUserData(user)
