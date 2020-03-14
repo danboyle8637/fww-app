@@ -18,7 +18,7 @@ import { usePortalContext } from '../context/portalContext'
 import { useFireBase } from '../components/Firebase/FirebaseContext'
 import { above } from '../styles/Theme'
 
-const Login = () => {
+const TestLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const [showDashboard, setShowDashboard] = useState(false)
   const [loadingMessage, setLoadingMessage] = useState(
@@ -36,8 +36,6 @@ const Login = () => {
   const auth = useFireBase()
 
   useEffect(() => {
-    auth.logUserOut()
-    console.log(programsState)
     console.log(programsState.notPurchasedPrograms.length)
   }, [auth, programsState])
 
@@ -104,25 +102,14 @@ const Login = () => {
         {background}
         <ContentWrapper>
           <LoginSignUpHeader />
-          <UpdateMessageContainer>
-            <UpdateParagraph>
-              Sorry we are making a big update to the Reset app.
-            </UpdateParagraph>
-            <UpdateParagraph>
-              Adding some new programs and options for you. It will be finished
-              by the end of the weekend.
-            </UpdateParagraph>
-            <UpdateParagraph>Thank you for being a member!</UpdateParagraph>
-          </UpdateMessageContainer>
-
-          {/* <LoginForms
+          <LoginForms
             setIsLoggingIn={setIsLoggingIn}
             setShowDashboard={setShowDashboard}
             setLoadingMessage={setLoadingMessage}
             handleToggleSyncing={handleToggleSyncing}
             setSyncingMessage={setSyncingMessage}
             setShowLogin={setShowLogin}
-          /> */}
+          />
         </ContentWrapper>
       </LoginContainer>
       {isLoggingIn ? (
@@ -137,21 +124,7 @@ const Login = () => {
   )
 }
 
-export default Login
-
-const UpdateMessageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-`
-
-const UpdateParagraph = styled.p`
-  margin-bottom: 20px;
-  &:last-child {
-    margin-bottom: 0px;
-  }
-`
+export default TestLogin
 
 const LoginContainer = styled.div`
   position: relative;

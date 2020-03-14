@@ -25,8 +25,6 @@ const ResetDashboard = ({ location }) => {
   // eslint-disable-next-line
   const [portalState, dispatchPortalAction] = usePortalContext()
 
-  console.log()
-
   useEffect(() => {
     if (
       programsState.purchasedPrograms.length === 0 &&

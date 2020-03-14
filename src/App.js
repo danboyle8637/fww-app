@@ -8,6 +8,7 @@ import BottomNav from './components/NavBottom/MenuChicklet'
 import ResetDashboard from './pages/ResetDashboard'
 import FourOhFour from './pages/FourOhFour'
 import Login from './pages/Login'
+import TestLogin from './pages/TestLogin'
 import SignUp from './pages/SignUp'
 import ResetSignUp from './pages/ResetSignUp'
 import Review from './pages/Review'
@@ -42,6 +43,7 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={Login} />
             <Route path="/login" component={Login} />
+            <Route path="/test-login" component={TestLogin} />
             <Route path="/security-login" component={ResetSecurityLogin} />
             <Route path="/social-login" component={SocialLogin} />
             <Route path="/social-sign-up" component={SocialSignUp} />
