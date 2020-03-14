@@ -9,7 +9,7 @@ firebase.json
 .firebase
 
 # env
-.env
+.env*
 
 # Greensock Plugins
 /greensock

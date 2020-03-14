@@ -1,9 +1,7 @@
 const helpers = require('./helpers')
 const environment = process.env.NODE_ENV
-const deployEnvironment = process.env.REACT_APP_STAGE
-const liveProdApiUrl = process.env.REACT_APP_PROD_API_URL
-const liveDevApiUrl = process.env.REACT_APP_DEV_API_URL
-const localDevelopmentUrl = process.env.REACT_APP_PROD_DEV_URL
+const localDevelopmentUrl = process.env.REACT_APP_LOCAL_URL
+const liveApiUrl = process.env.REACT_APP_API_URL
 
 module.exports = {
   breakPoints: {
@@ -15,11 +13,15 @@ module.exports = {
   },
   api: {
     baseUrl: `${
-      environment === 'development'
-        ? localDevelopmentUrl
-        : deployEnvironment === 'staging'
-        ? liveDevApiUrl
-        : liveProdApiUrl
+      environment === 'development' ? localDevelopmentUrl : liveApiUrl
     }`
   }
 }
+
+// `${
+//   environment === 'development'
+//     ? localDevelopmentUrl
+//     : deployEnvironment === 'staging'
+//     ? liveDevApiUrl
+//     : liveProdApiUrl
+// }`

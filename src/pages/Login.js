@@ -48,6 +48,7 @@ const Login = () => {
     auth
       .getCurrentUser()
       .then(user => {
+        console.log(user)
         auth.isAuthenticated = true
         setIsLoggingIn(true)
         fetchAndGetUserData(user)
