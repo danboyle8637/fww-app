@@ -6,6 +6,7 @@
 firebaseConfig.js
 .firebaserc
 firebase.json
+.firebase
 
 # env
 .env
