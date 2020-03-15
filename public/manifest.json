@@ -1,6 +1,9 @@
 {
-  "short_name": "FWW",
-  "name": "Fit Women's Weekly",
+  "manifest_version": 1,
+  "version": "version_one",
+  "short_name": "FWW Reset",
+  "name": "Fit Women's Weekly Reset",
+  "default_locale": "en",
   "icons": [
     {
       "src": "favicon.ico",
