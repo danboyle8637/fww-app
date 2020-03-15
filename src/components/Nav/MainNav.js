@@ -55,8 +55,7 @@ const MainNav = () => {
       location.pathname !== '/error' &&
       location.pathname !== '/social-link' &&
       location.pathname !== '/playground' &&
-      location.pathname !== '/thank-you' &&
-      location.pathname !== '/test-login'
+      location.pathname !== '/thank-you'
     ) {
       return <Redirect to="/login" />
     } else {

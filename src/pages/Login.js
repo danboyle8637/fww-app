@@ -36,12 +36,6 @@ const Login = () => {
   const auth = useFireBase()
 
   useEffect(() => {
-    auth.logUserOut()
-    console.log(programsState)
-    console.log(programsState.notPurchasedPrograms.length)
-  }, [auth, programsState])
-
-  useEffect(() => {
     // * Because I changed my data structure this ensure old members won't be left with error
     const currentProgramsLocalStorage = localStorage.getItem('fwwPrograms')
 
@@ -104,25 +98,14 @@ const Login = () => {
         {background}
         <ContentWrapper>
           <LoginSignUpHeader />
-          <UpdateMessageContainer>
-            <UpdateParagraph>
-              Sorry we are making a big update to the Reset app.
-            </UpdateParagraph>
-            <UpdateParagraph>
-              Adding some new programs and options for you. It will be finished
-              by the end of the weekend.
-            </UpdateParagraph>
-            <UpdateParagraph>Thank you for being a member!</UpdateParagraph>
-          </UpdateMessageContainer>
-
-          {/* <LoginForms
+          <LoginForms
             setIsLoggingIn={setIsLoggingIn}
             setShowDashboard={setShowDashboard}
             setLoadingMessage={setLoadingMessage}
             handleToggleSyncing={handleToggleSyncing}
             setSyncingMessage={setSyncingMessage}
             setShowLogin={setShowLogin}
-          /> */}
+          />
         </ContentWrapper>
       </LoginContainer>
       {isLoggingIn ? (
@@ -138,20 +121,6 @@ const Login = () => {
 }
 
 export default Login
-
-const UpdateMessageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-`
-
-const UpdateParagraph = styled.p`
-  margin-bottom: 20px;
-  &:last-child {
-    margin-bottom: 0px;
-  }
-`
 
 const LoginContainer = styled.div`
   position: relative;
