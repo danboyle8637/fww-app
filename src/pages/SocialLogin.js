@@ -25,14 +25,14 @@ const SocialLogin = () => {
       .then(result => {
         const user = result.user
         if (user) {
-          auth.isAuthenticated = true
-
           const photoUrl = user.photoURL
           const url = `${siteConfig.api.baseUrl}/get-user`
 
           if (localStorage.getItem('fwwUser')) {
             const data = localStorage.getItem('fwwUser')
             const user = JSON.parse(data)
+
+            auth.isAuthenticated = true
 
             dispatchUserAction({
               type: 'setLoggedInUser',

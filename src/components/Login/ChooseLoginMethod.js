@@ -41,13 +41,14 @@ const ChooseLoginMethod = ({
       auth
         .signInWithGoogleProviderPopUp()
         .then(result => {
-          auth.isAuthenticated = true
           const user = result.user
           photoUrl = user.photoURL
 
           if (localStorage.getItem('fwwUser')) {
             const data = localStorage.getItem('fwwUser')
             const user = JSON.parse(data)
+
+            auth.isAuthenticated = true
 
             dispatchUserAction({
               type: 'setLoggedInUser',
@@ -69,32 +70,47 @@ const ChooseLoginMethod = ({
               })
                 .then(response => response.json())
                 .then(userData => {
-                  dispatchUserAction({
-                    type: 'setLoggedInUser',
-                    value: {
+                  if (userData.error) {
+                    dispatchPortalAction({
+                      type: 'toggleErrorMessage',
+                      value: `😬 ${userData.message}`
+                    })
+                    setIsLoggingIn(false)
+                    setShowLogin(true)
+                  } else {
+                    auth.isAuthenticated = true
+
+                    dispatchUserAction({
+                      type: 'setLoggedInUser',
+                      value: {
+                        firstName: userData.firstName,
+                        photoUrl: photoUrl,
+                        programs: userData.programs
+                      }
+                    })
+
+                    const fwwUser = {
                       firstName: userData.firstName,
                       photoUrl: photoUrl,
                       programs: userData.programs
                     }
-                  })
 
-                  const fwwUser = {
-                    firstName: userData.firstName,
-                    photoUrl: photoUrl,
-                    programs: userData.programs
+                    localStorage.setItem('fwwUser', JSON.stringify(fwwUser))
+
+                    setShowDashboard(true)
                   }
-
-                  localStorage.setItem('fwwUser', JSON.stringify(fwwUser))
-
-                  setShowDashboard(true)
                 })
                 .catch(error => {
                   const message = error.message
+                  console.log(message)
 
+                  auth.isAuthenticated = false
+                  auth.logUserOut()
                   dispatchPortalAction({
                     type: 'toggleErrorMessage',
                     value: `😬 ${message}`
                   })
+                  setShowLogin(true)
                 })
             })
           }
@@ -183,13 +199,14 @@ const ChooseLoginMethod = ({
       auth
         .signInWithFacebookProviderPopUp()
         .then(result => {
-          auth.isAuthenticated = true
           const user = result.user
           photoUrl = user.photoURL
 
           if (localStorage.getItem('fwwUser')) {
             const data = localStorage.getItem('fwwUser')
             const user = JSON.parse(data)
+
+            auth.isAuthenticated = true
 
             dispatchUserAction({
               type: 'setLoggedInUser',
@@ -211,24 +228,35 @@ const ChooseLoginMethod = ({
               })
                 .then(response => response.json())
                 .then(userData => {
-                  dispatchUserAction({
-                    type: 'setLoggedInUser',
-                    value: {
+                  if (userData.error) {
+                    dispatchPortalAction({
+                      type: 'toggleErrorMessage',
+                      value: `😬 ${userData.message}`
+                    })
+                    setIsLoggingIn(false)
+                    setShowLogin(true)
+                  } else {
+                    auth.isAuthenticated = true
+
+                    dispatchUserAction({
+                      type: 'setLoggedInUser',
+                      value: {
+                        firstName: userData.firstName,
+                        photoUrl: photoUrl,
+                        programs: userData.programs
+                      }
+                    })
+
+                    const fwwUser = {
                       firstName: userData.firstName,
                       photoUrl: photoUrl,
                       programs: userData.programs
                     }
-                  })
 
-                  const fwwUser = {
-                    firstName: userData.firstName,
-                    photoUrl: photoUrl,
-                    programs: userData.programs
+                    localStorage.setItem('fwwUser', JSON.stringify(fwwUser))
+
+                    setShowDashboard(true)
                   }
-
-                  localStorage.setItem('fwwUser', JSON.stringify(fwwUser))
-
-                  setShowDashboard(true)
                 })
                 .catch(error => {
                   dispatchPortalAction({
