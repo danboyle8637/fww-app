@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { above } from '../../styles/Theme'
+
 const OptionsButton = ({ children, handleClick }) => {
   return <Button onClick={handleClick}>{children}</Button>
 }
@@ -21,4 +23,18 @@ const Button = styled.button`
   font-weight: 400;
   text-transform: uppercase;
   width: 100%;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  transition: box-shadow, background-color, border-color, border-width,
+    border-style, color, 300ms ease-in-out;
+  &:focus {
+    box-shadow: 0 0 0 2px #000, 0 0 0 5px ${props => props.theme.tertiaryAccent};
+  }
+  ${above.ipadPro`
+    &:hover {
+      box-shadow: 0 0 0 2px #000, 0 0 0 5px ${props =>
+        props.theme.tertiaryAccent};
+    }
+  `}
 `
