@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import TextInput from '../Forms/Inputs/TextInput'
 import BaseButton from '../Buttons/BaseButton'
 import DidForgetPassword from './DidForgotPassword'
-import BackChip from '../Chips/BackChip'
+// import BackChip from '../Chips/BackChip'
+import SignUp from './SignUp'
 import LoginFormTransition from '../../Animations/Transitions/LoginFormTransition'
 import PasswordShowHideIndicator from '../Indicators/PasswordShowHideIndicator'
 import { useFormStore } from '../../context/FormContext'
@@ -177,10 +178,16 @@ const LoginUsernamePassword = ({
       })
   }
 
-  const handleBackButton = () => {
-    setReverse(true)
-    setActiveForm(prevValue => prevValue - 1)
-  }
+  // * Took out back button because
+  /*
+    Until my app gets approved for oauth, I am taking out the 
+    social login buttons. So now there is only one option, 
+    use your email and password.
+  */
+  // const handleBackButton = () => {
+  //   setReverse(true)
+  //   setActiveForm(prevValue => prevValue - 1)
+  // }
 
   const handleForgotPassword = () => {
     dispatch({ type: 'resetUsernamePasswordForm' })
@@ -194,12 +201,12 @@ const LoginUsernamePassword = ({
 
   return (
     <LoginFormTransition
-      showNode={activeForm === 1}
+      showNode={activeForm === 0}
       reverse={reverse}
       formName="EmailPasswordForm"
     >
       <FormContainer>
-        <BackChip handleClick={handleBackButton}>Back</BackChip>
+        {/* <BackChip handleClick={handleBackButton}>Back</BackChip> */}
         <PasswordShowHideIndicator
           showPassword={showPassword}
           toggleShowPassword={toggleShowPassword}
@@ -241,7 +248,10 @@ const LoginUsernamePassword = ({
             {loginButtonValid ? 'Login' : 'Enter Your Info'}
           </BaseButton>
         </LoginForm>
-        <DidForgetPassword handleClick={handleForgotPassword} />
+        <AdditionalOptionsWrapper>
+          <DidForgetPassword handleClick={handleForgotPassword} />
+          <SignUp />
+        </AdditionalOptionsWrapper>
       </FormContainer>
     </LoginFormTransition>
   )
@@ -266,4 +276,12 @@ const LoginForm = styled.form`
   gap: 20px;
   justify-items: center;
   width: 100%;
+`
+
+const AdditionalOptionsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  justify-items: center;
+  align-items: center;
 `

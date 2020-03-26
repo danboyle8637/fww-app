@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Redirect } from 'react-router-dom'
 
-import TextButton from '../Buttons/TextButton'
+import OptionsButton from '../Buttons/OptionsButton'
 
 const SignUp = () => {
   const [toSignUp, setToSignUp] = useState(false)
@@ -14,10 +14,9 @@ const SignUp = () => {
   return (
     <>
       <SignUpContainer>
-        <SignUpHeadline>Don't have an account?</SignUpHeadline>
-        <TextButton handleClick={handleGotoSignUp}>
-          Create a Free Account
-        </TextButton>
+        <OptionsButton handleClick={handleGotoSignUp}>
+          Create a Free Account!
+        </OptionsButton>
       </SignUpContainer>
       {toSignUp ? <Redirect push to="/7-day-reset-step1" /> : null}
     </>
@@ -27,15 +26,15 @@ const SignUp = () => {
 export default SignUp
 
 const SignUpContainer = styled.div`
-  margin: 40px 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 `
 
-const SignUpHeadline = styled.h4`
-  margin: 0 0 8px 0;
-  font-size: 18px;
-  color: ${props => props.theme.headlineSecondary};
-  letter-spacing: 0.1rem;
-`
+// const SignUpHeadline = styled.h4`
+//   margin: 0 0 8px 0;
+//   font-size: 18px;
+//   color: ${props => props.theme.headlineSecondary};
+//   letter-spacing: 0.1rem;
+// `

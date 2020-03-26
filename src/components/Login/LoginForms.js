@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { TransitionGroup } from 'react-transition-group'
 
-import ChooseLoginMethod from './ChooseLoginMethod'
+// import ChooseLoginMethod from './ChooseLoginMethod'
 import UsernamePasswordForm from './UsernamePasswordForm'
 import ForgotPasswordForm from './ForgotPasswordForm'
 
@@ -20,7 +20,7 @@ const LoginForms = ({
   return (
     <FormWrapper>
       <TransitionGroup component={null}>
-        <ChooseLoginMethod
+        {/* <ChooseLoginMethod
           activeForm={activeForm}
           setActiveForm={setActiveForm}
           setReverse={setReverse}
@@ -28,7 +28,7 @@ const LoginForms = ({
           setIsLoggingIn={setIsLoggingIn}
           setLoadingMessage={setLoadingMessage}
           setShowLogin={setShowLogin}
-        />
+        /> */}
         <UsernamePasswordForm
           reverse={reverse}
           setReverse={setReverse}

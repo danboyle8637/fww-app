@@ -132,7 +132,7 @@ const LoginContainer = styled.div`
 `
 
 const ContentWrapper = styled.div`
-  margin: 100px 0 0 0;
+  margin: 40px 0 0 0;
   grid-column: 1 / -1;
   grid-row: 1 / -1;
   display: flex;

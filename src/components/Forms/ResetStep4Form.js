@@ -207,7 +207,7 @@ const ResetStep4Form = ({
   return (
     <>
       <LoginFormTransition
-        showNode={activeQuestion === 3}
+        showNode={activeQuestion === 2}
         reverse={reverse}
         formName="ResetSignUpStep3Form"
       >

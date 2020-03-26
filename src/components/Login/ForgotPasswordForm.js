@@ -60,7 +60,7 @@ const ForgetPasswordForm = ({
 
   return (
     <LoginFormTransition
-      showNode={activeForm === 2}
+      showNode={activeForm === 1}
       reverse={reverse}
       formName="ForgotPasswordForm"
     >

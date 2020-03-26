@@ -1,13 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import TextButton from '../Buttons/TextButton'
+import OptionsButton from '../Buttons/OptionsButton'
 
 const DidForgotPassword = ({ handleClick }) => {
   return (
     <ForgotPasswordContainer>
-      <ForgotPasswordHeadline>Forgot password?</ForgotPasswordHeadline>
-      <TextButton handleClick={handleClick}>Send reminder</TextButton>
+      <OptionsButton handleClick={handleClick}>
+        Send a Password Reminder?
+      </OptionsButton>
     </ForgotPasswordContainer>
   )
 }
@@ -15,15 +16,15 @@ const DidForgotPassword = ({ handleClick }) => {
 export default DidForgotPassword
 
 const ForgotPasswordContainer = styled.div`
-  margin: 40px 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 `
 
-const ForgotPasswordHeadline = styled.h4`
-  margin: 0 0 16px 0;
-  font-size: 18px;
-  color: ${props => props.theme.headlineSecondary};
-  letter-spacing: 0.1rem;
-`
+// const ForgotPasswordHeadline = styled.h4`
+//   margin: 0 0 16px 0;
+//   font-size: 18px;
+//   color: ${props => props.theme.headlineSecondary};
+//   letter-spacing: 0.1rem;
+// `

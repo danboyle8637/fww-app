@@ -11,7 +11,7 @@ import useRenderBackgroundImage from '../hooks/useRenderBackgroundImage'
 import ResetSignUpHeader from '../components/PageHeaders/ResetSignUpHeader'
 import ResetStep1Form from '../components/Forms/ResetStep1Form'
 import ResetStep2Form from '../components/Forms/ResetStep2Form'
-import ResetStep3Form from '../components/Forms/ResetStep3Form'
+// import ResetStep3Form from '../components/Forms/ResetStep3Form'
 import ResetStep4Form from '../components/Forms/ResetStep4Form'
 import FullPageKettlebellLoader from '../components/Loaders/FullPageKettlebellLoader'
 import ErrorIndicator from '../components/Indicators/ErrorIndicator'
@@ -20,11 +20,11 @@ const ResetSignUp = () => {
   const [reverse, setReverse] = useState(false)
   const [activeQuestion, setActiveQuestion] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
-  const [toDashboard, setToDashboard] = useState(false)
+  // const [toDashboard, setToDashboard] = useState(false)
   const [toErrorPage, setToErrorPage] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
-  const [showSocialSignUp, setShowSocialSignUp] = useState(false)
-  const [socialProvider, setSocialProvider] = useState('')
+  // const [showSocialSignUp, setShowSocialSignUp] = useState(false)
+  // const [socialProvider, setSocialProvider] = useState('')
 
   // This is for email and password login.
   const [showSecurityLogin, setShowSecurityLogin] = useState(false)
@@ -65,7 +65,7 @@ const ResetSignUp = () => {
                 reverse={reverse}
                 setReverse={setReverse}
               />
-              <ResetStep3Form
+              {/* <ResetStep3Form
                 reverse={reverse}
                 setReverse={setReverse}
                 activeQuestion={activeQuestion}
@@ -76,7 +76,7 @@ const ResetSignUp = () => {
                 setShowLogin={setShowLogin}
                 setShowSocialSignUp={setShowSocialSignUp}
                 setSocialProvider={setSocialProvider}
-              />
+              /> */}
               <ResetStep4Form
                 activeQuestion={activeQuestion}
                 setActiveQuestion={setActiveQuestion}
@@ -93,18 +93,18 @@ const ResetSignUp = () => {
         {background}
       </ResetSignUpContainer>
       <ErrorIndicator />
-      {toDashboard ? <Redirect to="/dashboard" /> : null}
+      {/* {toDashboard ? <Redirect to="/dashboard" /> : null} */}
       {showSecurityLogin ? <Redirect to="/security-login" /> : null}
       {toErrorPage ? <Redirect to="/error" /> : null}
       {showLogin ? <Redirect to="/login" /> : null}
-      {showSocialSignUp ? (
+      {/* {showSocialSignUp ? (
         <Redirect
           to={{
             pathname: '/social-sign-up',
             state: { provider: socialProvider }
           }}
         />
-      ) : null}
+      ) : null} */}
     </>
   )
 }
